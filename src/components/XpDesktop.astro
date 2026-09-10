@@ -31,6 +31,10 @@ import {
   Disc, 
   Save, 
   Briefcase, 
+  Trash2, 
+  Dog, 
+  StickyNote, 
+  Command, 
   Image as ImageIcon, 
   Award, 
   HelpCircle, 
@@ -167,10 +171,22 @@ const sampleWorkDocs = [
   <div id="xp-desktop-space" class="relative flex-1 w-full h-[calc(100vh-30px)] overflow-hidden">
 
     <!-- Desktop Icons Grid (Left column) -->
-    <div class="relative z-10 p-3 grid grid-flow-col grid-rows-8 gap-y-2.5 gap-x-5 w-max pointer-events-auto">
+    <div id="xp-desktop-icons-grid" class="relative z-10 p-3 grid grid-flow-col grid-rows-8 gap-y-2.5 gap-x-5 w-max pointer-events-auto">
+      <!-- Custom desktop icon tooltip -->
+      <div id="xp-icon-tooltip" class="fixed z-[10001] hidden pointer-events-none max-w-[220px]">
+        <div class="px-2 py-1.5 rounded border border-[#0a246a] bg-[#ffffe1] text-slate-900 shadow-lg text-[11px]">
+          <div id="xp-icon-tooltip-title" class="font-bold"></div>
+          <div id="xp-icon-tooltip-desc" class="text-slate-700 leading-tight mt-0.5"></div>
+        </div>
+      </div>
+
       
       <!-- Icon 1: Welcome.doc -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-welcome">
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+           data-open="win-welcome"
+           title="Welcome.doc"
+           data-tooltip-title="Welcome.doc"
+           data-tooltip-desc="Buka profil singkat dan tiga pilar keahlian Andhika. | Open a brief profile and the three pillars of Andhika's expertise.">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-white/95 border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
           <FileText class="w-6 h-6 text-blue-600" />
         </div>
@@ -180,7 +196,11 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Icon 2: Resume.doc -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-resume">
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+           data-open="win-resume"
+           title="Resume.doc"
+           data-tooltip-title="Resume.doc"
+           data-tooltip-desc="Lihat CV lengkap, pendidikan, pengalaman kerja, dan publikasi. | View full CV, education, work experience, and publications.">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-white/95 border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
           <Briefcase class="w-6 h-6 text-indigo-600" />
         </div>
@@ -190,7 +210,11 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Icon 3: Dokumen Pribadi (Folder Dokumen & Hasil Kerja) -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-docs-folder">
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+           data-open="win-docs-folder"
+           title="Dokumen Kerja"
+           data-tooltip-title="Dokumen Kerja / Work Docs"
+           data-tooltip-desc="Folder dokumen teknis dan CV ATS. | Folder of technical documents and ATS-friendly CV.">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-amber-100 border border-amber-300 shadow-md group-hover:scale-105 transition-transform">
           <Folder class="w-6 h-6 text-amber-500 fill-amber-400" />
         </div>
@@ -200,7 +224,11 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Icon 4: Galeri Sertifikat (Windows Picture & Fax Viewer) -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-gallery">
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+           data-open="win-gallery"
+           title="Sertifikat"
+           data-tooltip-title="Sertifikat / Certificates"
+           data-tooltip-desc="Lihat dan unduh sertifikat akademik & kompetensi. | View and download academic & competency certificates.">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-200 border border-teal-400 shadow-md group-hover:scale-105 transition-transform">
           <Award class="w-6 h-6 text-teal-700" />
         </div>
@@ -210,7 +238,11 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Icon 5: My Computer -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-explorer">
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+           data-open="win-explorer"
+           title="Komputer Saya"
+           data-tooltip-title="Komputer Saya / My Computer"
+           data-tooltip-desc="Akses drive, folder, dan perangkat sistem portofolio. | Access drives, folders, and portfolio system devices.">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-slate-100 border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
           <Laptop class="w-6 h-6 text-blue-700" />
         </div>
@@ -220,7 +252,11 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Icon 6: SDLC_Lens.exe -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-sdlc">
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+           data-open="win-sdlc"
+           title="SDLC_Lens.exe"
+           data-tooltip-title="SDLC_Lens.exe"
+           data-tooltip-desc="Lihat studi kasus PUMK dan Push Request dari sudut Analyst, Dev, dan QA. | View PUMK and Push Request case studies through Analyst, Dev, and QA lenses.">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-slate-900 border border-cyan-400 shadow-md group-hover:scale-105 transition-transform">
           <Layers class="w-5 h-5 text-cyan-400" />
         </div>
@@ -230,7 +266,11 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Icon 7: Windows Media Player -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-media-player">
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+           data-open="win-media-player"
+           title="Media Player"
+           data-tooltip-title="Windows Media Player"
+           data-tooltip-desc="Dengarkan playlist Lo-Fi Chill Beats. | Listen to the Lo-Fi Chill Beats playlist.">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-gradient-to-br from-slate-200 to-slate-400 border border-slate-400 shadow-md group-hover:scale-105 transition-transform">
           <Play class="w-5 h-5 text-blue-800 fill-blue-800 ml-0.5" />
         </div>
@@ -240,12 +280,57 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Icon 8: cmd.exe (Fixed!) -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-cmd">
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+           data-open="win-cmd"
+           title="cmd.exe"
+           data-tooltip-title="cmd.exe"
+           data-tooltip-desc="Jalankan perintah cepat seperti andhika, projects, skills, contact, dan clear. | Run quick commands like andhika, projects, skills, contact, and clear.">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-black border border-slate-600 shadow-md group-hover:scale-105 transition-transform">
           <Terminal class="w-5 h-5 text-emerald-400" />
         </div>
         <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
           cmd.exe
+        </span>
+      </div>
+      <!-- Icon 9: Search Companion (Rover) -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+           data-open="win-search"
+           title="Search Companion"
+           data-tooltip-title="Search Companion"
+           data-tooltip-desc="Cari jendela, keahlian, proyek, sertifikat, atau perintah dengan bantuan Rover. | Search windows, skills, projects, certificates, or commands with Rover.">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-blue-50 border border-blue-300 shadow-md group-hover:scale-105 transition-transform">
+          <Dog class="w-6 h-6 text-blue-700" />
+        </div>
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Search" data-id="Pencarian">
+          Pencarian
+        </span>
+      </div>
+
+      <!-- Icon 10: Notepad (Sticky Notes) -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+           data-open="win-notepad"
+           title="Notepad"
+           data-tooltip-title="Notepad"
+           data-tooltip-desc="Catatan bebas yang tersimpan otomatis di peramban. | Freeform notes automatically saved in your browser.">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-white border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
+          <StickyNote class="w-6 h-6 text-yellow-500" />
+        </div>
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Notepad" data-id="Catatan">
+          Catatan
+        </span>
+      </div>
+
+      <!-- Icon 11: Recycle Bin -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+           data-open="win-recycle-bin"
+           title="Recycle Bin"
+           data-tooltip-title="Recycle Bin"
+           data-tooltip-desc="Lihat jendela yang baru saja ditutup dan pulihkan (hiasan). | View recently closed windows and restore them (cosmetic).">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-slate-100 border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
+          <Trash2 class="w-6 h-6 text-slate-600" />
+        </div>
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Recycle Bin" data-id="Tempat Sampah">
+          Tempat Sampah
         </span>
       </div>
     </div>
@@ -335,7 +420,7 @@ const sampleWorkDocs = [
         </div>
 
         <div class="pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2.5">
-          <div class="flex items-center gap-2">
+          <div class="flex flex-wrap items-center gap-2">
             <button
               class="px-3 py-1.5 rounded text-xs font-semibold bg-[#ece9d8] border border-[#7f9db9] shadow-sm hover:bg-white active:scale-95 cursor-pointer"
               onclick="openWindow('win-resume')"
@@ -348,6 +433,30 @@ const sampleWorkDocs = [
             >
               Folder Dokumen Kerja
             </button>
+            <a
+              href="#"
+              onclick="openCvPdf(); return false;"
+              class="px-3 py-1.5 rounded text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm flex items-center gap-1.5"
+            >
+              <Download class="w-3.5 h-3.5" />
+              <span class="i18n" data-en="Download CV (PDF)" data-id="Unduh CV (PDF)">Unduh CV (PDF)</span>
+            </a>
+            <a
+              href="https://github.com/andhikapp28"
+              target="_blank"
+              class="px-3 py-1.5 rounded text-xs font-semibold bg-slate-800 hover:bg-slate-900 text-white shadow-sm flex items-center gap-1.5"
+            >
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.286-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.42-1.305.763-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.468-2.382 1.235-3.22-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.3 1.23A11.51 11.51 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.838 1.233 1.91 1.233 3.22 0 4.61-2.807 5.625-5.48 5.92.43.372.815 1.103.815 2.222 0 1.606-.015 2.898-.015 3.293 0 .32.218.694.825.577C20.565 21.795 24 17.298 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              GitHub
+            </a>
+            <a
+              href="https://linkedin.com/in/andhikaputrapratama"
+              target="_blank"
+              class="px-3 py-1.5 rounded text-xs font-semibold bg-[#0077b5] hover:bg-[#005582] text-white shadow-sm flex items-center gap-1.5"
+            >
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.5c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zm15.5 11.5h-3v-5.5c0-1.38-1.12-2.5-2.5-2.5s-2.5 1.12-2.5 2.5v5.5h-3v-10h3v1.5c.88-1.32 2.36-2.12 3.94-2.12 2.62 0 4.56 2.03 4.56 4.75v6.37z"/></svg>
+              LinkedIn
+            </a>
           </div>
 
           <span class="text-xs font-mono text-emerald-700 font-bold">
@@ -403,6 +512,7 @@ const sampleWorkDocs = [
           <div class="text-xs text-slate-700 font-mono text-left sm:text-right space-y-0.5">
             <div>Email: <strong class="text-blue-900">andhikapp28@gmail.com</strong></div>
             <div>GitHub: <a href="https://github.com/andhikapp28" target="_blank" class="text-blue-700 underline font-bold">github.com/andhikapp28</a></div>
+            <div>LinkedIn: <a href="https://linkedin.com/in/andhikaputrapratama" target="_blank" class="text-blue-700 underline font-bold">linkedin.com/in/andhikaputrapratama</a></div>
             <div>Telepon: 0812-7255-5407</div>
             <div>Lampung Selatan, Lampung, Indonesia</div>
           </div>
@@ -504,12 +614,36 @@ const sampleWorkDocs = [
           </ul>
         </div>
 
-        <div class="pt-4 border-t border-slate-200 flex items-center justify-between">
+        <div class="pt-4 border-t border-slate-200 flex flex-wrap items-center gap-2">
           <a
             href="mailto:andhikapp28@gmail.com"
             class="px-4 py-1.5 rounded bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm"
           >
             Hubungi via Email (andhikapp28@gmail.com)
+          </a>
+          <a
+            href="#"
+            onclick="openCvPdf(); return false;"
+            class="px-3 py-1.5 rounded text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm flex items-center gap-1.5"
+          >
+            <Download class="w-3.5 h-3.5" />
+            <span class="i18n" data-en="Download CV (PDF)" data-id="Unduh CV (PDF)">Unduh CV (PDF)</span>
+          </a>
+          <a
+            href="https://github.com/andhikapp28"
+            target="_blank"
+            class="px-3 py-1.5 rounded text-xs font-semibold bg-slate-800 hover:bg-slate-900 text-white shadow-sm flex items-center gap-1.5"
+          >
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.286-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.42-1.305.763-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.468-2.382 1.235-3.22-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.3 1.23A11.51 11.51 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.838 1.233 1.91 1.233 3.22 0 4.61-2.807 5.625-5.48 5.92.43.372.815 1.103.815 2.222 0 1.606-.015 2.898-.015 3.293 0 .32.218.694.825.577C20.565 21.795 24 17.298 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a
+            href="https://linkedin.com/in/andhikaputrapratama"
+            target="_blank"
+            class="px-3 py-1.5 rounded text-xs font-semibold bg-[#0077b5] hover:bg-[#005582] text-white shadow-sm flex items-center gap-1.5"
+          >
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.5c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zm15.5 11.5h-3v-5.5c0-1.38-1.12-2.5-2.5-2.5s-2.5 1.12-2.5 2.5v5.5h-3v-10h3v1.5c.88-1.32 2.36-2.12 3.94-2.12 2.62 0 4.56 2.03 4.56 4.75v6.37z"/></svg>
+            LinkedIn
           </a>
           <button
             class="px-3 py-1.5 rounded bg-[#ece9d8] border border-[#7f9db9] font-bold text-xs hover:bg-white cursor-pointer"
@@ -569,6 +703,18 @@ const sampleWorkDocs = [
               <div class="text-[10px] text-emerald-700 font-semibold mt-1">Status: Siap Diunduh / Cetak</div>
             </div>
           </div>
+        </div>
+
+        <div class="mt-4 p-3 rounded bg-blue-50 border border-blue-200 flex flex-wrap items-center gap-2">
+          <span class="text-[11px] font-bold text-blue-900 i18n" data-en="Need a printable copy?" data-id="Perlu salinan cetak?">Perlu salinan cetak?</span>
+          <a
+            href="#"
+            onclick="openCvPdf(); return false;"
+            class="px-3 py-1.5 rounded text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm flex items-center gap-1.5"
+          >
+            <Download class="w-3.5 h-3.5" />
+            <span class="i18n" data-en="Download CV (PDF)" data-id="Unduh CV (PDF)">Unduh CV (PDF)</span>
+          </a>
         </div>
       </div>
 
@@ -813,7 +959,7 @@ const sampleWorkDocs = [
                 <HardDrive class="w-7 h-7 text-blue-700 shrink-0" />
                 <div class="truncate">
                   <div class="font-bold text-blue-950 group-hover:underline">Data Disk (E:)</div>
-                  <div class="text-[10px] text-blue-700 font-semibold">&bull; KERJA\DAMRI (Projects)</div>
+                  <div class="text-[10px] text-blue-700 font-semibold">&bull; KERJA\PROJECTS (Projects)</div>
                 </div>
               </div>
             </div>
@@ -859,7 +1005,7 @@ const sampleWorkDocs = [
       <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Folder class="w-3.5 h-3.5 text-amber-300 fill-amber-300 shrink-0" />
-          <span>E:\KERJA\DAMRI\ - Daftar Proyek &amp; Studi Kasus</span>
+          <span>E:\KERJA\PROJECTS\ - Daftar Proyek &amp; Studi Kasus</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
           <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
@@ -871,7 +1017,7 @@ const sampleWorkDocs = [
       <div class="h-7 px-2 flex items-center gap-2 text-xs bg-[#ece9d8] border-b border-[#d8d4c2]">
         <span class="text-slate-600 font-medium">Address:</span>
         <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-xs font-mono text-slate-800 flex items-center">
-          E:\KERJA\DAMRI\KODING\
+          E:\KERJA\PROJECTS\KODING\
         </div>
       </div>
 
@@ -952,7 +1098,7 @@ const sampleWorkDocs = [
         <div class="flex items-center gap-1.5 flex-1 min-w-0">
           <span class="text-[11px] text-slate-600 font-semibold shrink-0">Address:</span>
           <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-xs font-mono text-slate-900 truncate" id="ie-address-bar">
-            http://internal.damri.co.id/specs/
+            http://internal.local/specs/
           </div>
         </div>
       </div>
@@ -1255,6 +1401,22 @@ const sampleWorkDocs = [
           <Check class="w-3.5 h-3.5 text-emerald-600 hidden" id="xp-copied-icon" />
           <span id="xp-copy-text">Salin Email</span>
         </button>
+        <a
+          href="https://github.com/andhikapp28"
+          target="_blank"
+          class="px-3 py-1 rounded bg-slate-800 hover:bg-slate-900 text-white font-bold text-[10px] flex items-center gap-1.5 shadow-sm"
+        >
+          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.286-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.42-1.305.763-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.468-2.382 1.235-3.22-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.3 1.23A11.51 11.51 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.838 1.233 1.91 1.233 3.22 0 4.61-2.807 5.625-5.48 5.92.43.372.815 1.103.815 2.222 0 1.606-.015 2.898-.015 3.293 0 .32.218.694.825.577C20.565 21.795 24 17.298 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+        <a
+          href="https://linkedin.com/in/andhikaputrapratama"
+          target="_blank"
+          class="px-3 py-1 rounded bg-[#0077b5] hover:bg-[#005582] text-white font-bold text-[10px] flex items-center gap-1.5 shadow-sm"
+        >
+          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.5c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zm15.5 11.5h-3v-5.5c0-1.38-1.12-2.5-2.5-2.5s-2.5 1.12-2.5 2.5v5.5h-3v-10h3v1.5c.88-1.32 2.36-2.12 3.94-2.12 2.62 0 4.56 2.03 4.56 4.75v6.37z"/></svg>
+          LinkedIn
+        </a>
       </div>
 
       <div class="p-4 bg-white space-y-3 text-xs font-sans">
@@ -1289,6 +1451,223 @@ const sampleWorkDocs = [
       </div>
     </div>
   </div>
+
+
+    <!-- WINDOW 13: Search Companion (Rover) -->
+    <div
+      id="win-search"
+      class="xp-window absolute top-12 left-32 w-[92vw] sm:w-[560px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
+    >
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+          <Dog class="w-3.5 h-3.5 text-yellow-200 shrink-0" />
+          <span>Search Companion</span>
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+        </div>
+      </div>
+
+      <div class="flex flex-1 overflow-hidden bg-white max-h-[62vh] text-xs">
+        <!-- Rover mascot + speech bubble -->
+        <div class="w-40 sm:w-44 bg-gradient-to-b from-[#e8f1ff] to-[#d3e5fa] border-r border-[#b8c9e5] p-3 flex flex-col items-center shrink-0">
+          <div class="w-24 h-28 relative">
+            <!-- XP Search Companion dog Rover -->
+            <svg viewBox="0 0 100 110" class="w-full h-full drop-shadow-md">
+              <ellipse cx="50" cy="96" rx="22" ry="10" fill="#d1d5db" opacity="0.6"/>
+              <path d="M30 45 Q25 80 35 92 Q50 100 65 92 Q75 80 70 45 Q65 25 50 25 Q35 25 30 45" fill="#f5d0a9"/>
+              <circle cx="40" cy="48" r="5" fill="#1f2937"/>
+              <circle cx="60" cy="48" r="5" fill="#1f2937"/>
+              <circle cx="41" cy="47" r="1.5" fill="white"/>
+              <circle cx="61" cy="47" r="1.5" fill="white"/>
+              <ellipse cx="50" cy="58" rx="6" ry="4" fill="#1f2937"/>
+              <path d="M46 63 Q50 68 54 63" stroke="#1f2937" stroke-width="2" fill="none"/>
+              <path d="M28 38 Q22 28 30 22 Q38 18 42 26" fill="#8b5cf6"/>
+              <path d="M72 38 Q78 28 70 22 Q62 18 58 26" fill="#8b5cf6"/>
+              <path class="rover-tail" d="M70 75 Q88 60 85 45" stroke="#f5d0a9" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <rect x="36" y="78" width="8" height="14" rx="4" fill="#f5d0a9"/>
+              <rect x="56" y="78" width="8" height="14" rx="4" fill="#f5d0a9"/>
+            </svg>
+          </div>
+          <div class="mt-2 p-2 rounded-lg bg-white border border-[#7f9db9] shadow-sm">
+            <p id="rover-speech" class="text-[10.5px] text-slate-800 leading-tight i18n"
+               data-en="Hi! What are you looking for? I can search windows, skills, projects, certificates, and commands."
+               data-id="Halo! Apa yang sedang kamu cari? Aku bisa mencari jendela, keahlian, proyek, sertifikat, dan perintah.">
+              Halo! Apa yang sedang kamu cari? Aku bisa mencari jendela, keahlian, proyek, sertifikat, dan perintah.
+            </p>
+          </div>
+        </div>
+
+        <!-- Search panel -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+          <div class="p-3 border-b border-[#d8d4c2] bg-[#f7f7f7]">
+            <label class="block text-[11px] font-bold text-slate-700 mb-1 i18n" data-en="Search for:" data-id="Cari:">Cari:</label>
+            <div class="flex items-center gap-2">
+              <input
+                id="rover-search-input"
+                type="text"
+                class="flex-1 px-2 py-1 border border-[#7f9db9] rounded text-xs outline-none focus:border-blue-500"
+                placeholder="contoh: resume, PUMK, Python, NIK, lockForUpdate..."
+              />
+              <button
+                id="rover-search-btn"
+                class="px-3 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] hover:bg-white font-bold text-xs flex items-center gap-1 cursor-pointer"
+              >
+                <Search class="w-3.5 h-3.5" />
+                <span class="i18n" data-en="Search" data-id="Cari">Cari</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="rover-results" class="flex-1 overflow-y-auto p-2 bg-white">
+            <div class="text-[11px] font-bold text-slate-700 mb-2 i18n" data-en="Search results" data-id="Hasil pencarian">Hasil pencarian</div>
+            <div id="rover-results-list" class="space-y-1">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="win-resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-se-resize flex items-end justify-end p-0.5 z-30">
+        <svg class="w-3 h-3 text-slate-400" viewBox="0 0 12 12" fill="currentColor">
+          <circle cx="10" cy="10" r="1.2" /><circle cx="6" cy="10" r="1.2" /><circle cx="10" cy="6" r="1.2" /><circle cx="2" cy="10" r="1.2" /><circle cx="6" cy="6" r="1.2" /><circle cx="10" cy="2" r="1.2" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- WINDOW 14: Notepad (Sticky Notes) -->
+    <div
+      id="win-notepad"
+      class="xp-window absolute top-16 left-28 w-[92vw] sm:w-[520px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
+    >
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+          <StickyNote class="w-3.5 h-3.5 text-yellow-200 shrink-0" />
+          <span class="i18n" data-en="Notepad - Notes.txt" data-id="Notepad - Catatan.txt">Notepad - Catatan.txt</span>
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+        </div>
+      </div>
+
+      <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700">
+        <span class="hover:underline cursor-pointer i18n" data-en="File" data-id="Berkas">Berkas</span>
+        <span class="hover:underline cursor-pointer i18n" data-en="Edit" data-id="Sunting">Sunting</span>
+        <span class="hover:underline cursor-pointer i18n" data-en="Format" data-id="Format">Format</span>
+        <span class="hover:underline cursor-pointer i18n" data-en="Help" data-id="Bantuan">Bantuan</span>
+      </div>
+
+      <textarea
+        id="notepad-textarea"
+        class="flex-1 p-3 bg-white text-slate-900 font-mono text-xs leading-relaxed outline-none resize-none"
+        spellcheck="false"
+      ></textarea>
+
+      <div class="h-5 px-2 flex items-center justify-between text-[10px] bg-[#ece9d8] border-t border-[#d8d4c2] text-slate-700">
+        <span id="notepad-status-position" class="font-mono">Ln 1, Col 1</span>
+        <span class="i18n" data-en="UTF-8" data-id="UTF-8">UTF-8</span>
+      </div>
+
+      <div class="win-resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-se-resize flex items-end justify-end p-0.5 z-30">
+        <svg class="w-3 h-3 text-slate-400" viewBox="0 0 12 12" fill="currentColor">
+          <circle cx="10" cy="10" r="1.2" /><circle cx="6" cy="10" r="1.2" /><circle cx="10" cy="6" r="1.2" /><circle cx="2" cy="10" r="1.2" /><circle cx="6" cy="6" r="1.2" /><circle cx="10" cy="2" r="1.2" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- WINDOW 15: Run Dialog -->
+    <div
+      id="win-run"
+      class="xp-window absolute top-20 left-36 w-[92vw] sm:w-[400px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-[11000] flex flex-col overflow-hidden hidden"
+    >
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+          <Command class="w-3.5 h-3.5 text-slate-200 shrink-0" />
+          <span class="i18n" data-en="Run" data-id="Jalankan">Jalankan</span>
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+        </div>
+      </div>
+
+      <div class="p-4 flex items-start gap-3 bg-[#ece9d8]">
+        <div class="w-10 h-10 shrink-0 rounded bg-white border border-[#7f9db9] flex items-center justify-center">
+          <Command class="w-6 h-6 text-blue-700" />
+        </div>
+        <div class="flex-1">
+          <label class="block text-xs text-slate-800 mb-1.5 i18n" data-en="Type the name of a program, folder, document, or Internet resource, and Windows will open it for you." data-id="Ketik nama program, folder, dokumen, atau sumber daya Internet, dan Windows akan membukanya untuk Anda.">
+            Ketik nama program, folder, dokumen, atau sumber daya Internet, dan Windows akan membukanya untuk Anda.
+          </label>
+          <div class="flex items-center gap-2 mt-2">
+            <span class="text-xs font-bold text-slate-700 w-14 i18n" data-en="Open:" data-id="Buka:">Buka:</span>
+            <input
+              id="run-input"
+              type="text"
+              class="flex-1 px-2 py-1 border border-[#7f9db9] rounded text-xs outline-none focus:border-blue-500"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="px-4 pb-4 flex items-center justify-end gap-2 bg-[#ece9d8]">
+        <button
+          id="run-ok-btn"
+          class="w-20 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] hover:bg-white text-xs font-bold cursor-pointer"
+        >
+          OK
+        </button>
+        <button
+          id="run-cancel-btn"
+          class="w-20 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] hover:bg-white text-xs font-bold cursor-pointer i18n"
+          data-en="Cancel"
+          data-id="Batal"
+        >
+          Batal
+        </button>
+      </div>
+    </div>
+
+    <!-- WINDOW 16: Recycle Bin -->
+    <div
+      id="win-recycle-bin"
+      class="xp-window absolute top-12 left-44 w-[92vw] sm:w-[480px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
+    >
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+          <Trash2 class="w-3.5 h-3.5 text-slate-200 shrink-0" />
+          <span class="i18n" data-en="Recycle Bin" data-id="Tempat Sampah">Tempat Sampah</span>
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+        </div>
+      </div>
+
+      <div class="h-7 px-2 flex items-center gap-2 text-xs bg-[#ece9d8] border-b border-[#d8d4c2]">
+        <span class="text-slate-600 font-medium">Address:</span>
+        <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-xs font-mono text-slate-800 truncate">
+          C:\RECYCLER\Andhika
+        </div>
+      </div>
+
+      <div class="flex-1 p-4 bg-white overflow-y-auto max-h-[60vh] text-xs">
+        <div class="text-[11px] text-slate-500 mb-3 i18n" data-en="Recently closed windows are listed here. Select an item and click Restore to reopen it (cosmetic)." data-id="Jendela yang baru ditutup ditampilkan di sini. Pilih item dan klik Pulihkan untuk membukanya kembali (hiasan).">
+          Jendela yang baru ditutup ditampilkan di sini. Pilih item dan klik Pulihkan untuk membukanya kembali (hiasan).
+        </div>
+        <div id="recycle-items-list" class="space-y-1">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+
+      <div class="win-resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-se-resize flex items-end justify-end p-0.5 z-30">
+        <svg class="w-3 h-3 text-slate-400" viewBox="0 0 12 12" fill="currentColor">
+          <circle cx="10" cy="10" r="1.2" /><circle cx="6" cy="10" r="1.2" /><circle cx="10" cy="6" r="1.2" /><circle cx="2" cy="10" r="1.2" /><circle cx="6" cy="6" r="1.2" /><circle cx="10" cy="2" r="1.2" />
+        </svg>
+      </div>
+    </div>
 
   <!-- ==================== AUTHENTIC WINDOWS XP SHUTDOWN DIALOG ==================== -->
   <div 
@@ -1402,14 +1781,31 @@ const sampleWorkDocs = [
           <Terminal class="w-4 h-4 text-emerald-600" />
           <span class="font-bold text-slate-800">cmd.exe</span>
         </div>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-search'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <Dog class="w-4 h-4 text-blue-600" />
+          <span class="font-bold text-slate-800 i18n" data-en="Search Companion" data-id="Pencarian">Search Companion</span>
+        </div>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-notepad'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <StickyNote class="w-4 h-4 text-yellow-600" />
+          <span class="font-bold text-slate-800 i18n" data-en="Notepad" data-id="Catatan">Notepad</span>
+        </div>
       </div>
 
       <div class="w-1/2 p-2 space-y-1 text-slate-700">
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="openWindow('win-explorer'); document.getElementById('xp-start-menu').classList.add('hidden');">
           My Computer
         </div>
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Search Companion" data-id="Pencarian" onclick="openWindow('win-search'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          Search Companion
+        </div>
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Notepad" data-id="Catatan" onclick="openWindow('win-notepad'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          Notepad
+        </div>
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Run..." data-id="Jalankan..." onclick="openWindow('win-run'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          Run...
+        </div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="openWindow('win-projects'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          E:\KERJA\DAMRI
+          E:\KERJA\PROJECTS
         </div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="openWindow('win-sdlc'); document.getElementById('xp-start-menu').classList.add('hidden');">
           SDLC Lens
@@ -1417,10 +1813,21 @@ const sampleWorkDocs = [
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="openWindow('win-contact'); document.getElementById('xp-start-menu').classList.add('hidden');">
           Outlook Express
         </div>
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Recycle Bin" data-id="Tempat Sampah" onclick="openWindow('win-recycle-bin'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          Recycle Bin
+        </div>
       </div>
     </div>
 
     <div class="h-9 px-3 flex items-center justify-end gap-3 bg-gradient-to-r from-[#0058ee] to-[#3593ff] text-white select-none">
+      <button
+        class="px-2 py-0.5 rounded text-[10px] font-bold hover:bg-white/20 cursor-pointer flex items-center gap-1"
+        onclick="openWindow('win-run'); document.getElementById('xp-start-menu').classList.add('hidden');"
+      >
+        <Command class="w-3 h-3" />
+        <span class="i18n" data-en="Run..." data-id="Jalankan...">Jalankan...</span>
+      </button>
+      <div class="w-[1px] h-4 bg-white/40"></div>
       <button
         id="xp-open-shutdown-btn"
         class="flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#c75050] hover:bg-[#e04343] border border-white/50 text-xs font-bold shadow cursor-pointer active:scale-95"
@@ -1504,6 +1911,21 @@ const sampleWorkDocs = [
     animation: tailWag 0.6s ease-in-out infinite;
     transform-origin: 74px 65px;
   }
+
+  @keyframes xpShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-6px); }
+  }
+  .xp-shake {
+    animation: xpShake 0.3s ease-in-out;
+  }
+
+  /* Ensure notepad textarea uses fixed font stack and no chrome */
+  #notepad-textarea {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
 </style>
 
 <script>
@@ -1531,7 +1953,55 @@ const sampleWorkDocs = [
         document.getElementById('cmd-input')?.focus();
       }, 100);
     }
+
+    // If opening run dialog, focus input
+    if (winId === 'win-run') {
+      setTimeout(() => {
+        document.getElementById('run-input')?.focus();
+      }, 100);
+    }
+
+    // If opening notepad, focus textarea
+    if (winId === 'win-notepad') {
+      setTimeout(() => {
+        document.getElementById('notepad-textarea')?.focus();
+      }, 100);
+    }
+
+    // If opening search, focus input
+    if (winId === 'win-search') {
+      setTimeout(() => {
+        document.getElementById('rover-search-input')?.focus();
+      }, 100);
+    }
   };
+  (window as any).closeWindow = closeWindow;
+
+  // Close window helper used by keyboard shortcuts & recycle tracking
+  function closeWindow(win: HTMLElement) {
+    if (!win) return;
+    const id = win.id;
+    // Add to recycle bin if it was a real application window (not dialogs)
+    if (id && id.startsWith('win-') && !['win-run', 'win-shutdown-modal', 'xp-shutdown-modal', 'xp-shutdown-screen'].includes(id)) {
+      addToRecycleBin(id);
+    }
+    // Stop WMP if closing media player
+    if (id === 'win-media-player') {
+      (window as any).stopWmp?.();
+    }
+    win.dataset.state = 'closed';
+    win.classList.add('hidden');
+    win.style.display = 'none';
+    updateTaskbar();
+  }
+
+  function minimizeWindow(win: HTMLElement) {
+    if (!win) return;
+    win.dataset.state = 'minimized';
+    win.classList.add('hidden');
+    win.style.display = 'none';
+    updateTaskbar();
+  }
 
   const windows = document.querySelectorAll<HTMLElement>('.xp-window');
   windows.forEach((win) => {
@@ -1614,16 +2084,7 @@ const sampleWorkDocs = [
     const btnClose = win.querySelector('.win-btn-close');
     btnClose?.addEventListener('click', (e) => {
       e.stopPropagation();
-      win.dataset.state = 'closed';
-      win.classList.add('hidden');
-      win.style.display = 'none';
-
-      // Stop Windows Media Player if this is the media player window
-      if (win.id === 'win-media-player') {
-        (window as any).stopWmp?.();
-      }
-
-      updateTaskbar();
+      closeWindow(win);
     });
 
     const btnMinimize = win.querySelector('.win-btn-minimize');
@@ -1658,8 +2119,12 @@ const sampleWorkDocs = [
     });
   });
 
-  // Desktop Icons Opening Windows
+  // Desktop Icons Opening Windows + tooltip helpers
   const desktopIcons = document.querySelectorAll('.xp-desktop-icon');
+  const iconTooltip = document.getElementById('xp-icon-tooltip');
+  const iconTooltipTitle = document.getElementById('xp-icon-tooltip-title');
+  const iconTooltipDesc = document.getElementById('xp-icon-tooltip-desc');
+
   desktopIcons.forEach((icon) => {
     icon.addEventListener('click', (e: Event) => {
       e.preventDefault();
@@ -1668,6 +2133,27 @@ const sampleWorkDocs = [
       if (targetId) {
         (window as any).openWindow(targetId);
       }
+    });
+
+    icon.addEventListener('mouseenter', () => {
+      if (!iconTooltip || !iconTooltipTitle || !iconTooltipDesc) return;
+      const title = icon.getAttribute('data-tooltip-title') || icon.getAttribute('title') || '';
+      const desc = icon.getAttribute('data-tooltip-desc') || '';
+      const lang = currentLang === 'id' ? 1 : 0;
+      const descLine = desc.split(' | ')[lang] || desc.split(' | ')[0] || desc;
+      iconTooltipTitle.innerText = title;
+      iconTooltipDesc.innerText = descLine;
+      iconTooltip.classList.remove('hidden');
+    });
+
+    icon.addEventListener('mousemove', (e: MouseEvent) => {
+      if (!iconTooltip) return;
+      iconTooltip.style.left = `${e.clientX + 12}px`;
+      iconTooltip.style.top = `${e.clientY + 12}px`;
+    });
+
+    icon.addEventListener('mouseleave', () => {
+      iconTooltip?.classList.add('hidden');
     });
   });
 
@@ -1747,9 +2233,22 @@ const sampleWorkDocs = [
       const text = el.getAttribute(`data-${lang}`);
       if (text) el.innerHTML = text;
     });
+    // Update input placeholders / values with data-en/data-id
+    document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-en][data-id]').forEach((el) => {
+      if ('placeholder' in el && el.getAttribute('placeholder')) {
+        const ph = el.getAttribute(`data-${lang}-placeholder`) || el.getAttribute(`data-${lang}`);
+        if (ph) el.placeholder = ph;
+      }
+    });
     if (langBtn) {
       langBtn.innerText = lang.toUpperCase();
     }
+    // Refresh Rover results if any
+    if (roverInput && roverInput.value.trim()) {
+      runRoverSearch();
+    }
+    // Refresh Recycle Bin labels
+    renderRecycleBin();
   }
 
   langBtn?.addEventListener('click', () => {
@@ -1774,6 +2273,93 @@ const sampleWorkDocs = [
       startMenu.classList.remove('flex');
     }
   });
+
+  // 3b. Keyboard Shortcuts
+  document.addEventListener('keydown', (e) => {
+    const isMeta = e.metaKey || e.key === 'Meta';
+    const targetTag = (e.target as HTMLElement)?.tagName?.toLowerCase();
+    const isTyping = targetTag === 'input' || targetTag === 'textarea';
+
+    // Win+R open Run dialog
+    if (isMeta && e.key.toLowerCase() === 'r') {
+      e.preventDefault();
+      (window as any).openWindow('win-run');
+      return;
+    }
+
+    // Win key alone toggles Start Menu
+    if (isMeta) {
+      e.preventDefault();
+      startMenu?.classList.toggle('hidden');
+      startMenu?.classList.toggle('flex');
+      return;
+    }
+
+    // F11 fullscreen
+    if (e.key === 'F11') {
+      e.preventDefault();
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+      return;
+    }
+
+    // Ctrl+L toggle language
+    if (e.ctrlKey && e.key.toLowerCase() === 'l') {
+      e.preventDefault();
+      const nextLang = currentLang === 'id' ? 'en' : 'id';
+      applyLanguage(nextLang);
+      return;
+    }
+
+    // Arrow keys navigate gallery when gallery viewport is focused / hovered
+    const galleryWin = document.getElementById('win-gallery');
+    if (galleryWin && !galleryWin.classList.contains('hidden') && galleryWin.style.display !== 'none') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        showCertificate(currentCertIndex - 1);
+        return;
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        showCertificate(currentCertIndex + 1);
+        return;
+      }
+    }
+
+    // Global window shortcuts (only when not typing)
+    if (isTyping) return;
+
+    if (e.key === 'Escape') {
+      // Close topmost visible window
+      const topWin = getTopmostWindow();
+      if (topWin) closeWindow(topWin);
+      return;
+    }
+
+    if (e.key.toLowerCase() === 'm') {
+      // Minimize topmost visible window
+      const topWin = getTopmostWindow();
+      if (topWin) minimizeWindow(topWin);
+      return;
+    }
+  });
+
+  function getTopmostWindow(): HTMLElement | null {
+    let top: HTMLElement | null = null;
+    let maxZ = 0;
+    document.querySelectorAll<HTMLElement>('.xp-window').forEach((win) => {
+      if (win.classList.contains('hidden') || win.style.display === 'none') return;
+      const z = parseInt(window.getComputedStyle(win).zIndex || '0', 10);
+      if (z > maxZ) {
+        maxZ = z;
+        top = win;
+      }
+    });
+    return top;
+  }
 
   // 4. System Tray Clock
   function updateClock() {
@@ -1806,7 +2392,7 @@ const sampleWorkDocs = [
       }
 
       if (ieAddressBar) {
-        ieAddressBar.innerText = `http://internal.damri.co.id/specs/${projectId}.html`;
+        ieAddressBar.innerText = `http://internal.local/specs/${projectId}.html`;
       }
       if (ieTitlebar) {
         const title = row.querySelector('span')?.textContent || 'Case Study';
@@ -2222,34 +2808,131 @@ const sampleWorkDocs = [
   const roverSpeech = document.getElementById('rover-speech');
   const roverResults = document.getElementById('rover-results-list');
 
+  const roverIndex: Array<{ id: string; title: string; titleId: string; desc: string; descId: string; type: string; keywords: string; action: () => void }> = [
+    { id: 'win-welcome', title: 'Welcome.doc', titleId: 'Welcome.doc', desc: 'Profil singkat Andhika', descId: 'Profil singkat Andhika', type: 'window', keywords: 'welcome profil profile', action: () => (window as any).openWindow('win-welcome') },
+    { id: 'win-resume', title: 'Resume.doc', titleId: 'Resume.doc', desc: 'CV lengkap, pendidikan, dan pengalaman', descId: 'CV lengkap, pendidikan, dan pengalaman', type: 'window', keywords: 'resume cv curriculum vitae pendidikan experience', action: () => (window as any).openWindow('win-resume') },
+    { id: 'win-docs-folder', title: 'Work Docs', titleId: 'Dokumen Kerja', desc: 'Folder dokumen dan CV ATS', descId: 'Folder dokumen dan CV ATS', type: 'window', keywords: 'dokumen kerja cv ats document', action: () => (window as any).openWindow('win-docs-folder') },
+    { id: 'win-gallery', title: 'Certificates', titleId: 'Sertifikat', desc: 'Galeri sertifikat', descId: 'Galeri sertifikat', type: 'window', keywords: 'sertifikat certificate toefl python machine learning', action: () => (window as any).openWindow('win-gallery') },
+    { id: 'win-explorer', title: 'My Computer', titleId: 'Komputer Saya', desc: 'Akses drive dan folder', descId: 'Akses drive dan folder', type: 'window', keywords: 'komputer saya my computer drive explorer', action: () => (window as any).openWindow('win-explorer') },
+    { id: 'win-sdlc', title: 'SDLC Lens', titleId: 'SDLC Lens', desc: 'Studi kasus PUMK & Push Request', descId: 'Studi kasus PUMK & Push Request', type: 'window', keywords: 'sdlc pumk push analyst dev qa', action: () => (window as any).openWindow('win-sdlc') },
+    { id: 'win-media-player', title: 'Media Player', titleId: 'Media Player', desc: 'Playlist lo-fi', descId: 'Playlist lo-fi', type: 'window', keywords: 'media player musik music lofi', action: () => (window as any).openWindow('win-media-player') },
+    { id: 'win-cmd', title: 'cmd.exe', titleId: 'cmd.exe', desc: 'Command prompt', descId: 'Command prompt', type: 'window', keywords: 'cmd command terminal', action: () => (window as any).openWindow('win-cmd') },
+    { id: 'win-contact', title: 'Outlook Express', titleId: 'Outlook Express', desc: 'Hubungi Andhika', descId: 'Hubungi Andhika', type: 'window', keywords: 'contact outlook email hubungi', action: () => (window as any).openWindow('win-contact') },
+    { id: 'win-notepad', title: 'Notepad', titleId: 'Catatan', desc: 'Catatan pribadi', descId: 'Catatan pribadi', type: 'window', keywords: 'notepad catatan notes sticky', action: () => (window as any).openWindow('win-notepad') },
+    { id: 'win-search', title: 'Search Companion', titleId: 'Pencarian', desc: 'Cari dengan Rover', descId: 'Cari dengan Rover', type: 'window', keywords: 'search pencarian rover', action: () => (window as any).openWindow('win-search') },
+    { id: 'win-projects', title: 'Case Studies (E:)', titleId: 'Studi Kasus (E:)', desc: 'Daftar proyek PUMK & Push', descId: 'Daftar proyek PUMK & Push', type: 'project', keywords: 'case studies project proyek pumk push', action: () => (window as any).openWindow('win-projects') },
+    { id: 'skill-system-analysis', title: 'Skill: System Analysis', titleId: 'Keahlian: Analisis Sistem', desc: 'BRD/SRS, BPMN, ERD, Data Dictionary', descId: 'BRD/SRS, BPMN, ERD, Kamus Data', type: 'skill', keywords: 'system analysis brd srs bpmn erd data dictionary kamus data', action: () => (window as any).openWindow('win-resume') },
+    { id: 'skill-development', title: 'Skill: Development', titleId: 'Keahlian: Development', desc: 'Laravel, PostgreSQL, REST, GitHub API', descId: 'Laravel, PostgreSQL, REST, GitHub API', type: 'skill', keywords: 'development laravel postgresql rest github api sso', action: () => (window as any).openWindow('win-resume') },
+    { id: 'skill-qa', title: 'Skill: QA Testing', titleId: 'Keahlian: QA Testing', desc: 'Test Case, Boundary, Postman', descId: 'Test Case, Boundary, Postman', type: 'skill', keywords: 'qa testing test case boundary postman concurrency', action: () => (window as any).openWindow('win-resume') },
+    { id: 'project-pumk', title: 'Project: PUMK', titleId: 'Proyek: PUMK', desc: 'Mitra unique ID & concurrency control', descId: 'ID unik mitra & kontrol konkurensi', type: 'project', keywords: 'pumk tjsl pkbl mitra nik lockforupdate concurrency', action: () => { (window as any).openWindow('win-projects'); setTimeout(() => { const row = document.querySelector('[data-project-id="damri-pumk-system"]'); row?.dispatchEvent(new Event('click')); }, 200); } },
+    { id: 'project-push', title: 'Project: Push Request', titleId: 'Proyek: Push Request', desc: 'GitHub audit & deployment tracking', descId: 'Audit GitHub & pelacakan deployment', type: 'project', keywords: 'push request github audit deployment webhook kanban', action: () => { (window as any).openWindow('win-projects'); setTimeout(() => { const row = document.querySelector('[data-project-id="damri-push-request-tracker"]'); row?.dispatchEvent(new Event('click')); }, 200); } },
+    { id: 'cert-python', title: 'Certificate: IT Specialist in Python', titleId: 'Sertifikat: IT Specialist in Python', desc: 'Pearson/Certiport', descId: 'Pearson/Certiport', type: 'certificate', keywords: 'python pearson certiport it specialist', action: () => { (window as any).openWindow('win-gallery'); showCertificate(3); } },
+    { id: 'cert-ml', title: 'Certificate: Machine Learning Specialization', titleId: 'Sertifikat: Machine Learning Specialization', desc: 'DeepLearning.AI / Stanford', descId: 'DeepLearning.AI / Stanford', type: 'certificate', keywords: 'machine learning andrew ng stanford deeplearning', action: () => { (window as any).openWindow('win-gallery'); showCertificate(4); } },
+    { id: 'cert-google', title: 'Certificate: Crash Course on Python', titleId: 'Sertifikat: Crash Course on Python', desc: 'Google / Coursera', descId: 'Google / Coursera', type: 'certificate', keywords: 'crash course python google coursera', action: () => { (window as any).openWindow('win-gallery'); showCertificate(5); } },
+    { id: 'cert-toefl', title: 'Certificate: TOEFL ITP 640', titleId: 'Sertifikat: TOEFL ITP 640', desc: 'English proficiency', descId: 'Kemahiran bahasa Inggris', type: 'certificate', keywords: 'toefl english 640 client', action: () => { (window as any).openWindow('win-gallery'); showCertificate(2); } },
+    { id: 'cmd-resume', title: 'Command: resume', titleId: 'Perintah: resume', desc: 'Buka Resume', descId: 'Buka Resume', type: 'command', keywords: 'command resume', action: () => (window as any).openWindow('win-resume') },
+    { id: 'cmd-projects', title: 'Command: projects', titleId: 'Perintah: projects', desc: 'Buka studi kasus', descId: 'Buka studi kasus', type: 'command', keywords: 'command projects', action: () => (window as any).openWindow('win-projects') },
+    { id: 'cmd-contact', title: 'Command: contact', titleId: 'Perintah: contact', desc: 'Buka kontak', descId: 'Buka kontak', type: 'command', keywords: 'command contact', action: () => (window as any).openWindow('win-contact') },
+    { id: 'cmd-notepad', title: 'Command: notepad', titleId: 'Perintah: notepad', desc: 'Buka Notepad', descId: 'Buka Notepad', type: 'command', keywords: 'command notepad', action: () => (window as any).openWindow('win-notepad') },
+    { id: 'cmd-search', title: 'Command: search', titleId: 'Perintah: search', desc: 'Buka pencarian', descId: 'Buka pencarian', type: 'command', keywords: 'command search', action: () => (window as any).openWindow('win-search') }
+  ];
+
+  function renderRoverResults(results: typeof roverIndex) {
+    if (!roverResults) return;
+    roverResults.innerHTML = '';
+    if (results.length === 0) {
+      roverResults.innerHTML = `<div class="text-[11px] text-slate-500 italic i18n" data-en="No results found." data-id="Tidak ditemukan hasil.">Tidak ditemukan hasil.</div>`;
+      return;
+    }
+    results.forEach((item) => {
+      const div = document.createElement('div');
+      div.className = 'p-2.5 rounded border border-slate-200 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group transition-all';
+      const title = currentLang === 'id' && item.titleId ? item.titleId : item.title;
+      const desc = currentLang === 'id' && item.descId ? item.descId : item.desc;
+      div.innerHTML = `
+        <div class="flex items-center gap-2">
+          <span class="px-1.5 py-0.5 rounded bg-slate-200 text-[9px] font-bold uppercase text-slate-700">${item.type}</span>
+          <span class="font-bold text-blue-900 text-xs group-hover:underline">${title}</span>
+        </div>
+        <div class="text-[10px] text-slate-600 mt-0.5">${desc}</div>
+      `;
+      div.addEventListener('click', () => {
+        item.action();
+        const searchWin = document.getElementById('win-search');
+        if (searchWin) closeWindow(searchWin);
+      });
+      roverResults.appendChild(div);
+    });
+  }
+
   function runRoverSearch() {
     const q = roverInput?.value.trim().toLowerCase();
     if (!roverResults) return;
 
     if (!q) {
-      if (roverSpeech) roverSpeech.innerText = 'Tulis kata kunci pencarian, saya akan mencarikannya untukmu!';
+      const promptText = currentLang === 'id'
+        ? 'Tulis kata kunci pencarian, saya akan mencarikannya untukmu!'
+        : 'Type a keyword and I will search for you!';
+      if (roverSpeech) roverSpeech.innerText = promptText;
+      renderRoverResults([]);
       return;
     }
 
-    if (roverSpeech) {
-      roverSpeech.innerText = `Woof! Menemukan dokumen & proyek terkait "${q}"!`;
-    }
+    const speechText = currentLang === 'id'
+      ? `Woof! Menemukan dokumen & proyek terkait "${roverInput.value}"!`
+      : `Woof! Found documents & projects related to "${roverInput.value}"!`;
+    if (roverSpeech) roverSpeech.innerText = speechText;
 
-    const items = roverResults.querySelectorAll('div.p-2\\.5');
-    items.forEach(item => {
-      const text = (item as HTMLElement).innerText.toLowerCase();
-      if (text.includes(q)) {
-        (item as HTMLElement).style.display = 'block';
-      } else {
-        (item as HTMLElement).style.display = 'none';
-      }
+    const results = roverIndex.filter(item => {
+      const hay = `${item.title} ${item.titleId || ''} ${item.desc} ${item.descId || ''} ${item.keywords}`.toLowerCase();
+      return hay.includes(q);
     });
+    renderRoverResults(results);
   }
 
   roverBtn?.addEventListener('click', runRoverSearch);
   roverInput?.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') runRoverSearch();
   });
+
+  // 9b. Notepad Sticky Notes (localStorage persistence)
+  const notepadTextarea = document.getElementById('notepad-textarea') as HTMLTextAreaElement;
+  const notepadStatus = document.getElementById('notepad-status-position');
+
+  function updateNotepadStatus() {
+    if (!notepadTextarea || !notepadStatus) return;
+    const text = notepadTextarea.value;
+    const lines = text.substr(0, notepadTextarea.selectionStart).split('\n');
+    const line = lines.length;
+    const col = lines[lines.length - 1].length + 1;
+    notepadStatus.innerText = `Ln ${line}, Col ${col}`;
+  }
+
+  function loadNotepadNotes() {
+    if (!notepadTextarea) return;
+    try {
+      const saved = localStorage.getItem('xp-notepad-notes');
+      if (saved !== null) {
+        notepadTextarea.value = saved;
+      }
+    } catch (e) {
+      console.warn('localStorage not available for notepad');
+    }
+    updateNotepadStatus();
+  }
+
+  notepadTextarea?.addEventListener('input', () => {
+    try {
+      localStorage.setItem('xp-notepad-notes', notepadTextarea.value);
+    } catch (e) {
+      // ignore storage errors
+    }
+    updateNotepadStatus();
+  });
+
+  notepadTextarea?.addEventListener('keyup', updateNotepadStatus);
+  notepadTextarea?.addEventListener('click', updateNotepadStatus);
+  loadNotepadNotes();
 
   // 10. SDLC Lens Tabs
   const sdlcSelect = document.getElementById('sdlc-feature-select') as HTMLSelectElement;
@@ -2745,7 +3428,66 @@ public function handlePush(Request $request)
 
   renderSdlc();
 
-  // 11. Command Prompt (cmd.exe)
+  // 10b. Run Dialog (Win+R style)
+  const runInput = document.getElementById('run-input') as HTMLInputElement;
+  const runOkBtn = document.getElementById('run-ok-btn');
+  const runCancelBtn = document.getElementById('run-cancel-btn');
+
+  function executeRunCommand(raw: string) {
+    const cmd = raw.trim().toLowerCase();
+    if (!cmd) return;
+    const runWin = document.getElementById('win-run');
+    if (runWin) closeWindow(runWin);
+
+    const runActions: Record<string, () => void> = {
+      resume: () => (window as any).openWindow('win-resume'),
+      projects: () => (window as any).openWindow('win-projects'),
+      gallery: () => (window as any).openWindow('win-gallery'),
+      cmd: () => (window as any).openWindow('win-cmd'),
+      media: () => (window as any).openWindow('win-media-player'),
+      sdlc: () => (window as any).openWindow('win-sdlc'),
+      contact: () => (window as any).openWindow('win-contact'),
+      notepad: () => (window as any).openWindow('win-notepad'),
+      search: () => (window as any).openWindow('win-search'),
+      welcome: () => (window as any).openWindow('win-welcome'),
+      docs: () => (window as any).openWindow('win-docs-folder'),
+      explorer: () => (window as any).openWindow('win-explorer'),
+      ie: () => (window as any).openWindow('win-ie-reader'),
+      shutdown: () => {
+        const modal = document.getElementById('xp-shutdown-modal');
+        if (modal) {
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+        }
+      }
+    };
+
+    if (runActions[cmd]) {
+      runActions[cmd]();
+    } else {
+      // Unknown command: shake the dialog and keep it open briefly
+      if (runWin) {
+        runWin.classList.add('xp-shake');
+        setTimeout(() => runWin?.classList.remove('xp-shake'), 300);
+      }
+    }
+  }
+
+  runOkBtn?.addEventListener('click', () => executeRunCommand(runInput?.value || ''));
+  runCancelBtn?.addEventListener('click', () => {
+    const runWin = document.getElementById('win-run');
+    if (runWin) closeWindow(runWin);
+  });
+  runInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') executeRunCommand(runInput.value);
+    if (e.key === 'Escape') {
+      const runWin = document.getElementById('win-run');
+      if (runWin) closeWindow(runWin);
+    }
+  });
+
+  // 11. Command Prompt
+ (cmd.exe)
   const cmdInput = document.getElementById('cmd-input') as HTMLInputElement;
   const cmdOutput = document.getElementById('cmd-output');
   const cmdScreen = document.getElementById('cmd-screen');
@@ -2769,6 +3511,13 @@ public function handlePush(Request $request)
           &bull; <span class="text-yellow-300">skills</span>   - Matriks keahlian SA, Dev &amp; QA<br/>
           &bull; <span class="text-yellow-300">contact</span>  - Email &amp; saluran komunikasi<br/>
           &bull; <span class="text-yellow-300">projects</span> - Daftar studi kasus portofolio<br/>
+          &bull; <span class="text-yellow-300">resume</span>   - Buka CV / Resume<br/>
+          &bull; <span class="text-yellow-300">gallery</span>  - Buka galeri sertifikat<br/>
+          &bull; <span class="text-yellow-300">media</span>    - Buka Windows Media Player<br/>
+          &bull; <span class="text-yellow-300">sdlc</span>     - Buka SDLC Lens<br/>
+          &bull; <span class="text-yellow-300">notepad</span>  - Buka Notepad<br/>
+          &bull; <span class="text-yellow-300">search</span>   - Buka Search Companion<br/>
+          &bull; <span class="text-yellow-300">shutdown</span> - Matikan komputer<br/>
           &bull; <span class="text-yellow-300">clear</span>    - Bersihkan layar terminal
         `;
       } else if (val === 'andhika') {
@@ -2792,6 +3541,34 @@ public function handlePush(Request $request)
         `;
       } else if (val === 'contact') {
         resp.innerHTML = `Email: andhikapp28@gmail.com | GitHub: andhikapp28`;
+      } else if (val === 'resume') {
+        (window as any).openWindow('win-resume');
+        resp.innerHTML = 'Membuka Resume.doc...';
+      } else if (val === 'projects') {
+        (window as any).openWindow('win-projects');
+        resp.innerHTML = 'Membuka daftar studi kasus...';
+      } else if (val === 'gallery') {
+        (window as any).openWindow('win-gallery');
+        resp.innerHTML = 'Membuka galeri sertifikat...';
+      } else if (val === 'media') {
+        (window as any).openWindow('win-media-player');
+        resp.innerHTML = 'Membuka Windows Media Player...';
+      } else if (val === 'sdlc') {
+        (window as any).openWindow('win-sdlc');
+        resp.innerHTML = 'Membuka SDLC_Lens.exe...';
+      } else if (val === 'notepad') {
+        (window as any).openWindow('win-notepad');
+        resp.innerHTML = 'Membuka Notepad...';
+      } else if (val === 'search') {
+        (window as any).openWindow('win-search');
+        resp.innerHTML = 'Membuka Search Companion...';
+      } else if (val === 'shutdown') {
+        const modal = document.getElementById('xp-shutdown-modal');
+        if (modal) {
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+        }
+        resp.innerHTML = 'Membuka dialog shutdown...';
       } else if (val === 'clear') {
         if (cmdOutput) cmdOutput.innerHTML = '';
         cmdInput.value = '';
@@ -2806,7 +3583,48 @@ public function handlePush(Request $request)
     }
   });
 
+  // 11b. Recycle Bin
+  const recycleItemsList = document.getElementById('recycle-items-list');
+  let recycleBinItems: Array<{ id: string; title: string; closedAt: string }> = [];
+
+  function addToRecycleBin(winId: string) {
+    const win = document.getElementById(winId);
+    if (!win) return;
+    const title = win.querySelector('.xp-titlebar span')?.textContent || winId;
+    // avoid duplicates at top
+    recycleBinItems = recycleBinItems.filter(i => i.id !== winId);
+    recycleBinItems.unshift({ id: winId, title, closedAt: new Date().toLocaleTimeString() });
+    if (recycleBinItems.length > 10) recycleBinItems = recycleBinItems.slice(0, 10);
+    renderRecycleBin();
+  }
+
+  function renderRecycleBin() {
+    if (!recycleItemsList) return;
+    if (recycleBinItems.length === 0) {
+      recycleItemsList.innerHTML = `<div class="p-3 text-[11px] text-slate-500 italic i18n" data-en="The Recycle Bin is empty." data-id="Tempat Sampah kosong.">Tempat Sampah kosong.</div>`;
+      return;
+    }
+    recycleItemsList.innerHTML = recycleBinItems.map((item, idx) => `
+      <div class="p-2 rounded border border-slate-200 bg-slate-50 flex items-center justify-between gap-2 group hover:border-blue-300">
+        <div class="flex items-center gap-2 min-w-0">
+          <svg class="w-4 h-4 text-slate-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+          <div class="truncate text-xs text-slate-800 font-semibold">${item.title}</div>
+          <div class="text-[10px] text-slate-500 shrink-0">${item.closedAt}</div>
+        </div>
+        <button
+          class="px-2 py-0.5 rounded bg-[#ece9d8] border border-[#7f9db9] text-[10px] font-bold hover:bg-white cursor-pointer shrink-0 i18n"
+          data-en="Restore"
+          data-id="Pulihkan"
+          onclick="window.openWindow('${item.id}')"
+        >Pulihkan</button>
+      </div>
+    `).join('');
+  }
+
+  renderRecycleBin();
+
   // 12. Shutdown Dialog
+
   const openShutdownBtn = document.getElementById('xp-open-shutdown-btn');
   const shutdownModal = document.getElementById('xp-shutdown-modal');
   const modalTurnOff = document.getElementById('modal-btn-turn-off');
