@@ -1,28 +1,27 @@
 ---
 title: "Sistem Informasi IT & GitHub Push Audit Tracker — Perum DAMRI"
-description: "Platform internal divisi IT Perum DAMRI untuk mengaudit histori commit/push GitHub ke server production, manajemen task kanban developer, dan sistem tiket gangguan ber-SLA lintas unit."
+description: "Platform internal divisi IT Perum DAMRI untuk mengaudit histori commit/push GitHub ke server production, pelacakan status deployment, dan manajemen proyek kanban developer."
 client: "Divisi Teknologi Informasi — Perum DAMRI"
 role: "Lead Developer & System Analyst"
 period: "2024 - 2026"
 category: "DevOps & Internal Tooling"
 featured: true
-tags: ["Laravel 12", "GitHub API", "MySQL/Postgres", "Kanban", "SLA Engine", "SSO Auth", "Audit Trail"]
+tags: ["Laravel 12", "GitHub API", "PostgreSQL", "Kanban Board", "SSO Auth", "Audit Trail", "Deployment Tracking"]
 metrics:
   - label: "Visibilitas Deploy Prod"
     value: "100% Tercatat"
-  - label: "Resolusi Tiket Sesuai SLA"
-    value: "94.8%"
-  - label: "Audit Diff Code"
+  - label: "Pelacakan Diff File"
     value: "Real-time"
+  - label: "Efisiensi Rilis Fitur"
+    value: "2.5x Lebih Cepat"
 ---
 
 ## Ringkasan Eksekutif
-Sebelum adanya sistem ini, tim IT DAMRI mengalami kendala dalam melacak apakah kode yang sudah di-commit oleh berbagai developer vendor/in-house sudah benar-benar di-pull ke server production, file apa saja yang mengalami perubahan, serta bagaimana progress pengerjaan backlog fitur.
+Sebelum adanya sistem ini, tim IT DAMRI mengalami kendala dalam melacak apakah kode yang sudah di-commit oleh berbagai developer vendor maupun in-house sudah benar-benar di-pull ke server production, file apa saja yang mengalami perubahan, serta bagaimana progress pengerjaan backlog fitur.
 
-Aplikasi ini dibangun untuk menyatukan 3 fungsi krusial:
-1. **Catatan Push GitHub (`push-notes`)**: Melacak commit, status pull ke production, dan diff file via integrasi GitHub API.
-2. **Manajemen Proyek (`projects`)**: Kanban board, timeline, milestone, dan go-live checklist.
-3. **Sistem Tiket Lintas Unit**: Menangani insiden & request layanan dengan perhitungan waktu SLA otomatis dan eskalasi.
+Aplikasi **Push Request** dibangun untuk menyatukan 2 fungsi krusial:
+1. **Catatan Push GitHub (`push-notes`)**: Melacak commit, status pull ke production, dan diff file via integrasi langsung dengan GitHub API.
+2. **Manajemen Proyek (`projects`)**: Pengelolaan task kanban board, timeline, milestone, go-live checklist, dan portofolio beban kerja tim IT.
 
 ## Arsitektur & Spesifikasi Teknis
 
@@ -31,14 +30,14 @@ Aplikasi ini dibangun untuk menyatukan 3 fungsi krusial:
 - Mengekstrak author, commit hash, file list, dan memvalidasi apakah branch target adalah `main`/`release`.
 - Menyediakan antarmuka audit visual bagi System Analyst dan Tech Lead sebelum proses deployment dieksekusi.
 
-### 2. SLA Engine & Matriks Eskalasi Tiket
-- Algoritma penghitungan target SLA berbasis jam kerja operasional kantor pusat DAMRI (mengecualikan akhir pekan & hari libur nasional).
-- Trigger notifikasi otomatis ketika tiket mendekati 80% dari batas waktu penyelesaian.
+### 2. Pelacakan Status Pull ke Server Production
+- Mencegah insiden *untracked deployment* atau desinkronisasi antara repository GitHub dan server live.
+- Setiap rilis memiliki checklist verifikasi formal (go-live checklist) sebelum status ditandai `Deployed`.
 
-### 3. Role-Based Access Control (RBAC) Terintegrasi
+### 3. Role-Based Access Control (RBAC) & Integrasi SSO DAMRI
 - Berbasis Spatie Laravel Permission yang dikombinasikan dengan database SSO DAMRI.
-- Menu sidebar dinamis yang dapat disesuaikan per level pengguna (Developer, Analyst, Manajer IT, dan User Cabang).
+- Menu sidebar dinamis yang dapat disesuaikan per level pengguna (Developer, Analyst, dan Manajer IT).
 
 ## Dampak & Efisiensi Operasional
-- **100% Pelacakan Deployment:** Mencegah insiden *untracked deployment* di server production.
-- **Transparansi SLA:** Peningkatan akuntabilitas penanganan gangguan sistem operasional bus dan loket DAMRI.
+- **100% Pelacakan Deployment:** Mencegah insiden file tertinggal saat rilis ke production.
+- **Transparansi Proyek:** Memperjelas timeline pengerjaan antar developer internal dan eksternal.
