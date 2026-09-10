@@ -16,6 +16,11 @@ import {
   Power, 
   Volume2, 
   VolumeX, 
+  Play, 
+  Pause, 
+  SkipForward, 
+  SkipBack, 
+  Search, 
   ExternalLink,
   Copy,
   Check,
@@ -24,13 +29,15 @@ import {
   ArrowRight,
   RotateCw,
   Home,
-  FileSpreadsheet,
-  CheckCircle2
+  HardDrive,
+  Laptop,
+  CheckCircle2,
+  HelpCircle,
+  Sparkles
 } from '@lucide/astro';
 
 const allProjects = await getCollection('projects');
 
-// Render markdown content for each project to embed in IE6 reader
 const renderedProjects = await Promise.all(
   allProjects.map(async (p) => {
     const { Content } = await render(p);
@@ -48,67 +55,78 @@ const renderedProjects = await Promise.all(
   class="fixed inset-0 z-30 w-screen h-screen hidden flex-col select-none overflow-hidden font-sans"
   style="background-image: url('/images/bliss.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;"
 >
-  <!-- Desktop Workspace Area (Occupies full height minus taskbar) -->
+  <!-- Desktop Workspace Area -->
   <div id="xp-desktop-space" class="relative flex-1 w-full h-[calc(100vh-30px)] overflow-hidden">
 
     <!-- Desktop Icons Grid (Left column) -->
-    <div class="relative z-10 p-4 grid grid-flow-col grid-rows-6 gap-y-3.5 gap-x-6 w-max pointer-events-auto">
+    <div class="relative z-10 p-3 grid grid-flow-col grid-rows-7 gap-y-2.5 gap-x-5 w-max pointer-events-auto">
+      
       <!-- Icon 1: Welcome_SA.doc -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1.5 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-welcome">
-        <div class="w-11 h-11 mb-1 rounded flex items-center justify-center bg-white/95 border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
-          <FileText class="w-7 h-7 text-blue-600" />
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-welcome">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-white/95 border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
+          <FileText class="w-6 h-6 text-blue-600" />
         </div>
-        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_1px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
           Welcome_SA.doc
         </span>
       </div>
 
-      <!-- Icon 2: C:\Case_Studies -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1.5 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-projects">
-        <div class="w-11 h-11 mb-1 rounded flex items-center justify-center bg-amber-100 border border-amber-300 shadow-md group-hover:scale-105 transition-transform">
-          <Folder class="w-7 h-7 text-amber-500 fill-amber-400" />
+      <!-- Icon 2: My Computer (File Explorer) -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-explorer">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-slate-100 border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
+          <Laptop class="w-6 h-6 text-blue-700" />
         </div>
-        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_1px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
-          Case_Studies
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="My Computer" data-id="Komputer Saya">
+          My Computer
         </span>
       </div>
 
-      <!-- Icon 3: SDLC_Lens.exe -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1.5 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-sdlc">
-        <div class="w-11 h-11 mb-1 rounded flex items-center justify-center bg-slate-900 border border-cyan-400 shadow-md group-hover:scale-105 transition-transform">
-          <Layers class="w-6 h-6 text-cyan-400" />
+      <!-- Icon 3: Case Studies (IE6) -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-projects">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-amber-100 border border-amber-300 shadow-md group-hover:scale-105 transition-transform">
+          <Folder class="w-6 h-6 text-amber-500 fill-amber-400" />
         </div>
-        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_1px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Case Studies" data-id="Studi Kasus DAMRI">
+          Case Studies
+        </span>
+      </div>
+
+      <!-- Icon 4: SDLC_Lens.exe -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-sdlc">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-slate-900 border border-cyan-400 shadow-md group-hover:scale-105 transition-transform">
+          <Layers class="w-5 h-5 text-cyan-400" />
+        </div>
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
           SDLC_Lens.exe
         </span>
       </div>
 
-      <!-- Icon 4: System_Flow.exe -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1.5 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-flow">
-        <div class="w-11 h-11 mb-1 rounded flex items-center justify-center bg-indigo-950 border border-indigo-400 shadow-md group-hover:scale-105 transition-transform">
-          <Network class="w-6 h-6 text-indigo-300" />
+      <!-- Icon 5: Windows Media Player -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-media-player">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-gradient-to-br from-orange-500 to-amber-600 border border-amber-300 shadow-md group-hover:scale-105 transition-transform">
+          <Play class="w-5 h-5 text-white fill-white ml-0.5" />
         </div>
-        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_1px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
-          System_Flow.exe
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
+          Media Player
         </span>
       </div>
 
-      <!-- Icon 5: cmd.exe -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1.5 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-cmd">
-        <div class="w-11 h-11 mb-1 rounded flex items-center justify-center bg-black border border-slate-600 shadow-md group-hover:scale-105 transition-transform">
-          <Terminal class="w-6 h-6 text-emerald-400" />
+      <!-- Icon 6: Search Companion (Rover the Dog) -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-search">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-yellow-400 border border-yellow-500 shadow-md group-hover:scale-105 transition-transform">
+          <Search class="w-5 h-5 text-slate-900" />
         </div>
-        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_1px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
-          cmd.exe
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Search (Rover)" data-id="Pencarian (Rover)">
+          Search (Rover)
         </span>
       </div>
 
-      <!-- Icon 6: Outlook Express -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1.5 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-contact">
-        <div class="w-11 h-11 mb-1 rounded flex items-center justify-center bg-sky-100 border border-sky-400 shadow-md group-hover:scale-105 transition-transform">
-          <Mail class="w-6 h-6 text-sky-600" />
+      <!-- Icon 7: Outlook Express (Contact) -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-contact">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-sky-100 border border-sky-400 shadow-md group-hover:scale-105 transition-transform">
+          <Mail class="w-5 h-5 text-sky-600" />
         </div>
-        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_1px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
           Outlook_Express
         </span>
       </div>
@@ -119,7 +137,7 @@ const renderedProjects = await Promise.all(
     <!-- WINDOW 1: Welcome_SA.doc (WordPad) -->
     <div
       id="win-welcome"
-      class="xp-window absolute top-8 left-28 w-[92vw] sm:w-[560px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-20 flex flex-col overflow-hidden"
+      class="xp-window absolute top-6 left-28 w-[92vw] sm:w-[560px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-20 flex flex-col overflow-hidden"
       style="display: flex;"
     >
       <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
@@ -143,52 +161,55 @@ const renderedProjects = await Promise.all(
         <span class="hover:underline cursor-pointer">Help</span>
       </div>
 
-      <div class="p-5 bg-white overflow-y-auto max-h-[64vh] text-slate-800 leading-relaxed font-sans text-xs">
+      <div class="p-5 bg-white overflow-y-auto max-h-[64vh] text-slate-900 leading-relaxed font-sans text-xs">
         <div class="border-b-2 border-blue-600 pb-3 mb-3">
-          <div class="text-[10px] font-mono uppercase tracking-widest text-blue-700 font-bold">
+          <div class="text-[10.5px] font-mono uppercase tracking-widest text-blue-700 font-bold i18n" data-en="EXECUTIVE ARCHITECTURE BRIEF" data-id="RINGKASAN EKSEKUTIF ARSITEKTUR">
             EXECUTIVE ARCHITECTURE BRIEF
           </div>
-          <h2 class="text-lg sm:text-xl font-black text-slate-900 mt-1 leading-tight">
+          <h2 class="text-lg sm:text-xl font-black text-slate-900 mt-1 leading-tight i18n" data-en="System Analyst • Dev Feasibility • QA Rigor" data-id="System Analyst &bull; Feasibility Dev &bull; Standar QA">
             System Analyst &bull; Dev Feasibility &bull; QA Rigor
           </h2>
-          <div class="text-[11px] text-slate-500 mt-0.5">
-            Bridging Business Requirements, Engineering Execution &amp; Defect Prevention
+          <div class="text-[11px] text-slate-600 mt-0.5 i18n" data-en="Perum DAMRI • Enterprise Systems • BRD & Kamus Data" data-id="Perum DAMRI &bull; Sistem Enterprise &bull; BRD & Kamus Data">
+            Perum DAMRI &bull; Enterprise Systems &bull; BRD &amp; Kamus Data
           </div>
         </div>
 
-        <p class="text-slate-700 mb-3.5">
-          Welcome to my workspace. Unlike theoretical analysts, my system designs are grounded in <strong>direct engineering feasibility</strong> (API idempotency, database indexing, latency budgets) and validated through <strong>defensive QA test suites</strong> (Gherkin BDD, boundary assertions, failure fallbacks).
+        <p class="text-slate-800 mb-3.5 leading-normal i18n" 
+          data-en="I am a System Analyst with hands-on coding and QA testing foundations at Perum DAMRI. I build production-grade architectures including the PUMK (Program Usaha Mikro Kecil) enterprise platform and the internal IT GitHub push audit tracking system."
+          data-id="Saya adalah System Analyst dengan fondasi hands-on coding dan QA testing di Perum DAMRI. Berpengalaman merancang arsitektur sistem skala enterprise seperti platform PUMK (Program Usaha Mikro Kecil) dan sistem audit push commit GitHub internal divisi IT DAMRI."
+        >
+          I am a System Analyst with hands-on coding and QA testing foundations at Perum DAMRI. I build production-grade architectures including the PUMK (Program Usaha Mikro Kecil) enterprise platform and the internal IT GitHub push audit tracking system.
         </p>
 
-        <!-- 3-Pillar Capability Matrix Preview -->
+        <!-- 3 Pillars Matrix -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 my-3.5">
-          <div class="p-2.5 rounded border border-blue-200 bg-blue-50/70">
+          <div class="p-2.5 rounded border border-blue-200 bg-blue-50/80">
             <div class="font-bold text-[11px] text-blue-900 mb-1 flex items-center gap-1.5">
               <Workflow class="w-3.5 h-3.5 text-blue-600" />
               <span>1. Analysis (Core)</span>
             </div>
-            <p class="text-[10.5px] text-slate-600 leading-tight">
-              BRD/SRS, BPMN 2.0 swimlanes, 3NF ERD modeling, and OpenAPI 3.1.
+            <p class="text-[10.5px] text-slate-700 leading-tight">
+              BRD/SRS, BPMN 2.0, Kamus Data, skema database relasional &amp; integrasi SSO.
             </p>
           </div>
 
-          <div class="p-2.5 rounded border border-indigo-200 bg-indigo-50/70">
+          <div class="p-2.5 rounded border border-indigo-200 bg-indigo-50/80">
             <div class="font-bold text-[11px] text-indigo-900 mb-1 flex items-center gap-1.5">
               <Code2 class="w-3.5 h-3.5 text-indigo-600" />
               <span>2. Dev Feasibility</span>
             </div>
-            <p class="text-[10.5px] text-slate-600 leading-tight">
-              SQL optimization, distributed locking (Redis Redlock), REST APIs.
+            <p class="text-[10.5px] text-slate-700 leading-tight">
+              Laravel 12, PostgreSQL lockForUpdate, GitHub API webhooks, REST contracts.
             </p>
           </div>
 
-          <div class="p-2.5 rounded border border-emerald-200 bg-emerald-50/70">
+          <div class="p-2.5 rounded border border-emerald-200 bg-emerald-50/80">
             <div class="font-bold text-[11px] text-emerald-900 mb-1 flex items-center gap-1.5">
               <ShieldCheck class="w-3.5 h-3.5 text-emerald-600" />
               <span>3. QA Rigor</span>
             </div>
-            <p class="text-[10.5px] text-slate-600 leading-tight">
-              BDD Given/When/Then, Postman automated tests &amp; edge cases.
+            <p class="text-[10.5px] text-slate-700 leading-tight">
+              Validasi NIK 16 digit, skenario uji anti race-condition &amp; boundary test matrix.
             </p>
           </div>
         </div>
@@ -199,32 +220,32 @@ const renderedProjects = await Promise.all(
               class="px-3 py-1 rounded text-xs font-semibold bg-[#ece9d8] border border-[#7f9db9] shadow-sm hover:bg-[#f7f5ec] active:bg-[#e0dccb] cursor-pointer"
               onclick="document.querySelector('[data-open=\'win-projects\']').click()"
             >
-              Open Case Studies &rarr;
+              Lihat Proyek DAMRI &rarr;
             </button>
             <button
               class="px-3 py-1 rounded text-xs font-semibold bg-[#ece9d8] border border-[#7f9db9] shadow-sm hover:bg-[#f7f5ec] active:bg-[#e0dccb] cursor-pointer"
-              onclick="document.querySelector('[data-open=\'win-sdlc\']').click()"
+              onclick="document.querySelector('[data-open=\'win-explorer\']').click()"
             >
-              Launch SDLC Switcher
+              Buka File Explorer
             </button>
           </div>
 
           <span class="text-[10.5px] font-mono text-emerald-700 font-bold">
-            &bull; Available for Roles
+            &bull; Perum DAMRI &bull; Open for Roles
           </span>
         </div>
       </div>
     </div>
 
-    <!-- WINDOW 2: Case Studies (Windows Explorer) -->
+    <!-- WINDOW 2: File Explorer (E:\KERJA\DAMRI) -->
     <div
-      id="win-projects"
-      class="xp-window absolute top-14 left-44 w-[92vw] sm:w-[640px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
+      id="win-explorer"
+      class="xp-window absolute top-10 left-36 w-[94vw] sm:w-[680px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
       <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.7)] truncate">
-          <Folder class="w-3.5 h-3.5 text-amber-300 fill-amber-300 shrink-0" />
-          <span>C:\System_Projects\ - Windows Explorer</span>
+          <Laptop class="w-3.5 h-3.5 text-blue-200 shrink-0" />
+          <span id="explorer-title">E:\KERJA\DAMRI - Windows Explorer</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
           <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
@@ -236,21 +257,147 @@ const renderedProjects = await Promise.all(
       <!-- Address Bar -->
       <div class="h-7 px-2 flex items-center gap-2 text-xs bg-[#ece9d8] border-b border-[#d8d4c2]">
         <span class="text-slate-600 font-medium">Address:</span>
-        <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-xs font-mono text-slate-800 flex items-center">
-          C:\System_Projects\Case_Studies\
+        <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-xs font-mono text-slate-800 flex items-center truncate" id="explorer-path">
+          E:\KERJA\DAMRI\KODING\
         </div>
       </div>
 
-      <!-- Explorer Content Table -->
+      <!-- Explorer Two-Pane Layout -->
+      <div class="flex flex-1 overflow-hidden bg-white max-h-[60vh] text-xs">
+        <!-- Left Folders Tree -->
+        <div class="w-48 border-r border-[#d8d4c2] bg-[#f9f9f8] p-2 overflow-y-auto space-y-1">
+          <div class="font-bold text-slate-800 flex items-center gap-1.5 py-0.5">
+            <HardDrive class="w-3.5 h-3.5 text-blue-600" />
+            <span>Data Disk (E:)</span>
+          </div>
+          <div class="pl-4 space-y-1">
+            <div class="font-semibold text-blue-900 flex items-center gap-1 py-0.5 bg-blue-100/70 px-1 rounded cursor-pointer">
+              <Folder class="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
+              <span>KERJA</span>
+            </div>
+            <div class="pl-3 space-y-0.5">
+              <div class="text-slate-800 flex items-center gap-1 py-0.5 px-1 font-bold">
+                <Folder class="w-3.5 h-3.5 text-amber-500 fill-amber-400" />
+                <span>DAMRI</span>
+              </div>
+              <div class="pl-3 space-y-0.5 text-slate-600">
+                <div class="hover:bg-blue-50 px-1 rounded cursor-pointer flex items-center gap-1 py-0.5 text-blue-900 font-semibold" data-explore="koding">
+                  <Folder class="w-3 h-3 text-amber-500 fill-amber-400" />
+                  <span>KODING</span>
+                </div>
+                <div class="hover:bg-blue-50 px-1 rounded cursor-pointer flex items-center gap-1 py-0.5" data-explore="dokumentasi">
+                  <Folder class="w-3 h-3 text-amber-500 fill-amber-400" />
+                  <span>DOKUMENTASI</span>
+                </div>
+                <div class="hover:bg-blue-50 px-1 rounded cursor-pointer flex items-center gap-1 py-0.5" data-explore="kpi">
+                  <Folder class="w-3 h-3 text-amber-500 fill-amber-400" />
+                  <span>KPI</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Files & Folders Grid -->
+        <div class="flex-1 p-3 overflow-y-auto" id="explorer-files-container">
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <!-- Folder new_pumk -->
+            <div 
+              class="flex items-center gap-2 p-2 rounded border border-transparent hover:border-blue-300 hover:bg-blue-50 cursor-pointer group"
+              onclick="document.querySelector('[data-project-id=\'damri-pumk-system\']')?.click()"
+            >
+              <Folder class="w-8 h-8 text-amber-500 fill-amber-400 shrink-0" />
+              <div class="truncate">
+                <div class="font-bold text-slate-900 group-hover:underline truncate">new_pumk</div>
+                <div class="text-[10px] text-slate-500">Aplikasi PUMK DAMRI</div>
+              </div>
+            </div>
+
+            <!-- Folder push_request -->
+            <div 
+              class="flex items-center gap-2 p-2 rounded border border-transparent hover:border-blue-300 hover:bg-blue-50 cursor-pointer group"
+              onclick="document.querySelector('[data-project-id=\'damri-push-request-tracker\']')?.click()"
+            >
+              <Folder class="w-8 h-8 text-amber-500 fill-amber-400 shrink-0" />
+              <div class="truncate">
+                <div class="font-bold text-slate-900 group-hover:underline truncate">push_request</div>
+                <div class="text-[10px] text-slate-500">Audit Push &amp; Proyek IT</div>
+              </div>
+            </div>
+
+            <!-- Folder etiketingbaru -->
+            <div 
+              class="flex items-center gap-2 p-2 rounded border border-transparent hover:border-blue-300 hover:bg-blue-50 cursor-pointer group"
+              onclick="document.querySelector('[data-project-id=\'damri-etiketing-fleet\']')?.click()"
+            >
+              <Folder class="w-8 h-8 text-amber-500 fill-amber-400 shrink-0" />
+              <div class="truncate">
+                <div class="font-bold text-slate-900 group-hover:underline truncate">etiketingbaru</div>
+                <div class="text-[10px] text-slate-500">Tiket Loket &amp; Armada</div>
+              </div>
+            </div>
+
+            <!-- File kamus-data.md -->
+            <div 
+              class="flex items-center gap-2 p-2 rounded border border-transparent hover:border-blue-300 hover:bg-blue-50 cursor-pointer group"
+              onclick="document.querySelector('[data-project-id=\'damri-pumk-system\']')?.click()"
+            >
+              <FileText class="w-8 h-8 text-blue-600 shrink-0" />
+              <div class="truncate">
+                <div class="font-bold text-slate-900 group-hover:underline truncate">kamus-data.md</div>
+                <div class="text-[10px] text-slate-500">32 KB &bull; Data Dictionary</div>
+              </div>
+            </div>
+
+            <!-- File README.md (push_request) -->
+            <div 
+              class="flex items-center gap-2 p-2 rounded border border-transparent hover:border-blue-300 hover:bg-blue-50 cursor-pointer group"
+              onclick="document.querySelector('[data-project-id=\'damri-push-request-tracker\']')?.click()"
+            >
+              <FileText class="w-8 h-8 text-blue-600 shrink-0" />
+              <div class="truncate">
+                <div class="font-bold text-slate-900 group-hover:underline truncate">README.md</div>
+                <div class="text-[10px] text-slate-500">26 KB &bull; Arsitektur IT DAMRI</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WINDOW 3: Case Studies List -->
+    <div
+      id="win-projects"
+      class="xp-window absolute top-14 left-44 w-[92vw] sm:w-[640px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
+    >
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.7)] truncate">
+          <Folder class="w-3.5 h-3.5 text-amber-300 fill-amber-300 shrink-0" />
+          <span>E:\KERJA\DAMRI\ - Daftar Proyek &amp; Studi Kasus</span>
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+        </div>
+      </div>
+
+      <div class="h-7 px-2 flex items-center gap-2 text-xs bg-[#ece9d8] border-b border-[#d8d4c2]">
+        <span class="text-slate-600 font-medium">Address:</span>
+        <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-xs font-mono text-slate-800 flex items-center">
+          E:\KERJA\DAMRI\KODING\
+        </div>
+      </div>
+
       <div class="bg-white overflow-y-auto max-h-[62vh] p-2">
         <table class="w-full text-left text-xs border-collapse font-sans">
           <thead>
-            <tr class="border-b border-slate-200 text-slate-500 bg-[#f7f7f7]">
-              <th class="py-1.5 px-2 font-semibold">Name</th>
-              <th class="py-1.5 px-2 font-semibold">Domain</th>
-              <th class="py-1.5 px-2 font-semibold">Role</th>
-              <th class="py-1.5 px-2 font-semibold">Key Metric</th>
-              <th class="py-1.5 px-2 font-semibold text-right">Action</th>
+            <tr class="border-b border-slate-200 text-slate-600 bg-[#f7f7f7]">
+              <th class="py-1.5 px-2 font-bold">Project Name</th>
+              <th class="py-1.5 px-2 font-bold">Domain</th>
+              <th class="py-1.5 px-2 font-bold">Role</th>
+              <th class="py-1.5 px-2 font-bold">Key Metric</th>
+              <th class="py-1.5 px-2 font-bold text-right">Action</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100">
@@ -263,9 +410,9 @@ const renderedProjects = await Promise.all(
                   <FileText class="w-4 h-4 text-blue-600 shrink-0" />
                   <span class="group-hover:underline">{project.data.title}</span>
                 </td>
-                <td class="py-2.5 px-2 text-slate-600">{project.data.category}</td>
-                <td class="py-2.5 px-2 text-slate-600">{project.data.role}</td>
-                <td class="py-2.5 px-2 font-mono text-emerald-700 font-bold">
+                <td class="py-2.5 px-2 text-slate-700">{project.data.category}</td>
+                <td class="py-2.5 px-2 text-slate-700">{project.data.role}</td>
+                <td class="py-2.5 px-2 font-mono text-emerald-800 font-bold">
                   {project.data.metrics[0]?.value}
                 </td>
                 <td class="py-2.5 px-2 text-right">
@@ -283,12 +430,11 @@ const renderedProjects = await Promise.all(
       </div>
     </div>
 
-    <!-- WINDOW 3: Internet Explorer 6 (The Full Case Study Reader!) -->
+    <!-- WINDOW 4: Internet Explorer 6 (High-Contrast Full Case Study Reader!) -->
     <div
       id="win-ie-reader"
-      class="xp-window absolute top-10 left-32 w-[94vw] sm:w-[720px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-20 flex flex-col overflow-hidden hidden"
+      class="xp-window absolute top-8 left-28 w-[95vw] sm:w-[760px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-20 flex flex-col overflow-hidden hidden"
     >
-      <!-- Titlebar -->
       <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.7)] truncate">
           <Globe class="w-3.5 h-3.5 text-blue-200 shrink-0" />
@@ -301,41 +447,27 @@ const renderedProjects = await Promise.all(
         </div>
       </div>
 
-      <!-- IE6 Menu Bar -->
-      <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700">
-        <span class="hover:underline cursor-pointer">File</span>
-        <span class="hover:underline cursor-pointer">Edit</span>
-        <span class="hover:underline cursor-pointer">View</span>
-        <span class="hover:underline cursor-pointer">Favorites</span>
-        <span class="hover:underline cursor-pointer">Tools</span>
-        <span class="hover:underline cursor-pointer">Help</span>
-      </div>
-
-      <!-- IE6 Toolbar Icons -->
-      <div class="h-9 px-2 flex items-center gap-2 bg-[#ece9d8] border-b border-[#d8d4c2] text-xs">
-        <button class="px-2 py-1 rounded hover:bg-white flex items-center gap-1 text-slate-700 cursor-pointer" onclick="document.getElementById('win-projects').style.display='flex';">
+      <!-- IE6 Toolbar -->
+      <div class="h-8 px-2 flex items-center gap-2 bg-[#ece9d8] border-b border-[#d8d4c2] text-xs">
+        <button class="px-2 py-0.5 rounded hover:bg-white flex items-center gap-1 text-slate-700 cursor-pointer" onclick="document.getElementById('win-projects').style.display='flex';">
           <ArrowLeft class="w-3.5 h-3.5 text-blue-600" />
           <span>Back</span>
         </button>
-        <button class="px-2 py-1 rounded hover:bg-white flex items-center gap-1 text-slate-700 cursor-pointer">
-          <ArrowRight class="w-3.5 h-3.5 text-slate-400" />
-          <span>Forward</span>
-        </button>
-        <button class="px-2 py-1 rounded hover:bg-white flex items-center gap-1 text-slate-700 cursor-pointer">
+        <button class="px-2 py-0.5 rounded hover:bg-white flex items-center gap-1 text-slate-700 cursor-pointer">
           <RotateCw class="w-3.5 h-3.5 text-emerald-600" />
           <span>Refresh</span>
         </button>
-        <div class="h-5 w-[1px] bg-slate-400 mx-1"></div>
-        <div class="flex items-center gap-1.5 flex-1">
-          <span class="text-[11px] text-slate-600 font-semibold">Address:</span>
-          <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-xs font-mono text-slate-800 truncate" id="ie-address-bar">
-            http://internal.analyst.corp/specs/
+        <div class="h-4 w-[1px] bg-slate-400 mx-1"></div>
+        <div class="flex items-center gap-1.5 flex-1 min-w-0">
+          <span class="text-[11px] text-slate-600 font-semibold shrink-0">Address:</span>
+          <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-xs font-mono text-slate-900 truncate" id="ie-address-bar">
+            http://internal.damri.co.id/specs/
           </div>
         </div>
       </div>
 
-      <!-- IE6 Browser Page Content (Full Markdown Case Study Document) -->
-      <div class="p-6 bg-white overflow-y-auto max-h-[62vh] text-slate-800 font-sans text-xs">
+      <!-- IE6 Document Content (High Contrast, Ultra Readable) -->
+      <div class="p-6 bg-white overflow-y-auto max-h-[64vh] text-slate-900 font-sans text-xs sm:text-sm leading-relaxed">
         {renderedProjects.map((p) => {
           const ContentComponent = p.Content;
           return (
@@ -343,16 +475,16 @@ const renderedProjects = await Promise.all(
               <!-- Header Section -->
               <div class="border-b-2 border-blue-600 pb-4">
                 <div class="flex items-center gap-2 mb-2">
-                  <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold text-[10px]">
+                  <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-900 font-bold text-[10px]">
                     {p.data.category}
                   </span>
                   <span class="text-slate-400">&bull;</span>
-                  <span class="text-slate-500 font-mono text-[10px]">{p.data.period}</span>
+                  <span class="text-slate-600 font-mono text-[10px]">{p.data.period}</span>
                 </div>
-                <h1 class="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
+                <h1 class="text-xl sm:text-2xl font-black text-slate-950 leading-tight">
                   {p.data.title}
                 </h1>
-                <p class="text-slate-600 text-xs mt-2 leading-relaxed">
+                <p class="text-slate-800 text-xs mt-2 leading-relaxed">
                   {p.data.description}
                 </p>
                 <div class="grid grid-cols-2 gap-3 mt-3 p-2.5 rounded bg-[#f5f8ff] border border-blue-200 text-[11px]">
@@ -365,14 +497,14 @@ const renderedProjects = await Promise.all(
               <div class="grid grid-cols-3 gap-2.5 p-3 rounded-lg bg-[#eaf2fd] border border-blue-300 text-center">
                 {p.data.metrics.map(m => (
                   <div>
-                    <div class="text-sm sm:text-base font-mono font-black text-blue-800">{m.value}</div>
-                    <div class="text-[10px] text-slate-600 mt-0.5 truncate">{m.label}</div>
+                    <div class="text-sm sm:text-base font-mono font-black text-blue-900">{m.value}</div>
+                    <div class="text-[10px] text-slate-700 mt-0.5 truncate font-medium">{m.label}</div>
                   </div>
                 ))}
               </div>
 
               <!-- Markdown Body -->
-              <div class="markdown-spec text-slate-800 pt-2">
+              <div class="markdown-spec text-slate-900 pt-2">
                 <ContentComponent />
               </div>
             </div>
@@ -381,15 +513,170 @@ const renderedProjects = await Promise.all(
       </div>
     </div>
 
-    <!-- WINDOW 4: SDLC_Lens.exe -->
+    <!-- WINDOW 5: Windows Media Player 9/10 -->
+    <div
+      id="win-media-player"
+      class="xp-window absolute top-12 left-48 w-[92vw] sm:w-[480px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#1a2b4c] text-white z-10 flex flex-col overflow-hidden hidden"
+    >
+      <!-- Titlebar -->
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+          <Play class="w-3.5 h-3.5 text-orange-400 fill-orange-400 shrink-0" />
+          <span>Windows Media Player</span>
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+        </div>
+      </div>
+
+      <!-- Player Body -->
+      <div class="p-4 bg-gradient-to-b from-[#142340] to-[#0a1322] flex flex-col items-center">
+        <!-- Visualizer Area -->
+        <div class="w-full h-36 rounded-lg bg-black border border-blue-500/40 relative overflow-hidden flex items-end justify-center gap-1.5 p-3 mb-4 shadow-inner">
+          <div id="wmp-bars" class="flex items-end justify-center gap-1.5 w-full h-full">
+            <div class="w-2 bg-gradient-to-t from-blue-500 via-cyan-400 to-emerald-400 h-6 rounded-t transition-all duration-150"></div>
+            <div class="w-2 bg-gradient-to-t from-blue-500 via-cyan-400 to-emerald-400 h-16 rounded-t transition-all duration-150"></div>
+            <div class="w-2 bg-gradient-to-t from-blue-500 via-cyan-400 to-emerald-400 h-24 rounded-t transition-all duration-150"></div>
+            <div class="w-2 bg-gradient-to-t from-blue-500 via-cyan-400 to-emerald-400 h-12 rounded-t transition-all duration-150"></div>
+            <div class="w-2 bg-gradient-to-t from-blue-500 via-cyan-400 to-emerald-400 h-20 rounded-t transition-all duration-150"></div>
+            <div class="w-2 bg-gradient-to-t from-blue-500 via-cyan-400 to-emerald-400 h-8 rounded-t transition-all duration-150"></div>
+            <div class="w-2 bg-gradient-to-t from-blue-500 via-cyan-400 to-emerald-400 h-18 rounded-t transition-all duration-150"></div>
+            <div class="w-2 bg-gradient-to-t from-blue-500 via-cyan-400 to-emerald-400 h-10 rounded-t transition-all duration-150"></div>
+          </div>
+          <div class="absolute top-2 left-3 text-[10px] font-mono text-cyan-300">
+            NOW PLAYING: Windows XP Startup Chime
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center justify-center gap-4 mb-2">
+          <button class="p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-white cursor-pointer" id="wmp-prev">
+            <SkipBack class="w-4 h-4" />
+          </button>
+          <button class="p-3 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 hover:brightness-110 text-white shadow-lg cursor-pointer" id="wmp-play-toggle">
+            <Play class="w-5 h-5 fill-white" id="wmp-play-icon" />
+            <Pause class="w-5 h-5 fill-white hidden" id="wmp-pause-icon" />
+          </button>
+          <button class="p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-white cursor-pointer" id="wmp-next">
+            <SkipForward class="w-4 h-4" />
+          </button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full flex items-center gap-2 text-[10px] font-mono text-slate-300">
+          <span id="wmp-time-curr">0:00</span>
+          <div class="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden cursor-pointer">
+            <div id="wmp-progress-bar" class="h-full bg-blue-500 w-0"></div>
+          </div>
+          <span id="wmp-time-total">0:04</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WINDOW 6: Search Companion (Rover the Dog!) -->
+    <div
+      id="win-search"
+      class="xp-window absolute top-16 left-32 w-[92vw] sm:w-[620px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
+    >
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+          <Search class="w-3.5 h-3.5 text-yellow-300 shrink-0" />
+          <span class="i18n" data-en="Search Companion - Rover" data-id="Pencarian Windows XP - Rover">Search Companion - Rover</span>
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+        </div>
+      </div>
+
+      <div class="flex flex-1 overflow-hidden bg-white max-h-[60vh] text-xs">
+        <!-- Rover Sidebar (Yellow Animated Puppy) -->
+        <div class="w-56 bg-gradient-to-b from-[#6487dc] to-[#4068c8] p-4 text-white flex flex-col items-center text-center justify-between">
+          <div>
+            <!-- Cute Cartoon Puppy SVG (Rover) -->
+            <div class="w-24 h-24 mb-3 relative mx-auto">
+              <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
+                <!-- Body -->
+                <ellipse cx="50" cy="65" rx="26" ry="20" fill="#f59e0b" />
+                <!-- Tail (Wagging Animation) -->
+                <path d="M 74 65 Q 88 50 82 40" stroke="#f59e0b" stroke-width="8" stroke-linecap="round" fill="none" class="rover-tail origin-bottom-left" />
+                <!-- Head -->
+                <circle cx="50" cy="38" r="22" fill="#f59e0b" />
+                <!-- Snout -->
+                <ellipse cx="50" cy="44" rx="12" ry="9" fill="#fde68a" />
+                <!-- Nose -->
+                <ellipse cx="50" cy="40" rx="5" ry="3.5" fill="#1e1e1e" />
+                <!-- Eyes -->
+                <circle cx="43" cy="34" r="3" fill="#1e1e1e" />
+                <circle cx="57" cy="34" r="3" fill="#1e1e1e" />
+                <!-- Ears (Floppy) -->
+                <ellipse cx="30" cy="35" rx="7" ry="14" fill="#d97706" transform="rotate(-15 30 35)" />
+                <ellipse cx="70" cy="35" rx="7" ry="14" fill="#d97706" transform="rotate(15 70 35)" />
+                <!-- Paws -->
+                <ellipse cx="40" cy="82" rx="7" ry="5" fill="#d97706" />
+                <ellipse cx="60" cy="82" rx="7" ry="5" fill="#d97706" />
+              </svg>
+            </div>
+
+            <!-- Speech Bubble -->
+            <div class="bg-white text-slate-800 p-2.5 rounded-lg text-left shadow text-[11px] leading-snug relative">
+              <span id="rover-speech" class="i18n" data-en="What are you searching for today? Type DAMRI, PUMK, API, or Laravel..." data-id="Apa yang ingin kamu cari hari ini? Ketik DAMRI, PUMK, API, atau Laravel...">
+                What are you searching for today? Type DAMRI, PUMK, API, or Laravel...
+              </span>
+            </div>
+          </div>
+
+          <!-- Rover Status -->
+          <div class="text-[10px] text-blue-200 font-mono mt-2">
+            Rover the Search Companion
+          </div>
+        </div>
+
+        <!-- Search Input & Live Results Pane -->
+        <div class="flex-1 p-4 flex flex-col bg-white overflow-y-auto">
+          <div class="flex items-center gap-2 mb-4">
+            <input
+              type="text"
+              id="rover-search-input"
+              placeholder="Ketik kata kunci (DAMRI, PUMK, Push, QA, API)..."
+              class="flex-1 px-3 py-1.5 border border-[#7f9db9] rounded text-xs outline-none focus:border-blue-500 font-sans"
+            />
+            <button class="px-3 py-1.5 rounded bg-[#ece9d8] border border-[#7f9db9] font-bold text-xs hover:bg-white cursor-pointer" id="rover-search-btn">
+              Search
+            </button>
+          </div>
+
+          <!-- Results List -->
+          <div class="flex-1 space-y-2" id="rover-results-list">
+            <div class="p-2.5 rounded border border-blue-100 bg-blue-50/50 hover:bg-blue-100 cursor-pointer" onclick="document.querySelector('[data-project-id=\'damri-pumk-system\']')?.click()">
+              <div class="font-bold text-blue-900 text-xs">Aplikasi PUMK (Program Usaha Mikro Kecil) — Perum DAMRI</div>
+              <div class="text-[10.5px] text-slate-600 mt-0.5">Kamus Data, validasi NIK 16 digit, generate kode mitra lockForUpdate, modul TJSL.</div>
+            </div>
+
+            <div class="p-2.5 rounded border border-blue-100 bg-blue-50/50 hover:bg-blue-100 cursor-pointer" onclick="document.querySelector('[data-project-id=\'damri-push-request-tracker\']')?.click()">
+              <div class="font-bold text-blue-900 text-xs">Sistem Informasi IT &amp; Push Request Tracker — Perum DAMRI</div>
+              <div class="text-[10.5px] text-slate-600 mt-0.5">Audit push/commit GitHub ke server production, manajemen proyek kanban, tiket SLA.</div>
+            </div>
+
+            <div class="p-2.5 rounded border border-blue-100 bg-blue-50/50 hover:bg-blue-100 cursor-pointer" onclick="document.querySelector('[data-project-id=\'damri-etiketing-fleet\']')?.click()">
+              <div class="font-bold text-blue-900 text-xs">Modernisasi E-Ticketing &amp; LMB Online — Armada DAMRI</div>
+              <div class="text-[10.5px] text-slate-600 mt-0.5">Integrasi manifes penumpang, loket tiket digital nasional, BPMN 2.0 flow.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WINDOW 7: SDLC_Lens.exe -->
     <div
       id="win-sdlc"
       class="xp-window absolute top-16 left-36 w-[92vw] sm:w-[660px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
       <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
-        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.7)] truncate">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Layers class="w-3.5 h-3.5 text-cyan-300 shrink-0" />
-          <span>SDLC_Lens.exe - [Feature Spec #SA-104]</span>
+          <span>SDLC_Lens.exe - [Fitur Spec: PUMK &amp; Push Request DAMRI]</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
           <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
@@ -413,103 +700,58 @@ const renderedProjects = await Promise.all(
       <div class="p-5 bg-white overflow-y-auto max-h-[60vh] font-sans text-xs">
         <div id="xp-view-analyst" class="space-y-3">
           <div class="p-3 rounded bg-blue-50 border border-blue-200">
-            <div class="font-bold text-blue-900 text-sm mb-1">BRD &amp; Business Process Elicitation</div>
-            <p class="text-slate-700 leading-relaxed">
-              Eliminating double charges and ghost inventory during flash sales through an automated 5-minute stock reservation state machine.
+            <div class="font-bold text-blue-900 text-sm mb-1">BRD &amp; Kamus Data PUMK DAMRI</div>
+            <p class="text-slate-800 leading-relaxed">
+              Menerjemahkan data operasional Excel Product Owner (MB, PKBL, TW I-IV) menjadi entitas terstruktur: <code>RefMitra</code>, <code>TrTjslPembayaran</code>, dan integrasi SSO terpusat.
             </p>
           </div>
           <div class="font-mono text-[11px] bg-slate-900 text-slate-200 p-3 rounded space-y-1">
-            <div class="text-cyan-400 font-bold">STATE TRANSITION:</div>
-            <div>DRAFT &rarr; RESERVED (5m TTL) &rarr; PAID &rarr; DEDUCTED &rarr; FULFILLED</div>
+            <div class="text-cyan-400 font-bold">ALUR SIKLUS MITRA BINAAN:</div>
+            <div>PENGAJUAN NIK 16 DIGIT &rarr; VALIDASI BU &rarr; GENERATE KODE PUMK &rarr; PENYALURAN &rarr; CICILAN TJSL</div>
           </div>
-          <ul class="space-y-1.5 text-slate-700 list-disc pl-4">
-            <li><strong>Anti-Double Charge:</strong> Network retries from customer app within 60s window must resolve to existing payment transaction.</li>
-            <li><strong>Reservation TTL:</strong> If payment is unconfirmed after 300s, automatic asynchronous event triggers stock restoration.</li>
-          </ul>
         </div>
 
         <div id="xp-view-dev" class="space-y-3 hidden">
           <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
-            <div class="font-bold text-indigo-900 text-sm mb-1">API Contract &amp; Locking Mechanism</div>
-            <p class="text-slate-700 leading-relaxed">
-              Stateless REST endpoint with strictly enforced idempotency keys and Redis distributed locking.
+            <div class="font-bold text-indigo-900 text-sm mb-1">Teknikal Dev: Concurrency Lock &amp; GitHub API</div>
+            <p class="text-slate-800 leading-relaxed">
+              Mencegah duplikasi nomor kode mitra saat registrasi serentak di cabang DAMRI dan sinkronisasi status deploy commit via Webhook GitHub API.
             </p>
           </div>
-          <pre class="font-mono text-[11px] bg-slate-900 text-indigo-300 p-3 rounded overflow-x-auto">POST /api/v1/checkout/charge
-Header: X-Idempotency-Key: "uuid_98231a"
-Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
-          <ul class="space-y-1.5 text-slate-700 list-disc pl-4">
-            <li><strong>ACID Concurrency:</strong> PostgreSQL transaction with <code>SELECT ... FOR UPDATE</code> on SKU table to prevent phantom reads.</li>
-            <li><strong>Circuit Breaker:</strong> Downstream payment gateway timeout fallback with exponential backoff retry.</li>
-          </ul>
+          <pre class="font-mono text-[11px] bg-slate-900 text-indigo-300 p-3 rounded overflow-x-auto">// Proteksi Concurrency PUMK
+RefMitra::whereYear('created_at', now()->year)
+    ->lockForUpdate()
+    ->latest('id')->first();</pre>
         </div>
 
         <div id="xp-view-qa" class="space-y-3 hidden">
           <div class="p-3 rounded bg-emerald-50 border border-emerald-200">
-            <div class="font-bold text-emerald-900 text-sm mb-1">BDD Gherkin &amp; Boundary Assertions</div>
-            <p class="text-slate-700 leading-relaxed">
-              Exhaustive acceptance criteria covering network drop during payment gateway callback.
+            <div class="font-bold text-emerald-900 text-sm mb-1">QA Rigor: Boundary Test NIK &amp; Target SLA</div>
+            <p class="text-slate-800 leading-relaxed">
+              Pengujian skenario kegagalan: NIK tidak 16 digit, timeout koneksi database SSO, serta kepatuhan SLA tiket gangguan armada.
             </p>
           </div>
-          <pre class="font-mono text-[11px] bg-slate-900 text-emerald-300 p-3 rounded overflow-x-auto">Scenario: Duplicate checkout under unstable network
-  Given order #8891 has stock reserved
-  When client sends 2 identical POST requests concurrently
-  Then only 1 ledger entry is written to 'transactions'
-  And stock decreases by exactly 1 unit</pre>
-          <ul class="space-y-1.5 text-slate-700 list-disc pl-4">
-            <li><strong>Negative Test:</strong> Assert HTTP 409 Conflict if checkout is submitted at second 301.</li>
-            <li><strong>Tampering Check:</strong> Assert HTTP 401 Unauthorized if webhook HMAC does not match SHA-256 secret.</li>
-          </ul>
+          <pre class="font-mono text-[11px] bg-slate-900 text-emerald-300 p-3 rounded overflow-x-auto">Scenario: Validasi NIK Pemilik UMKM
+  Given pendaftaran mitra baru di cabang DAMRI
+  When input NIK kurang dari 16 digit
+  Then sistem menolak dengan HTTP 422 Unprocessable Entity
+  And mencatat log penolakan di audit trail</pre>
         </div>
       </div>
     </div>
 
-    <!-- WINDOW 5: System_Flow.exe -->
-    <div
-      id="win-flow"
-      class="xp-window absolute top-20 left-24 w-[92vw] sm:w-[660px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
-    >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
-        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.7)] truncate">
-          <Network class="w-3.5 h-3.5 text-indigo-300 shrink-0" />
-          <span>System_Flow.exe - Architecture Inspector</span>
-        </div>
-        <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
-        </div>
-      </div>
-
-      <div class="p-2.5 bg-[#ece9d8] border-b border-[#d8d4c2] flex flex-wrap items-center gap-1 text-xs">
-        <span class="font-bold text-slate-700 mr-1">Select Node:</span>
-        <button class="xp-flow-btn active px-2.5 py-1 rounded bg-white border border-[#7f9db9] font-semibold text-blue-900" data-node="client">1. Client / POS</button>
-        <button class="xp-flow-btn px-2.5 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] text-slate-700 hover:bg-white" data-node="gateway">2. API Gateway</button>
-        <button class="xp-flow-btn px-2.5 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] text-slate-700 hover:bg-white" data-node="service">3. Core Engine</button>
-        <button class="xp-flow-btn px-2.5 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] text-slate-700 hover:bg-white" data-node="queue">4. Message Queue</button>
-        <button class="xp-flow-btn px-2.5 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] text-slate-700 hover:bg-white" data-node="database">5. DB Cluster</button>
-      </div>
-
-      <div class="p-5 bg-white overflow-y-auto max-h-[60vh] text-xs font-sans">
-        <div id="xp-flow-details" class="space-y-3">
-          <!-- Dynamically populated via JS -->
-        </div>
-      </div>
-    </div>
-
-    <!-- WINDOW 6: cmd.exe -->
+    <!-- WINDOW 8: cmd.exe -->
     <div
       id="win-cmd"
       class="xp-window absolute top-24 left-20 w-[92vw] sm:w-[560px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-black text-white z-10 flex flex-col overflow-hidden hidden"
     >
       <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
-        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.7)] truncate">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Terminal class="w-3.5 h-3.5 text-emerald-400 shrink-0" />
           <span>Command Prompt - cmd.exe</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
           <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
           <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
@@ -517,10 +759,10 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
       <div id="cmd-screen" class="p-4 bg-black font-mono text-xs text-[#00ff66] min-h-[260px] max-h-[50vh] overflow-y-auto leading-relaxed">
         <div>Microsoft Windows XP [Version 5.1.2600]</div>
         <div>(C) Copyright 1985-2001 Microsoft Corp.</div>
-        <div class="my-2 text-slate-400">Type <span class="text-white font-bold">help</span> to see available commands (skills, projects, contact, clear).</div>
-        <div id="cmd-output" class="space-y-2"></div>
+        <div class="my-2 text-slate-400">Ketik <span class="text-white font-bold">help</span> untuk daftar perintah (damri, skills, projects, contact, clear).</div>
+        <div id="cmd-output" class="space-y-1.5"></div>
         <div class="flex items-center gap-1 mt-2">
-          <span class="text-slate-300">C:\Users\SystemAnalyst&gt;</span>
+          <span class="text-slate-300">E:\KERJA\DAMRI&gt;</span>
           <input
             id="cmd-input"
             type="text"
@@ -531,19 +773,18 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
       </div>
     </div>
 
-    <!-- WINDOW 7: Outlook Express (Contact) -->
+    <!-- WINDOW 9: Outlook Express -->
     <div
       id="win-contact"
       class="xp-window absolute top-28 left-32 w-[92vw] sm:w-[540px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
       <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
-        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.7)] truncate">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Mail class="w-3.5 h-3.5 text-sky-300 shrink-0" />
           <span>New Message - Outlook Express</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
           <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
           <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
@@ -577,7 +818,7 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
           <label class="w-16 text-slate-600 font-semibold">Subject:</label>
           <input
             type="text"
-            value="Architecture Consultation / System Analyst Opportunity"
+            value="Konsultasi Arsitektur Sistem / Peluang Karir"
             class="flex-1 px-2 py-1 border border-[#7f9db9] rounded text-slate-800 outline-none focus:border-blue-500"
           />
         </div>
@@ -586,10 +827,86 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
           <textarea
             rows="5"
             class="w-full p-2 border border-[#7f9db9] rounded text-slate-800 outline-none focus:border-blue-500 resize-none"
-            placeholder="Hi, I saw your portfolio and would like to discuss a project..."
+            placeholder="Halo, saya melihat portofolio Anda di DAMRI..."
           ></textarea>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ==================== AUTHENTIC WINDOWS XP SHUTDOWN DIALOG ==================== -->
+  <div 
+    id="xp-shutdown-modal" 
+    class="fixed inset-0 z-[20000] hidden items-center justify-center backdrop-grayscale backdrop-brightness-50"
+  >
+    <div class="w-80 rounded-t-lg bg-[#ece9d8] border-[3px] border-[#0055ea] shadow-2xl overflow-hidden">
+      <!-- Blue Header -->
+      <div class="h-8 px-3 flex items-center justify-between bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white">
+        <div class="flex items-center gap-2 font-bold text-xs">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
+            <rect x="2" y="2" width="9" height="9" fill="#f44336" rx="1" />
+            <rect x="13" y="2" width="9" height="9" fill="#4caf50" rx="1" />
+            <rect x="2" y="13" width="9" height="9" fill="#2196f3" rx="1" />
+            <rect x="13" y="13" width="9" height="9" fill="#ffeb3b" rx="1" />
+          </svg>
+          <span class="i18n" data-en="Turn off computer" data-id="Matikan komputer">Turn off computer</span>
+        </div>
+      </div>
+
+      <!-- Dialog Body with 3 Circles -->
+      <div class="p-6 bg-[#001333] flex items-center justify-around">
+        <!-- Stand by -->
+        <button class="flex flex-col items-center gap-1.5 group cursor-pointer" onclick="document.getElementById('xp-shutdown-modal').classList.add('hidden'); document.getElementById('xp-shutdown-modal').classList.remove('flex');">
+          <div class="w-11 h-11 rounded-full bg-yellow-500 border-2 border-yellow-300 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
+            <HelpCircle class="w-6 h-6 text-black" />
+          </div>
+          <span class="text-[11px] text-white font-bold">Stand By</span>
+        </button>
+
+        <!-- Turn Off -->
+        <button id="modal-btn-turn-off" class="flex flex-col items-center gap-1.5 group cursor-pointer">
+          <div class="w-11 h-11 rounded-full bg-red-600 border-2 border-red-300 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
+            <Power class="w-6 h-6 text-white" />
+          </div>
+          <span class="text-[11px] text-white font-bold i18n" data-en="Turn Off" data-id="Matikan">Turn Off</span>
+        </button>
+
+        <!-- Restart -->
+        <button class="flex flex-col items-center gap-1.5 group cursor-pointer" onclick="window.location.reload();">
+          <div class="w-11 h-11 rounded-full bg-emerald-500 border-2 border-emerald-300 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
+            <RotateCw class="w-6 h-6 text-white" />
+          </div>
+          <span class="text-[11px] text-white font-bold">Restart</span>
+        </button>
+      </div>
+
+      <!-- Footer Cancel -->
+      <div class="p-2.5 bg-[#ece9d8] border-t border-[#d8d4c2] flex justify-end">
+        <button 
+          class="px-4 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] text-xs font-bold text-slate-800 hover:bg-white cursor-pointer"
+          onclick="document.getElementById('xp-shutdown-modal').classList.add('hidden'); document.getElementById('xp-shutdown-modal').classList.remove('flex');"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Shutdown Message Screen -->
+  <div id="xp-shutdown-screen" class="fixed inset-0 z-[25000] bg-[#001333] hidden flex-col items-center justify-center select-none">
+    <div class="flex items-center gap-3.5 mb-4">
+      <svg class="w-10 h-10" viewBox="0 0 24 24">
+        <rect x="2" y="2" width="9" height="9" fill="#f44336" rx="1" />
+        <rect x="13" y="2" width="9" height="9" fill="#4caf50" rx="1" />
+        <rect x="2" y="13" width="9" height="9" fill="#2196f3" rx="1" />
+        <rect x="13" y="13" width="9" height="9" fill="#ffeb3b" rx="1" />
+      </svg>
+      <div class="text-2xl font-bold text-white tracking-tight">
+        Windows<span class="text-amber-500 italic font-black">xp</span>
+      </div>
+    </div>
+    <div class="text-sm font-sans text-slate-300 tracking-wider i18n" data-en="Windows is shutting down..." data-id="Windows sedang dimatikan...">
+      Windows is shutting down...
     </div>
   </div>
 
@@ -604,41 +921,47 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
           SA
         </div>
       </div>
-      <div class="font-bold text-sm drop-shadow-[1px_1px_1px_rgba(0,0,0,0.7)]">
-        System Analyst
+      <div class="font-bold text-sm drop-shadow">
+        System Analyst &bull; Perum DAMRI
       </div>
     </div>
 
     <div class="flex bg-[#d3e5fa] text-xs">
+      <!-- Left Column -->
       <div class="w-1/2 bg-white p-2 space-y-1 border-r border-[#95bdee]">
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-welcome\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
           <FileText class="w-4 h-4 text-blue-600" />
           <span class="font-bold text-slate-800">Welcome SA</span>
         </div>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-explorer\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <Laptop class="w-4 h-4 text-blue-700" />
+          <span class="font-bold text-slate-800 i18n" data-en="My Computer" data-id="Komputer Saya">My Computer</span>
+        </div>
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-projects\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Folder class="w-4 h-4 text-amber-500" />
-          <span class="font-bold text-slate-800">Case Studies</span>
+          <span class="font-bold text-slate-800 i18n" data-en="Proyek DAMRI" data-id="Proyek DAMRI">Proyek DAMRI</span>
         </div>
-        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-sdlc\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
-          <Layers class="w-4 h-4 text-cyan-600" />
-          <span class="font-bold text-slate-800">SDLC Lens</span>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-media-player\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <Play class="w-4 h-4 text-orange-500 fill-orange-500" />
+          <span class="font-bold text-slate-800">Media Player</span>
         </div>
-        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-flow\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
-          <Network class="w-4 h-4 text-indigo-600" />
-          <span class="font-bold text-slate-800">System Flow</span>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-search\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <Search class="w-4 h-4 text-yellow-600" />
+          <span class="font-bold text-slate-800 i18n" data-en="Search (Rover)" data-id="Cari File">Search (Rover)</span>
         </div>
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-cmd\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Terminal class="w-4 h-4 text-emerald-600" />
-          <span class="font-bold text-slate-800">Command Prompt</span>
+          <span class="font-bold text-slate-800">cmd.exe</span>
         </div>
       </div>
 
+      <!-- Right Column -->
       <div class="w-1/2 p-2 space-y-1 text-slate-700">
-        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="document.querySelector('[data-open=\'win-projects\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
-          My Documents
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="document.querySelector('[data-open=\'win-explorer\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+          E:\KERJA\DAMRI
         </div>
-        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="document.querySelector('[data-open=\'win-flow\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
-          My Network
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="document.querySelector('[data-open=\'win-sdlc\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+          SDLC Lens
         </div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="document.querySelector('[data-open=\'win-contact\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
           Outlook Express
@@ -646,18 +969,19 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
       </div>
     </div>
 
+    <!-- Start Menu Footer -->
     <div class="h-9 px-3 flex items-center justify-end gap-3 bg-gradient-to-r from-[#0058ee] to-[#3593ff] text-white select-none">
       <button
-        id="xp-shutdown-btn"
+        id="xp-open-shutdown-btn"
         class="flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#c75050] hover:bg-[#e04343] border border-white/50 text-xs font-bold shadow cursor-pointer active:scale-95"
       >
         <Power class="w-3 h-3" />
-        <span>Turn Off Computer</span>
+        <span class="i18n" data-en="Turn Off Computer" data-id="Matikan Komputer">Turn Off Computer</span>
       </button>
     </div>
   </div>
 
-  <!-- ==================== WINDOWS XP TASKBAR (STRICTLY PINNED TO BOTTOM) ==================== -->
+  <!-- ==================== TASKBAR (PINNED AT BOTTOM) ==================== -->
   <div 
     id="xp-taskbar" 
     class="relative z-[9999] h-[30px] w-full bg-gradient-to-b from-[#245edb] via-[#3f8cf3] to-[#1941a5] border-t border-[#468df2] flex items-center justify-between select-none shadow-lg shrink-0"
@@ -674,35 +998,70 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
           <rect x="2" y="13" width="9" height="9" fill="#2196f3" rx="1" />
           <rect x="13" y="13" width="9" height="9" fill="#ffeb3b" rx="1" />
         </svg>
-        <span class="font-black italic text-white text-xs drop-shadow-[1px_1px_2px_rgba(0,0,0,0.8)]">
+        <span class="font-black italic text-white text-xs drop-shadow-[1px_1px_2px_rgba(0,0,0,0.8)] i18n" data-en="start" data-id="mulai">
           start
         </span>
       </button>
 
-      <!-- Taskbar Open Window Tabs -->
+      <!-- Taskbar Open Window Tabs (Dynamic Sync: Only open windows appear!) -->
       <div id="xp-taskbar-items" class="flex items-center gap-1 px-1.5 h-full overflow-x-auto">
       </div>
     </div>
 
-    <!-- System Tray (Notification Area) -->
+    <!-- System Tray (Notification Area & Language Switcher) -->
     <div class="h-full px-2.5 bg-gradient-to-b from-[#0f388a] via-[#16439e] to-[#0d2f78] border-l border-[#194bb5] shadow-inner flex items-center gap-2.5 text-xs text-white font-mono">
+      <!-- Language Switcher Button [ ID | EN ] -->
+      <button 
+        id="lang-toggle-btn"
+        class="px-1.5 py-0.5 rounded bg-blue-950/80 border border-blue-400/40 text-[10px] font-bold text-amber-300 hover:bg-blue-900 cursor-pointer"
+        title="Switch Language (ID / EN)"
+      >
+        ID &bull; EN
+      </button>
+
       <Volume2 class="w-3 h-3 text-blue-200" />
       <span id="xp-clock" class="text-[11px]">12:00 PM</span>
     </div>
   </div>
 </div>
 
-<script>
-  // 1. Boot event from 3D stage
-  window.addEventListener('xp:boot-desktop', () => {
-    const desktop = document.getElementById('xp-desktop-container');
-    if (desktop) {
-      desktop.classList.remove('hidden');
-      desktop.classList.add('flex');
-    }
-  });
+<style>
+  @keyframes tailWag {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(18deg); }
+    100% { transform: rotate(0deg); }
+  }
+  .rover-tail {
+    animation: tailWag 0.6s ease-in-out infinite;
+    transform-origin: 74px 65px;
+  }
+</style>
 
-  // 2. Start Menu Toggle
+<script>
+  // 2. Language Switcher (ID <-> EN)
+  let currentLang = 'id'; // Default Indonesian as requested
+  const langBtn = document.getElementById('lang-toggle-btn');
+
+  function applyLanguage(lang: string) {
+    currentLang = lang;
+    const elements = document.querySelectorAll<HTMLElement>('.i18n');
+    elements.forEach(el => {
+      const text = el.getAttribute(`data-${lang}`);
+      if (text) el.innerHTML = text;
+    });
+    if (langBtn) {
+      langBtn.innerText = lang.toUpperCase();
+    }
+  }
+
+  langBtn?.addEventListener('click', () => {
+    const nextLang = currentLang === 'id' ? 'en' : 'id';
+    applyLanguage(nextLang);
+  });
+  // Initial set to Indonesian
+  applyLanguage('id');
+
+  // 3. Start Menu Toggle
   const startBtn = document.getElementById('xp-start-btn');
   const startMenu = document.getElementById('xp-start-menu');
 
@@ -719,7 +1078,7 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
     }
   });
 
-  // 3. System Tray Clock
+  // 4. System Tray Clock
   function updateClock() {
     const clockEl = document.getElementById('xp-clock');
     if (!clockEl) return;
@@ -733,7 +1092,7 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
   updateClock();
   setInterval(updateClock, 1000);
 
-  // 4. Draggable Windows Logic & Active Z-Index
+  // 5. Draggable Windows Logic & Active Z-Index
   let highestZIndex = 30;
 
   function bringToFront(win: HTMLElement) {
@@ -782,13 +1141,17 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
 
     // Window controls
     const btnClose = win.querySelector('.win-btn-close');
-    btnClose?.addEventListener('click', () => {
+    btnClose?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      win.classList.add('hidden');
       win.style.display = 'none';
       updateTaskbar();
     });
 
     const btnMinimize = win.querySelector('.win-btn-minimize');
-    btnMinimize?.addEventListener('click', () => {
+    btnMinimize?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      win.classList.add('hidden');
       win.style.display = 'none';
       updateTaskbar();
     });
@@ -815,7 +1178,7 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
     });
   });
 
-  // 5. Desktop Icons Opening Windows
+  // 6. Desktop Icons Opening Windows
   const desktopIcons = document.querySelectorAll('.xp-desktop-icon');
   desktopIcons.forEach((icon) => {
     icon.addEventListener('click', () => {
@@ -823,6 +1186,7 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
       if (targetId) {
         const targetWin = document.getElementById(targetId);
         if (targetWin) {
+          targetWin.classList.remove('hidden');
           targetWin.style.display = 'flex';
           bringToFront(targetWin);
           updateTaskbar();
@@ -831,7 +1195,7 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
     });
   });
 
-  // 6. Case Study Explorer -> Open in Internet Explorer 6 Window!
+  // 7. Case Study Explorer -> Open in Internet Explorer 6 Window!
   const projectRows = document.querySelectorAll('.xp-project-row');
   const ieReader = document.getElementById('win-ie-reader');
   const ieAddressBar = document.getElementById('ie-address-bar');
@@ -842,7 +1206,6 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
       const projectId = row.getAttribute('data-project-id');
       if (!projectId || !ieReader) return;
 
-      // Hide all articles, reveal clicked one
       document.querySelectorAll('.ie-case-study-article').forEach(art => art.classList.add('hidden'));
       const targetArt = document.getElementById(`ie-article-${projectId}`);
       if (targetArt) {
@@ -850,28 +1213,29 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
       }
 
       if (ieAddressBar) {
-        ieAddressBar.innerText = `http://internal.analyst.corp/specs/${projectId}.html`;
+        ieAddressBar.innerText = `http://internal.damri.co.id/specs/${projectId}.html`;
       }
       if (ieTitlebar) {
         const title = row.querySelector('span')?.textContent || 'Case Study';
         ieTitlebar.innerText = `Microsoft Internet Explorer - ${title}`;
       }
 
+      ieReader.classList.remove('hidden');
       ieReader.style.display = 'flex';
       bringToFront(ieReader);
       updateTaskbar();
     });
   });
 
-  // 7. Update Taskbar
+  // 8. Strict Taskbar Sync: ONLY OPEN WINDOWS ARE DISPLAYED!
   function updateTaskbar() {
     const taskbarContainer = document.getElementById('xp-taskbar-items');
     if (!taskbarContainer) return;
     taskbarContainer.innerHTML = '';
 
     windows.forEach((win) => {
-      const isVisible = win.style.display !== 'none';
-      if (!isVisible) return; // Only show open windows
+      const isVisible = win.style.display === 'flex' || (!win.classList.contains('hidden') && win.style.display !== 'none');
+      if (!isVisible) return; // STRICT FILTER: Do not show closed windows!
 
       const title = win.querySelector('.xp-titlebar span')?.textContent || 'Window';
 
@@ -880,10 +1244,12 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
       btn.innerText = title.split(' - ')[0];
 
       btn.addEventListener('click', () => {
-        if (win.style.display === 'none') {
+        if (win.style.display === 'none' || win.classList.contains('hidden')) {
+          win.classList.remove('hidden');
           win.style.display = 'flex';
           bringToFront(win);
         } else {
+          win.classList.add('hidden');
           win.style.display = 'none';
         }
         updateTaskbar();
@@ -892,114 +1258,151 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
       taskbarContainer.appendChild(btn);
     });
   }
-  updateTaskbar();
 
-  // 8. Interactive SDLC Switcher inside Windows XP
-  const sdlcTabs = document.querySelectorAll('.xp-lens-tab');
-  sdlcTabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const view = tab.getAttribute('data-view');
-      sdlcTabs.forEach((t) => {
-        t.classList.remove('active', 'bg-white', 'border-t-2', 'border-l-2', 'border-r-2', 'text-blue-900');
-        t.classList.add('bg-[#ece9d8]', 'text-slate-600');
-      });
-      tab.classList.add('active', 'bg-white', 'border-t-2', 'border-l-2', 'border-r-2', 'text-blue-900');
-      tab.classList.remove('bg-[#ece9d8]', 'text-slate-600');
-
-      document.getElementById('xp-view-analyst')?.classList.add('hidden');
-      document.getElementById('xp-view-dev')?.classList.add('hidden');
-      document.getElementById('xp-view-qa')?.classList.add('hidden');
-
-      if (view === 'analyst') document.getElementById('xp-view-analyst')?.classList.remove('hidden');
-      if (view === 'dev') document.getElementById('xp-view-dev')?.classList.remove('hidden');
-      if (view === 'qa') document.getElementById('xp-view-qa')?.classList.remove('hidden');
-    });
-  });
-
-  // 9. Interactive Architecture Node Flow inside Windows XP
-  const flowButtons = document.querySelectorAll('.xp-flow-btn');
-  const flowDetails = document.getElementById('xp-flow-details');
-
-  const nodeDescriptions: Record<string, { title: string; sla: string; req: string; dev: string; qa: string }> = {
-    client: {
-      title: "Node 01: Client POS / Terminal",
-      sla: "P99 UI Latency <100ms",
-      req: "Offline-first local storage (SQLite/IndexedDB) allowing transactions to proceed during network partition.",
-      dev: "Payload compression (gzip) for bulk batches; client-side UUIDv4 idempotency key attached to every button click.",
-      qa: "Simulate airplane mode during checkout submission: assert zero data loss and background queue retry."
-    },
-    gateway: {
-      title: "Node 02: API Gateway & Reverse Proxy",
-      sla: "15,000 req/sec | Latency <5ms",
-      req: "Strict rate limiting (100 req/min/IP) and mTLS/HMAC validation on third-party webhook payloads.",
-      dev: "Redis token bucket rate limiter; correlation-id forwarding to all downstream microservices.",
-      qa: "Assert HTTP 429 Too Many Requests with Retry-After header once rate threshold is crossed."
-    },
-    service: {
-      title: "Node 03: Core Engine & State Machine",
-      sla: "TAT <120ms | 99.95% SLA",
-      req: "Deterministic finite state machine: DRAFT -> RESERVED -> CHARGED -> FULFILLED with 5-minute stock hold TTL.",
-      dev: "Redis distributed locking (Redlock) on SKU ID + PostgreSQL row-level locks (FOR UPDATE).",
-      qa: "Assert simultaneous requests with same Idempotency-Key return identical cached response body without duplicate charge."
-    },
-    queue: {
-      title: "Node 04: Message Queue (RabbitMQ)",
-      sla: "Delivery Guarantee: At-least-once",
-      req: "Decouples synchronous checkout responses from slow notification dispatch and ERP syncing.",
-      dev: "Dead Letter Queue (DLQ) retry policy with exponential backoff for poison-pill payloads.",
-      qa: "Simulate consumer service crash midway through processing: verify message is re-queued without drop."
-    },
-    database: {
-      title: "Node 05: Database (PostgreSQL + Redis)",
-      sla: "Zero Data Loss (RPO = 0)",
-      req: "3NF normalized schema with soft-delete audit history on all financial transactions.",
-      dev: "Master-Slave cluster with read-write splitting and connection pooling via PgBouncer.",
-      qa: "Assert simultaneous debit transactions respect ACID Serializable isolation without deadlocks."
+  // Boot event listener from 3D stage
+  window.addEventListener('xp:boot-desktop', () => {
+    const desktop = document.getElementById('xp-desktop-container');
+    if (desktop) {
+      desktop.classList.remove('hidden');
+      desktop.classList.add('flex');
     }
-  };
-
-  function renderFlowDetail(key: string) {
-    if (!flowDetails) return;
-    const d = nodeDescriptions[key] || nodeDescriptions.client;
-    flowDetails.innerHTML = `
-      <div class="p-2.5 bg-blue-50 border border-blue-200 rounded">
-        <div class="flex items-center justify-between">
-          <span class="font-bold text-blue-900 text-xs sm:text-sm">${d.title}</span>
-          <span class="font-mono text-[10.5px] text-emerald-700 font-bold">${d.sla}</span>
-        </div>
-      </div>
-      <div class="space-y-2">
-        <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
-          <strong class="text-blue-800 block mb-0.5 text-[11px]">Analyst Requirement:</strong>
-          <span class="text-slate-700 text-[11px] leading-relaxed">${d.req}</span>
-        </div>
-        <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
-          <strong class="text-indigo-800 block mb-0.5 text-[11px]">Developer Implementation:</strong>
-          <span class="text-slate-700 text-[11px] leading-relaxed">${d.dev}</span>
-        </div>
-        <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
-          <strong class="text-emerald-800 block mb-0.5 text-[11px]">QA Edge-Case Assertion:</strong>
-          <span class="text-slate-700 text-[11px] leading-relaxed">${d.qa}</span>
-        </div>
-      </div>
-    `;
-  }
-  renderFlowDetail('client');
-
-  flowButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const nodeKey = btn.getAttribute('data-node') || 'client';
-      flowButtons.forEach((b) => {
-        b.classList.remove('active', 'bg-white', 'text-blue-900', 'font-semibold');
-        b.classList.add('bg-[#ece9d8]', 'text-slate-700');
-      });
-      btn.classList.add('active', 'bg-white', 'text-blue-900', 'font-semibold');
-      btn.classList.remove('bg-[#ece9d8]', 'text-slate-700');
-      renderFlowDetail(nodeKey);
-    });
+    const welcome = document.getElementById('win-welcome');
+    if (welcome) {
+      welcome.classList.remove('hidden');
+      welcome.style.display = 'flex';
+      bringToFront(welcome);
+    }
+    updateTaskbar();
   });
 
-  // 10. Command Prompt CLI
+  // 9. Windows Media Player Logic
+  const wmpPlayBtn = document.getElementById('wmp-play-toggle');
+  const wmpPlayIcon = document.getElementById('wmp-play-icon');
+  const wmpPauseIcon = document.getElementById('wmp-pause-icon');
+  const wmpProgressBar = document.getElementById('wmp-progress-bar');
+  const wmpTimeCurr = document.getElementById('wmp-time-curr');
+  let isPlaying = false;
+  let wmpAudio: HTMLAudioElement | null = null;
+  let wmpInterval: any = null;
+
+  wmpPlayBtn?.addEventListener('click', () => {
+    if (!isPlaying) {
+      isPlaying = true;
+      wmpPlayIcon?.classList.add('hidden');
+      wmpPauseIcon?.classList.remove('hidden');
+
+      if (!wmpAudio) {
+        wmpAudio = new Audio('/sounds/xp-startup.wav');
+        wmpAudio.addEventListener('ended', () => {
+          isPlaying = false;
+          wmpPlayIcon?.classList.remove('hidden');
+          wmpPauseIcon?.classList.add('hidden');
+          if (wmpProgressBar) wmpProgressBar.style.width = '0%';
+          clearInterval(wmpInterval);
+        });
+      }
+      wmpAudio.play().catch(e => console.warn(e));
+
+      // Visualizer animation
+      wmpInterval = setInterval(() => {
+        const bars = document.querySelectorAll('#wmp-bars div');
+        bars.forEach(b => {
+          const h = Math.floor(Math.random() * 80) + 10;
+          (b as HTMLElement).style.height = `${h}px`;
+        });
+      }, 150);
+    } else {
+      isPlaying = false;
+      wmpPlayIcon?.classList.remove('hidden');
+      wmpPauseIcon?.classList.add('hidden');
+      wmpAudio?.pause();
+      clearInterval(wmpInterval);
+    }
+  });
+
+  // 10. Rover the Search Dog Companion Logic
+  const roverInput = document.getElementById('rover-search-input') as HTMLInputElement;
+  const roverBtn = document.getElementById('rover-search-btn');
+  const roverSpeech = document.getElementById('rover-speech');
+  const roverResults = document.getElementById('rover-results-list');
+
+  function runRoverSearch() {
+    const q = roverInput?.value.trim().toLowerCase();
+    if (!roverResults) return;
+
+    if (!q) {
+      if (roverSpeech) roverSpeech.innerText = 'Tulis kata kunci pencarian, saya akan mencarikannya untukmu!';
+      return;
+    }
+
+    if (roverSpeech) {
+      roverSpeech.innerText = `Woof! Menemukan hasil terkait "${q}" di dokumen & proyek DAMRI!`;
+    }
+
+    const items = roverResults.querySelectorAll('div.p-2\\.5');
+    items.forEach(item => {
+      const text = (item as HTMLElement).innerText.toLowerCase();
+      if (text.includes(q)) {
+        (item as HTMLElement).style.display = 'block';
+      } else {
+        (item as HTMLElement).style.display = 'none';
+      }
+    });
+  }
+
+  roverBtn?.addEventListener('click', runRoverSearch);
+  roverInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') runRoverSearch();
+  });
+
+  // 11. Authentic Windows XP Shutdown Dialog
+  const openShutdownBtn = document.getElementById('xp-open-shutdown-btn');
+  const shutdownModal = document.getElementById('xp-shutdown-modal');
+  const modalTurnOff = document.getElementById('modal-btn-turn-off');
+  const shutdownScreen = document.getElementById('xp-shutdown-screen');
+
+  openShutdownBtn?.addEventListener('click', () => {
+    startMenu?.classList.add('hidden');
+    if (shutdownModal) {
+      shutdownModal.classList.remove('hidden');
+      shutdownModal.classList.add('flex');
+    }
+  });
+
+  modalTurnOff?.addEventListener('click', () => {
+    shutdownModal?.classList.add('hidden');
+    shutdownModal?.classList.remove('flex');
+
+    // Show "Windows is shutting down..." blue screen
+    if (shutdownScreen) {
+      shutdownScreen.classList.remove('hidden');
+      shutdownScreen.classList.add('flex');
+    }
+
+    // Play real shutdown audio
+    try {
+      const audio = new Audio('/sounds/xp-shutdown.wav');
+      audio.play().catch(e => console.warn(e));
+    } catch (e) {
+      console.error(e);
+    }
+
+    // After 2.5s return cleanly to 3D workstation
+    setTimeout(() => {
+      if (shutdownScreen) {
+        shutdownScreen.classList.add('hidden');
+        shutdownScreen.classList.remove('flex');
+      }
+      const desktop = document.getElementById('xp-desktop-container');
+      if (desktop) {
+        desktop.classList.add('hidden');
+        desktop.classList.remove('flex');
+      }
+      window.dispatchEvent(new CustomEvent('xp:shutdown-to-3d'));
+    }, 2500);
+  });
+
+  // 12. Command Prompt
   const cmdInput = document.getElementById('cmd-input') as HTMLInputElement;
   const cmdOutput = document.getElementById('cmd-output');
   const cmdScreen = document.getElementById('cmd-screen');
@@ -1010,7 +1413,7 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
       if (!val) return;
 
       const line = document.createElement('div');
-      line.innerHTML = `<span class="text-slate-400">C:\\Users\\SystemAnalyst&gt;</span> <span class="text-white">${cmdInput.value}</span>`;
+      line.innerHTML = `<span class="text-slate-400">E:\\KERJA\\DAMRI&gt;</span> <span class="text-white">${cmdInput.value}</span>`;
       cmdOutput?.appendChild(line);
 
       const resp = document.createElement('div');
@@ -1018,35 +1421,41 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
 
       if (val === 'help') {
         resp.innerHTML = `
-          Commands available:<br/>
-          &bull; <span class="text-yellow-300">skills</span>   - List System Analyst, Dev & QA matrix<br/>
-          &bull; <span class="text-yellow-300">projects</span> - View active architecture case studies<br/>
-          &bull; <span class="text-yellow-300">contact</span>  - Show email and direct communication channels<br/>
-          &bull; <span class="text-yellow-300">clear</span>    - Clear the command prompt
+          Perintah yang tersedia:<br/>
+          &bull; <span class="text-yellow-300">damri</span>    - Informasi sistem kerja Perum DAMRI<br/>
+          &bull; <span class="text-yellow-300">pumk</span>     - Detail arsitektur aplikasi PUMK<br/>
+          &bull; <span class="text-yellow-300">push</span>     - Detail aplikasi Push Request & GitHub Tracker<br/>
+          &bull; <span class="text-yellow-300">skills</span>   - Matriks keahlian SA, Dev & QA<br/>
+          &bull; <span class="text-yellow-300">contact</span>  - Email & saluran komunikasi<br/>
+          &bull; <span class="text-yellow-300">clear</span>    - Bersihkan layar terminal
+        `;
+      } else if (val === 'damri' || val === 'pumk') {
+        resp.innerHTML = `
+          [PUMK DAMRI]: Sistem Pembinaan & Pembiayaan UMKM BUMN.<br/>
+          - Validasi NIK 16 digit & Penomoran unik via lockForUpdate<br/>
+          - Integrasi Shadow User ke database SSO DAMRI<br/>
+          - Kamus data komprehensif & penyesuaian format PO Excel
+        `;
+      } else if (val === 'push') {
+        resp.innerHTML = `
+          [PUSH REQUEST DAMRI]: Sistem Audit Commit & Manajemen Proyek IT.<br/>
+          - Webhook GitHub API & diff audit ke production<br/>
+          - Kanban board task & target SLA insiden lintas unit
         `;
       } else if (val === 'skills') {
         resp.innerHTML = `
-          [CORE SA]: BRD/SRS, BPMN 2.0, ERD 3NF Modeling, OpenAPI 3.1<br/>
-          [DEV FEASIBILITY]: PostgreSQL, SQL Tuning, REST APIs, Redis Redlock<br/>
-          [QA RIGOR]: BDD Gherkin, Postman Automation, Chaos Fault Injection
-        `;
-      } else if (val === 'projects') {
-        resp.innerHTML = `
-          1. Omnichannel POS & Real-Time Sync (Discrepancy: 0.01%)<br/>
-          2. Automated Loan Scoring Engine (Approval TAT: 45s)<br/>
-          3. Hospital E-Prescription ERP (Dispensing Errors: 0)
+          [SA]: BRD/SRS, BPMN 2.0, Kamus Data, Skema Relasional, SSO Auth<br/>
+          [DEV]: Laravel 12, PostgreSQL, Concurrency Locks, GitHub API, REST<br/>
+          [QA]: Boundary Testing, Test Cases Matrix, Postman API Testing
         `;
       } else if (val === 'contact') {
-        resp.innerHTML = `
-          Email: analyst.dipa@example.com<br/>
-          Status: Available for Fulltime & Strategic Architecture Projects
-        `;
+        resp.innerHTML = `Email: analyst.dipa@example.com | Perum DAMRI`;
       } else if (val === 'clear') {
         if (cmdOutput) cmdOutput.innerHTML = '';
         cmdInput.value = '';
         return;
       } else {
-        resp.innerHTML = `'${val}' is not recognized as an internal or external command. Type 'help'.`;
+        resp.innerHTML = `'${val}' tidak dikenali. Ketik 'help' untuk panduan.`;
       }
 
       cmdOutput?.appendChild(resp);
@@ -1055,7 +1464,7 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
     }
   });
 
-  // 11. Copy Email in Outlook Express
+  // 13. Copy Email
   const copyBtn = document.getElementById('xp-copy-email-btn');
   const copyIcon = document.getElementById('xp-copy-icon');
   const copiedIcon = document.getElementById('xp-copied-icon');
@@ -1065,27 +1474,12 @@ Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
     navigator.clipboard.writeText('analyst.dipa@example.com').then(() => {
       copyIcon?.classList.add('hidden');
       copiedIcon?.classList.remove('hidden');
-      if (copyText) copyText.innerText = 'Copied!';
+      if (copyText) copyText.innerText = 'Tersalin!';
       setTimeout(() => {
         copyIcon?.classList.remove('hidden');
         copiedIcon?.classList.add('hidden');
         if (copyText) copyText.innerText = 'Copy Address';
       }, 2000);
     });
-  });
-
-  // 12. Turn Off Computer Shutdown
-  const shutdownBtn = document.getElementById('xp-shutdown-btn');
-  shutdownBtn?.addEventListener('click', () => {
-    const confirmShutdown = confirm('Are you sure you want to shut down and return to the 3D Workstation?');
-    if (confirmShutdown) {
-      const desktop = document.getElementById('xp-desktop-container');
-      if (desktop) {
-        desktop.classList.add('hidden');
-        desktop.classList.remove('flex');
-      }
-      startMenu?.classList.add('hidden');
-      window.dispatchEvent(new CustomEvent('xp:shutdown-to-3d'));
-    }
   });
 </script>

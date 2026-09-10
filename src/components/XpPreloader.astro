@@ -1,191 +1,87 @@
 ---
 ---
 
-<div id="xp-preloader" class="fixed inset-0 z-[100] bg-[#07090e] flex flex-col items-center justify-center select-none transition-all duration-700">
-  <!-- Subtle scanline background -->
-  <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0)_50%,rgba(0,0,0,0.4)_50%)] bg-[length:100%_4px] opacity-40"></div>
+<div id="xp-preloader" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center select-none transition-opacity duration-700">
+  <div class="flex flex-col items-center max-w-sm px-6 w-full text-center">
+    
+    <!-- Authentic Windows XP Logo & Wordmark (Zero AI Neon) -->
+    <div class="flex items-center gap-3.5 mb-10">
+      <!-- Windows 4-Color Flag -->
+      <div class="relative w-12 h-12 shrink-0">
+        <svg class="w-full h-full drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" viewBox="0 0 24 24">
+          <path d="M2 3l9-1v9H2V3z" fill="#f44336" />
+          <path d="M13 1.8l9-1.2v9.4h-9V1.8z" fill="#4caf50" />
+          <path d="M2 13h9v9l-9-1.2V13z" fill="#2196f3" />
+          <path d="M13 13h9v9.4l-9-1.2V13z" fill="#ffeb3b" />
+        </svg>
+      </div>
 
-  <div class="relative z-10 flex flex-col items-center max-w-sm px-6 w-full text-center">
-    <!-- 3D Flipping Card Badge (Retro Flip Animation) -->
-    <div class="flip-scene w-32 h-32 mb-8 cursor-pointer">
-      <div id="flip-card" class="flip-card-inner relative w-full h-full text-center transition-transform duration-700 shadow-2xl">
-        <!-- Front Side: Windows XP 4-Color Logo Emblem -->
-        <div class="flip-card-front absolute inset-0 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-black border-2 border-slate-700/80 flex flex-col items-center justify-center p-4">
-          <svg class="w-14 h-14 drop-shadow-[0_0_12px_rgba(255,255,255,0.3)] animate-pulse" viewBox="0 0 24 24">
-            <rect x="2" y="2" width="9" height="9" fill="#f44336" rx="2" />
-            <rect x="13" y="2" width="9" height="9" fill="#4caf50" rx="2" />
-            <rect x="2" y="13" width="9" height="9" fill="#2196f3" rx="2" />
-            <rect x="13" y="13" width="9" height="9" fill="#ffeb3b" rx="2" />
-          </svg>
-          <span class="text-[10px] font-mono text-slate-400 mt-2 tracking-widest uppercase font-bold">
-            OS / XP 2026
-          </span>
+      <!-- Wordmark -->
+      <div class="text-left font-sans">
+        <div class="text-[11px] text-slate-400 font-semibold tracking-wide">Microsoft&reg;</div>
+        <div class="text-2xl sm:text-3xl font-bold tracking-tight text-white flex items-baseline gap-1 leading-none">
+          Windows<span class="text-amber-500 text-xl italic font-black">xp</span>
         </div>
-
-        <!-- Back Side: System Analyst Tech Core Badge -->
-        <div class="flip-card-back absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-950 via-indigo-950 to-slate-950 border-2 border-cyan-400/80 flex flex-col items-center justify-center p-3">
-          <span class="text-xs font-mono font-black text-cyan-300 tracking-wider">SYSTEM</span>
-          <span class="text-sm font-mono font-black text-white tracking-widest">ANALYST</span>
-          <div class="w-10 h-0.5 bg-cyan-400 my-1"></div>
-          <span class="text-[9px] font-mono text-emerald-400 tracking-tighter">SA &bull; DEV &bull; QA</span>
+        <div class="text-[9px] text-[#2b79e0] tracking-[0.25em] font-mono font-bold uppercase mt-0.5">
+          Professional
         </div>
       </div>
     </div>
 
-    <!-- 3D Flip Counter Tiles (Split-Flap Style) -->
-    <div class="flex items-center justify-center gap-2 mb-4">
-      <div class="flip-tile flex flex-col items-center justify-center w-14 h-16 rounded-xl bg-slate-900 border-2 border-slate-700 text-white font-mono text-2xl font-black shadow-lg">
-        <span id="flip-digit-1">0</span>
-      </div>
-      <div class="flip-tile flex flex-col items-center justify-center w-14 h-16 rounded-xl bg-slate-900 border-2 border-slate-700 text-white font-mono text-2xl font-black shadow-lg">
-        <span id="flip-digit-2">0</span>
-      </div>
-      <div class="flip-tile flex flex-col items-center justify-center w-14 h-16 rounded-xl bg-slate-900 border-2 border-slate-700 text-white font-mono text-2xl font-black shadow-lg">
-        <span id="flip-digit-3">%</span>
+    <!-- Authentic Windows XP Scrolling 3-Block Blue Progress Bar -->
+    <div class="w-64 h-4 bg-[#0a0a0a] rounded-full p-0.5 border border-[#333333] shadow-[inset_0_1px_2px_rgba(0,0,0,0.9)] overflow-hidden relative mb-6">
+      <div id="xp-boot-track" class="w-full h-full relative">
+        <div class="xp-boot-blocks flex gap-1 h-full absolute top-0">
+          <div class="w-3 h-full rounded-sm bg-gradient-to-b from-[#5999ec] via-[#245edb] to-[#143a8c] shadow-sm"></div>
+          <div class="w-3 h-full rounded-sm bg-gradient-to-b from-[#5999ec] via-[#245edb] to-[#143a8c] shadow-sm"></div>
+          <div class="w-3 h-full rounded-sm bg-gradient-to-b from-[#5999ec] via-[#245edb] to-[#143a8c] shadow-sm"></div>
+        </div>
       </div>
     </div>
 
-    <!-- Thin Progress Bar Line -->
-    <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden mb-6 border border-slate-700/60">
-      <div id="preloader-bar" class="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-emerald-400 w-0 transition-all duration-100"></div>
+    <!-- Clean Status Text -->
+    <div class="min-h-[30px] flex items-center justify-center">
+      <span id="xp-preloader-text" class="font-sans text-xs text-slate-400 tracking-wider">
+        Starting up...
+      </span>
     </div>
 
-    <!-- Live Status Log Line -->
-    <div class="min-h-[50px] flex flex-col items-center justify-center">
-      <div id="preloader-status" class="font-mono text-xs uppercase tracking-[0.2em] text-slate-400 animate-pulse">
-        CALIBRATING HARDWARE...
-      </div>
-
-      <!-- Action Button after 100% (Instant Click) -->
-      <button
-        id="preloader-start-btn"
-        class="hidden px-8 py-3.5 rounded-xl border-2 border-cyan-400 bg-cyan-950/80 hover:bg-cyan-400 text-cyan-300 hover:text-black font-black font-mono text-xs sm:text-sm tracking-[0.2em] uppercase transition-all duration-300 shadow-[0_0_30px_rgba(6,182,212,0.4)] cursor-pointer active:scale-95"
-      >
-        PRESS TO ENTER WORKSTATION &rarr;
-      </button>
-    </div>
-
-    <!-- Subtle Footer Tagline -->
-    <div class="mt-8 text-[11px] font-mono text-slate-600 tracking-widest uppercase">
-      MICROSOFT WINDOWS XP &bull; ARCHITECTURE EDITION
+    <div class="mt-8 text-[10px] font-sans text-slate-400">
+      System Analyst Workstation &bull; Perum DAMRI &bull; 2026
     </div>
   </div>
 </div>
 
 <style>
-  .flip-scene {
-    perspective: 1000px;
+  @keyframes xpProgressScroll {
+    0% {
+      left: -40px;
+    }
+    100% {
+      left: 100%;
+    }
   }
-  .flip-card-inner {
-    transform-style: preserve-3d;
-  }
-  .flip-card-front, .flip-card-back {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-  .flip-card-back {
-    transform: rotateY(180deg);
-  }
-  .flipped {
-    transform: rotateY(180deg);
-  }
-  .flip-tick {
-    animation: tileFlip 0.25s ease-in-out;
-  }
-  @keyframes tileFlip {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.15) rotateX(15deg); }
-    100% { transform: scale(1); }
+  .xp-boot-blocks {
+    animation: xpProgressScroll 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 </style>
 
 <script>
-  const card = document.getElementById('flip-card');
-  const d1 = document.getElementById('flip-digit-1');
-  const d2 = document.getElementById('flip-digit-2');
-  const bar = document.getElementById('preloader-bar');
-  const statusText = document.getElementById('preloader-status');
-  const startBtn = document.getElementById('preloader-start-btn');
   const preloader = document.getElementById('xp-preloader');
+  const text = document.getElementById('xp-preloader-text');
 
-  // Automatic periodic 3D card flip
-  let isCardFlipped = false;
-  const cardFlipInterval = setInterval(() => {
-    isCardFlipped = !isCardFlipped;
-    if (card) {
-      if (isCardFlipped) {
-        card.classList.add('flipped');
-      } else {
-        card.classList.remove('flipped');
-      }
-    }
+  // Realistic Windows XP Boot sequence (runs 2.2s then auto-fades smoothly into 3D scene)
+  setTimeout(() => {
+    if (text) text.innerText = 'Loading personalized settings...';
   }, 1200);
 
-  let progress = 0;
-  const statusMessages = [
-    'INITIALIZING BIOS 2026...',
-    'MOUNTING SYSTEM BLUEPRINTS...',
-    'CONFIGURING WINDOWS XP SUBSYSTEM...',
-    'LOADING CASE STUDIES...',
-    'ALL ARTIFACTS VERIFIED'
-  ];
-
-  const interval = setInterval(() => {
-    const inc = Math.floor(Math.random() * 5) + 3;
-    progress = Math.min(100, progress + inc);
-
-    // Update digits
-    if (progress < 10) {
-      if (d1) d1.innerText = '0';
-      if (d2) d2.innerText = progress.toString();
-    } else if (progress < 100) {
-      const s = progress.toString();
-      if (d1) d1.innerText = s[0];
-      if (d2) d2.innerText = s[1];
-    } else {
-      if (d1) d1.innerText = '9';
-      if (d2) d2.innerText = '9';
-    }
-
-    // Trigger flip animation tick on digits
-    d2?.parentElement?.classList.add('flip-tick');
-    setTimeout(() => {
-      d2?.parentElement?.classList.remove('flip-tick');
-    }, 200);
-
-    if (bar) bar.style.width = `${progress}%`;
-
-    const statusIdx = Math.min(statusMessages.length - 1, Math.floor((progress / 100) * statusMessages.length));
-    if (statusText && statusMessages[statusIdx]) {
-      statusText.innerText = statusMessages[statusIdx];
-    }
-
-    if (progress >= 100) {
-      clearInterval(interval);
-      if (d1) d1.innerText = '1';
-      if (d2) d2.innerText = '0';
-      const d3 = document.getElementById('flip-digit-3');
-      if (d3) d3.innerText = '0';
-
-      setTimeout(() => {
-        if (statusText) statusText.classList.add('hidden');
-        if (startBtn) {
-          startBtn.classList.remove('hidden');
-          startBtn.classList.add('inline-flex');
-        }
-      }, 300);
-    }
-  }, 40);
-
-  startBtn?.addEventListener('click', () => {
-    clearInterval(cardFlipInterval);
+  setTimeout(() => {
     window.dispatchEvent(new CustomEvent('xp:preloader-completed'));
-
     if (preloader) {
       preloader.classList.add('opacity-0', 'pointer-events-none');
       setTimeout(() => {
         preloader.classList.add('hidden');
       }, 700);
     }
-  });
+  }, 2200);
 </script>
