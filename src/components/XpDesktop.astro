@@ -9,13 +9,11 @@ import {
   Minus, 
   Square, 
   Layers, 
-  Network, 
   Workflow, 
   ShieldCheck, 
   Code2, 
   Power, 
   Volume2, 
-  VolumeX, 
   Play, 
   Square as StopIcon, 
   SkipForward, 
@@ -28,17 +26,18 @@ import {
   ArrowLeft, 
   ArrowRight, 
   RotateCw, 
-  Home, 
   HardDrive, 
   Laptop, 
   Disc, 
   Save, 
-  FileSpreadsheet, 
-  UserCheck, 
   Briefcase, 
-  GraduationCap, 
-  HelpCircle,
-  Download
+  Image as ImageIcon, 
+  Award, 
+  HelpCircle, 
+  Download, 
+  ZoomIn, 
+  ZoomOut, 
+  Music 
 } from '@lucide/astro';
 
 const allProjects = await getCollection('projects');
@@ -53,8 +52,136 @@ const renderedProjects = await Promise.all(
     };
   })
 );
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const blissImg = `${base}/images/bliss.jpg`;
+
+// Real Certificates of Andhika Putra Pratama
+const certificates = [
+  {
+    id: 1,
+    title: "Ijazah Sarjana Komputer (S.Kom.)",
+    category: "Gelar Akademik",
+    issuer: "Institut Teknologi Sumatera (ITERA)",
+    date: "15 Juli 2023",
+    certNo: "552022023000891",
+    img: `${base}/certificates/certificate_1.jpg`,
+    desc: "Ijazah Sarjana Strata-1 (S1) Program Studi Teknik Informatika, Institut Teknologi Sumatera dengan predikat Sangat Memuaskan."
+  },
+  {
+    id: 2,
+    title: "Transkrip Akademik Resmi (IPK: 3.73)",
+    category: "Transkrip Nilai",
+    issuer: "Institut Teknologi Sumatera (ITERA)",
+    date: "15 Juli 2023",
+    certNo: "TR/327/IT9.F3/IF.14/S-1/2023",
+    img: `${base}/certificates/certificate_2.jpg`,
+    desc: "Transkrip akademik dengan total 147 SKS diselesaikan, IPK kumulatif 3.73 (Skala 4.00) dengan predikat kelulusan Sangat Memuaskan."
+  },
+  {
+    id: 3,
+    title: "ITP TOEFL® Test Score: 640",
+    category: "Sertifikasi Bahasa",
+    issuer: "Centre of Language Improvement (CLIent)",
+    date: "24 Oktober 2025",
+    certNo: "4036.213365/2002/X/2025",
+    img: `${base}/certificates/certificate_3.jpg`,
+    desc: "Skor Uji Kemahiran Bahasa Inggris: Listening 67, Structure 58, Reading 67. Total Overall Score: 640."
+  },
+  {
+    id: 4,
+    title: "IT Specialist in Python",
+    category: "Sertifikasi Internasional",
+    issuer: "Pearson VUE & Certiport",
+    date: "16 Februari 2023",
+    certNo: "QAnD-4wbu",
+    verifyUrl: "https://verify.certiport.com",
+    img: `${base}/certificates/certificate_4.jpg`,
+    desc: "Sertifikasi kompetensi rekayasa perangkat lunak internasional untuk bahasa pemrograman Python."
+  },
+  {
+    id: 5,
+    title: "Machine Learning Specialization",
+    category: "Sertifikasi Internasional",
+    issuer: "DeepLearning.AI & Stanford University",
+    date: "15 Agustus 2024",
+    certNo: "ELS8CJWZ65AH",
+    verifyUrl: "https://coursera.org/verify/specialization/ELS8CJWZ65AH",
+    img: `${base}/certificates/certificate_5.jpg`,
+    desc: "Spesialisasi 3 rangkaian kursus Machine Learning (Supervised Learning, Neural Networks, Unsupervised & Recommender Systems) oleh Andrew Ng."
+  },
+  {
+    id: 6,
+    title: "Crash Course on Python",
+    category: "Sertifikasi Profesional",
+    issuer: "Google / Coursera",
+    date: "2 Mei 2025",
+    certNo: "AIC9TK0FRT1A",
+    verifyUrl: "https://coursera.org/verify/AIC9TK0FRT1A",
+    img: `${base}/certificates/certificate_6.jpg`,
+    desc: "Sertifikasi resmi Google Professional untuk pemecahan masalah algoritma dan otomatisasi sistem dengan Python."
+  },
+  {
+    id: 7,
+    title: "Asisten Praktikum: Pemrograman Berorientasi Objek",
+    category: "Sertifikat Pengajaran",
+    issuer: "Laboratorium Multimedia & UPT ITERA",
+    date: "30 Agustus 2022",
+    certNo: "B/2925/IT9.E5/TA.00.00/2022",
+    img: `${base}/certificates/certificate_7.jpg`,
+    desc: "Sertifikat penghargaan sebagai Asisten Praktikum mata kuliah Pemrograman Berorientasi Objek (PBO) Semester Genap T.A 2021/2022."
+  },
+  {
+    id: 8,
+    title: "Asisten Praktikum: Sistem Tertanam (Embedded Systems)",
+    category: "Sertifikat Pengajaran",
+    issuer: "Laboratorium Multimedia & UPT ITERA",
+    date: "21 Desember 2022",
+    certNo: "B/3707/IT9.E5/TA.00.00/2022",
+    img: `${base}/certificates/certificate_8.jpg`,
+    desc: "Sertifikat penghargaan sebagai Asisten Praktikum mata kuliah Sistem Tertanam (Embedded Systems) Semester Ganjil T.A 2022/2023."
+  }
+];
+
+// Sample Work Documents
+const sampleWorkDocs = [
+  {
+    id: "srs-pumk",
+    title: "SRS_PUMK_Spesifikasi_Kebutuhan.doc",
+    category: "Requirements Engineering",
+    size: "184 KB",
+    date: "Juni 2024",
+    desc: "Dokumen formal Software Requirements Specification (SRS) aplikasi PUMK Perum DAMRI: batasan fungsional, non-fungsional, dan use case.",
+    docSnippet: `DOKUMEN SOFTWARE REQUIREMENTS SPECIFICATION (SRS)\nPROYEK: APLIKASI PUMK - PERUM DAMRI\nNOMOR DOKUMEN: SRS-PUMK-2024-V1.2\n\n1. PENDAHULUAN\nSistem PUMK (Program Usaha Mikro Kecil) dirancang untuk mengelola tata kelola pembiayaan kemitraan BUMN di lingkungan Perum DAMRI.\n\n2. KEBUTUHAN FUNGSIONAL UTAMA\n- FR-01: Verifikasi NIK Pemilik Usaha 16 Digit numerik valid.\n- FR-02: Auto-Generate Kode Mitra format PUMK-{tahun}-{urutan 3 digit} dengan Pessimistic Concurrency Lock (lockForUpdate).\n- FR-03: Otentikasi Shadow User terintegrasi SSO DAMRI tanpa penyimpanan plaintext password.\n- FR-04: Modul monitoring cicilan dan restrukturisasi pinjaman TJSL triwulanan (TW1 - TW4).`
+  },
+  {
+    id: "kamus-data",
+    title: "Kamus_Data_Teknis_Aplikasi_PUMK.doc",
+    category: "Data Modeling & Glosarium",
+    size: "32 KB",
+    date: "Juli 2024",
+    desc: "Kamus data relasional lengkap penyelarasan istilah bisnis Excel Product Owner (MB, Realisasi PK, TW) dengan skema database PostgreSQL.",
+    docSnippet: `KAMUS DATA TEKNIS — SISTEM PUMK DAMRI (32 KB)\nVERSI: 1.0\n\n[TABEL: ref_mitra]\n- id (bigserial, PK)\n- kode_mitra (varchar 20, UNIQUE, Format PUMK-YYYY-XXX)\n- nama_usaha (varchar 150)\n- nama_pemilik (varchar 100)\n- nik_pemilik (char 16, Validasi Dukcapil)\n- id_bu (int, Foreign Key unit bisnis SSO)\n\n[TABEL: tr_tjsl_pembayaran]\n- id (bigserial, PK)\n- id_mitra (bigint, FK ref_mitra.id)\n- nominal_angsuran (decimal 15,2)\n- tanggal_bayar (date)\n- status_verifikasi (enum: DRAFT, APPROVED, REJECTED)`
+  },
+  {
+    id: "audit-push",
+    title: "SOP_Audit_Deployment_PushRequest.doc",
+    category: "DevOps & Audit Governance",
+    size: "95 KB",
+    date: "Agustus 2024",
+    desc: "Standar Operasional Prosedur peninjauan commit GitHub, verifikasi webhook HMAC, dan checklist go-live deployment server production IT DAMRI.",
+    docSnippet: `STANDAR OPERASIONAL PROSEDUR (SOP) AUDIT DEPLOYMENT\nSISTEM INFORMASI IT — PERUM DAMRI\n\n1. TUJUAN\nMenjamin seluruh baris kode yang dirilis ke server production telah melalui tahapan review System Analyst dan Tech Lead.\n\n2. ALUR AUDIT GITHUB PUSH\n- Webhook GitHub mengirimkan payload event push ke endpoint /api/webhook/github-push.\n- Sistem memvalidasi X-Hub-Signature-256 menggunakan secret key rahasia.\n- Commit hash, author, dan diff file tercatat otomatis ke tabel audit_pushes.\n- Go-Live Checklist ditandatangani digital sebelum proses 'git pull' dieksekusi di server live.`
+  },
+  {
+    id: "qa-matrix",
+    title: "Matriks_Skenario_Uji_QA_Boundary.doc",
+    category: "Quality Assurance Testing",
+    size: "64 KB",
+    date: "September 2024",
+    desc: "Matriks skenario pengujian QA untuk kondisi ekstrem: 20 request konkuren bersamaan, payload boundary NIK, dan isolasi kegagalan SSO.",
+    docSnippet: `MATRIKS SKENARIO PENGUJIAN QUALITY ASSURANCE (QA)\n\nTC-01: Concurrency Race Condition Registrasi Mitra\n- Given: 20 request POST registrasi mitra binaan dikirim simultan pada milidetik yang sama.\n- Expected: Seluruh 20 mitra mendapatkan nomor urut berurutan tanpa satu pun duplikasi nomor PUMK-2026-XXX.\n- Result: PASS (PostgreSQL lockForUpdate berhasil mengantrikan transaksi).\n\nTC-02: Boundary NIK Invalid (15 dan 17 digit)\n- Input: NIK string '157107280200006' (15 digit) atau '15710728020000611' (17 digit).\n- Expected: HTTP 422 Unprocessable Entity dengan error message presisi.\n- Result: PASS.`
+  }
+];
 ---
 
 <div 
@@ -67,9 +194,9 @@ const blissImg = `${base}/images/bliss.jpg`;
   <div id="xp-desktop-space" class="relative flex-1 w-full h-[calc(100vh-30px)] overflow-hidden">
 
     <!-- Desktop Icons Grid (Left column) -->
-    <div class="relative z-10 p-3 grid grid-flow-col grid-rows-7 gap-y-2 gap-x-5 w-max pointer-events-auto">
+    <div class="relative z-10 p-3 grid grid-flow-col grid-rows-8 gap-y-2.5 gap-x-5 w-max pointer-events-auto">
       
-      <!-- Icon 1: Welcome_Andhika.doc -->
+      <!-- Icon 1: Welcome.doc -->
       <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-welcome">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-white/95 border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
           <FileText class="w-6 h-6 text-blue-600" />
@@ -79,17 +206,37 @@ const blissImg = `${base}/images/bliss.jpg`;
         </span>
       </div>
 
-      <!-- Icon 2: Resume_Andhika.doc (Curriculum Vitae) -->
+      <!-- Icon 2: Resume.doc -->
       <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-resume">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-white/95 border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
           <Briefcase class="w-6 h-6 text-indigo-600" />
         </div>
-        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Resume.doc" data-id="Resume.doc">
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
           Resume.doc
         </span>
       </div>
 
-      <!-- Icon 3: My Computer (File Explorer) -->
+      <!-- Icon 3: Dokumen Pribadi (Folder Dokumen & Hasil Kerja) -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-docs-folder">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-amber-100 border border-amber-300 shadow-md group-hover:scale-105 transition-transform">
+          <Folder class="w-6 h-6 text-amber-500 fill-amber-400" />
+        </div>
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Work Docs" data-id="Dokumen Kerja">
+          Dokumen Kerja
+        </span>
+      </div>
+
+      <!-- Icon 4: Galeri Sertifikat (Windows Picture & Fax Viewer) -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-gallery">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-200 border border-teal-400 shadow-md group-hover:scale-105 transition-transform">
+          <Award class="w-6 h-6 text-teal-700" />
+        </div>
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Certificates" data-id="Sertifikat">
+          Sertifikat
+        </span>
+      </div>
+
+      <!-- Icon 5: My Computer -->
       <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-explorer">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-slate-100 border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
           <Laptop class="w-6 h-6 text-blue-700" />
@@ -99,17 +246,7 @@ const blissImg = `${base}/images/bliss.jpg`;
         </span>
       </div>
 
-      <!-- Icon 4: Case Studies (IE6) -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-projects">
-        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-amber-100 border border-amber-300 shadow-md group-hover:scale-105 transition-transform">
-          <Folder class="w-6 h-6 text-amber-500 fill-amber-400" />
-        </div>
-        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Case Studies" data-id="Studi Kasus">
-          Case Studies
-        </span>
-      </div>
-
-      <!-- Icon 5: SDLC_Lens.exe -->
+      <!-- Icon 6: SDLC_Lens.exe -->
       <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-sdlc">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-slate-900 border border-cyan-400 shadow-md group-hover:scale-105 transition-transform">
           <Layers class="w-5 h-5 text-cyan-400" />
@@ -119,7 +256,7 @@ const blissImg = `${base}/images/bliss.jpg`;
         </span>
       </div>
 
-      <!-- Icon 6: Windows Media Player (Classic WMP Skin) -->
+      <!-- Icon 7: Windows Media Player -->
       <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-media-player">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-gradient-to-br from-slate-200 to-slate-400 border border-slate-400 shadow-md group-hover:scale-105 transition-transform">
           <Play class="w-5 h-5 text-blue-800 fill-blue-800 ml-0.5" />
@@ -129,20 +266,20 @@ const blissImg = `${base}/images/bliss.jpg`;
         </span>
       </div>
 
-      <!-- Icon 7: Search Companion (Rover the Dog) -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-search">
-        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-yellow-400 border border-yellow-500 shadow-md group-hover:scale-105 transition-transform">
-          <Search class="w-5 h-5 text-slate-900" />
+      <!-- Icon 8: cmd.exe (Fixed!) -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-cmd">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-black border border-slate-600 shadow-md group-hover:scale-105 transition-transform">
+          <Terminal class="w-5 h-5 text-emerald-400" />
         </div>
-        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Search (Rover)" data-id="Pencarian (Rover)">
-          Search (Rover)
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
+          cmd.exe
         </span>
       </div>
     </div>
 
     <!-- ==================== DRAGGABLE & RESIZABLE WINDOWS ==================== -->
 
-    <!-- WINDOW 1: Welcome_Andhika.doc (WordPad) -->
+    <!-- WINDOW 1: Welcome.doc (WordPad) -->
     <div
       id="win-welcome"
       class="xp-window absolute top-6 left-28 w-[92vw] sm:w-[580px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-20 flex flex-col overflow-hidden"
@@ -160,7 +297,6 @@ const blissImg = `${base}/images/bliss.jpg`;
         </div>
       </div>
 
-      <!-- Menu Bar -->
       <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700">
         <span class="hover:underline cursor-pointer">File</span>
         <span class="hover:underline cursor-pointer">Edit</span>
@@ -170,7 +306,6 @@ const blissImg = `${base}/images/bliss.jpg`;
         <span class="hover:underline cursor-pointer">Help</span>
       </div>
 
-      <!-- Content Body -->
       <div class="flex-1 p-5 bg-white overflow-y-auto max-h-[64vh] text-slate-900 leading-relaxed font-sans text-xs">
         <div class="border-b-2 border-blue-600 pb-3 mb-3.5">
           <div class="text-[10px] font-mono uppercase tracking-widest text-blue-700 font-bold i18n" data-en="SYSTEM ANALYST &bull; SOLUTION ARCHITECT &bull; DEV/QA" data-id="SYSTEM ANALYST &bull; SOLUTION ARCHITECT &bull; DEV/QA">
@@ -188,9 +323,9 @@ const blissImg = `${base}/images/bliss.jpg`;
 
         <p class="text-slate-800 mb-3.5 text-xs sm:text-sm leading-relaxed i18n" 
           data-en="Hello! I am a System Analyst with hands-on Software Engineering and Quality Assurance depth. I bridge the gap between complex business requirements and robust, zero-defect engineering delivery. Currently driving enterprise software architectures for state-owned public transit (Perum DAMRI)."
-          data-id="Halo! Saya adalah seorang System Analyst dengan fondasi langsung di bidang Rekayasa Perangkat Lunak (Dev) dan Quality Assurance (QA). Saya bertindak sebagai jembatan strategis antara kebutuhan bisnis yang rumit dengan implementasi teknis yang teruji bebas celah. Saat ini memimpin perancangan arsitektur sistem enterprise di BUMN transportasi umum (Perum DAMRI)."
+          data-id="Halo! Saya adalah seorang System Analyst dengan fondasi langsung di bidang Rekayasa Perangkat Lunak (Dev) dan Quality Assurance (QA). Saya bertindak sebagai jembatan strategis antara kebutuhan bisnis yang rumit dengan implementasi teknis yang teruji bebas celah. Mengembangkan arsitektur sistem enterprise PUMK dan Push Request Tracker di Perum DAMRI."
         >
-          Halo! Saya adalah seorang System Analyst dengan fondasi langsung di bidang Rekayasa Perangkat Lunak (Dev) dan Quality Assurance (QA). Saya bertindak sebagai jembatan strategis antara kebutuhan bisnis yang rumit dengan implementasi teknis yang teruji bebas celah. Saat ini memimpin perancangan arsitektur sistem enterprise di BUMN transportasi umum (Perum DAMRI).
+          Halo! Saya adalah seorang System Analyst dengan fondasi langsung di bidang Rekayasa Perangkat Lunak (Dev) dan Quality Assurance (QA). Saya bertindak sebagai jembatan strategis antara kebutuhan bisnis yang rumit dengan implementasi teknis yang teruji bebas celah. Mengembangkan arsitektur sistem enterprise PUMK dan Push Request Tracker di Perum DAMRI.
         </p>
 
         <!-- 3 Pillars Matrix -->
@@ -226,43 +361,36 @@ const blissImg = `${base}/images/bliss.jpg`;
           </div>
         </div>
 
-        <!-- Quick CTAs -->
         <div class="pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2.5">
           <div class="flex items-center gap-2">
             <button
               class="px-3 py-1.5 rounded text-xs font-semibold bg-[#ece9d8] border border-[#7f9db9] shadow-sm hover:bg-white active:scale-95 cursor-pointer"
-              onclick="document.querySelector('[data-open=\'win-resume\']').click()"
+              onclick="openWindow('win-resume')"
             >
               Lihat Resume Lengkap &rarr;
             </button>
             <button
               class="px-3 py-1.5 rounded text-xs font-semibold bg-[#ece9d8] border border-[#7f9db9] shadow-sm hover:bg-white active:scale-95 cursor-pointer"
-              onclick="document.querySelector('[data-open=\'win-projects\']').click()"
+              onclick="openWindow('win-docs-folder')"
             >
-              Buka Studi Kasus
+              Folder Dokumen Kerja
             </button>
           </div>
 
           <span class="text-xs font-mono text-emerald-700 font-bold">
-            &bull; Open for Strategic Opportunities
+            &bull; Open for Opportunities
           </span>
         </div>
       </div>
 
-      <!-- Diagonal Resize Grip Handle -->
       <div class="win-resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-se-resize flex items-end justify-end p-0.5 z-30">
         <svg class="w-3 h-3 text-slate-400" viewBox="0 0 12 12" fill="currentColor">
-          <circle cx="10" cy="10" r="1.2" />
-          <circle cx="6" cy="10" r="1.2" />
-          <circle cx="10" cy="6" r="1.2" />
-          <circle cx="2" cy="10" r="1.2" />
-          <circle cx="6" cy="6" r="1.2" />
-          <circle cx="10" cy="2" r="1.2" />
+          <circle cx="10" cy="10" r="1.2" /><circle cx="6" cy="10" r="1.2" /><circle cx="10" cy="6" r="1.2" /><circle cx="2" cy="10" r="1.2" /><circle cx="6" cy="6" r="1.2" /><circle cx="10" cy="2" r="1.2" />
         </svg>
       </div>
     </div>
 
-    <!-- WINDOW 2: Resume_Andhika.doc (Curriculum Vitae) -->
+    <!-- WINDOW 2: Resume_Andhika.doc (Curriculum Vitae Update) -->
     <div
       id="win-resume"
       class="xp-window absolute top-8 left-32 w-[94vw] sm:w-[680px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
@@ -279,96 +407,143 @@ const blissImg = `${base}/images/bliss.jpg`;
         </div>
       </div>
 
-      <!-- Menu Bar -->
-      <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700">
-        <span class="hover:underline cursor-pointer" onclick="window.print()">Print</span>
-        <span class="hover:underline cursor-pointer" onclick="document.querySelector('[data-open=\'win-contact\']').click()">Contact Me</span>
+      <div class="h-6 px-2 flex items-center justify-between text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700">
+        <div class="flex items-center gap-3">
+          <span class="hover:underline cursor-pointer" onclick="window.print()">Print</span>
+          <span class="hover:underline cursor-pointer" onclick="openWindow('win-contact')">Contact Me</span>
+          <span class="hover:underline cursor-pointer" onclick="openWindow('win-gallery')">Lihat Sertifikat Asli</span>
+        </div>
+        <span class="text-[10.5px] font-mono text-emerald-800 font-bold">IPK: 3.73 (Cum Laude)</span>
       </div>
 
       <div class="flex-1 p-6 sm:p-8 bg-white overflow-y-auto max-h-[64vh] text-slate-900 font-sans text-xs sm:text-sm leading-relaxed">
-        <!-- Resume Header -->
+        <!-- Header -->
         <div class="border-b-2 border-slate-900 pb-4 mb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
             <h1 class="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-              ANDHIKA PUTRA PRATAMA
+              ANDHIKA PUTRA PRATAMA, S.Kom.
             </h1>
             <div class="text-sm font-bold text-blue-800 mt-0.5">
               System Analyst &bull; Solution Architect &bull; Tech Lead
             </div>
           </div>
-          <div class="text-xs text-slate-600 font-mono text-left sm:text-right space-y-0.5">
-            <div>Email: <strong class="text-slate-900">andhikapp28@gmail.com</strong></div>
-            <div>GitHub: <a href="https://github.com/andhikapp28" target="_blank" class="text-blue-700 underline">github.com/andhikapp28</a></div>
-            <div>Domisili: Indonesia</div>
+          <div class="text-xs text-slate-700 font-mono text-left sm:text-right space-y-0.5">
+            <div>Email: <strong class="text-blue-900">andhikapp28@gmail.com</strong></div>
+            <div>GitHub: <a href="https://github.com/andhikapp28" target="_blank" class="text-blue-700 underline font-bold">github.com/andhikapp28</a></div>
+            <div>Telepon: 0812-7255-5407</div>
+            <div>Lampung Selatan, Lampung, Indonesia</div>
           </div>
         </div>
 
         <!-- Summary -->
         <div class="mb-5">
           <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-blue-900 border-b border-blue-200 pb-1 mb-2">
-            PROFESSIONAL SUMMARY
+            PROFIL PROFESIONAL
           </h3>
           <p class="text-slate-800 text-xs sm:text-sm leading-relaxed">
-            System Analyst berpengalaman dengan kemampuan perancangan spesifikasi sistem end-to-end (BRD, SRS, BPMN 2.0, Kamus Data), integrasi arsitektur enterprise skala nasional, dan pemahaman teknis mendalam pada backend (Laravel 12, PostgreSQL) serta Quality Assurance (QA boundary testing). Mampu menyatukan kepentingan strategis bisnis C-level dengan kapabilitas tim engineering secara akurat dan terukur.
+            Lulusan <strong>Teknik Informatika Institut Teknologi Sumatera (ITERA)</strong> dengan IPK <strong>3.73 (Sangat Memuaskan)</strong> dan skor <strong>TOEFL 640</strong>. Berpengalaman sebagai System Analyst, Asisten Laboratorium, dan Front End Developer dalam proyek strategis seperti <strong>Platform PUMK BUMN Perum DAMRI</strong> dan <strong>Sistem GitHub Push Audit Tracker</strong>. Menguasai penyusunan dokumen SRS/BRD, diagram BPMN 2.0, Kamus Data teknis, pemrograman backend (Laravel 12, PostgreSQL), serta telah mempublikasikan <strong>4 buku ber-ISBN</strong> di bidang rekayasa sistem dan IoT.
           </p>
+        </div>
+
+        <!-- Education -->
+        <div class="mb-5">
+          <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-blue-900 border-b border-blue-200 pb-1 mb-2">
+            PENDIDIKAN FORMAL
+          </h3>
+          <div>
+            <div class="flex justify-between items-baseline font-bold text-slate-950">
+              <span>INSTITUT TEKNOLOGI SUMATERA (ITERA)</span>
+              <span class="font-mono text-xs text-slate-600">Juni 2019 &mdash; Juli 2023</span>
+            </div>
+            <div class="text-blue-900 font-semibold text-xs mt-0.5">
+              Sarjana Komputer (S.Kom.) &bull; S1 Teknik Informatika | <strong>IPK: 3.73 / 4.00 (Sangat Memuaskan)</strong>
+            </div>
+            <div class="text-xs text-slate-600 mt-1">
+              Tugas Akhir: <em>Implementasi Sistem Monitoring Keadaan Tanah dan Lingkungan Berbasis IoT Menggunakan K-Nearest Neighbour.</em>
+            </div>
+          </div>
         </div>
 
         <!-- Experience -->
         <div class="mb-5">
           <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-blue-900 border-b border-blue-200 pb-1 mb-2">
-            PENGALAMAN KERJA UTAMA
+            PENGALAMAN KERJA RELEVAN
           </h3>
           <div class="space-y-4">
             <div>
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between font-bold text-xs sm:text-sm text-slate-950">
-                <span>System Analyst &amp; Full-Stack Engineer &bull; Perum DAMRI</span>
-                <span class="text-slate-500 font-mono text-xs">2024 &mdash; Sekarang</span>
+              <div class="flex justify-between items-baseline font-bold text-slate-950">
+                <span>System Analyst &amp; Full-Stack Developer &bull; Perum DAMRI</span>
+                <span class="font-mono text-xs text-slate-600">2024 &mdash; Sekarang</span>
               </div>
-              <ul class="mt-2 space-y-1.5 text-xs text-slate-700 list-disc pl-4">
-                <li><strong>Aplikasi PUMK (Program Usaha Mikro Kecil):</strong> Merancang SRS, menyusun kamus data teknis 32KB, dan mendesain mekanisme <code>lockForUpdate()</code> PostgreSQL untuk mencegah benturan registrasi nomor mitra binaan serentak antar cabang di seluruh Indonesia.</li>
-                <li><strong>Sistem Push Request &amp; Audit Tracker:</strong> Membangun platform internal pemantauan commit GitHub ke production, integrasi Webhook GitHub API, manajemen proyek task kanban developer, dan pelacakan audit diff file sebelum rilis.</li>
-                <li><strong>Integrasi SSO DAMRI:</strong> Mengimplementasikan arsitektur *Shadow User* yang terhubung ke database otentikasi pusat SSO tanpa menyimpan plaintext password lokal pegawai.</li>
+              <ul class="mt-1.5 space-y-1 text-xs text-slate-700 list-disc pl-4">
+                <li><strong>Aplikasi PUMK DAMRI:</strong> Menyusun dokumen SRS formal, memetakan data kamus data 32KB, mengimplementasikan <code>lockForUpdate()</code> PostgreSQL untuk pencegahan benturan nomor mitra di puluhan cabang, serta menghubungkan sistem ke database SSO DAMRI.</li>
+                <li><strong>Push Request Tracker:</strong> Membangun platform audit commit GitHub tim developer, webhook API verification, dan manajemen kanban proyek IT DAMRI.</li>
+              </ul>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-baseline font-bold text-slate-950">
+                <span>Pranata Laboratorium &bull; Institut Teknologi Sumatera</span>
+                <span class="font-mono text-xs text-slate-600">Maret 2024 &mdash; Des 2024</span>
+              </div>
+              <ul class="mt-1.5 space-y-1 text-xs text-slate-700 list-disc pl-4">
+                <li>Mengelola operasional dan inventarisasi peralatan laboratorium teknologi terpadu.</li>
+                <li>Menyusun penjadwalan dan laporan praktikum bebas tabrakan jadwal (*zero collision*).</li>
+              </ul>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-baseline font-bold text-slate-950">
+                <span>Front End Developer &bull; Proyek Kedaireka ITERA</span>
+                <span class="font-mono text-xs text-slate-600">Agu 2023 &mdash; Des 2023</span>
+              </div>
+              <ul class="mt-1.5 space-y-1 text-xs text-slate-700 list-disc pl-4">
+                <li>Menyusun dokumen Software Requirements Specification (SRS) untuk Building Monitoring System berbasis IoT.</li>
+                <li>Mengembangkan antarmuka responsif dan buku panduan dokumentasi sistem.</li>
               </ul>
             </div>
           </div>
         </div>
 
-        <!-- Skills -->
+        <!-- Certifications -->
         <div class="mb-5">
           <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-blue-900 border-b border-blue-200 pb-1 mb-2">
-            KEAHLIAN TEKNIS (CORE COMPETENCIES)
+            SERTIFIKASI KOMPETENSI
           </h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <div>
-              <strong class="text-slate-900 block mb-1">Analisis Sistem &amp; Arsitektur:</strong>
-              <span class="text-slate-700">BRD/SRS Documentation, BPMN 2.0 Process Modeling, Kamus Data (Data Dictionary), Normalisasi Database (3NF), OpenAPI / Swagger Contract, State Machine.</span>
-            </div>
-            <div>
-              <strong class="text-slate-900 block mb-1">Development &amp; Database:</strong>
-              <span class="text-slate-700">Laravel 12, PHP, PostgreSQL, MySQL, Redis Locking, Concurrency Control, Git / GitHub API Webhooks, RESTful Architecture.</span>
-            </div>
-            <div>
-              <strong class="text-slate-900 block mb-1">Quality Assurance &amp; Testing:</strong>
-              <span class="text-slate-700">Boundary Value Testing, Negative Testing Matrix, Postman API Test Automation, UAT Facilitation, Race-Condition Verification.</span>
-            </div>
-            <div>
-              <strong class="text-slate-900 block mb-1">Project Management:</strong>
-              <span class="text-slate-700">Kanban Board, Scrum / Agile SDLC, WBS (Work Breakdown Structure), Technical Spike &amp; PoC Prototyping.</span>
-            </div>
-          </div>
+          <ul class="space-y-1 text-xs text-slate-800 list-disc pl-4">
+            <li><strong>Crash Course on Python</strong> &mdash; Google / Coursera (2025)</li>
+            <li><strong>Machine Learning Specialization</strong> &mdash; DeepLearning.AI &amp; Stanford University / Andrew Ng (2024)</li>
+            <li><strong>Information Technology Specialist in Python</strong> &mdash; Pearson VUE &amp; Certiport (2023)</li>
+            <li><strong>English Proficiency TOEFL ITP Score 640</strong> &mdash; Centre of Language Improvement (2025)</li>
+          </ul>
         </div>
 
-        <!-- Action inside Resume -->
+        <!-- Publications -->
+        <div class="mb-5">
+          <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-blue-900 border-b border-blue-200 pb-1 mb-2">
+            PUBLIKASI BUKU RESMI (BER-ISBN)
+          </h3>
+          <ul class="space-y-1 text-xs text-slate-800 list-disc pl-4">
+            <li><em>Manajemen Spesifikasi Kebutuhan Pengguna pada Building Monitoring System Berbasis IoT</em> (ISBN: 978-634-7013-56-9)</li>
+            <li><em>Manajemen IoT dalam Sistem Pengontrolan Kelistrikan: Konsep dan Implementasi</em> (ISBN: 978-623-8472-40-6)</li>
+            <li><em>Sistem Digital Proteus dan Mikrokontroler ESP32</em> (ISBN: 978-634-7013-58-3)</li>
+            <li><em>Pengetahuan Dasar Desain PCB pada Aplikasi KiCad</em> (ISBN: 978-634-7013-74-3)</li>
+          </ul>
+        </div>
+
         <div class="pt-4 border-t border-slate-200 flex items-center justify-between">
           <a
             href="mailto:andhikapp28@gmail.com"
-            class="px-4 py-1.5 rounded bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm transition-all"
+            class="px-4 py-1.5 rounded bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm"
           >
-            Hubungi Andhika via Email &rarr;
+            Hubungi via Email (andhikapp28@gmail.com)
           </a>
-          <span class="text-[11px] font-mono text-slate-500">
-            Updated: September 2026
-          </span>
+          <button
+            class="px-3 py-1.5 rounded bg-[#ece9d8] border border-[#7f9db9] font-bold text-xs hover:bg-white cursor-pointer"
+            onclick="openWindow('win-gallery')"
+          >
+            Buka Galeri Sertifikat Fisik &rarr;
+          </button>
         </div>
       </div>
 
@@ -379,13 +554,234 @@ const blissImg = `${base}/images/bliss.jpg`;
       </div>
     </div>
 
-    <!-- WINDOW 3: My Computer (Authentic Windows XP Explorer Layout) -->
+    <!-- WINDOW 3: Dokumen Pribadi & Hasil Kerja (Folder Explorer) -->
+    <div
+      id="win-docs-folder"
+      class="xp-window absolute top-12 left-36 w-[94vw] sm:w-[680px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
+    >
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+          <Folder class="w-3.5 h-3.5 text-amber-300 fill-amber-300 shrink-0" />
+          <span>C:\Documents and Settings\Andhika\Dokumen_Kerja\</span>
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+        </div>
+      </div>
+
+      <div class="h-7 px-2 flex items-center gap-2 text-xs bg-[#ece9d8] border-b border-[#d8d4c2]">
+        <span class="text-slate-600 font-medium">Address:</span>
+        <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-xs font-mono text-slate-800 truncate">
+          C:\Dokumen_Pribadi\Hasil_Kerja\
+        </div>
+      </div>
+
+      <div class="flex-1 p-4 bg-white overflow-y-auto max-h-[60vh] text-xs">
+        <div class="text-[11px] text-slate-500 mb-3 font-medium">
+          Daftar dokumen portofolio teknis dan artefak kerja yang disusun oleh Andhika Putra Pratama:
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- File 1: ATS CV -->
+          <div 
+            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
+            onclick="openWindow('win-resume')"
+          >
+            <FileText class="w-7 h-7 text-indigo-600 shrink-0 mt-0.5" />
+            <div class="truncate">
+              <div class="font-bold text-blue-900 group-hover:underline truncate">CV_ATS_Andhika_Putra.doc</div>
+              <div class="text-[10px] text-slate-500 mt-0.5">Curriculum Vitae Standar ATS</div>
+              <div class="text-[10px] text-emerald-700 font-semibold mt-1">Status: Siap Diunduh / Cetak</div>
+            </div>
+          </div>
+
+          <!-- File 2: SRS PUMK -->
+          <div 
+            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
+            onclick="openSampleDoc('srs-pumk')"
+          >
+            <FileText class="w-7 h-7 text-blue-600 shrink-0 mt-0.5" />
+            <div class="truncate">
+              <div class="font-bold text-blue-900 group-hover:underline truncate">SRS_PUMK_Spesifikasi.doc</div>
+              <div class="text-[10px] text-slate-500 mt-0.5">184 KB &bull; Software Requirements Spec</div>
+              <div class="text-[10px] text-blue-700 font-semibold mt-1">Perum DAMRI TJSL</div>
+            </div>
+          </div>
+
+          <!-- File 3: Kamus Data -->
+          <div 
+            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
+            onclick="openSampleDoc('kamus-data')"
+          >
+            <FileText class="w-7 h-7 text-blue-600 shrink-0 mt-0.5" />
+            <div class="truncate">
+              <div class="font-bold text-blue-900 group-hover:underline truncate">Kamus_Data_Teknis_Aplikasi.doc</div>
+              <div class="text-[10px] text-slate-500 mt-0.5">32 KB &bull; Data Dictionary Formal</div>
+              <div class="text-[10px] text-blue-700 font-semibold mt-1">Penyelarasan PO Excel vs DB</div>
+            </div>
+          </div>
+
+          <!-- File 4: SOP Push Request -->
+          <div 
+            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
+            onclick="openSampleDoc('audit-push')"
+          >
+            <FileText class="w-7 h-7 text-blue-600 shrink-0 mt-0.5" />
+            <div class="truncate">
+              <div class="font-bold text-blue-900 group-hover:underline truncate">SOP_Audit_GitHub_Push.doc</div>
+              <div class="text-[10px] text-slate-500 mt-0.5">95 KB &bull; DevOps Deployment SOP</div>
+              <div class="text-[10px] text-blue-700 font-semibold mt-1">Webhook API &amp; Prod Tracking</div>
+            </div>
+          </div>
+
+          <!-- File 5: QA Matrix -->
+          <div 
+            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
+            onclick="openSampleDoc('qa-matrix')"
+          >
+            <FileText class="w-7 h-7 text-emerald-600 shrink-0 mt-0.5" />
+            <div class="truncate">
+              <div class="font-bold text-blue-900 group-hover:underline truncate">Matriks_Skenario_QA_Testing.doc</div>
+              <div class="text-[10px] text-slate-500 mt-0.5">64 KB &bull; Test Cases &amp; Concurrency</div>
+              <div class="text-[10px] text-emerald-700 font-semibold mt-1">Boundary &amp; Negative Matrix</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="win-resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-se-resize flex items-end justify-end p-0.5 z-30">
+        <svg class="w-3 h-3 text-slate-400" viewBox="0 0 12 12" fill="currentColor">
+          <circle cx="10" cy="10" r="1.2" /><circle cx="6" cy="10" r="1.2" /><circle cx="10" cy="6" r="1.2" /><circle cx="2" cy="10" r="1.2" /><circle cx="6" cy="6" r="1.2" /><circle cx="10" cy="2" r="1.2" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- WINDOW 4: Sample Document Viewer Modal (WordPad Reader) -->
+    <div
+      id="win-doc-viewer"
+      class="xp-window absolute top-10 left-32 w-[94vw] sm:w-[680px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-30 flex flex-col overflow-hidden hidden"
+    >
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+          <FileText class="w-3.5 h-3.5 text-blue-200 shrink-0" />
+          <span id="doc-viewer-title">Document Viewer</span>
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+        </div>
+      </div>
+
+      <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700">
+        <span class="hover:underline cursor-pointer" onclick="openWindow('win-docs-folder')">&larr; Kembali ke Folder</span>
+        <span class="hover:underline cursor-pointer" onclick="window.print()">Print Document</span>
+      </div>
+
+      <div class="flex-1 p-6 bg-white overflow-y-auto max-h-[64vh] text-slate-900 font-mono text-xs leading-relaxed">
+        <pre id="doc-viewer-content" class="whitespace-pre-wrap font-mono text-xs text-slate-800"></pre>
+      </div>
+
+      <div class="win-resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-se-resize flex items-end justify-end p-0.5 z-30">
+        <svg class="w-3 h-3 text-slate-400" viewBox="0 0 12 12" fill="currentColor">
+          <circle cx="10" cy="10" r="1.2" /><circle cx="6" cy="10" r="1.2" /><circle cx="10" cy="6" r="1.2" /><circle cx="2" cy="10" r="1.2" /><circle cx="6" cy="6" r="1.2" /><circle cx="10" cy="2" r="1.2" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- WINDOW 5: Galeri Sertifikat (Windows Picture and Fax Viewer) -->
+    <div
+      id="win-gallery"
+      class="xp-window absolute top-10 left-32 w-[95vw] sm:w-[740px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-20 flex flex-col overflow-hidden hidden"
+    >
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+          <Award class="w-3.5 h-3.5 text-teal-200 shrink-0" />
+          <span id="gallery-titlebar">Windows Picture and Fax Viewer - Sertifikat</span>
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+        </div>
+      </div>
+
+      <!-- Main Viewer Area -->
+      <div class="flex-1 p-4 bg-[#4a5568] flex flex-col items-center justify-center overflow-y-auto max-h-[52vh] relative">
+        <img
+          id="gallery-main-img"
+          src={certificates[0].img}
+          alt={certificates[0].title}
+          class="max-h-[46vh] max-w-full object-contain rounded shadow-2xl border border-slate-900 bg-white"
+        />
+      </div>
+
+      <!-- Certificate Meta Info Strip -->
+      <div class="px-4 py-2 bg-white border-t border-[#d8d4c2] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+        <div>
+          <div class="font-bold text-slate-950" id="gallery-cert-title">{certificates[0].title}</div>
+          <div class="text-[11px] text-slate-600" id="gallery-cert-issuer">
+            Penerbit: {certificates[0].issuer} &bull; Tanggal: {certificates[0].date}
+          </div>
+        </div>
+        <div class="flex items-center gap-2 font-mono text-[11px] shrink-0" id="gallery-cert-links">
+          <span class="text-slate-500" id="gallery-cert-no">No: {certificates[0].certNo}</span>
+          <a
+            id="gallery-cert-dl"
+            href={certificates[0].img}
+            download
+            class="px-2.5 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] hover:bg-white text-slate-900 font-sans font-semibold flex items-center gap-1 shadow-xs"
+          >
+            <Download class="w-3 h-3" />
+            <span>Unduh</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- XP Picture Viewer Bottom Toolbar & Thumbnail Strip -->
+      <div class="p-2 bg-[#ece9d8] border-t border-[#d8d4c2] flex flex-col gap-2">
+        <!-- Controls -->
+        <div class="flex items-center justify-center gap-3">
+          <button id="gallery-btn-prev" class="px-3 py-1 rounded bg-white border border-[#7f9db9] font-bold text-xs hover:bg-blue-50 flex items-center gap-1 cursor-pointer">
+            <ArrowLeft class="w-3.5 h-3.5 text-blue-600" />
+            <span>Sebelumnya</span>
+          </button>
+          <span id="gallery-counter" class="text-xs font-mono font-bold text-slate-700">1 / 8</span>
+          <button id="gallery-btn-next" class="px-3 py-1 rounded bg-white border border-[#7f9db9] font-bold text-xs hover:bg-blue-50 flex items-center gap-1 cursor-pointer">
+            <span>Berikutnya</span>
+            <ArrowRight class="w-3.5 h-3.5 text-blue-600" />
+          </button>
+        </div>
+
+        <!-- Clickable Thumbnails Reel -->
+        <div class="flex items-center gap-2 overflow-x-auto py-1 px-1">
+          {certificates.map((c, idx) => (
+            <div 
+              class="cert-thumb-card shrink-0 w-20 h-14 rounded border-2 border-slate-300 hover:border-blue-500 overflow-hidden cursor-pointer bg-white p-0.5"
+              data-idx={idx}
+            >
+              <img src={c.img} alt={c.title} class="w-full h-full object-cover" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="win-resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-se-resize flex items-end justify-end p-0.5 z-30">
+        <svg class="w-3 h-3 text-slate-400" viewBox="0 0 12 12" fill="currentColor">
+          <circle cx="10" cy="10" r="1.2" /><circle cx="6" cy="10" r="1.2" /><circle cx="10" cy="6" r="1.2" /><circle cx="2" cy="10" r="1.2" /><circle cx="6" cy="6" r="1.2" /><circle cx="10" cy="2" r="1.2" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- WINDOW 6: My Computer (XP Drive Layout) -->
     <div
       id="win-explorer"
       class="xp-window absolute top-10 left-36 w-[94vw] sm:w-[680px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
       <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
-        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.7)] truncate">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Laptop class="w-3.5 h-3.5 text-blue-200 shrink-0" />
           <span class="i18n" data-en="My Computer" data-id="Komputer Saya">My Computer</span>
         </div>
@@ -396,59 +792,52 @@ const blissImg = `${base}/images/bliss.jpg`;
         </div>
       </div>
 
-      <!-- Address Bar -->
       <div class="h-7 px-2 flex items-center gap-2 text-xs bg-[#ece9d8] border-b border-[#d8d4c2]">
         <span class="text-slate-600 font-medium">Address:</span>
-        <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-xs font-mono text-slate-800 flex items-center truncate" id="mycomputer-path">
+        <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-xs font-mono text-slate-800 truncate">
           My Computer
         </div>
       </div>
 
-      <!-- Two-Pane Layout -->
       <div class="flex flex-1 overflow-hidden bg-white max-h-[60vh] text-xs">
-        <!-- Authentic XP Left Task Pane -->
         <div class="w-44 border-r border-[#d8d4c2] bg-[#f0f4fc] p-2 overflow-y-auto space-y-3 shrink-0">
-          <!-- System Tasks Box -->
           <div class="rounded border border-[#b8c9e5] bg-white overflow-hidden shadow-xs">
             <div class="h-5 px-2 bg-gradient-to-r from-[#215dc6] to-[#3a8bf5] text-white font-bold text-[10px] flex items-center">
               System Tasks
             </div>
             <div class="p-1.5 space-y-1 text-[10.5px] text-blue-900">
-              <div class="hover:underline cursor-pointer" onclick="document.querySelector('[data-open=\'win-resume\']').click()">View Profile &amp; CV</div>
-              <div class="hover:underline cursor-pointer" onclick="document.querySelector('[data-open=\'win-sdlc\']').click()">SDLC Architecture</div>
+              <div class="hover:underline cursor-pointer" onclick="openWindow('win-resume')">View Resume / CV</div>
+              <div class="hover:underline cursor-pointer" onclick="openWindow('win-gallery')">Galeri Sertifikat</div>
             </div>
           </div>
 
-          <!-- Other Places Box -->
           <div class="rounded border border-[#b8c9e5] bg-white overflow-hidden shadow-xs">
             <div class="h-5 px-2 bg-gradient-to-r from-[#215dc6] to-[#3a8bf5] text-white font-bold text-[10px] flex items-center">
               Other Places
             </div>
             <div class="p-1.5 space-y-1 text-[10.5px] text-blue-900">
-              <div class="hover:underline cursor-pointer" onclick="document.querySelector('[data-open=\'win-projects\']').click()">Case Studies</div>
-              <div class="hover:underline cursor-pointer" onclick="document.querySelector('[data-open=\'win-welcome\']').click()">Welcome Doc</div>
-              <div class="hover:underline cursor-pointer" onclick="document.querySelector('[data-open=\'win-contact\']').click()">Contact Me</div>
+              <div class="hover:underline cursor-pointer" onclick="openWindow('win-projects')">Case Studies (E:)</div>
+              <div class="hover:underline cursor-pointer" onclick="openWindow('win-docs-folder')">Dokumen Kerja</div>
+              <div class="hover:underline cursor-pointer" onclick="openWindow('win-contact')">Contact Andhika</div>
             </div>
           </div>
         </div>
 
-        <!-- Right Drive & Folder Grid (Authentic XP Category Grouping) -->
         <div class="flex-1 p-3 overflow-y-auto space-y-4">
-          <!-- Category 1: Files Stored on This Computer -->
           <div>
             <div class="text-[11px] font-bold text-slate-700 border-b border-slate-200 pb-1 mb-2">
               Files Stored on This Computer
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <div class="flex items-center gap-2 p-1.5 rounded hover:bg-blue-50 cursor-pointer group" onclick="document.querySelector('[data-open=\'win-welcome\']').click()">
+              <div class="flex items-center gap-2 p-1.5 rounded hover:bg-blue-50 cursor-pointer group" onclick="openWindow('win-docs-folder')">
                 <Folder class="w-7 h-7 text-amber-500 fill-amber-400 shrink-0" />
                 <div class="truncate">
                   <div class="font-bold text-slate-900 group-hover:underline truncate">Shared Documents</div>
-                  <div class="text-[10px] text-slate-500">Folder Berkas</div>
+                  <div class="text-[10px] text-slate-500">Berkas Publik</div>
                 </div>
               </div>
 
-              <div class="flex items-center gap-2 p-1.5 rounded hover:bg-blue-50 cursor-pointer group" onclick="document.querySelector('[data-open=\'win-resume\']').click()">
+              <div class="flex items-center gap-2 p-1.5 rounded hover:bg-blue-50 cursor-pointer group" onclick="openWindow('win-resume')">
                 <Folder class="w-7 h-7 text-amber-500 fill-amber-400 shrink-0" />
                 <div class="truncate">
                   <div class="font-bold text-slate-900 group-hover:underline truncate">Andhika's Docs</div>
@@ -458,13 +847,11 @@ const blissImg = `${base}/images/bliss.jpg`;
             </div>
           </div>
 
-          <!-- Category 2: Hard Disk Drives -->
           <div>
             <div class="text-[11px] font-bold text-slate-700 border-b border-slate-200 pb-1 mb-2">
               Hard Disk Drives
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <!-- Local Disk C: -->
               <div class="flex items-center gap-2 p-1.5 rounded hover:bg-blue-50 cursor-pointer group">
                 <HardDrive class="w-7 h-7 text-slate-700 shrink-0" />
                 <div class="truncate">
@@ -473,11 +860,9 @@ const blissImg = `${base}/images/bliss.jpg`;
                 </div>
               </div>
 
-              <!-- Data Disk E: (Holds KERJA\DAMRI) -->
               <div 
                 class="flex items-center gap-2 p-1.5 rounded hover:bg-blue-50 border border-transparent hover:border-blue-300 cursor-pointer group" 
-                onclick="document.querySelector('[data-open=\'win-projects\']').click()"
-                title="Klik untuk membuka studi kasus E:\KERJA\DAMRI"
+                onclick="openWindow('win-projects')"
               >
                 <HardDrive class="w-7 h-7 text-blue-700 shrink-0" />
                 <div class="truncate">
@@ -488,7 +873,6 @@ const blissImg = `${base}/images/bliss.jpg`;
             </div>
           </div>
 
-          <!-- Category 3: Devices with Removable Storage -->
           <div>
             <div class="text-[11px] font-bold text-slate-700 border-b border-slate-200 pb-1 mb-2">
               Devices with Removable Storage
@@ -521,13 +905,13 @@ const blissImg = `${base}/images/bliss.jpg`;
       </div>
     </div>
 
-    <!-- WINDOW 4: Case Studies List (E:\KERJA\DAMRI\KODING\) -->
+    <!-- WINDOW 7: Case Studies List -->
     <div
       id="win-projects"
       class="xp-window absolute top-14 left-44 w-[92vw] sm:w-[660px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
       <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
-        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.7)] truncate">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Folder class="w-3.5 h-3.5 text-amber-300 fill-amber-300 shrink-0" />
           <span>E:\KERJA\DAMRI\ - Daftar Proyek &amp; Studi Kasus</span>
         </div>
@@ -592,13 +976,13 @@ const blissImg = `${base}/images/bliss.jpg`;
       </div>
     </div>
 
-    <!-- WINDOW 5: Internet Explorer 6 (High-Contrast Full Case Study Reader!) -->
+    <!-- WINDOW 8: Internet Explorer 6 (High-Contrast Full Case Study Reader) -->
     <div
       id="win-ie-reader"
       class="xp-window absolute top-8 left-28 w-[95vw] sm:w-[780px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-20 flex flex-col overflow-hidden hidden"
     >
       <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
-        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.7)] truncate">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Globe class="w-3.5 h-3.5 text-blue-200 shrink-0" />
           <span id="ie-titlebar-text">Microsoft Internet Explorer - Case Study Document</span>
         </div>
@@ -609,9 +993,8 @@ const blissImg = `${base}/images/bliss.jpg`;
         </div>
       </div>
 
-      <!-- IE6 Toolbar -->
       <div class="h-8 px-2 flex items-center gap-2 bg-[#ece9d8] border-b border-[#d8d4c2] text-xs">
-        <button class="px-2 py-0.5 rounded hover:bg-white flex items-center gap-1 text-slate-700 cursor-pointer" onclick="document.getElementById('win-projects').style.display='flex';">
+        <button class="px-2 py-0.5 rounded hover:bg-white flex items-center gap-1 text-slate-700 cursor-pointer" onclick="openWindow('win-projects')">
           <ArrowLeft class="w-3.5 h-3.5 text-blue-600" />
           <span>Back</span>
         </button>
@@ -628,13 +1011,11 @@ const blissImg = `${base}/images/bliss.jpg`;
         </div>
       </div>
 
-      <!-- IE6 Document Content (High Contrast, Dark Crisp Headings) -->
       <div class="flex-1 p-6 bg-white overflow-y-auto max-h-[64vh] text-slate-900 font-sans text-xs sm:text-sm leading-relaxed">
         {renderedProjects.map((p) => {
           const ContentComponent = p.Content;
           return (
             <div id={`ie-article-${p.id}`} class="ie-case-study-article hidden space-y-4">
-              <!-- Header Section -->
               <div class="border-b-2 border-blue-600 pb-4">
                 <div class="flex items-center gap-2 mb-2">
                   <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-900 font-bold text-[10px]">
@@ -655,7 +1036,6 @@ const blissImg = `${base}/images/bliss.jpg`;
                 </div>
               </div>
 
-              <!-- Metrics Row -->
               <div class="grid grid-cols-3 gap-2.5 p-3 rounded-lg bg-[#eaf2fd] border border-blue-300 text-center">
                 {p.data.metrics.map(m => (
                   <div>
@@ -665,7 +1045,6 @@ const blissImg = `${base}/images/bliss.jpg`;
                 ))}
               </div>
 
-              <!-- Markdown Body -->
               <div class="markdown-spec text-slate-900 pt-2">
                 <ContentComponent />
               </div>
@@ -681,16 +1060,15 @@ const blissImg = `${base}/images/bliss.jpg`;
       </div>
     </div>
 
-    <!-- WINDOW 6: Windows Media Player (Classic Silver/Blue Skin - Matches Image 3!) -->
+    <!-- WINDOW 9: Windows Media Player (YouTube 5 LoFi Playlist & Classic Image 3 Skin) -->
     <div
       id="win-media-player"
       class="xp-window absolute top-12 left-44 w-[92vw] sm:w-[460px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#d6dff7] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
-      <!-- Titlebar -->
       <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Play class="w-3.5 h-3.5 text-orange-400 fill-orange-400 shrink-0" />
-          <span>Windows Media Player</span>
+          <span>Windows Media Player - Lo-Fi Chill Beats</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
           <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
@@ -698,32 +1076,34 @@ const blissImg = `${base}/images/bliss.jpg`;
         </div>
       </div>
 
-      <!-- WMP Menu Bar -->
       <div class="h-6 px-2 flex items-center justify-between text-[11px] bg-[#ece9d8] border-b border-[#c2cde5] text-slate-700">
         <div class="flex items-center gap-3">
           <span class="hover:underline cursor-pointer">File</span>
           <span class="hover:underline cursor-pointer">Play</span>
+          <span class="hover:underline cursor-pointer">Playlist</span>
           <span class="hover:underline cursor-pointer">Help</span>
         </div>
-        <span class="text-[10px] text-slate-500 font-mono">Sound Mod: OFF</span>
+        <span class="text-[10px] text-slate-500 font-mono">YouTube Audio Engine</span>
       </div>
 
-      <!-- Classic Brushed Silver Chassis (Image 3 Concept) -->
+      <!-- Classic WMP Silver Skin Body -->
       <div class="flex-1 p-3 bg-gradient-to-b from-[#e8ecf8] via-[#cfd8ee] to-[#b4c3e8] flex flex-col items-center">
-        <!-- Display Frame (Deep Black Letterbox Frame) -->
-        <div class="w-full h-32 rounded bg-black border-2 border-[#7a8da8] relative overflow-hidden flex flex-col items-center justify-center p-2 shadow-inner mb-3">
-          <!-- Animated Retro Chick / Equalizer Screen -->
-          <div class="text-center space-y-1">
-            <div class="text-2xl animate-bounce">🐥</div>
-            <div class="text-[11px] font-bold text-white tracking-wide" id="wmp-track-title">
-              Windows XP Startup Sound
+        <!-- Video / Display Screen Area -->
+        <div class="w-full h-36 rounded bg-black border-2 border-[#7a8da8] relative overflow-hidden flex flex-col items-center justify-center p-2 shadow-inner mb-2.5">
+          <!-- Hidden YouTube iframe container -->
+          <div id="wmp-yt-iframe" class="hidden"></div>
+
+          <!-- Retro Screen Graphic (Little chick animation like Image 3!) -->
+          <div class="text-center space-y-0.5">
+            <div class="text-2xl animate-bounce" id="wmp-mascot">🐥</div>
+            <div class="text-xs font-bold text-white tracking-wide truncate max-w-[340px]" id="wmp-track-title">
+              1. Lofi Girl - Chill Beats
             </div>
             <div class="text-[10px] font-mono text-slate-400" id="wmp-artist">
-              Bill Brown &bull; Microsoft Corporation
+              Relaxing Coding Beats &bull; YouTube LoFi
             </div>
           </div>
           
-          <!-- Stopped / Playing Status Indicator -->
           <div class="absolute bottom-1.5 left-2 flex items-center gap-1.5 text-[10px] font-mono text-white">
             <span class="w-2 h-2 rounded-xs bg-lime-400" id="wmp-status-dot"></span>
             <span id="wmp-status-text">■ Stopped</span>
@@ -731,22 +1111,22 @@ const blissImg = `${base}/images/bliss.jpg`;
         </div>
 
         <!-- Scrubber Bar with Lime Green Capsule Thumb (Image 3) -->
-        <div class="w-full flex items-center gap-2 mb-3 px-1 text-[11px] font-mono text-slate-700">
-          <span class="text-slate-500 cursor-pointer">&laquo;</span>
-          <div class="flex-1 h-2 bg-[#9bb0d6] rounded-full relative overflow-hidden cursor-pointer" id="wmp-scrubber-track">
-            <div id="wmp-progress-bar" class="h-full bg-blue-600 w-0"></div>
+        <div class="w-full flex items-center gap-2 mb-2 px-1 text-[11px] font-mono text-slate-700">
+          <span class="text-slate-500 cursor-pointer" id="wmp-seek-back">&laquo;</span>
+          <div class="flex-1 h-2.5 bg-[#9bb0d6] rounded-full relative overflow-hidden cursor-pointer" id="wmp-scrubber-track">
+            <div id="wmp-progress-bar" class="h-full bg-emerald-500 w-0 transition-all duration-200"></div>
           </div>
-          <span class="text-slate-500 cursor-pointer">&raquo;</span>
+          <span class="text-slate-500 cursor-pointer" id="wmp-seek-fwd">&raquo;</span>
         </div>
 
-        <!-- Tactile Round Metallic Buttons (Image 3 Style) -->
-        <div class="w-full flex items-center justify-between px-2">
+        <!-- Controls -->
+        <div class="w-full flex items-center justify-between px-2 mb-2.5">
           <div class="flex items-center gap-2">
             <!-- Play Button (Large Silver Circle with Blue Center) -->
             <button 
               id="wmp-play-toggle"
               class="w-10 h-10 rounded-full bg-gradient-to-b from-white via-[#c7d6ee] to-[#7f99cc] border-2 border-[#5473aa] shadow-md flex items-center justify-center hover:brightness-105 active:scale-95 cursor-pointer"
-              title="Play"
+              title="Play / Pause"
             >
               <div class="w-7 h-7 rounded-full bg-gradient-to-br from-[#2b72ea] to-[#12429c] flex items-center justify-center shadow-inner">
                 <Play class="w-3.5 h-3.5 text-white fill-white ml-0.5" id="wmp-play-icon" />
@@ -764,18 +1144,28 @@ const blissImg = `${base}/images/bliss.jpg`;
             </button>
 
             <!-- Prev / Next -->
-            <button class="w-7 h-7 rounded-full bg-gradient-to-b from-white to-[#b6c6e6] border border-[#5473aa] flex items-center justify-center hover:brightness-105 cursor-pointer">
+            <button id="wmp-prev-btn" class="w-7 h-7 rounded-full bg-gradient-to-b from-white to-[#b6c6e6] border border-[#5473aa] flex items-center justify-center hover:brightness-105 cursor-pointer" title="Lagu Sebelumnya">
               <SkipBack class="w-3 h-3 text-slate-800" />
             </button>
-            <button class="w-7 h-7 rounded-full bg-gradient-to-b from-white to-[#b6c6e6] border border-[#5473aa] flex items-center justify-center hover:brightness-105 cursor-pointer">
+            <button id="wmp-next-btn" class="w-7 h-7 rounded-full bg-gradient-to-b from-white to-[#b6c6e6] border border-[#5473aa] flex items-center justify-center hover:brightness-105 cursor-pointer" title="Lagu Berikutnya">
               <SkipForward class="w-3 h-3 text-slate-800" />
             </button>
           </div>
 
-          <!-- Volume & Time -->
           <div class="flex items-center gap-2 text-[11px] font-mono text-slate-700">
             <Volume2 class="w-4 h-4 text-blue-700" />
-            <span id="wmp-time-display">0:00 / 0:04</span>
+            <span id="wmp-time-display">0:00</span>
+          </div>
+        </div>
+
+        <!-- 5 LoFi Track Playlist List -->
+        <div class="w-full bg-white rounded border border-[#a2b4d4] p-1.5 overflow-y-auto max-h-24 text-[10.5px]">
+          <div class="font-bold text-slate-700 border-b border-slate-200 pb-0.5 mb-1 flex items-center justify-between">
+            <span>Playlist: 5 Lagu Lo-Fi</span>
+            <span class="text-blue-700 font-mono">YouTube Stream</span>
+          </div>
+          <div id="wmp-playlist-items" class="space-y-0.5">
+            <!-- Injected dynamically via JS -->
           </div>
         </div>
       </div>
@@ -787,96 +1177,7 @@ const blissImg = `${base}/images/bliss.jpg`;
       </div>
     </div>
 
-    <!-- WINDOW 7: Search Companion (Rover the Dog!) -->
-    <div
-      id="win-search"
-      class="xp-window absolute top-16 left-32 w-[92vw] sm:w-[620px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
-    >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
-        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
-          <Search class="w-3.5 h-3.5 text-yellow-300 shrink-0" />
-          <span class="i18n" data-en="Search Companion - Rover" data-id="Pencarian Windows XP - Rover">Search Companion - Rover</span>
-        </div>
-        <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
-        </div>
-      </div>
-
-      <div class="flex flex-1 overflow-hidden bg-white max-h-[60vh] text-xs">
-        <!-- Rover Sidebar (Yellow Animated Puppy) -->
-        <div class="w-56 bg-gradient-to-b from-[#6487dc] to-[#4068c8] p-4 text-white flex flex-col items-center text-center justify-between shrink-0">
-          <div>
-            <!-- Cute Puppy SVG (Rover) -->
-            <div class="w-24 h-24 mb-3 relative mx-auto">
-              <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                <ellipse cx="50" cy="65" rx="26" ry="20" fill="#f59e0b" />
-                <path d="M 74 65 Q 88 50 82 40" stroke="#f59e0b" stroke-width="8" stroke-linecap="round" fill="none" class="rover-tail origin-bottom-left" />
-                <circle cx="50" cy="38" r="22" fill="#f59e0b" />
-                <ellipse cx="50" cy="44" rx="12" ry="9" fill="#fde68a" />
-                <ellipse cx="50" cy="40" rx="5" ry="3.5" fill="#1e1e1e" />
-                <circle cx="43" cy="34" r="3" fill="#1e1e1e" />
-                <circle cx="57" cy="34" r="3" fill="#1e1e1e" />
-                <ellipse cx="30" cy="35" rx="7" ry="14" fill="#d97706" transform="rotate(-15 30 35)" />
-                <ellipse cx="70" cy="35" rx="7" ry="14" fill="#d97706" transform="rotate(15 70 35)" />
-                <ellipse cx="40" cy="82" rx="7" ry="5" fill="#d97706" />
-                <ellipse cx="60" cy="82" rx="7" ry="5" fill="#d97706" />
-              </svg>
-            </div>
-
-            <div class="bg-white text-slate-800 p-2.5 rounded-lg text-left shadow text-[11px] leading-snug relative">
-              <span id="rover-speech" class="i18n" data-en="What are you searching for today? Type PUMK, Push, API, or Laravel..." data-id="Apa yang ingin kamu cari hari ini? Ketik PUMK, Push, API, atau Laravel...">
-                What are you searching for today? Type PUMK, Push, API, or Laravel...
-              </span>
-            </div>
-          </div>
-
-          <div class="text-[10px] text-blue-200 font-mono mt-2">
-            Rover the Search Companion
-          </div>
-        </div>
-
-        <!-- Search Input & Results -->
-        <div class="flex-1 p-4 flex flex-col bg-white overflow-y-auto">
-          <div class="flex items-center gap-2 mb-4">
-            <input
-              type="text"
-              id="rover-search-input"
-              placeholder="Cari PUMK, Push Request, Laravel, QA..."
-              class="flex-1 px-3 py-1.5 border border-[#7f9db9] rounded text-xs outline-none focus:border-blue-500 font-sans"
-            />
-            <button class="px-3 py-1.5 rounded bg-[#ece9d8] border border-[#7f9db9] font-bold text-xs hover:bg-white cursor-pointer" id="rover-search-btn">
-              Search
-            </button>
-          </div>
-
-          <div class="flex-1 space-y-2.5" id="rover-results-list">
-            <div class="p-2.5 rounded border border-blue-200 bg-blue-50/60 hover:bg-blue-100 cursor-pointer" onclick="document.querySelector('[data-project-id=\'damri-pumk-system\']')?.click()">
-              <div class="font-bold text-blue-950 text-xs">Aplikasi PUMK (Program Usaha Mikro Kecil) — Perum DAMRI</div>
-              <div class="text-[10.5px] text-slate-700 mt-0.5">Kamus Data teknis, NIK 16 digit, concurrency lockForUpdate, modul TJSL &amp; SSO.</div>
-            </div>
-
-            <div class="p-2.5 rounded border border-blue-200 bg-blue-50/60 hover:bg-blue-100 cursor-pointer" onclick="document.querySelector('[data-project-id=\'damri-push-request-tracker\']')?.click()">
-              <div class="font-bold text-blue-950 text-xs">Sistem Informasi IT &amp; Push Request Tracker — Perum DAMRI</div>
-              <div class="text-[10.5px] text-slate-700 mt-0.5">Audit commit GitHub ke production, Webhook GitHub API, manajemen proyek IT kanban.</div>
-            </div>
-
-            <div class="p-2.5 rounded border border-blue-200 bg-blue-50/60 hover:bg-blue-100 cursor-pointer" onclick="document.querySelector('[data-open=\'win-resume\']')?.click()">
-              <div class="font-bold text-blue-950 text-xs">Curriculum Vitae / Resume — Andhika Putra Pratama</div>
-              <div class="text-[10.5px] text-slate-700 mt-0.5">Ringkasan profil profesional, riwayat pekerjaan, dan keahlian SA / Dev / QA.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="win-resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-se-resize flex items-end justify-end p-0.5 z-30">
-        <svg class="w-3 h-3 text-slate-400" viewBox="0 0 12 12" fill="currentColor">
-          <circle cx="10" cy="10" r="1.2" /><circle cx="6" cy="10" r="1.2" /><circle cx="10" cy="6" r="1.2" /><circle cx="2" cy="10" r="1.2" /><circle cx="6" cy="6" r="1.2" /><circle cx="10" cy="2" r="1.2" />
-        </svg>
-      </div>
-    </div>
-
-    <!-- WINDOW 8: SDLC_Lens.exe (In-Depth Technical Comparison) -->
+    <!-- WINDOW 10: SDLC_Lens.exe (In-Depth Technical Comparison) -->
     <div
       id="win-sdlc"
       class="xp-window absolute top-14 left-36 w-[94vw] sm:w-[720px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
@@ -893,7 +1194,6 @@ const blissImg = `${base}/images/bliss.jpg`;
         </div>
       </div>
 
-      <!-- Feature Selector Strip -->
       <div class="p-2 bg-[#ece9d8] border-b border-[#d8d4c2] flex flex-wrap items-center justify-between gap-2 text-xs">
         <div class="flex items-center gap-1.5">
           <span class="font-bold text-slate-700">Modul:</span>
@@ -903,7 +1203,6 @@ const blissImg = `${base}/images/bliss.jpg`;
           </select>
         </div>
 
-        <!-- 3 Tabs -->
         <div class="flex items-center gap-1">
           <button class="xp-lens-tab active px-2.5 py-0.5 rounded-t text-xs font-bold bg-white border-t-2 border-l-2 border-r-2 border-[#7f9db9] text-blue-900 cursor-pointer" data-view="analyst">
             1. Analyst
@@ -920,7 +1219,6 @@ const blissImg = `${base}/images/bliss.jpg`;
       <div class="flex-1 p-5 bg-white overflow-y-auto max-h-[62vh] font-sans text-xs">
         <!-- Feature 1: PUMK Content -->
         <div id="sdlc-content-pumk" class="sdlc-feature-block space-y-3">
-          <!-- Analyst View -->
           <div id="xp-view-analyst" class="space-y-3">
             <div class="p-3 rounded bg-blue-50 border border-blue-200">
               <div class="font-bold text-blue-900 text-sm mb-1">Analyst Lens: Penyelarasan Kamus Data &amp; Alur Bisnis PUMK</div>
@@ -939,7 +1237,6 @@ const blissImg = `${base}/images/bliss.jpg`;
             </ul>
           </div>
 
-          <!-- Dev View -->
           <div id="xp-view-dev" class="space-y-3 hidden">
             <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
               <div class="font-bold text-indigo-900 text-sm mb-1">Developer Feasibility: PostgreSQL Transaction Locking</div>
@@ -965,7 +1262,6 @@ DB::transaction(function() use ($request) &#123;
 &#125;);</pre>
           </div>
 
-          <!-- QA View -->
           <div id="xp-view-qa" class="space-y-3 hidden">
             <div class="p-3 rounded bg-emerald-50 border border-emerald-200">
               <div class="font-bold text-emerald-900 text-sm mb-1">QA Rigor: Skenario Uji Concurrency &amp; Boundary Value</div>
@@ -1009,7 +1305,7 @@ DB::transaction(function() use ($request) &#123;
       </div>
     </div>
 
-    <!-- WINDOW 9: cmd.exe -->
+    <!-- WINDOW 11: cmd.exe (BUG FIXED: Can be opened cleanly from desktop or start menu!) -->
     <div
       id="win-cmd"
       class="xp-window absolute top-24 left-20 w-[92vw] sm:w-[560px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-black text-white z-10 flex flex-col overflow-hidden hidden"
@@ -1048,7 +1344,7 @@ DB::transaction(function() use ($request) &#123;
       </div>
     </div>
 
-    <!-- WINDOW 10: Outlook Express (Contact Andhika) -->
+    <!-- WINDOW 12: Outlook Express (Contact Andhika) -->
     <div
       id="win-contact"
       class="xp-window absolute top-28 left-32 w-[92vw] sm:w-[540px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
@@ -1121,7 +1417,6 @@ DB::transaction(function() use ($request) &#123;
     class="fixed inset-0 z-[20000] hidden items-center justify-center backdrop-grayscale backdrop-brightness-50"
   >
     <div class="w-80 rounded-t-lg bg-[#ece9d8] border-[3px] border-[#0055ea] shadow-2xl overflow-hidden">
-      <!-- Blue Header -->
       <div class="h-8 px-3 flex items-center justify-between bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white">
         <div class="flex items-center gap-2 font-bold text-xs">
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
@@ -1134,9 +1429,7 @@ DB::transaction(function() use ($request) &#123;
         </div>
       </div>
 
-      <!-- Dialog Body with 3 Circles -->
       <div class="p-6 bg-[#001333] flex items-center justify-around">
-        <!-- Stand by -->
         <button class="flex flex-col items-center gap-1.5 group cursor-pointer" onclick="document.getElementById('xp-shutdown-modal').classList.add('hidden'); document.getElementById('xp-shutdown-modal').classList.remove('flex');">
           <div class="w-11 h-11 rounded-full bg-yellow-500 border-2 border-yellow-300 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
             <HelpCircle class="w-6 h-6 text-black" />
@@ -1144,7 +1437,6 @@ DB::transaction(function() use ($request) &#123;
           <span class="text-[11px] text-white font-bold">Stand By</span>
         </button>
 
-        <!-- Turn Off -->
         <button id="modal-btn-turn-off" class="flex flex-col items-center gap-1.5 group cursor-pointer">
           <div class="w-11 h-11 rounded-full bg-red-600 border-2 border-red-300 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
             <Power class="w-6 h-6 text-white" />
@@ -1152,7 +1444,6 @@ DB::transaction(function() use ($request) &#123;
           <span class="text-[11px] text-white font-bold i18n" data-en="Turn Off" data-id="Matikan">Turn Off</span>
         </button>
 
-        <!-- Restart -->
         <button class="flex flex-col items-center gap-1.5 group cursor-pointer" onclick="window.location.reload();">
           <div class="w-11 h-11 rounded-full bg-emerald-500 border-2 border-emerald-300 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
             <RotateCw class="w-6 h-6 text-white" />
@@ -1161,7 +1452,6 @@ DB::transaction(function() use ($request) &#123;
         </button>
       </div>
 
-      <!-- Footer Cancel -->
       <div class="p-2.5 bg-[#ece9d8] border-t border-[#d8d4c2] flex justify-end">
         <button 
           class="px-4 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] text-xs font-bold text-slate-800 hover:bg-white cursor-pointer"
@@ -1208,53 +1498,49 @@ DB::transaction(function() use ($request) &#123;
     </div>
 
     <div class="flex bg-[#d3e5fa] text-xs">
-      <!-- Left Column -->
       <div class="w-1/2 bg-white p-2 space-y-1 border-r border-[#95bdee]">
-        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-welcome\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-welcome'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <FileText class="w-4 h-4 text-blue-600" />
           <span class="font-bold text-slate-800">Welcome Doc</span>
         </div>
-        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-resume\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-resume'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Briefcase class="w-4 h-4 text-indigo-600" />
           <span class="font-bold text-slate-800 i18n" data-en="Curriculum Vitae" data-id="Resume / CV">Resume / CV</span>
         </div>
-        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-explorer\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
-          <Laptop class="w-4 h-4 text-blue-700" />
-          <span class="font-bold text-slate-800 i18n" data-en="My Computer" data-id="Komputer Saya">My Computer</span>
-        </div>
-        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-projects\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-docs-folder'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Folder class="w-4 h-4 text-amber-500" />
-          <span class="font-bold text-slate-800 i18n" data-en="Case Studies" data-id="Studi Kasus">Case Studies</span>
+          <span class="font-bold text-slate-800 i18n" data-en="Work Docs" data-id="Dokumen Kerja">Dokumen Kerja</span>
         </div>
-        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-media-player\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-gallery'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <Award class="w-4 h-4 text-teal-600" />
+          <span class="font-bold text-slate-800 i18n" data-en="Certificates" data-id="Sertifikat">Sertifikat</span>
+        </div>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-media-player'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Play class="w-4 h-4 text-blue-800 fill-blue-800" />
           <span class="font-bold text-slate-800">Media Player</span>
         </div>
-        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-search\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
-          <Search class="w-4 h-4 text-yellow-600" />
-          <span class="font-bold text-slate-800 i18n" data-en="Search (Rover)" data-id="Cari Berkas">Search (Rover)</span>
-        </div>
-        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-cmd\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-cmd'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Terminal class="w-4 h-4 text-emerald-600" />
           <span class="font-bold text-slate-800">cmd.exe</span>
         </div>
       </div>
 
-      <!-- Right Column -->
       <div class="w-1/2 p-2 space-y-1 text-slate-700">
-        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="document.querySelector('[data-open=\'win-explorer\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="openWindow('win-explorer'); document.getElementById('xp-start-menu').classList.add('hidden');">
           My Computer
         </div>
-        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="document.querySelector('[data-open=\'win-sdlc\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="openWindow('win-projects'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          E:\KERJA\DAMRI
+        </div>
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="openWindow('win-sdlc'); document.getElementById('xp-start-menu').classList.add('hidden');">
           SDLC Lens
         </div>
-        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="document.querySelector('[data-open=\'win-contact\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="openWindow('win-contact'); document.getElementById('xp-start-menu').classList.add('hidden');">
           Outlook Express
         </div>
       </div>
     </div>
 
-    <!-- Footer Turn Off Computer -->
     <div class="h-9 px-3 flex items-center justify-end gap-3 bg-gradient-to-r from-[#0058ee] to-[#3593ff] text-white select-none">
       <button
         id="xp-open-shutdown-btn"
@@ -1266,12 +1552,11 @@ DB::transaction(function() use ($request) &#123;
     </div>
   </div>
 
-  <!-- ==================== TASKBAR (PINNED AT BOTTOM) ==================== -->
+  <!-- ==================== TASKBAR ==================== -->
   <div 
     id="xp-taskbar" 
     class="relative z-[9999] h-[30px] w-full bg-gradient-to-b from-[#245edb] via-[#3f8cf3] to-[#1941a5] border-t border-[#468df2] flex items-center justify-between select-none shadow-lg shrink-0"
   >
-    <!-- Start Button -->
     <div class="flex items-center h-full">
       <button
         id="xp-start-btn"
@@ -1288,14 +1573,11 @@ DB::transaction(function() use ($request) &#123;
         </span>
       </button>
 
-      <!-- Taskbar Open Window Tabs (Dynamic Sync: Only open windows appear!) -->
       <div id="xp-taskbar-items" class="flex items-center gap-1 px-1.5 h-full overflow-x-auto">
       </div>
     </div>
 
-    <!-- System Tray (Notification Area & Language Switcher) -->
     <div class="h-full px-2.5 bg-gradient-to-b from-[#0f388a] via-[#16439e] to-[#0d2f78] border-l border-[#194bb5] shadow-inner flex items-center gap-2.5 text-xs text-white font-mono">
-      <!-- Language Switcher Button [ ID | EN ] -->
       <button 
         id="lang-toggle-btn"
         class="px-1.5 py-0.5 rounded bg-blue-950/80 border border-blue-400/40 text-[10px] font-bold text-amber-300 hover:bg-blue-900 cursor-pointer"
@@ -1310,6 +1592,9 @@ DB::transaction(function() use ($request) &#123;
   </div>
 </div>
 
+<!-- Load YouTube IFrame API for Windows Media Player -->
+<script is:inline src="https://www.youtube.com/iframe_api"></script>
+
 <style>
   @keyframes tailWag {
     0% { transform: rotate(0deg); }
@@ -1323,7 +1608,192 @@ DB::transaction(function() use ($request) &#123;
 </style>
 
 <script>
-  // 1. Boot event listener from 3D stage
+  // 1. Window Management & Taskbar Sync
+  let highestZIndex = 30;
+
+  function bringToFront(win: HTMLElement) {
+    highestZIndex += 1;
+    win.style.zIndex = highestZIndex.toString();
+  }
+
+  // Expose openWindow to window so inline onclick handlers work without fail
+  (window as any).openWindow = function(winId: string) {
+    const win = document.getElementById(winId);
+    if (!win) return;
+    win.classList.remove('hidden');
+    win.style.display = 'flex';
+    bringToFront(win);
+    updateTaskbar();
+
+    // If opening cmd, focus the input
+    if (winId === 'win-cmd') {
+      setTimeout(() => {
+        document.getElementById('cmd-input')?.focus();
+      }, 100);
+    }
+  };
+
+  const windows = document.querySelectorAll<HTMLElement>('.xp-window');
+  windows.forEach((win) => {
+    win.addEventListener('mousedown', () => bringToFront(win));
+
+    // Titlebar drag
+    const titlebar = win.querySelector<HTMLElement>('.xp-titlebar');
+    if (titlebar) {
+      let isDragging = false;
+      let startX = 0;
+      let startY = 0;
+      let initialLeft = 0;
+      let initialTop = 0;
+
+      titlebar.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        bringToFront(win);
+        startX = e.clientX;
+        startY = e.clientY;
+        initialLeft = win.offsetLeft;
+        initialTop = win.offsetTop;
+
+        function onMouseMove(moveEvent: MouseEvent) {
+          if (!isDragging) return;
+          const dx = moveEvent.clientX - startX;
+          const dy = moveEvent.clientY - startY;
+          win.style.left = `${Math.max(0, initialLeft + dx)}px`;
+          win.style.top = `${Math.max(0, initialTop + dy)}px`;
+        }
+
+        function onMouseUp() {
+          isDragging = false;
+          window.removeEventListener('mousemove', onMouseMove);
+          window.removeEventListener('mouseup', onMouseUp);
+        }
+
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
+      });
+    }
+
+    // Window Resizing via bottom-right grip handle
+    const resizeHandle = win.querySelector<HTMLElement>('.win-resize-handle');
+    if (resizeHandle) {
+      let isResizing = false;
+      let startW = 0;
+      let startH = 0;
+      let startX = 0;
+      let startY = 0;
+
+      resizeHandle.addEventListener('mousedown', (e) => {
+        e.stopPropagation();
+        isResizing = true;
+        bringToFront(win);
+        startX = e.clientX;
+        startY = e.clientY;
+        startW = win.offsetWidth;
+        startH = win.offsetHeight;
+
+        function onResizeMove(moveEvent: MouseEvent) {
+          if (!isResizing) return;
+          const dw = moveEvent.clientX - startX;
+          const dh = moveEvent.clientY - startY;
+          win.style.width = `${Math.max(300, startW + dw)}px`;
+          win.style.height = `${Math.max(200, startH + dh)}px`;
+        }
+
+        function onResizeUp() {
+          isResizing = false;
+          window.removeEventListener('mousemove', onResizeMove);
+          window.removeEventListener('mouseup', onResizeUp);
+        }
+
+        window.addEventListener('mousemove', onResizeMove);
+        window.addEventListener('mouseup', onResizeUp);
+      });
+    }
+
+    // Window controls
+    const btnClose = win.querySelector('.win-btn-close');
+    btnClose?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      win.classList.add('hidden');
+      win.style.display = 'none';
+      updateTaskbar();
+    });
+
+    const btnMinimize = win.querySelector('.win-btn-minimize');
+    btnMinimize?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      win.classList.add('hidden');
+      win.style.display = 'none';
+      updateTaskbar();
+    });
+
+    const btnMaximize = win.querySelector('.win-btn-maximize');
+    btnMaximize?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (win.dataset.maximized === 'true') {
+        win.style.width = win.dataset.prevWidth || '580px';
+        win.style.height = win.dataset.prevHeight || 'auto';
+        win.style.top = win.dataset.prevTop || '40px';
+        win.style.left = win.dataset.prevLeft || '80px';
+        win.dataset.maximized = 'false';
+      } else {
+        win.dataset.prevWidth = win.style.width || `${win.offsetWidth}px`;
+        win.dataset.prevHeight = win.style.height || `${win.offsetHeight}px`;
+        win.dataset.prevTop = `${win.offsetTop}px`;
+        win.dataset.prevLeft = `${win.offsetLeft}px`;
+        win.style.width = '100vw';
+        win.style.height = 'calc(100vh - 30px)';
+        win.style.top = '0px';
+        win.style.left = '0px';
+        win.dataset.maximized = 'true';
+      }
+    });
+  });
+
+  // Desktop Icons Opening Windows
+  const desktopIcons = document.querySelectorAll('.xp-desktop-icon');
+  desktopIcons.forEach((icon) => {
+    icon.addEventListener('click', () => {
+      const targetId = icon.getAttribute('data-open');
+      if (targetId) {
+        (window as any).openWindow(targetId);
+      }
+    });
+  });
+
+  // Strict Taskbar Sync: ONLY OPEN WINDOWS APPEAR!
+  function updateTaskbar() {
+    const taskbarContainer = document.getElementById('xp-taskbar-items');
+    if (!taskbarContainer) return;
+    taskbarContainer.innerHTML = '';
+
+    windows.forEach((win) => {
+      const isVisible = win.style.display === 'flex' || (!win.classList.contains('hidden') && win.style.display !== 'none');
+      if (!isVisible) return;
+
+      const title = win.querySelector('.xp-titlebar span')?.textContent || 'Window';
+
+      const btn = document.createElement('button');
+      btn.className = 'h-6 px-2.5 rounded text-[11px] font-bold flex items-center gap-1.5 cursor-pointer max-w-[140px] truncate shadow-inner bg-[#1b3f94] text-white border border-[#0d2358]';
+      btn.innerText = title.split(' - ')[0];
+
+      btn.addEventListener('click', () => {
+        if (win.style.display === 'none' || win.classList.contains('hidden')) {
+          win.classList.remove('hidden');
+          win.style.display = 'flex';
+          bringToFront(win);
+        } else {
+          win.classList.add('hidden');
+          win.style.display = 'none';
+        }
+        updateTaskbar();
+      });
+
+      taskbarContainer.appendChild(btn);
+    });
+  }
+
+  // Boot event listener from 3D stage
   window.addEventListener('xp:boot-desktop', () => {
     const desktop = document.getElementById('xp-desktop-container');
     if (desktop) {
@@ -1392,157 +1862,15 @@ DB::transaction(function() use ($request) &#123;
   updateClock();
   setInterval(updateClock, 1000);
 
-  // 5. Draggable & Resizable Windows Logic
-  let highestZIndex = 30;
-
-  function bringToFront(win: HTMLElement) {
-    highestZIndex += 1;
-    win.style.zIndex = highestZIndex.toString();
-  }
-
-  const windows = document.querySelectorAll<HTMLElement>('.xp-window');
-  windows.forEach((win) => {
-    win.addEventListener('mousedown', () => bringToFront(win));
-
-    // Titlebar drag
-    const titlebar = win.querySelector<HTMLElement>('.xp-titlebar');
-    if (titlebar) {
-      let isDragging = false;
-      let startX = 0;
-      let startY = 0;
-      let initialLeft = 0;
-      let initialTop = 0;
-
-      titlebar.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        bringToFront(win);
-        startX = e.clientX;
-        startY = e.clientY;
-        initialLeft = win.offsetLeft;
-        initialTop = win.offsetTop;
-
-        function onMouseMove(moveEvent: MouseEvent) {
-          if (!isDragging) return;
-          const dx = moveEvent.clientX - startX;
-          const dy = moveEvent.clientY - startY;
-          win.style.left = `${Math.max(0, initialLeft + dx)}px`;
-          win.style.top = `${Math.max(0, initialTop + dy)}px`;
-        }
-
-        function onMouseUp() {
-          isDragging = false;
-          window.removeEventListener('mousemove', onMouseMove);
-          window.removeEventListener('mouseup', onMouseUp);
-        }
-
-        window.addEventListener('mousemove', onMouseMove);
-        window.addEventListener('mouseup', onMouseUp);
-      });
-    }
-
-    // Window Resizing via bottom-right grip handle
-    const resizeHandle = win.querySelector<HTMLElement>('.win-resize-handle');
-    if (resizeHandle) {
-      let isResizing = false;
-      let startW = 0;
-      let startH = 0;
-      let startX = 0;
-      let startY = 0;
-
-      resizeHandle.addEventListener('mousedown', (e) => {
-        e.stopPropagation();
-        isResizing = true;
-        bringToFront(win);
-        startX = e.clientX;
-        startY = e.clientY;
-        startW = win.offsetWidth;
-        startH = win.offsetHeight;
-
-        function onResizeMove(moveEvent: MouseEvent) {
-          if (!isResizing) return;
-          const dw = moveEvent.clientX - startX;
-          const dh = moveEvent.clientY - startY;
-          win.style.width = `${Math.max(320, startW + dw)}px`;
-          win.style.height = `${Math.max(220, startH + dh)}px`;
-        }
-
-        function onResizeUp() {
-          isResizing = false;
-          window.removeEventListener('mousemove', onResizeMove);
-          window.removeEventListener('mouseup', onResizeUp);
-        }
-
-        window.addEventListener('mousemove', onResizeMove);
-        window.addEventListener('mouseup', onResizeUp);
-      });
-    }
-
-    // Window controls
-    const btnClose = win.querySelector('.win-btn-close');
-    btnClose?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      win.classList.add('hidden');
-      win.style.display = 'none';
-      updateTaskbar();
-    });
-
-    const btnMinimize = win.querySelector('.win-btn-minimize');
-    btnMinimize?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      win.classList.add('hidden');
-      win.style.display = 'none';
-      updateTaskbar();
-    });
-
-    const btnMaximize = win.querySelector('.win-btn-maximize');
-    btnMaximize?.addEventListener('click', () => {
-      if (win.dataset.maximized === 'true') {
-        win.style.width = win.dataset.prevWidth || '580px';
-        win.style.height = win.dataset.prevHeight || 'auto';
-        win.style.top = win.dataset.prevTop || '40px';
-        win.style.left = win.dataset.prevLeft || '80px';
-        win.dataset.maximized = 'false';
-      } else {
-        win.dataset.prevWidth = win.style.width || `${win.offsetWidth}px`;
-        win.dataset.prevHeight = win.style.height || `${win.offsetHeight}px`;
-        win.dataset.prevTop = `${win.offsetTop}px`;
-        win.dataset.prevLeft = `${win.offsetLeft}px`;
-        win.style.width = '100vw';
-        win.style.height = 'calc(100vh - 30px)';
-        win.style.top = '0px';
-        win.style.left = '0px';
-        win.dataset.maximized = 'true';
-      }
-    });
-  });
-
-  // 6. Desktop Icons Opening Windows
-  const desktopIcons = document.querySelectorAll('.xp-desktop-icon');
-  desktopIcons.forEach((icon) => {
-    icon.addEventListener('click', () => {
-      const targetId = icon.getAttribute('data-open');
-      if (targetId) {
-        const targetWin = document.getElementById(targetId);
-        if (targetWin) {
-          targetWin.classList.remove('hidden');
-          targetWin.style.display = 'flex';
-          bringToFront(targetWin);
-          updateTaskbar();
-        }
-      }
-    });
-  });
-
-  // 7. Case Study Explorer -> Open in Internet Explorer 6 Window!
+  // 5. Case Study Explorer -> Open in Internet Explorer 6 Window
   const projectRows = document.querySelectorAll('.xp-project-row');
-  const ieReader = document.getElementById('win-ie-reader');
   const ieAddressBar = document.getElementById('ie-address-bar');
   const ieTitlebar = document.getElementById('ie-titlebar-text');
 
   projectRows.forEach((row) => {
     row.addEventListener('click', () => {
       const projectId = row.getAttribute('data-project-id');
-      if (!projectId || !ieReader) return;
+      if (!projectId) return;
 
       document.querySelectorAll('.ie-case-study-article').forEach(art => art.classList.add('hidden'));
       const targetArt = document.getElementById(`ie-article-${projectId}`);
@@ -1558,109 +1886,319 @@ DB::transaction(function() use ($request) &#123;
         ieTitlebar.innerText = `Microsoft Internet Explorer - ${title}`;
       }
 
-      ieReader.classList.remove('hidden');
-      ieReader.style.display = 'flex';
-      bringToFront(ieReader);
-      updateTaskbar();
+      (window as any).openWindow('win-ie-reader');
     });
   });
 
-  // 8. Strict Taskbar Sync: ONLY OPEN WINDOWS ARE DISPLAYED!
-  function updateTaskbar() {
-    const taskbarContainer = document.getElementById('xp-taskbar-items');
-    if (!taskbarContainer) return;
-    taskbarContainer.innerHTML = '';
+  // 6. Sample Work Documents Viewer
+  const sampleDocsData: Record<string, { title: string; snippet: string }> = {
+    "srs-pumk": {
+      title: "SRS_PUMK_Spesifikasi_Kebutuhan.doc",
+      snippet: `DOKUMEN SOFTWARE REQUIREMENTS SPECIFICATION (SRS)\nPROYEK: APLIKASI PUMK - PERUM DAMRI\nNOMOR DOKUMEN: SRS-PUMK-2024-V1.2\n\n1. PENDAHULUAN\nSistem PUMK (Program Usaha Mikro Kecil) dirancang untuk mengelola tata kelola pembiayaan kemitraan BUMN di lingkungan Perum DAMRI.\n\n2. KEBUTUHAN FUNGSIONAL UTAMA\n- FR-01: Verifikasi NIK Pemilik Usaha 16 Digit numerik valid.\n- FR-02: Auto-Generate Kode Mitra format PUMK-{tahun}-{urutan 3 digit} dengan Pessimistic Concurrency Lock (lockForUpdate).\n- FR-03: Otentikasi Shadow User terintegrasi SSO DAMRI tanpa penyimpanan plaintext password.\n- FR-04: Modul monitoring cicilan dan restrukturisasi pinjaman TJSL triwulanan (TW1 - TW4).`
+    },
+    "kamus-data": {
+      title: "Kamus_Data_Teknis_Aplikasi_PUMK.doc",
+      snippet: `KAMUS DATA TEKNIS — SISTEM PUMK DAMRI (32 KB)\nVERSI: 1.0\n\n[TABEL: ref_mitra]\n- id (bigserial, PK)\n- kode_mitra (varchar 20, UNIQUE, Format PUMK-YYYY-XXX)\n- nama_usaha (varchar 150)\n- nama_pemilik (varchar 100)\n- nik_pemilik (char 16, Validasi Dukcapil)\n- id_bu (int, Foreign Key unit bisnis SSO)\n\n[TABEL: tr_tjsl_pembayaran]\n- id (bigserial, PK)\n- id_mitra (bigint, FK ref_mitra.id)\n- nominal_angsuran (decimal 15,2)\n- tanggal_bayar (date)\n- status_verifikasi (enum: DRAFT, APPROVED, REJECTED)`
+    },
+    "audit-push": {
+      title: "SOP_Audit_Deployment_PushRequest.doc",
+      snippet: `STANDAR OPERASIONAL PROSEDUR (SOP) AUDIT DEPLOYMENT\nSISTEM INFORMASI IT — PERUM DAMRI\n\n1. TUJUAN\nMenjamin seluruh baris kode yang dirilis ke server production telah melalui tahapan review System Analyst dan Tech Lead.\n\n2. ALUR AUDIT GITHUB PUSH\n- Webhook GitHub mengirimkan payload event push ke endpoint /api/webhook/github-push.\n- Sistem memvalidasi X-Hub-Signature-256 menggunakan secret key rahasia.\n- Commit hash, author, dan diff file tercatat otomatis ke tabel audit_pushes.\n- Go-Live Checklist ditandatangani digital sebelum proses 'git pull' dieksekusi di server live.`
+    },
+    "qa-matrix": {
+      title: "Matriks_Skenario_Uji_QA_Boundary.doc",
+      snippet: `MATRIKS SKENARIO PENGUJIAN QUALITY ASSURANCE (QA)\n\nTC-01: Concurrency Race Condition Registrasi Mitra\n- Given: 20 request POST registrasi mitra binaan dikirim simultan pada milidetik yang sama.\n- Expected: Seluruh 20 mitra mendapatkan nomor urut berurutan tanpa satu pun duplikasi nomor PUMK-2026-XXX.\n- Result: PASS (PostgreSQL lockForUpdate berhasil mengantrikan transaksi).\n\nTC-02: Boundary NIK Invalid (15 dan 17 digit)\n- Input: NIK string '157107280200006' (15 digit) atau '15710728020000611' (17 digit).\n- Expected: HTTP 422 Unprocessable Entity dengan error message presisi.\n- Result: PASS.`
+    }
+  };
 
-    windows.forEach((win) => {
-      const isVisible = win.style.display === 'flex' || (!win.classList.contains('hidden') && win.style.display !== 'none');
-      if (!isVisible) return; // Only show currently open windows!
+  (window as any).openSampleDoc = function(docKey: string) {
+    const data = sampleDocsData[docKey];
+    if (!data) return;
+    const titleEl = document.getElementById('doc-viewer-title');
+    const contentEl = document.getElementById('doc-viewer-content');
+    if (titleEl) titleEl.innerText = data.title;
+    if (contentEl) contentEl.innerText = data.snippet;
+    (window as any).openWindow('win-doc-viewer');
+  };
 
-      const title = win.querySelector('.xp-titlebar span')?.textContent || 'Window';
+  // 7. Galeri Sertifikat (Windows Picture and Fax Viewer)
+  const certsList = [
+    {
+      title: "Ijazah Sarjana Komputer (S.Kom.)",
+      issuer: "Institut Teknologi Sumatera (ITERA)",
+      date: "15 Juli 2023",
+      certNo: "552022023000891",
+      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/certificates/certificate_1.jpg`
+    },
+    {
+      title: "Transkrip Akademik Resmi (IPK: 3.73)",
+      issuer: "Institut Teknologi Sumatera (ITERA)",
+      date: "15 Juli 2023",
+      certNo: "TR/327/IT9.F3/IF.14/S-1/2023",
+      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/certificates/certificate_2.jpg`
+    },
+    {
+      title: "ITP TOEFL® Test Score: 640",
+      issuer: "Centre of Language Improvement (CLIent)",
+      date: "24 Oktober 2025",
+      certNo: "4036.213365/2002/X/2025",
+      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/certificates/certificate_3.jpg`
+    },
+    {
+      title: "Information Technology Specialist in Python",
+      issuer: "Pearson VUE & Certiport",
+      date: "16 Februari 2023",
+      certNo: "QAnD-4wbu",
+      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/certificates/certificate_4.jpg`
+    },
+    {
+      title: "Machine Learning Specialization",
+      issuer: "DeepLearning.AI & Stanford University",
+      date: "15 Agustus 2024",
+      certNo: "ELS8CJWZ65AH",
+      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/certificates/certificate_5.jpg`
+    },
+    {
+      title: "Crash Course on Python",
+      issuer: "Google / Coursera",
+      date: "2 Mei 2025",
+      certNo: "AIC9TK0FRT1A",
+      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/certificates/certificate_6.jpg`
+    },
+    {
+      title: "Asisten Praktikum: Pemrograman Berorientasi Objek",
+      issuer: "Laboratorium Multimedia & UPT ITERA",
+      date: "30 Agustus 2022",
+      certNo: "B/2925/IT9.E5/TA.00.00/2022",
+      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/certificates/certificate_7.jpg`
+    },
+    {
+      title: "Asisten Praktikum: Sistem Tertanam (Embedded Systems)",
+      issuer: "Laboratorium Multimedia & UPT ITERA",
+      date: "21 Desember 2022",
+      certNo: "B/3707/IT9.E5/TA.00.00/2022",
+      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/certificates/certificate_8.jpg`
+    }
+  ];
 
-      const btn = document.createElement('button');
-      btn.className = 'h-6 px-2.5 rounded text-[11px] font-bold flex items-center gap-1.5 cursor-pointer max-w-[150px] truncate shadow-inner bg-[#1b3f94] text-white border border-[#0d2358]';
-      btn.innerText = title.split(' - ')[0];
+  let currentCertIndex = 0;
 
-      btn.addEventListener('click', () => {
-        if (win.style.display === 'none' || win.classList.contains('hidden')) {
-          win.classList.remove('hidden');
-          win.style.display = 'flex';
-          bringToFront(win);
-        } else {
-          win.classList.add('hidden');
-          win.style.display = 'none';
-        }
-        updateTaskbar();
-      });
+  function showCertificate(idx: number) {
+    if (idx < 0) idx = certsList.length - 1;
+    if (idx >= certsList.length) idx = 0;
+    currentCertIndex = idx;
+    const cert = certsList[idx];
 
-      taskbarContainer.appendChild(btn);
+    const imgEl = document.getElementById('gallery-main-img') as HTMLImageElement;
+    const titleEl = document.getElementById('gallery-cert-title');
+    const issuerEl = document.getElementById('gallery-cert-issuer');
+    const noEl = document.getElementById('gallery-cert-no');
+    const counterEl = document.getElementById('gallery-counter');
+    const dlLink = document.getElementById('gallery-cert-dl') as HTMLAnchorElement;
+
+    if (imgEl) imgEl.src = cert.img;
+    if (titleEl) titleEl.innerText = cert.title;
+    if (issuerEl) issuerEl.innerText = `Penerbit: ${cert.issuer} • Tanggal: ${cert.date}`;
+    if (noEl) noEl.innerText = `No: ${cert.certNo}`;
+    if (counterEl) counterEl.innerText = `${idx + 1} / ${certsList.length}`;
+    if (dlLink) dlLink.href = cert.img;
+
+    document.querySelectorAll('.cert-thumb-card').forEach((card, cIdx) => {
+      if (cIdx === idx) {
+        card.classList.add('border-blue-600', 'ring-2', 'ring-blue-400');
+      } else {
+        card.classList.remove('border-blue-600', 'ring-2', 'ring-blue-400');
+      }
     });
   }
 
-  // 9. Windows Media Player Logic (Classic Image 3 Style)
-  const wmpPlayBtn = document.getElementById('wmp-play-toggle');
-  const wmpStopBtn = document.getElementById('wmp-stop-btn');
-  const wmpPlayIcon = document.getElementById('wmp-play-icon');
-  const wmpPauseIcon = document.getElementById('wmp-pause-icon');
-  const wmpProgressBar = document.getElementById('wmp-progress-bar');
-  const wmpTimeDisplay = document.getElementById('wmp-time-display');
-  const wmpStatusText = document.getElementById('wmp-status-text');
-  const wmpStatusDot = document.getElementById('wmp-status-dot');
-  let isPlaying = false;
-  let wmpAudio: HTMLAudioElement | null = null;
-  let wmpInterval: any = null;
+  document.getElementById('gallery-btn-prev')?.addEventListener('click', () => showCertificate(currentCertIndex - 1));
+  document.getElementById('gallery-btn-next')?.addEventListener('click', () => showCertificate(currentCertIndex + 1));
 
-  wmpPlayBtn?.addEventListener('click', () => {
-    if (!isPlaying) {
-      isPlaying = true;
-      wmpPlayIcon?.classList.add('hidden');
-      wmpPauseIcon?.classList.remove('hidden');
-      if (wmpStatusText) wmpStatusText.innerText = '► Playing';
-      if (wmpStatusDot) wmpStatusDot.className = 'w-2 h-2 rounded-xs bg-emerald-400 animate-pulse';
+  document.querySelectorAll('.cert-thumb-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const idx = parseInt(card.getAttribute('data-idx') || '0', 10);
+      showCertificate(idx);
+    });
+  });
 
-      if (!wmpAudio) {
-        const assetBase = document.getElementById('xp-desktop-container')?.dataset.baseUrl || '';
-        wmpAudio = new Audio(`${assetBase}/sounds/xp-startup.wav`);
-        wmpAudio.addEventListener('ended', () => {
-          stopWmp();
-        });
-      }
-      wmpAudio.play().catch(e => console.warn(e));
+  // 8. Windows Media Player with 5 LoFi YouTube Tracks
+  const lofiPlaylist = [
+    { title: "1. Lofi Girl - Relaxing Chill Beats", artist: "Lofi Records", id: "jfKfPfyJRdk" },
+    { title: "2. Coffee Shop Vibes - Study Jazz", artist: "Chillhop Music", id: "5yx6BWlEVcY" },
+    { title: "3. Rainy Night Lofi - Deep Work Beats", artist: "Retro Lofi", id: "7NOSDKb0HlU" },
+    { title: "4. Cozy Sunset - Relaxing Study", artist: "Dreamy Lofi", id: "lTRiuFIWV54" },
+    { title: "5. Windows XP Nostalgia Lofi Remix", artist: "Vaporwave Beats", id: "2atQnvunGCo" }
+  ];
 
-      wmpInterval = setInterval(() => {
-        if (wmpAudio && wmpAudio.duration) {
-          const pct = (wmpAudio.currentTime / wmpAudio.duration) * 100;
-          if (wmpProgressBar) wmpProgressBar.style.width = `${pct}%`;
-          if (wmpTimeDisplay) {
-            const cur = Math.floor(wmpAudio.currentTime);
-            const dur = Math.floor(wmpAudio.duration);
-            wmpTimeDisplay.innerText = `0:0${cur} / 0:0${dur}`;
+  let currentTrackIdx = 0;
+  let isWmpPlaying = false;
+  let ytPlayerInstance: any = null;
+  let localAudioFallback: HTMLAudioElement | null = null;
+  let wmpScrubInterval: any = null;
+
+  // Render Playlist HTML
+  const playlistContainer = document.getElementById('wmp-playlist-items');
+  if (playlistContainer) {
+    playlistContainer.innerHTML = lofiPlaylist.map((t, idx) => `
+      <div class="wmp-track-row p-1 rounded hover:bg-blue-100 flex items-center justify-between cursor-pointer ${idx === 0 ? 'bg-blue-50 font-bold text-blue-900' : 'text-slate-700'}" data-track-idx="${idx}">
+        <div class="truncate flex items-center gap-1.5">
+          <span class="text-[9px] text-blue-600 font-mono">▶</span>
+          <span class="truncate">${t.title}</span>
+        </div>
+        <span class="text-[9px] text-slate-400 font-mono shrink-0">Lo-Fi</span>
+      </div>
+    `).join('');
+  }
+
+  // Initialize YouTube IFrame API
+  (window as any).onYouTubeIframeAPIReady = function() {
+    try {
+      ytPlayerInstance = new (window as any).YT.Player('wmp-yt-iframe', {
+        height: '0',
+        width: '0',
+        videoId: lofiPlaylist[0].id,
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0
+        },
+        events: {
+          onStateChange: (event: any) => {
+            if (event.data === (window as any).YT.PlayerState.PLAYING) {
+              setWmpPlayingState(true);
+            } else if (event.data === (window as any).YT.PlayerState.PAUSED || event.data === (window as any).YT.PlayerState.ENDED) {
+              setWmpPlayingState(false);
+              if (event.data === (window as any).YT.PlayerState.ENDED) {
+                playTrack((currentTrackIdx + 1) % lofiPlaylist.length);
+              }
+            }
           }
         }
-      }, 100);
+      });
+    } catch (e) {
+      console.warn('YouTube API init fallback:', e);
+    }
+  };
+
+  function setWmpPlayingState(playing: boolean) {
+    isWmpPlaying = playing;
+    const playIcon = document.getElementById('wmp-play-icon');
+    const pauseIcon = document.getElementById('wmp-pause-icon');
+    const statusText = document.getElementById('wmp-status-text');
+    const statusDot = document.getElementById('wmp-status-dot');
+
+    if (playing) {
+      playIcon?.classList.add('hidden');
+      pauseIcon?.classList.remove('hidden');
+      if (statusText) statusText.innerText = '► Playing';
+      if (statusDot) statusDot.className = 'w-2 h-2 rounded-xs bg-emerald-400 animate-pulse';
+
+      // Scrubber timer
+      clearInterval(wmpScrubInterval);
+      wmpScrubInterval = setInterval(() => {
+        if (ytPlayerInstance && ytPlayerInstance.getCurrentTime) {
+          const cur = ytPlayerInstance.getCurrentTime() || 0;
+          const dur = ytPlayerInstance.getDuration() || 180;
+          const pct = Math.min(100, (cur / dur) * 100);
+          const bar = document.getElementById('wmp-progress-bar');
+          if (bar) bar.style.width = `${pct}%`;
+          const timeEl = document.getElementById('wmp-time-display');
+          if (timeEl) {
+            const m = Math.floor(cur / 60);
+            const s = Math.floor(cur % 60).toString().padStart(2, '0');
+            timeEl.innerText = `${m}:${s}`;
+          }
+        }
+      }, 500);
     } else {
-      stopWmp();
+      playIcon?.classList.remove('hidden');
+      pauseIcon?.classList.add('hidden');
+      if (statusText) statusText.innerText = '■ Stopped';
+      if (statusDot) statusDot.className = 'w-2 h-2 rounded-xs bg-lime-400';
+      clearInterval(wmpScrubInterval);
+    }
+  }
+
+  function playTrack(idx: number) {
+    currentTrackIdx = idx;
+    const t = lofiPlaylist[idx];
+    const titleEl = document.getElementById('wmp-track-title');
+    const artistEl = document.getElementById('wmp-artist');
+    if (titleEl) titleEl.innerText = t.title;
+    if (artistEl) artistEl.innerText = `${t.artist} • YouTube LoFi`;
+
+    // Highlight row in playlist
+    document.querySelectorAll('.wmp-track-row').forEach((r, rIdx) => {
+      if (rIdx === idx) {
+        r.classList.add('bg-blue-50', 'font-bold', 'text-blue-900');
+      } else {
+        r.classList.remove('bg-blue-50', 'font-bold', 'text-blue-900');
+      }
+    });
+
+    if (ytPlayerInstance && ytPlayerInstance.loadVideoById) {
+      ytPlayerInstance.loadVideoById(t.id);
+      ytPlayerInstance.playVideo();
+    } else {
+      // Fallback to local audio
+      if (!localAudioFallback) {
+        const assetBase = document.getElementById('xp-desktop-container')?.dataset.baseUrl || '';
+        localAudioFallback = new Audio(`${assetBase}/sounds/xp-startup.wav`);
+      }
+      localAudioFallback.play().catch(e => console.warn(e));
+      setWmpPlayingState(true);
+    }
+  }
+
+  document.querySelectorAll('.wmp-track-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const idx = parseInt(row.getAttribute('data-track-idx') || '0', 10);
+      playTrack(idx);
+    });
+  });
+
+  document.getElementById('wmp-play-toggle')?.addEventListener('click', () => {
+    if (!isWmpPlaying) {
+      if (ytPlayerInstance && ytPlayerInstance.playVideo) {
+        ytPlayerInstance.playVideo();
+      } else {
+        playTrack(currentTrackIdx);
+      }
+    } else {
+      if (ytPlayerInstance && ytPlayerInstance.pauseVideo) {
+        ytPlayerInstance.pauseVideo();
+      } else if (localAudioFallback) {
+        localAudioFallback.pause();
+        setWmpPlayingState(false);
+      }
     }
   });
 
-  function stopWmp() {
-    isPlaying = false;
-    wmpPlayIcon?.classList.remove('hidden');
-    wmpPauseIcon?.classList.add('hidden');
-    if (wmpStatusText) wmpStatusText.innerText = '■ Stopped';
-    if (wmpStatusDot) wmpStatusDot.className = 'w-2 h-2 rounded-xs bg-lime-400';
-    if (wmpAudio) {
-      wmpAudio.pause();
-      wmpAudio.currentTime = 0;
+  document.getElementById('wmp-stop-btn')?.addEventListener('click', () => {
+    if (ytPlayerInstance && ytPlayerInstance.stopVideo) {
+      ytPlayerInstance.stopVideo();
     }
-    if (wmpProgressBar) wmpProgressBar.style.width = '0%';
-    if (wmpTimeDisplay) wmpTimeDisplay.innerText = '0:00 / 0:04';
-    clearInterval(wmpInterval);
-  }
+    if (localAudioFallback) {
+      localAudioFallback.pause();
+      localAudioFallback.currentTime = 0;
+    }
+    setWmpPlayingState(false);
+    const bar = document.getElementById('wmp-progress-bar');
+    if (bar) bar.style.width = '0%';
+  });
 
-  wmpStopBtn?.addEventListener('click', stopWmp);
+  document.getElementById('wmp-prev-btn')?.addEventListener('click', () => {
+    const prev = (currentTrackIdx - 1 + lofiPlaylist.length) % lofiPlaylist.length;
+    playTrack(prev);
+  });
 
-  // 10. Rover the Search Dog Companion Logic
+  document.getElementById('wmp-next-btn')?.addEventListener('click', () => {
+    const next = (currentTrackIdx + 1) % lofiPlaylist.length;
+    playTrack(next);
+  });
+
+  // 9. Rover Search Companion
   const roverInput = document.getElementById('rover-search-input') as HTMLInputElement;
   const roverBtn = document.getElementById('rover-search-btn');
   const roverSpeech = document.getElementById('rover-speech');
@@ -1695,7 +2233,7 @@ DB::transaction(function() use ($request) &#123;
     if (e.key === 'Enter') runRoverSearch();
   });
 
-  // 11. SDLC Lens Switcher & Feature Selector Logic
+  // 10. SDLC Lens Tabs
   const sdlcSelect = document.getElementById('sdlc-feature-select') as HTMLSelectElement;
   const sdlcTabs = document.querySelectorAll('.xp-lens-tab');
 
@@ -1730,7 +2268,75 @@ DB::transaction(function() use ($request) &#123;
     });
   });
 
-  // 12. Authentic Windows XP Shutdown Dialog
+  // 11. Command Prompt (cmd.exe)
+  const cmdInput = document.getElementById('cmd-input') as HTMLInputElement;
+  const cmdOutput = document.getElementById('cmd-output');
+  const cmdScreen = document.getElementById('cmd-screen');
+
+  cmdInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const val = cmdInput.value.trim().toLowerCase();
+      if (!val) return;
+
+      const line = document.createElement('div');
+      line.innerHTML = `<span class="text-slate-400">C:\\Users\\Andhika&gt;</span> <span class="text-white">${cmdInput.value}</span>`;
+      cmdOutput?.appendChild(line);
+
+      const resp = document.createElement('div');
+      resp.className = 'text-emerald-300 pl-2';
+
+      if (val === 'help') {
+        resp.innerHTML = `
+          Perintah yang tersedia:<br/>
+          &bull; <span class="text-yellow-300">andhika</span>  - Profil Andhika Putra Pratama<br/>
+          &bull; <span class="text-yellow-300">pumk</span>     - Detail arsitektur aplikasi PUMK<br/>
+          &bull; <span class="text-yellow-300">push</span>     - Detail aplikasi Push Request Tracker<br/>
+          &bull; <span class="text-yellow-300">skills</span>   - Matriks keahlian SA, Dev &amp; QA<br/>
+          &bull; <span class="text-yellow-300">contact</span>  - Email &amp; saluran komunikasi<br/>
+          &bull; <span class="text-yellow-300">clear</span>    - Bersihkan layar terminal
+        `;
+      } else if (val === 'andhika') {
+        resp.innerHTML = `
+          Andhika Putra Pratama, S.Kom. (Dipa) - System Analyst &amp; Solution Architect<br/>
+          Lulusan S1 Teknik Informatika ITERA (IPK: 3.73 / TOEFL: 640)<br/>
+          Email: andhikapp28@gmail.com | GitHub: github.com/andhikapp28
+        `;
+      } else if (val === 'pumk') {
+        resp.innerHTML = `
+          [PUMK DAMRI]: Sistem Pembinaan &amp; Pembiayaan UMKM BUMN.<br/>
+          - Validasi NIK 16 digit &amp; penomoran unik via lockForUpdate<br/>
+          - Integrasi Shadow User ke database SSO DAMRI<br/>
+          - Kamus data teknis 32KB
+        `;
+      } else if (val === 'push') {
+        resp.innerHTML = `
+          [PUSH REQUEST DAMRI]: Sistem Audit Commit &amp; Manajemen Proyek IT.<br/>
+          - Webhook GitHub API &amp; diff audit status pull ke production<br/>
+          - Kanban board task &amp; milestone checklist
+        `;
+      } else if (val === 'skills') {
+        resp.innerHTML = `
+          [SA]: BRD/SRS, BPMN 2.0, Kamus Data, Skema Relasional ERD 3NF, SSO Auth<br/>
+          [DEV]: Laravel 12, PostgreSQL, Concurrency Locks, GitHub API, REST<br/>
+          [QA]: Boundary Testing, Test Cases Matrix, Postman API Testing
+        `;
+      } else if (val === 'contact') {
+        resp.innerHTML = `Email: andhikapp28@gmail.com | GitHub: andhikapp28`;
+      } else if (val === 'clear') {
+        if (cmdOutput) cmdOutput.innerHTML = '';
+        cmdInput.value = '';
+        return;
+      } else {
+        resp.innerHTML = `'${val}' tidak dikenali. Ketik 'help' untuk panduan.`;
+      }
+
+      cmdOutput?.appendChild(resp);
+      cmdInput.value = '';
+      if (cmdScreen) cmdScreen.scrollTop = cmdScreen.scrollHeight;
+    }
+  });
+
+  // 12. Shutdown Dialog
   const openShutdownBtn = document.getElementById('xp-open-shutdown-btn');
   const shutdownModal = document.getElementById('xp-shutdown-modal');
   const modalTurnOff = document.getElementById('modal-btn-turn-off');
@@ -1775,74 +2381,7 @@ DB::transaction(function() use ($request) &#123;
     }, 2500);
   });
 
-  // 13. Command Prompt
-  const cmdInput = document.getElementById('cmd-input') as HTMLInputElement;
-  const cmdOutput = document.getElementById('cmd-output');
-  const cmdScreen = document.getElementById('cmd-screen');
-
-  cmdInput?.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      const val = cmdInput.value.trim().toLowerCase();
-      if (!val) return;
-
-      const line = document.createElement('div');
-      line.innerHTML = `<span class="text-slate-400">C:\\Users\\Andhika&gt;</span> <span class="text-white">${cmdInput.value}</span>`;
-      cmdOutput?.appendChild(line);
-
-      const resp = document.createElement('div');
-      resp.className = 'text-emerald-300 pl-2';
-
-      if (val === 'help') {
-        resp.innerHTML = `
-          Perintah yang tersedia:<br/>
-          &bull; <span class="text-yellow-300">andhika</span>  - Profil Andhika Putra Pratama<br/>
-          &bull; <span class="text-yellow-300">pumk</span>     - Detail arsitektur aplikasi PUMK<br/>
-          &bull; <span class="text-yellow-300">push</span>     - Detail aplikasi Push Request Tracker<br/>
-          &bull; <span class="text-yellow-300">skills</span>   - Matriks keahlian SA, Dev &amp; QA<br/>
-          &bull; <span class="text-yellow-300">contact</span>  - Email &amp; saluran komunikasi<br/>
-          &bull; <span class="text-yellow-300">clear</span>    - Bersihkan layar terminal
-        `;
-      } else if (val === 'andhika') {
-        resp.innerHTML = `
-          Andhika Putra Pratama (Dipa) - System Analyst &amp; Technical Architect<br/>
-          Email: andhikapp28@gmail.com | GitHub: github.com/andhikapp28
-        `;
-      } else if (val === 'pumk') {
-        resp.innerHTML = `
-          [PUMK DAMRI]: Sistem Pembinaan &amp; Pembiayaan UMKM BUMN.<br/>
-          - Validasi NIK 16 digit &amp; penomoran unik via lockForUpdate<br/>
-          - Integrasi Shadow User ke database SSO DAMRI<br/>
-          - Kamus data teknis 32KB
-        `;
-      } else if (val === 'push') {
-        resp.innerHTML = `
-          [PUSH REQUEST DAMRI]: Sistem Audit Commit &amp; Manajemen Proyek IT.<br/>
-          - Webhook GitHub API &amp; diff audit status pull ke production<br/>
-          - Kanban board task &amp; milestone checklist
-        `;
-      } else if (val === 'skills') {
-        resp.innerHTML = `
-          [SA]: BRD/SRS, BPMN 2.0, Kamus Data, Skema Relasional ERD 3NF, SSO Auth<br/>
-          [DEV]: Laravel 12, PostgreSQL, Concurrency Locks, GitHub API, REST<br/>
-          [QA]: Boundary Testing, Test Cases Matrix, Postman API Testing
-        `;
-      } else if (val === 'contact') {
-        resp.innerHTML = `Email: andhikapp28@gmail.com | GitHub: andhikapp28`;
-      } else if (val === 'clear') {
-        if (cmdOutput) cmdOutput.innerHTML = '';
-        cmdInput.value = '';
-        return;
-      } else {
-        resp.innerHTML = `'${val}' tidak dikenali. Ketik 'help' untuk panduan.`;
-      }
-
-      cmdOutput?.appendChild(resp);
-      cmdInput.value = '';
-      if (cmdScreen) cmdScreen.scrollTop = cmdScreen.scrollHeight;
-    }
-  });
-
-  // 14. Copy Email
+  // 13. Copy Email
   const copyBtn = document.getElementById('xp-copy-email-btn');
   const copyIcon = document.getElementById('xp-copy-icon');
   const copiedIcon = document.getElementById('xp-copied-icon');
