@@ -1,0 +1,119 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { ArrowLeft, Calendar, User, Building2, CheckCircle2, FileSpreadsheet, ShieldAlert, Cpu } from '@lucide/astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<Layout 
+  title={`${project.data.title} | System Analyst Case Study`}
+  description={project.data.description}
+>
+  <Header />
+
+  <main class="flex-grow py-12 md:py-20 relative">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Back Navigation -->
+      <a
+        href="/#case-studies"
+        class="inline-flex items-center gap-2 text-xs font-mono text-slate-400 hover:text-cyan-300 transition-colors mb-8 group"
+      >
+        <ArrowLeft class="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+        <span>Back to All Case Studies</span>
+      </a>
+
+      <!-- Header Meta -->
+      <div class="border-b border-slate-800 pb-8 mb-8">
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+          <span class="text-xs font-mono px-3 py-1 rounded-full bg-cyan-950/50 border border-cyan-500/30 text-cyan-300">
+            {project.data.category}
+          </span>
+          <span class="text-xs font-mono text-slate-500">•</span>
+          <span class="text-xs font-mono text-slate-400 flex items-center gap-1.5">
+            <Calendar class="w-3.5 h-3.5" />
+            {project.data.period}
+          </span>
+        </div>
+
+        <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-100 tracking-tight leading-tight mb-6">
+          {project.data.title}
+        </h1>
+
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+          {project.data.description}
+        </p>
+
+        <!-- Role & Client Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-xs">
+          <div class="flex items-center gap-2.5">
+            <User class="w-4 h-4 text-cyan-400 shrink-0" />
+            <div>
+              <span class="text-slate-400 block font-mono">Assigned Role</span>
+              <span class="font-semibold text-slate-200">{project.data.role}</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <Building2 class="w-4 h-4 text-indigo-400 shrink-0" />
+            <div>
+              <span class="text-slate-400 block font-mono">Client / Domain</span>
+              <span class="font-semibold text-slate-200">{project.data.client}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Quantitative Outcomes Card -->
+      <div class="p-6 rounded-2xl bg-gradient-to-r from-cyan-950/30 via-slate-900/40 to-indigo-950/30 border border-cyan-500/30 mb-12">
+        <h2 class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold mb-4 flex items-center gap-2">
+          <FileSpreadsheet class="w-4 h-4" />
+          <span>Verified Business & System Metrics</span>
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {project.data.metrics.map((metric) => (
+            <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80 text-center">
+              <div class="text-xl sm:text-2xl font-mono font-extrabold text-cyan-400">{metric.value}</div>
+              <div class="text-xs text-slate-400 mt-1">{metric.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Specification Document Content -->
+      <article class="markdown-spec bg-slate-900/30 border border-slate-800/80 rounded-2xl p-6 sm:p-10">
+        <Content />
+      </article>
+
+      <!-- Bottom Next Actions -->
+      <div class="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <a
+          href="/#case-studies"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-700 bg-slate-900/60 hover:bg-slate-800 text-xs font-medium text-slate-300 transition-colors"
+        >
+          <ArrowLeft class="w-3.5 h-3.5" />
+          <span>Back to Case Studies</span>
+        </a>
+
+        <a
+          href="/#contact"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold transition-all shadow-md shadow-cyan-500/10"
+        >
+          <span>Discuss Similar Architecture</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

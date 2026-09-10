@@ -1,0 +1,293 @@
+---
+import { Network, Server, Database, Layers, ArrowRight, ShieldAlert, Cpu, Sparkles, RefreshCw } from '@lucide/astro';
+---
+
+<section id="interactive-flow" class="py-16 md:py-24 border-t border-slate-800/80 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-14">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-950/30 text-indigo-300 text-xs font-mono mb-4">
+        <Network class="w-3.5 h-3.5" />
+        <span>System Blueprint Inspection</span>
+      </div>
+      <h2 class="text-2xl sm:text-4xl font-bold text-slate-100 tracking-tight">
+        Interactive Architecture Diagram
+      </h2>
+      <p class="text-slate-400 text-sm sm:text-base mt-3 leading-relaxed">
+        Click any node in this distributed system pipeline to inspect the SA requirements, Dev contract, and QA edge-case assertions for that component.
+      </p>
+    </div>
+
+    <!-- The Diagram Nodes Bar -->
+    <div class="max-w-5xl mx-auto mb-8">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+        <!-- Node 1 -->
+        <button
+          class="flow-node active p-4 rounded-xl border border-cyan-500/40 bg-cyan-950/20 text-left transition-all hover:bg-slate-800/60 focus:outline-none"
+          data-node="client"
+        >
+          <div class="text-[10px] font-mono text-cyan-400 mb-1 font-semibold">NODE 01</div>
+          <div class="text-sm font-bold text-slate-100">Client / POS</div>
+          <div class="text-xs text-slate-400 mt-1">Store terminal / App</div>
+        </button>
+
+        <!-- Node 2 -->
+        <button
+          class="flow-node p-4 rounded-xl border border-slate-800 bg-slate-900/50 text-left transition-all hover:bg-slate-800/60 focus:outline-none"
+          data-node="gateway"
+        >
+          <div class="text-[10px] font-mono text-slate-400 mb-1 font-semibold">NODE 02</div>
+          <div class="text-sm font-bold text-slate-100">API Gateway</div>
+          <div class="text-xs text-slate-400 mt-1">Rate limit & Auth</div>
+        </button>
+
+        <!-- Node 3 -->
+        <button
+          class="flow-node p-4 rounded-xl border border-slate-800 bg-slate-900/50 text-left transition-all hover:bg-slate-800/60 focus:outline-none"
+          data-node="service"
+        >
+          <div class="text-[10px] font-mono text-slate-400 mb-1 font-semibold">NODE 03</div>
+          <div class="text-sm font-bold text-slate-100">Core Engine</div>
+          <div class="text-xs text-slate-400 mt-1">State machine</div>
+        </button>
+
+        <!-- Node 4 -->
+        <button
+          class="flow-node p-4 rounded-xl border border-slate-800 bg-slate-900/50 text-left transition-all hover:bg-slate-800/60 focus:outline-none"
+          data-node="queue"
+        >
+          <div class="text-[10px] font-mono text-slate-400 mb-1 font-semibold">NODE 04</div>
+          <div class="text-sm font-bold text-slate-100">Event Queue</div>
+          <div class="text-xs text-slate-400 mt-1">RabbitMQ / Redis</div>
+        </button>
+
+        <!-- Node 5 -->
+        <button
+          class="flow-node p-4 rounded-xl border border-slate-800 bg-slate-900/50 text-left transition-all hover:bg-slate-800/60 focus:outline-none"
+          data-node="database"
+        >
+          <div class="text-[10px] font-mono text-slate-400 mb-1 font-semibold">NODE 05</div>
+          <div class="text-sm font-bold text-slate-100">DB & Storage</div>
+          <div class="text-xs text-slate-400 mt-1">Postgres + Redis</div>
+        </button>
+      </div>
+
+      <!-- Arrow Flow Indicator (Visual) -->
+      <div class="hidden md:flex items-center justify-between px-6 py-2 text-xs font-mono text-slate-400">
+        <span>Request Flow &rarr;</span>
+        <span>Asynchronous Decoupling &rarr;</span>
+        <span>ACID Persistence &rarr;</span>
+      </div>
+    </div>
+
+    <!-- Inspector Details Drawer -->
+    <div class="max-w-5xl mx-auto rounded-2xl border border-slate-800 bg-slate-900/80 p-6 sm:p-8 backdrop-blur-md shadow-2xl relative min-h-[320px]">
+      <div id="flow-content-area" class="transition-all duration-200">
+        <!-- Content injected dynamically via JS below -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  interface NodeDetail {
+    title: string;
+    subtitle: string;
+    sla: string;
+    saReq: string[];
+    devSpecs: string[];
+    qaAssertions: string[];
+  }
+
+  const nodeData: Record<string, NodeDetail> = {
+    client: {
+      title: "Node 01: Client Applications & POS Terminals",
+      subtitle: "Offline-first capability, client-side idempotency generation, and token management.",
+      sla: "P99 UI Latency: <100ms (Optimistic UI)",
+      saReq: [
+        "Offline local storage (IndexedDB/SQLite) allows cashiers to continue checkouts during internet loss.",
+        "Generates unique UUIDv4 idempotency key per physical button tap to protect from double-charging.",
+        "Background automatic synchronization thread fires upon connection restoration."
+      ],
+      devSpecs: [
+        "Payload: Compress request JSON with gzip if bulk inventory batch size exceeds 50KB.",
+        "Bearer JWT rotation with refresh tokens stored in secure encrypted storage.",
+        "Automatic retry with exponential backoff (1s, 2s, 4s) up to 3 attempts on network 5xx."
+      ],
+      qaAssertions: [
+        "Assert checkout UI disables 'Submit' button immediately upon first click.",
+        "Simulate airplane mode during checkout: verify transaction safely queues locally without data loss.",
+        "Assert cached token expiry forces graceful re-auth modal without clearing current cart draft."
+      ]
+    },
+    gateway: {
+      title: "Node 02: API Gateway & Reverse Proxy",
+      subtitle: "TLS termination, rate limiting, HMAC validation, and routing to internal clusters.",
+      sla: "Throughput: 15,000 req/sec | Latency Overhead: <5ms",
+      saReq: [
+        "Defines strict ingress throttling: 100 requests per minute per IP for public endpoints.",
+        "Enforces mutual TLS (mTLS) or encrypted HMAC headers for all third-party webhook integrations.",
+        "Uniform error response format: standard JSON envelope with error code, message, and trace ID."
+      ],
+      devSpecs: [
+        "Token bucket rate limiter running on Redis Cluster.",
+        "Reverse proxy strips internal debug headers (X-Powered-By) to prevent server fingerprinting.",
+        "Correlates every incoming HTTP request with `X-Correlation-ID` passed to all downstream services."
+      ],
+      qaAssertions: [
+        "Assert 429 Too Many Requests response after threshold is breached with `Retry-After` header.",
+        "Send malformed payloads: verify gateway terminates request with 400 before reaching internal services.",
+        "Assert CORS policy strictly rejects unauthorized origin headers."
+      ]
+    },
+    service: {
+      title: "Node 03: Core Domain Service & State Machine",
+      subtitle: "Deterministic business logic, transactional boundaries, and state lifecycle transitions.",
+      sla: "Execution TAT: <120ms | Availability: 99.95%",
+      saReq: [
+        "Implements strict finite state machine: DRAFT -> RESERVED -> CHARGED -> FULFILLED.",
+        "Business rules validation: coupon applicability, customer loyalty tier, tax calculation.",
+        "Emits transactional domain events (`OrderCreated`, `StockDeducted`) to message broker."
+      ],
+      devSpecs: [
+        "Stateless service built with clean architecture (Controller -> UseCase -> Repository).",
+        "Distributed lock on SKU inventory via Redis Redlock to prevent concurrency race condition.",
+        "Circuit breaker (Resilience4j/Polly) trips after 5 consecutive downstream payment gateway timeouts."
+      ],
+      qaAssertions: [
+        "Assert simultaneous requests with same Idempotency-Key return exactly identical response body.",
+        "Trigger database timeout: assert transaction rolls back cleanly without orphan state.",
+        "Boundary test: verify system rejects checkout if item quantity exceeds warehouse quota."
+      ]
+    },
+    queue: {
+      title: "Node 04: Asynchronous Event Queue (RabbitMQ / Redis)",
+      subtitle: "Decoupling heavy tasks, notification dispatching, and background reconciliation.",
+      sla: "Message Delivery Guarantee: At-least-once | Processing Lag: <200ms",
+      saReq: [
+        "Decouples fast synchronous user response from slow external operations (push notifications, PDF invoice generation).",
+        "Dead Letter Queue (DLQ) policy for messages that fail after 3 retry cycles for manual analyst review.",
+        "Audit trail for all financial state changes persisted to durable message storage."
+      ],
+      devSpecs: [
+        "RabbitMQ topic exchange with durable queues and publisher confirms enabled.",
+        "Consumers process messages with idempotent database upserts using message IDs.",
+        "Backpressure monitoring: auto-scale worker pods if queue depth exceeds 2,000 messages."
+      ],
+      qaAssertions: [
+        "Kill consumer worker midway through processing: verify message is re-queued without loss.",
+        "Simulate poison-pill payload: assert message lands in DLQ without stalling the main queue.",
+        "Assert duplicate delivery does not cause multiple notifications or duplicate ledger entries."
+      ]
+    },
+    database: {
+      title: "Node 05: Database & Caching Cluster (PostgreSQL + Redis)",
+      subtitle: "ACID transactions, relational normalization, read replicas, and fast cache layer.",
+      sla: "Read Latency: <2ms (Cache) / <15ms (DB) | Zero Data Loss (RPO = 0)",
+      saReq: [
+        "Strict 3NF database schema ensuring referential integrity and foreign key constraints.",
+        "Soft-delete architecture for all financial entities (is_deleted, deleted_at) for audit history.",
+        "Data retention policy: partition transaction logs by year for query optimization."
+      ],
+      devSpecs: [
+        "Master-Slave PostgreSQL cluster with pgpool connection pooling and read-write splitting.",
+        "Composite index on `(merchant_id, status, created_at)` for high-frequency dashboard queries.",
+        "Redis Cache-Aside pattern with 600s TTL and cache-invalidation on write."
+      ],
+      qaAssertions: [
+        "Assert simultaneous debit transaction respects ACID isolation level (Read Committed / Serializable).",
+        "Verify cache eviction occurs immediately when product stock is updated by administrator.",
+        "Validate SQL injection immunity using prepared statements and ORM parameter binding."
+      ]
+    }
+  };
+
+  const contentArea = document.getElementById('flow-content-area');
+  const buttons = document.querySelectorAll('.flow-node');
+
+  function renderNode(key: string) {
+    const data = nodeData[key];
+    if (!data || !contentArea) return;
+
+    contentArea.innerHTML = `
+      <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-slate-800 gap-4">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-semibold">Active Node Inspection</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-slate-100 mt-1">${data.title}</h3>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">${data.subtitle}</p>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-mono text-emerald-400 bg-emerald-950/40 px-3.5 py-2 rounded-xl border border-emerald-500/30 shrink-0">
+          <span>${data.sla}</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+        <!-- SA Requirements -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-cyan-400">
+            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+            <span>SA Specifications</span>
+          </div>
+          <ul class="space-y-2.5 text-xs text-slate-300">
+            ${data.saReq.map(item => `
+              <li class="flex items-start gap-2">
+                <span class="text-cyan-400 font-bold">•</span>
+                <span class="leading-relaxed">${item}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+
+        <!-- Dev Specs -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-indigo-400">
+            <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+            <span>Dev Feasibility</span>
+          </div>
+          <ul class="space-y-2.5 text-xs text-slate-300">
+            ${data.devSpecs.map(item => `
+              <li class="flex items-start gap-2">
+                <span class="text-indigo-400 font-bold">•</span>
+                <span class="leading-relaxed">${item}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+
+        <!-- QA Assertions -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-emerald-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span>QA Test Assertions</span>
+          </div>
+          <ul class="space-y-2.5 text-xs text-slate-300">
+            ${data.qaAssertions.map(item => `
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">•</span>
+                <span class="leading-relaxed">${item}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      </div>
+    `;
+  }
+
+  // Initial render
+  renderNode('client');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nodeKey = btn.getAttribute('data-node') || 'client';
+
+      buttons.forEach(b => {
+        b.classList.remove('active', 'border-cyan-500/40', 'bg-cyan-950/20');
+        b.classList.add('border-slate-800', 'bg-slate-900/50');
+      });
+
+      btn.classList.remove('border-slate-800', 'bg-slate-900/50');
+      btn.classList.add('active', 'border-cyan-500/40', 'bg-cyan-950/20');
+
+      renderNode(nodeKey);
+    });
+  });
+</script>

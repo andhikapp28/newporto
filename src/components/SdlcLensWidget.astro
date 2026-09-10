@@ -1,0 +1,287 @@
+---
+import { Workflow, Terminal, ShieldCheck, CheckCircle, Code2, Sparkles, Layers, ArrowRight } from '@lucide/astro';
+---
+
+<section id="lens-widget" class="py-16 md:py-24 border-t border-slate-800/80 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-950/30 text-cyan-300 text-xs font-mono mb-4">
+        <Layers class="w-3.5 h-3.5" />
+        <span>Interactive SDLC Perspective Switcher</span>
+      </div>
+      <h2 class="text-2xl sm:text-4xl font-bold text-slate-100 tracking-tight">
+        One Feature. Three Critical Lenses.
+      </h2>
+      <p class="text-slate-400 text-sm sm:text-base mt-3 leading-relaxed">
+        See how I define the exact same business requirement through the analytical rigor of an SA, the technical realism of a Developer, and the defensive posture of a QA tester.
+      </p>
+    </div>
+
+    <!-- Feature Context Box -->
+    <div class="max-w-5xl mx-auto mb-8 p-4 rounded-xl border border-slate-800 bg-slate-900/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="px-2.5 py-1 rounded bg-slate-800 border border-slate-700 text-slate-300 text-xs font-mono font-semibold">
+          FEATURE SPEC #SA-104
+        </span>
+        <span class="text-sm sm:text-base font-semibold text-slate-200">
+          High-Traffic Idempotent Checkout & Payment Webhook
+        </span>
+      </div>
+      <div class="flex items-center gap-2 text-xs font-mono text-cyan-400 bg-cyan-950/40 px-3 py-1 rounded-full border border-cyan-500/30">
+        <Sparkles class="w-3.5 h-3.5" />
+        <span>Live Interactive Demo Below</span>
+      </div>
+    </div>
+
+    <!-- The 3 Tab Switchers -->
+    <div class="max-w-5xl mx-auto">
+      <div class="grid grid-cols-3 gap-2 p-1.5 bg-slate-900/80 border border-slate-800 rounded-2xl mb-6">
+        <!-- Tab 1: Analyst -->
+        <button
+          id="btn-lens-analyst"
+          class="lens-tab-btn active flex items-center justify-center gap-2 py-3 px-3 rounded-xl font-medium text-xs sm:text-sm transition-all text-cyan-300 bg-slate-800/90 border border-cyan-500/30 shadow-sm"
+          data-target="panel-analyst"
+        >
+          <Workflow class="w-4 h-4 text-cyan-400 shrink-0" />
+          <span class="hidden sm:inline">1. System Analyst Lens</span>
+          <span class="sm:hidden">Analyst</span>
+        </button>
+
+        <!-- Tab 2: Dev -->
+        <button
+          id="btn-lens-dev"
+          class="lens-tab-btn flex items-center justify-center gap-2 py-3 px-3 rounded-xl font-medium text-xs sm:text-sm transition-all text-slate-400 hover:text-slate-200"
+          data-target="panel-dev"
+        >
+          <Terminal class="w-4 h-4 text-indigo-400 shrink-0" />
+          <span class="hidden sm:inline">2. Developer Feasibility</span>
+          <span class="sm:hidden">Dev Lens</span>
+        </button>
+
+        <!-- Tab 3: QA -->
+        <button
+          id="btn-lens-qa"
+          class="lens-tab-btn flex items-center justify-center gap-2 py-3 px-3 rounded-xl font-medium text-xs sm:text-sm transition-all text-slate-400 hover:text-slate-200"
+          data-target="panel-qa"
+        >
+          <ShieldCheck class="w-4 h-4 text-emerald-400 shrink-0" />
+          <span class="hidden sm:inline">3. QA Test & Edge Cases</span>
+          <span class="sm:hidden">QA Rigor</span>
+        </button>
+      </div>
+
+      <!-- Panel 1: Analyst Content -->
+      <div id="panel-analyst" class="lens-panel block rounded-2xl border border-cyan-500/30 bg-[#090e17] p-6 sm:p-8 shadow-xl shadow-cyan-950/20">
+        <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-slate-800 gap-4">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-semibold">Deliverable: BRD & Business Flow</span>
+            <h3 class="text-xl font-bold text-slate-100 mt-1">Elicitation, State Machine & Business Constraints</h3>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono text-slate-400 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
+            <span>Doc ID: BRD-PAY-2024-V2.1</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+          <!-- Flow / State Machine -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-mono uppercase text-slate-400 tracking-wider">BPMN Order State Transitions</h4>
+            <div class="space-y-2 font-mono text-xs">
+              <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between">
+                <span class="text-slate-300">1. CART_CHECKOUT</span>
+                <span class="text-cyan-400 font-semibold">Reserve Stock (5 Min TTL)</span>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between">
+                <span class="text-slate-300">2. PAYMENT_INITIATED</span>
+                <span class="text-yellow-400 font-semibold">Generate Idempotent Intent</span>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between">
+                <span class="text-slate-300">3. WEBHOOK_RECEIVED</span>
+                <span class="text-emerald-400 font-semibold">Verify HMAC Signature</span>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between">
+                <span class="text-slate-300">4. COMPLETED / RELEASED</span>
+                <span class="text-indigo-400 font-semibold">Deduct DB or Restore Inventory</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Business Rules & Stakeholder Alignment -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-mono uppercase text-slate-400 tracking-wider">Analyst Business Rules</h4>
+            <ul class="space-y-3 text-xs sm:text-sm text-slate-300">
+              <li class="flex items-start gap-2.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 shrink-0"></span>
+                <span><strong class="text-slate-100 font-semibold">Anti-Double Charge:</strong> Network retries from customer app within 60s window must resolve to existing payment transaction.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 shrink-0"></span>
+                <span><strong class="text-slate-100 font-semibold">Stock Reservation TTL:</strong> If payment is unconfirmed after 300s, automatic asynchronous event triggers stock restoration.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 shrink-0"></span>
+                <span><strong class="text-slate-100 font-semibold">Audit Immutability:</strong> Every webhook attempt is stored with raw payload for compliance and disputed transaction settlement.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 2: Dev Content -->
+      <div id="panel-dev" class="lens-panel hidden rounded-2xl border border-indigo-500/30 bg-[#090e17] p-6 sm:p-8 shadow-xl shadow-indigo-950/20">
+        <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-slate-800 gap-4">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-wider text-indigo-400 font-semibold">Deliverable: API Contract & Database Schema</span>
+            <h3 class="text-xl font-bold text-slate-100 mt-1">REST OpenAPI 3.1 & Distributed Lock Strategy</h3>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono text-slate-400 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
+            <span>METHOD: POST /v1/checkout/charge</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+          <!-- API Schema JSON -->
+          <div class="space-y-3">
+            <h4 class="text-xs font-mono uppercase text-slate-400 tracking-wider">HTTP Request Contract (JSON)</h4>
+            <div class="rounded-xl bg-slate-950 p-4 border border-slate-800/90 font-mono text-xs overflow-x-auto text-slate-300">
+<pre class="text-indigo-300">POST /api/v1/checkout/charge
+Headers:
+  Content-Type: application/json
+  <span class="text-cyan-400">X-Idempotency-Key:</span> "idem_uuid_893bca1"
+  Authorization: Bearer &lt;jwt_token&gt;
+
+Body:
+&#123;
+  <span class="text-emerald-400">"order_id"</span>: "ORD-2024-8891",
+  <span class="text-emerald-400">"amount"</span>: 450000,
+  <span class="text-emerald-400">"currency"</span>: "IDR",
+  <span class="text-emerald-400">"payment_method"</span>: "VIRTUAL_ACCOUNT_BCA",
+  <span class="text-emerald-400">"reserved_token"</span>: "tok_res_998124"
+&#125;</pre>
+            </div>
+          </div>
+
+          <!-- Technical Feasibility & DB Locking -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-mono uppercase text-slate-400 tracking-wider">Dev Feasibility Architecture</h4>
+            <div class="space-y-3 text-xs text-slate-300">
+              <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-1">
+                <span class="font-mono text-indigo-300 font-semibold">1. Distributed Lock (Redis Redlock):</span>
+                <p class="text-slate-400">Prevent race condition by acquiring lock: <code class="font-mono text-cyan-300">SET lock:order:8891 $UUID NX PX 4000</code> before processing deduction.</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-1">
+                <span class="font-mono text-indigo-300 font-semibold">2. Relational Transaction Isolation:</span>
+                <p class="text-slate-400">PostgreSQL transaction with <code class="font-mono text-cyan-300">SELECT ... FOR UPDATE</code> on the SKU table to eliminate phantom inventory reads.</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-1">
+                <span class="font-mono text-indigo-300 font-semibold">3. Webhook Circuit Breaker:</span>
+                <p class="text-slate-400">Fallback queue to RabbitMQ when downstream payment provider experiences high latency (&gt;2500ms).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 3: QA Content -->
+      <div id="panel-qa" class="lens-panel hidden rounded-2xl border border-emerald-500/30 bg-[#090e17] p-6 sm:p-8 shadow-xl shadow-emerald-950/20">
+        <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-slate-800 gap-4">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-semibold">Deliverable: BDD Test Cases & Boundary Assertions</span>
+            <h3 class="text-xl font-bold text-slate-100 mt-1">Gherkin Specification & Failure Edge-Case Matrix</h3>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono text-slate-400 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
+            <span>TEST SUITE: TC-CHECKOUT-IDEM-08</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+          <!-- BDD Gherkin Feature Script -->
+          <div class="space-y-3">
+            <h4 class="text-xs font-mono uppercase text-slate-400 tracking-wider">BDD Acceptance Criteria (Gherkin)</h4>
+            <div class="rounded-xl bg-slate-950 p-4 border border-slate-800/90 font-mono text-xs overflow-x-auto text-slate-300 leading-relaxed">
+<span class="text-emerald-400">Feature:</span> Idempotent Payment Processing
+
+<span class="text-yellow-400">Scenario:</span> Client triggers duplicate payment under unstable network
+  <span class="text-cyan-400">Given</span> order "ORD-2024-8891" has stock reserved
+  <span class="text-cyan-400">And</span> client generates idempotency key "idem_uuid_893bca1"
+  <span class="text-cyan-400">When</span> client sends 2 identical POST requests concurrently
+  <span class="text-emerald-400">Then</span> only 1 ledger entry must be written to "transactions"
+  <span class="text-emerald-400">And</span> second request returns HTTP 200 with cached response
+  <span class="text-emerald-400">And</span> stock quantity must decrease by exactly 1 unit
+            </div>
+          </div>
+
+          <!-- Edge Cases & Boundary Matrix -->
+          <div class="space-y-4">
+            <h4 class="text-xs font-mono uppercase text-slate-400 tracking-wider">Defensive QA Test Assertions</h4>
+            <div class="space-y-2.5 text-xs">
+              <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-start gap-2.5">
+                <span class="text-emerald-400 font-bold font-mono">PASS</span>
+                <div>
+                  <strong class="text-slate-200">Expired Reservation Checkout:</strong>
+                  <p class="text-slate-400">If client submits payment after 301 seconds, assert HTTP 409 Conflict: <code class="font-mono text-slate-300">ERR_STOCK_RESERVATION_EXPIRED</code>.</p>
+                </div>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-start gap-2.5">
+                <span class="text-emerald-400 font-bold font-mono">PASS</span>
+                <div>
+                  <strong class="text-slate-200">Tampered Webhook HMAC:</strong>
+                  <p class="text-slate-400">Assert HTTP 401 Unauthorized when fake webhook payload signature does not match sha256 secret.</p>
+                </div>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-start gap-2.5">
+                <span class="text-emerald-400 font-bold font-mono">PASS</span>
+                <div>
+                  <strong class="text-slate-200">Zero & Negative Balance Boundary:</strong>
+                  <p class="text-slate-400">Validate request rejects amount &lt;= 0 with HTTP 422 Unprocessable Entity before calling 3rd-party gateway.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs = document.querySelectorAll('.lens-tab-btn');
+  const panels = document.querySelectorAll('.lens-panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetId = tab.getAttribute('data-target');
+
+      // Reset tabs styling
+      tabs.forEach(t => {
+        t.classList.remove('active', 'text-cyan-300', 'text-indigo-300', 'text-emerald-300', 'bg-slate-800/90', 'border-cyan-500/30', 'border-indigo-500/30', 'border-emerald-500/30', 'shadow-sm');
+        t.classList.add('text-slate-400');
+      });
+
+      // Style active tab
+      tab.classList.add('active', 'bg-slate-800/90', 'shadow-sm');
+      tab.classList.remove('text-slate-400');
+
+      if (targetId === 'panel-analyst') {
+        tab.classList.add('text-cyan-300', 'border', 'border-cyan-500/30');
+      } else if (targetId === 'panel-dev') {
+        tab.classList.add('text-indigo-300', 'border', 'border-indigo-500/30');
+      } else if (targetId === 'panel-qa') {
+        tab.classList.add('text-emerald-300', 'border', 'border-emerald-500/30');
+      }
+
+      // Hide all panels, show target
+      panels.forEach(panel => {
+        panel.classList.add('hidden');
+        panel.classList.remove('block');
+      });
+
+      const targetPanel = document.getElementById(targetId);
+      if (targetPanel) {
+        targetPanel.classList.remove('hidden');
+        targetPanel.classList.add('block');
+      }
+    });
+  });
+</script>

@@ -1,0 +1,104 @@
+---
+import { Search, Compass, FileCode2, CheckCheck, ArrowRight } from '@lucide/astro';
+
+const steps = [
+  {
+    num: "01",
+    title: "Elicitation & Process Mapping",
+    subtitle: "Understanding business pain points without jumping straight to code.",
+    icon: Search,
+    color: "cyan",
+    points: [
+      "In-depth stakeholder interviews across product, operations, and executives.",
+      "As-Is vs To-Be business process flowcharts with bottleneck identification.",
+      "Scope prioritization matrix (MoSCoW) to prevent scope creep."
+    ]
+  },
+  {
+    num: "02",
+    title: "System Modeling & Blueprinting",
+    subtitle: "Translating ambiguous requirements into rigorous architectural models.",
+    icon: Compass,
+    color: "indigo",
+    points: [
+      "BPMN 2.0 swimlane workflow and finite state transition diagrams.",
+      "Normalized Entity Relationship Diagrams (ERD) with indexing strategy.",
+      "High-level architecture and asynchronous message queue topology."
+    ]
+  },
+  {
+    num: "03",
+    title: "Technical Specification & Alignment",
+    subtitle: "Giving developers unambiguous, battle-tested API contracts and logic.",
+    icon: FileCode2,
+    color: "teal",
+    points: [
+      "OpenAPI 3.1 schema specification with strict HTTP status semantics.",
+      "Idempotency tokens, circuit breakers, and distributed lock mechanics.",
+      "Pre-sprint engineering walk-throughs to eliminate assumption gaps."
+    ]
+  },
+  {
+    num: "04",
+    title: "QA Verification & Acceptance Gate",
+    subtitle: "Guaranteeing quality and edge-case resilience before production release.",
+    icon: CheckCheck,
+    color: "emerald",
+    points: [
+      "BDD Gherkin acceptance criteria embedded into every Jira user story.",
+      "Postman test automation suites verifying happy & negative paths.",
+      "User Acceptance Testing (UAT) facilitation with business stakeholders."
+    ]
+  }
+];
+---
+
+<section id="methodology" class="py-16 md:py-24 border-t border-slate-800/80 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-teal-500/30 bg-teal-950/30 text-teal-300 text-xs font-mono mb-4">
+        <Compass class="w-3.5 h-3.5" />
+        <span>System Analysis Framework</span>
+      </div>
+      <h2 class="text-2xl sm:text-4xl font-bold text-slate-100 tracking-tight">
+        How I Deliver Reliable Systems
+      </h2>
+      <p class="text-slate-400 text-sm sm:text-base mt-3 leading-relaxed">
+        A predictable, 4-phase methodology that ensures business objectives are met with zero architectural debt and complete testing coverage.
+      </p>
+    </div>
+
+    <!-- 4-step Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {steps.map((step) => {
+        const Icon = step.icon;
+        return (
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-6 flex flex-col justify-between hover:border-slate-700 transition-all group">
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-950/60 px-2.5 py-1 rounded-md border border-cyan-500/30">
+                  STEP {step.num}
+                </span>
+                <div class="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 group-hover:text-cyan-400 transition-colors">
+                  <Icon class="w-4 h-4" />
+                </div>
+              </div>
+
+              <h3 class="text-base font-bold text-slate-100 mb-2 leading-snug">{step.title}</h3>
+              <p class="text-xs text-slate-400 leading-relaxed mb-6">{step.subtitle}</p>
+
+              <div class="space-y-2.5 border-t border-slate-800/80 pt-4">
+                {step.points.map((pt) => (
+                  <div class="text-xs text-slate-300 flex items-start gap-2">
+                    <span class="text-cyan-400 font-bold shrink-0">•</span>
+                    <span class="leading-relaxed">{pt}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

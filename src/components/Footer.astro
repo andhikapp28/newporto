@@ -1,0 +1,49 @@
+---
+import { Network, Mail, ArrowUp } from '@lucide/astro';
+---
+
+<footer class="border-t border-slate-800/80 bg-[#06080d] py-12 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-800/60">
+      <!-- Brand & Description -->
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+          <Network class="w-4 h-4" />
+        </div>
+        <div class="text-xs">
+          <div class="font-bold text-slate-200">System Analyst Portfolio</div>
+          <div class="text-slate-400 font-mono text-[11px]">Engineered with Astro & Tailwind CSS</div>
+        </div>
+      </div>
+
+      <!-- Quick Nav Links -->
+      <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400">
+        <a href="#lens-widget" class="hover:text-cyan-300 transition-colors">SDLC Lens</a>
+        <a href="#three-pillars" class="hover:text-cyan-300 transition-colors">3-Pillar Toolkit</a>
+        <a href="#interactive-flow" class="hover:text-cyan-300 transition-colors">System Architecture</a>
+        <a href="#case-studies" class="hover:text-cyan-300 transition-colors">Case Studies</a>
+        <a href="#methodology" class="hover:text-cyan-300 transition-colors">Methodology</a>
+        <a href="#contact" class="hover:text-cyan-300 transition-colors">Contact</a>
+      </div>
+
+      <!-- Back to top -->
+      <a
+        href="#"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/60 hover:bg-slate-800 text-slate-400 hover:text-slate-200 text-xs transition-colors"
+      >
+        <span>Back to top</span>
+        <ArrowUp class="w-3.5 h-3.5" />
+      </a>
+    </div>
+
+    <!-- Sub footer -->
+    <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400 font-mono">
+      <div>
+        &copy; {new Date().getFullYear()} System Analyst Portfolio. Designed for clarity, precision & performance.
+      </div>
+      <div class="flex items-center gap-4">
+        <span>Static Site • Zero Latency • 100% Free Hosting</span>
+      </div>
+    </div>
+  </div>
+</footer>

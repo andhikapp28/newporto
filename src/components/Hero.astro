@@ -1,0 +1,128 @@
+---
+import { 
+  FileCode, 
+  CheckCircle2, 
+  Workflow, 
+  ArrowUpRight, 
+  Layers, 
+  ShieldCheck, 
+  Terminal,
+  Cpu
+} from '@lucide/astro';
+---
+
+<section class="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
+  <!-- Blueprint Grid Overlay -->
+  <div class="absolute inset-0 blueprint-grid-dense opacity-40 pointer-events-none -z-10"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <!-- Superpower badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-950/40 text-cyan-300 text-xs font-mono mb-8 tracking-wide shadow-inner shadow-cyan-500/10">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+        <span>System Analyst & Solution Architect</span>
+        <span class="text-slate-600">|</span>
+        <span class="text-slate-400">Dev Feasibility & QA Rigor</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-100 leading-[1.15] mb-6">
+        Bridging Complex Business Logic into 
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400">
+          Scalable, Testable Systems.
+        </span>
+      </h1>
+
+      <!-- Subheadline -->
+      <p class="text-base sm:text-lg text-slate-400 leading-relaxed max-w-3xl mx-auto mb-10">
+        Most software projects fail not in code, but in ambiguous requirements. I architect complete system blueprints—from <strong class="text-slate-200 font-semibold">BPMN workflows</strong> and <strong class="text-slate-200 font-semibold">ERD database models</strong> to strictly typed <strong class="text-slate-200 font-semibold">API contracts</strong> and <strong class="text-slate-200 font-semibold">automated QA acceptance criteria</strong>.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-4 mb-14">
+        <a
+          href="#case-studies"
+          class="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-400 hover:to-teal-400 text-slate-950 font-bold text-sm tracking-wide transition-all shadow-lg shadow-cyan-500/20 flex items-center gap-2 group"
+        >
+          <span>Explore Case Studies</span>
+          <ArrowUpRight class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+        </a>
+
+        <a
+          href="#lens-widget"
+          class="px-6 py-3 rounded-xl border border-slate-700 bg-slate-900/60 hover:bg-slate-800/80 hover:border-slate-600 text-slate-200 font-medium text-sm transition-all flex items-center gap-2"
+        >
+          <Layers class="w-4 h-4 text-cyan-400" />
+          <span>Interactive SDLC Switcher</span>
+        </a>
+      </div>
+
+      <!-- 3-Role Hybrid Advantage Quick Strip -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto text-left">
+        <!-- Pillar 1: Analysis -->
+        <div class="p-4 rounded-xl border border-cyan-500/20 bg-cyan-950/20 backdrop-blur-sm">
+          <div class="flex items-center gap-2.5 mb-1.5">
+            <Workflow class="w-4 h-4 text-cyan-400 shrink-0" />
+            <span class="text-xs font-bold text-cyan-300 uppercase tracking-wider">Analysis (Core)</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-snug">
+            BRD/SRS, BPMN 2.0, state machines, and relational ERD mapping.
+          </p>
+        </div>
+
+        <!-- Pillar 2: Dev Feasibility -->
+        <div class="p-4 rounded-xl border border-indigo-500/20 bg-indigo-950/20 backdrop-blur-sm">
+          <div class="flex items-center gap-2.5 mb-1.5">
+            <Terminal class="w-4 h-4 text-indigo-400 shrink-0" />
+            <span class="text-xs font-bold text-indigo-300 uppercase tracking-wider">Dev Feasibility</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-snug">
+            REST contracts, SQL optimization, idempotency, and PoC prototyping.
+          </p>
+        </div>
+
+        <!-- Pillar 3: QA Rigor -->
+        <div class="p-4 rounded-xl border border-emerald-500/20 bg-emerald-950/20 backdrop-blur-sm">
+          <div class="flex items-center gap-2.5 mb-1.5">
+            <ShieldCheck class="w-4 h-4 text-emerald-400 shrink-0" />
+            <span class="text-xs font-bold text-emerald-300 uppercase tracking-wider">QA Rigor</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-snug">
+            Gherkin BDD specs, API automated testing, edge-case failure matrices.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Impact Metrics Ticker -->
+    <div class="mt-16 pt-10 border-t border-slate-800/80 max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div class="space-y-1">
+        <div class="text-2xl sm:text-3xl font-extrabold font-mono text-cyan-400 tracking-tight">
+          0%
+        </div>
+        <div class="text-xs font-medium text-slate-400">Spec-to-Code Ambiguity</div>
+      </div>
+
+      <div class="space-y-1">
+        <div class="text-2xl sm:text-3xl font-extrabold font-mono text-teal-400 tracking-tight">
+          &gt;40%
+        </div>
+        <div class="text-xs font-medium text-slate-400">Sprint Delivery Acceleration</div>
+      </div>
+
+      <div class="space-y-1">
+        <div class="text-2xl sm:text-3xl font-extrabold font-mono text-indigo-400 tracking-tight">
+          100%
+        </div>
+        <div class="text-xs font-medium text-slate-400">BDD Testable Requirements</div>
+      </div>
+
+      <div class="space-y-1">
+        <div class="text-2xl sm:text-3xl font-extrabold font-mono text-emerald-400 tracking-tight">
+          3+
+        </div>
+        <div class="text-xs font-medium text-slate-400">Mission-Critical Case Studies</div>
+      </div>
+    </div>
+  </div>
+</section>

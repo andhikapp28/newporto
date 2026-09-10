@@ -1,0 +1,109 @@
+---
+import { Network, FileText, ArrowRight, Menu, X } from '@lucide/astro';
+---
+
+<header class="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-[#07090e]/85 backdrop-blur-md transition-all">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <!-- Brand / Identifier -->
+    <a href="/" class="flex items-center gap-3 group">
+      <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:border-cyan-400/60 transition-colors">
+        <Network class="w-5 h-5 text-cyan-400" />
+      </div>
+      <div class="flex flex-col">
+        <span class="font-bold text-slate-100 text-sm tracking-tight group-hover:text-cyan-300 transition-colors">
+          System Analyst<span class="text-cyan-400">.</span>
+        </span>
+        <span class="text-[11px] font-mono text-slate-400 leading-tight">
+          Specs • Architecture • Quality
+        </span>
+      </div>
+    </a>
+
+    <!-- Status Badge (Center on desktop) -->
+    <div class="hidden md:flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-950/30 text-emerald-400 text-xs font-mono">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+      </span>
+      <span>Open for Projects & Fulltime Roles</span>
+    </div>
+
+    <!-- Desktop Navigation Links -->
+    <nav class="hidden lg:flex items-center gap-6 text-xs font-medium text-slate-300">
+      <a href="#lens-widget" class="hover:text-cyan-300 transition-colors">SDLC Lens</a>
+      <a href="#three-pillars" class="hover:text-cyan-300 transition-colors">3-Pillar Matrix</a>
+      <a href="#interactive-flow" class="hover:text-cyan-300 transition-colors">System Flow</a>
+      <a href="#case-studies" class="hover:text-cyan-300 transition-colors">Case Studies</a>
+      <a href="#methodology" class="hover:text-cyan-300 transition-colors">Methodology</a>
+      <a href="#contact" class="hover:text-cyan-300 transition-colors">Contact</a>
+    </nav>
+
+    <!-- Quick CTA & Mobile Menu Toggle -->
+    <div class="flex items-center gap-3">
+      <a
+        href="#contact"
+        class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-cyan-500/40 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 text-xs font-medium tracking-wide transition-all shadow-sm shadow-cyan-500/10"
+      >
+        <span>Discuss Architecture</span>
+        <ArrowRight class="w-3.5 h-3.5" />
+      </a>
+
+      <button
+        id="mobile-menu-btn"
+        aria-label="Toggle Navigation Menu"
+        class="lg:hidden p-2 rounded-lg border border-slate-800 text-slate-400 hover:text-slate-100 hover:bg-slate-800/60"
+      >
+        <Menu class="w-5 h-5 block" id="icon-open" />
+        <X class="w-5 h-5 hidden" id="icon-close" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-menu" class="hidden lg:hidden border-b border-slate-800 bg-[#07090e]/95 px-6 py-5 space-y-4 font-medium text-sm text-slate-300">
+    <a href="#lens-widget" class="block py-1 hover:text-cyan-300 mobile-nav-link">SDLC Lens (Analyst vs Dev vs QA)</a>
+    <a href="#three-pillars" class="block py-1 hover:text-cyan-300 mobile-nav-link">3-Pillar Core Matrix</a>
+    <a href="#interactive-flow" class="block py-1 hover:text-cyan-300 mobile-nav-link">Interactive System Architecture</a>
+    <a href="#case-studies" class="block py-1 hover:text-cyan-300 mobile-nav-link">Featured Case Studies</a>
+    <a href="#methodology" class="block py-1 hover:text-cyan-300 mobile-nav-link">Analysis Methodology</a>
+    <a href="#contact" class="block py-1 hover:text-cyan-300 mobile-nav-link">Contact & Inquiries</a>
+    <div class="pt-2">
+      <a
+        href="#contact"
+        class="w-full inline-flex justify-center items-center gap-2 px-4 py-2.5 rounded-lg border border-cyan-500/40 bg-cyan-500/15 text-cyan-300 text-sm font-medium"
+      >
+        Discuss Architecture
+        <ArrowRight class="w-4 h-4" />
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+  const links = document.querySelectorAll('.mobile-nav-link');
+
+  btn?.addEventListener('click', () => {
+    const isClosed = menu?.classList.contains('hidden');
+    if (isClosed) {
+      menu?.classList.remove('hidden');
+      iconOpen?.classList.add('hidden');
+      iconClose?.classList.remove('hidden');
+    } else {
+      menu?.classList.add('hidden');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+    }
+  });
+
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      menu?.classList.add('hidden');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+    });
+  });
+</script>

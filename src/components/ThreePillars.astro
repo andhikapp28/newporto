@@ -1,0 +1,132 @@
+---
+import { 
+  Workflow, 
+  Terminal, 
+  ShieldCheck, 
+  FileText, 
+  GitBranch, 
+  Database, 
+  Code2, 
+  CheckCircle2, 
+  Cpu, 
+  Boxes,
+  Compass,
+  FileCheck
+} from '@lucide/astro';
+
+const pillars = [
+  {
+    role: "Core Competency",
+    title: "System Analysis & Architecture",
+    tagline: "Eliciting needs, eliminating ambiguity, and designing blueprint integrity.",
+    accent: "cyan",
+    borderClass: "border-cyan-500/30 hover:border-cyan-500/60",
+    bgClass: "bg-gradient-to-b from-cyan-950/20 to-slate-900/40",
+    badgeClass: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
+    icon: Workflow,
+    skills: [
+      { name: "BRD & SRS Documentation", desc: "Exhaustive functional and non-functional specifications with zero jargon." },
+      { name: "BPMN 2.0 & UML Modeling", desc: "Activity swimlanes, sequence diagrams, and finite state machines." },
+      { name: "Relational ERD & Data Schema", desc: "Normalized schemas, entity relationships, indexing, and foreign key integrity." },
+      { name: "API Contract Design (OpenAPI)", desc: "Strictly typed REST contracts, error payloads, and semantic HTTP statuses." },
+      { name: "Stakeholder Alignment", desc: "Translating C-level business metrics into sprint-ready engineering epics." }
+    ]
+  },
+  {
+    role: "Engineering Foundation",
+    title: "Development Feasibility",
+    tagline: "Writing specs that respect real-world runtime, latency, and database locks.",
+    accent: "indigo",
+    borderClass: "border-indigo-500/30 hover:border-indigo-500/60",
+    bgClass: "bg-gradient-to-b from-indigo-950/20 to-slate-900/40",
+    badgeClass: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
+    icon: Terminal,
+    skills: [
+      { name: "SQL & Query Optimization", desc: "Index execution plans (EXPLAIN ANALYZE), deadlocks avoidance, and transactions." },
+      { name: "RESTful & Event-Driven Patterns", desc: "Stateless APIs, asynchronous worker queues (RabbitMQ/Redis), and webhooks." },
+      { name: "Technical Spike & PoC Prototyping", desc: "Quick verification of complex third-party SDKs and architectural feasibility." },
+      { name: "Idempotency & Concurrency", desc: "Distributed locking patterns, optimistic locks, and duplicate prevention." },
+      { name: "Git, Branching & CI/CD", desc: "Version control hygiene, automated build checks, and deployment lifecycles." }
+    ]
+  },
+  {
+    role: "Defensive Rigor",
+    title: "Quality Assurance & Testing",
+    tagline: "Uncovering edge cases, boundary failures, and security loopholes early.",
+    accent: "emerald",
+    borderClass: "border-emerald-500/30 hover:border-emerald-500/60",
+    bgClass: "bg-gradient-to-b from-emerald-950/20 to-slate-900/40",
+    badgeClass: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    icon: ShieldCheck,
+    skills: [
+      { name: "BDD & Gherkin Acceptance Criteria", desc: "Testable User Stories written in Given/When/Then format before code starts." },
+      { name: "API Testing & Automation", desc: "Postman test suites, Newman CI runner, environment variables, and status assertions." },
+      { name: "Negative & Boundary Value Testing", desc: "Simulating network partitions, race conditions, null payloads, and buffer limits." },
+      { name: "Defect Triage & Root Cause Analysis", desc: "Tracing production bugs back to log traces, database states, and spec gaps." },
+      { name: "UAT Facilitation", desc: "Guiding product managers and business users through structured acceptance tests." }
+    ]
+  }
+];
+---
+
+<section id="three-pillars" class="py-16 md:py-24 border-t border-slate-800/80 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-slate-700 bg-slate-900 text-slate-300 text-xs font-mono mb-4">
+        <Boxes class="w-3.5 h-3.5 text-cyan-400" />
+        <span>The T-Shaped Capability Matrix</span>
+      </div>
+      <h2 class="text-2xl sm:text-4xl font-bold text-slate-100 tracking-tight">
+        Why My Specifications Stand Apart
+      </h2>
+      <p class="text-slate-400 text-sm sm:text-base mt-3 leading-relaxed">
+        A specification is only as good as its implementation and resilience. By uniting business analysis with developer empathy and QA skepticism, I eliminate communication silos across the SDLC.
+      </p>
+    </div>
+
+    <!-- 3 Pillar Cards -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {pillars.map((pillar) => {
+        const IconComponent = pillar.icon;
+        return (
+          <div class={`rounded-2xl border ${pillar.borderClass} ${pillar.bgClass} p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 hover:shadow-xl`}>
+            <div>
+              <!-- Badge & Icon -->
+              <div class="flex items-center justify-between mb-6">
+                <span class={`text-[11px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full border ${pillar.badgeClass}`}>
+                  {pillar.role}
+                </span>
+                <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-300">
+                  <IconComponent class="w-5 h-5" />
+                </div>
+              </div>
+
+              <!-- Title & Tagline -->
+              <h3 class="text-xl font-bold text-slate-100 mb-2">{pillar.title}</h3>
+              <p class="text-xs text-slate-400 leading-relaxed mb-6">{pillar.tagline}</p>
+
+              <!-- Skills List -->
+              <div class="space-y-3.5 border-t border-slate-800/80 pt-6">
+                {pillar.skills.map((skill) => (
+                  <div class="space-y-0.5">
+                    <div class="flex items-center gap-2">
+                      <CheckCircle2 class="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                      <h4 class="text-xs font-semibold text-slate-200">{skill.name}</h4>
+                    </div>
+                    <p class="text-[11px] text-slate-400 pl-5.5 leading-normal">{skill.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Bottom Footnote -->
+            <div class="mt-8 pt-4 border-t border-slate-800/50 flex items-center justify-between text-[11px] font-mono text-slate-500">
+              <span>Standardized Output</span>
+              <span>Production-Grade</span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
