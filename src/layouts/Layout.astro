@@ -7,43 +7,30 @@ interface Props {
 }
 
 const {
-  title = "System Analyst Portfolio | Bridging Architecture, Code & Quality",
-  description = "Portfolio of a System Analyst with hands-on Development feasibility and Quality Assurance (QA) rigor. Specializing in BRD/SRS, BPMN, ERD modeling, API contracts, and high-reliability systems."
+  title = "System Analyst Workstation | Windows XP Experience",
+  description = "Interactive System Analyst portfolio featuring a retro 3D workstation, SDLC specifications, and an authentic Windows XP desktop."
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="dark selection:bg-cyan-500/30 selection:text-cyan-200">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- SEO Meta Tags -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content="System Analyst, Systems Analyst, Solution Architect, BRD, SRS, BPMN, UML, ERD, API Design, OpenAPI, QA, SDLC" />
-    <meta name="theme-color" content="#07090e" />
+    <meta name="theme-color" content="#0055ea" />
 
-    <!-- Open Graph / Social -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-
-    <!-- Google Fonts -->
+    <!-- Google Fonts for XP: Tahoma, Trebuchet MS, Segoe UI, JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-[#07090e] text-slate-200 antialiased min-h-screen flex flex-col font-sans relative overflow-x-hidden blueprint-bg">
-    <!-- Subtle top ambient light -->
-    <div class="pointer-events-none fixed top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[350px] bg-gradient-to-b from-cyan-500/10 via-indigo-500/5 to-transparent blur-3xl opacity-70 -z-10"></div>
-    <div class="pointer-events-none fixed top-[40%] right-[-100px] w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] -z-10"></div>
-
+  <body class="w-screen h-screen m-0 p-0 overflow-hidden bg-black text-slate-900 select-none font-sans">
     <slot />
   </body>
 </html>

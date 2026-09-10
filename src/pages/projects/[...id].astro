@@ -1,9 +1,20 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import { ArrowLeft, Calendar, User, Building2, CheckCircle2, FileSpreadsheet, ShieldAlert, Cpu } from '@lucide/astro';
+import { 
+  Globe, 
+  ArrowLeft, 
+  RotateCw, 
+  Home, 
+  X, 
+  Minus, 
+  Square, 
+  Volume2, 
+  FileSpreadsheet, 
+  Calendar, 
+  User, 
+  Building2 
+} from '@lucide/astro';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -18,102 +29,170 @@ const { Content } = await render(project);
 ---
 
 <Layout 
-  title={`${project.data.title} | System Analyst Case Study`}
+  title={`${project.data.title} - Microsoft Internet Explorer`}
   description={project.data.description}
 >
-  <Header />
-
-  <main class="flex-grow py-12 md:py-20 relative">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Back Navigation -->
-      <a
-        href="/#case-studies"
-        class="inline-flex items-center gap-2 text-xs font-mono text-slate-400 hover:text-cyan-300 transition-colors mb-8 group"
-      >
-        <ArrowLeft class="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-        <span>Back to All Case Studies</span>
-      </a>
-
-      <!-- Header Meta -->
-      <div class="border-b border-slate-800 pb-8 mb-8">
-        <div class="flex flex-wrap items-center gap-2 mb-4">
-          <span class="text-xs font-mono px-3 py-1 rounded-full bg-cyan-950/50 border border-cyan-500/30 text-cyan-300">
-            {project.data.category}
-          </span>
-          <span class="text-xs font-mono text-slate-500">•</span>
-          <span class="text-xs font-mono text-slate-400 flex items-center gap-1.5">
-            <Calendar class="w-3.5 h-3.5" />
-            {project.data.period}
-          </span>
-        </div>
-
-        <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-100 tracking-tight leading-tight mb-6">
-          {project.data.title}
-        </h1>
-
-        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
-          {project.data.description}
-        </p>
-
-        <!-- Role & Client Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-xs">
-          <div class="flex items-center gap-2.5">
-            <User class="w-4 h-4 text-cyan-400 shrink-0" />
-            <div>
-              <span class="text-slate-400 block font-mono">Assigned Role</span>
-              <span class="font-semibold text-slate-200">{project.data.role}</span>
-            </div>
+  <div 
+    class="fixed inset-0 w-screen h-screen flex flex-col select-none overflow-hidden font-sans"
+    style="background-image: url('/images/bliss.jpg'); background-size: cover; background-position: center;"
+  >
+    <!-- Desktop Workspace -->
+    <div class="relative flex-1 w-full h-[calc(100vh-30px)] p-2 sm:p-6 flex items-center justify-center overflow-hidden">
+      
+      <!-- Internet Explorer 6 Window -->
+      <div class="w-full max-w-5xl h-full rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 flex flex-col overflow-hidden">
+        <!-- Titlebar -->
+        <div class="h-7 px-2 flex items-center justify-between select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+          <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.7)] truncate">
+            <Globe class="w-3.5 h-3.5 text-blue-200 shrink-0" />
+            <span>{project.data.title} - Microsoft Internet Explorer</span>
           </div>
-          <div class="flex items-center gap-2.5">
-            <Building2 class="w-4 h-4 text-indigo-400 shrink-0" />
-            <div>
-              <span class="text-slate-400 block font-mono">Client / Domain</span>
-              <span class="font-semibold text-slate-200">{project.data.client}</span>
-            </div>
+          <div class="flex items-center gap-1 shrink-0">
+            <button class="w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
+            <button class="w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
+            <a href="/" class="w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold" title="Back to Desktop"><X class="w-2.5 h-2.5" /></a>
           </div>
         </div>
-      </div>
 
-      <!-- Key Quantitative Outcomes Card -->
-      <div class="p-6 rounded-2xl bg-gradient-to-r from-cyan-950/30 via-slate-900/40 to-indigo-950/30 border border-cyan-500/30 mb-12">
-        <h2 class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold mb-4 flex items-center gap-2">
-          <FileSpreadsheet class="w-4 h-4" />
-          <span>Verified Business & System Metrics</span>
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {project.data.metrics.map((metric) => (
-            <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80 text-center">
-              <div class="text-xl sm:text-2xl font-mono font-extrabold text-cyan-400">{metric.value}</div>
-              <div class="text-xs text-slate-400 mt-1">{metric.label}</div>
-            </div>
-          ))}
+        <!-- Menu Bar -->
+        <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700">
+          <span class="hover:underline cursor-pointer">File</span>
+          <span class="hover:underline cursor-pointer">Edit</span>
+          <span class="hover:underline cursor-pointer">View</span>
+          <span class="hover:underline cursor-pointer">Favorites</span>
+          <span class="hover:underline cursor-pointer">Tools</span>
+          <span class="hover:underline cursor-pointer">Help</span>
         </div>
-      </div>
 
-      <!-- Specification Document Content -->
-      <article class="markdown-spec bg-slate-900/30 border border-slate-800/80 rounded-2xl p-6 sm:p-10">
-        <Content />
-      </article>
+        <!-- Toolbar -->
+        <div class="h-9 px-2 flex items-center gap-2 bg-[#ece9d8] border-b border-[#d8d4c2] text-xs">
+          <a
+            href="/"
+            class="px-2.5 py-1 rounded bg-white/70 hover:bg-white border border-[#7f9db9] flex items-center gap-1 text-slate-800 font-medium cursor-pointer shadow-sm"
+          >
+            <ArrowLeft class="w-3.5 h-3.5 text-blue-600" />
+            <span>Desktop</span>
+          </a>
+          <button class="px-2 py-1 rounded hover:bg-white flex items-center gap-1 text-slate-700 cursor-pointer">
+            <RotateCw class="w-3.5 h-3.5 text-emerald-600" />
+            <span>Refresh</span>
+          </button>
+          <div class="h-5 w-[1px] bg-slate-400 mx-1"></div>
+          <div class="flex items-center gap-1.5 flex-1">
+            <span class="text-[11px] text-slate-600 font-semibold">Address:</span>
+            <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-xs font-mono text-slate-800 truncate">
+              http://internal.analyst.corp/specs/{project.id}.html
+            </div>
+          </div>
+        </div>
 
-      <!-- Bottom Next Actions -->
-      <div class="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <a
-          href="/#case-studies"
-          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-700 bg-slate-900/60 hover:bg-slate-800 text-xs font-medium text-slate-300 transition-colors"
-        >
-          <ArrowLeft class="w-3.5 h-3.5" />
-          <span>Back to Case Studies</span>
-        </a>
+        <!-- Document Content -->
+        <div class="flex-1 p-6 sm:p-10 bg-white overflow-y-auto text-slate-800 font-sans text-xs sm:text-sm leading-relaxed">
+          <!-- Article Header -->
+          <div class="border-b-2 border-blue-600 pb-5 mb-6">
+            <div class="flex flex-wrap items-center gap-2 mb-2.5">
+              <span class="px-2.5 py-0.5 rounded bg-blue-100 text-blue-900 font-semibold text-xs border border-blue-200">
+                {project.data.category}
+              </span>
+              <span class="text-slate-400">&bull;</span>
+              <span class="text-slate-500 font-mono text-xs flex items-center gap-1">
+                <Calendar class="w-3.5 h-3.5" />
+                {project.data.period}
+              </span>
+            </div>
 
-        <a
-          href="/#contact"
-          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold transition-all shadow-md shadow-cyan-500/10"
-        >
-          <span>Discuss Similar Architecture</span>
-        </a>
+            <h1 class="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
+              {project.data.title}
+            </h1>
+
+            <p class="text-slate-600 text-sm mt-3 leading-relaxed">
+              {project.data.description}
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4 p-3 rounded-lg bg-[#f0f6ff] border border-blue-200 text-xs">
+              <div class="flex items-center gap-2">
+                <User class="w-4 h-4 text-blue-600 shrink-0" />
+                <div>
+                  <span class="text-slate-500 block font-mono text-[10px]">ASSIGNED ROLE</span>
+                  <span class="font-bold text-blue-950">{project.data.role}</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <Building2 class="w-4 h-4 text-indigo-600 shrink-0" />
+                <div>
+                  <span class="text-slate-500 block font-mono text-[10px]">CLIENT / DOMAIN</span>
+                  <span class="font-bold text-blue-950">{project.data.client}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Verified Metrics Box -->
+          <div class="p-4 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-300 mb-8">
+            <h2 class="text-xs font-mono uppercase tracking-wider text-blue-900 font-bold mb-3 flex items-center gap-1.5">
+              <FileSpreadsheet class="w-4 h-4 text-blue-700" />
+              <span>Verified Business &amp; System Metrics</span>
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {project.data.metrics.map(m => (
+                <div class="p-3 rounded-lg bg-white border border-blue-200 text-center shadow-sm">
+                  <div class="text-xl sm:text-2xl font-mono font-black text-blue-800">{m.value}</div>
+                  <div class="text-xs text-slate-600 mt-0.5">{m.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Markdown Content Body -->
+          <article class="markdown-spec text-slate-800">
+            <Content />
+          </article>
+
+          <!-- Return to Desktop -->
+          <div class="mt-10 pt-6 border-t border-slate-200 flex items-center justify-between">
+            <a
+              href="/"
+              class="inline-flex items-center gap-1.5 px-4 py-2 rounded bg-[#ece9d8] border border-[#7f9db9] font-bold text-xs text-slate-800 hover:bg-white shadow-sm"
+            >
+              <ArrowLeft class="w-3.5 h-3.5" />
+              <span>Return to Windows XP Desktop</span>
+            </a>
+            <span class="text-xs font-mono text-slate-400">STATUS: 200 OK &bull; ENCRYPTED SPEC</span>
+          </div>
+        </div>
       </div>
     </div>
-  </main>
 
-  <Footer />
+    <!-- Taskbar Pinned at Bottom -->
+    <div class="relative z-[9999] h-[30px] w-full bg-gradient-to-b from-[#245edb] via-[#3f8cf3] to-[#1941a5] border-t border-[#468df2] flex items-center justify-between select-none shadow-lg shrink-0">
+      <div class="flex items-center h-full">
+        <a
+          href="/"
+          class="h-full px-3.5 rounded-r-xl bg-gradient-to-b from-[#388e3c] via-[#4caf50] to-[#2e7d32] hover:brightness-110 active:brightness-90 border-r border-[#1b5e20] shadow-[inset_1px_1px_1px_rgba(255,255,255,0.7)] flex items-center gap-1.5 cursor-pointer"
+        >
+          <svg class="w-3.5 h-3.5 drop-shadow" viewBox="0 0 24 24">
+            <rect x="2" y="2" width="9" height="9" fill="#f44336" rx="1" />
+            <rect x="13" y="2" width="9" height="9" fill="#4caf50" rx="1" />
+            <rect x="2" y="13" width="9" height="9" fill="#2196f3" rx="1" />
+            <rect x="13" y="13" width="9" height="9" fill="#ffeb3b" rx="1" />
+          </svg>
+          <span class="font-black italic text-white text-xs drop-shadow-[1px_1px_2px_rgba(0,0,0,0.8)]">
+            start
+          </span>
+        </a>
+
+        <div class="flex items-center gap-1 px-2 h-full">
+          <div class="h-6 px-3 rounded text-[11px] font-bold flex items-center gap-1.5 bg-[#1b3f94] text-white border border-[#0d2358] shadow-inner max-w-[240px] truncate">
+            <Globe class="w-3 h-3 text-blue-200 shrink-0" />
+            <span class="truncate">{project.data.title}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="h-full px-2.5 bg-gradient-to-b from-[#0f388a] via-[#16439e] to-[#0d2f78] border-l border-[#194bb5] shadow-inner flex items-center gap-2.5 text-xs text-white font-mono">
+        <Volume2 class="w-3 h-3 text-blue-200" />
+        <span class="text-[11px]">IE 6.0</span>
+      </div>
+    </div>
+  </div>
 </Layout>

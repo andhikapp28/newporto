@@ -1,44 +1,43 @@
 ---
-import { Power, RotateCcw, Volume2, VolumeX, Sparkles } from '@lucide/astro';
+import { Power, Sparkles, Monitor, MousePointer } from '@lucide/astro';
 ---
 
-<div id="three-computer-stage" class="fixed inset-0 z-40 bg-[#070a0e] flex flex-col justify-between select-none overflow-hidden transition-all duration-700">
+<div id="three-computer-stage" class="fixed inset-0 z-40 bg-[#080b11] flex flex-col justify-between select-none overflow-hidden transition-opacity duration-700">
   <!-- Three.js Canvas Container -->
   <div id="webgl-container" class="absolute inset-0 z-0 cursor-grab active:cursor-grabbing"></div>
 
-  <!-- CRT Scanline & Vignette Effect -->
-  <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.85)_100%)] z-10"></div>
-  <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.3)_50%)] bg-[length:100%_4px] opacity-40 z-10"></div>
+  <!-- CRT Vignette & Subtle Scanlines -->
+  <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(0,0,0,0.85)_100%)] z-10"></div>
+  <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] opacity-35 z-10"></div>
 
-  <!-- Top Retro Neon Header (Matches Image 2 "MICRO WAVER" style) -->
-  <div class="relative z-20 pt-8 px-6 flex flex-col items-center text-center">
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-950/40 text-emerald-400 text-xs font-mono mb-3 tracking-widest uppercase">
+  <!-- Top Retro Neon Header -->
+  <div class="relative z-20 pt-6 px-6 flex flex-col items-center text-center">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-950/40 text-emerald-400 text-xs font-mono mb-2 tracking-widest uppercase">
       <Sparkles class="w-3.5 h-3.5" />
-      <span>Interactive 3D Workstation</span>
+      <span>Retro Workstation 3D</span>
     </div>
 
-    <h1 class="text-3xl sm:text-5xl font-black font-mono tracking-wider text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]">
-      SYSTEM ANALYST
+    <h1 class="text-2xl sm:text-4xl font-black font-mono tracking-wider text-emerald-400 drop-shadow-[0_0_20px_rgba(52,211,153,0.4)]">
+      SYSTEM ANALYST &bull; WORKSTATION
     </h1>
-    <div class="text-xs sm:text-sm font-mono tracking-[0.3em] text-emerald-500/80 mt-1 uppercase">
-      ARCHITECTURE &bull; DEV &bull; QUALITY ASSURANCE
-    </div>
+    <p class="text-[11px] sm:text-xs font-mono tracking-[0.25em] text-slate-400 mt-1 uppercase">
+      BRD &bull; ARCHITECTURE &bull; DEV FEASIBILITY &bull; QA RIGOR
+    </p>
   </div>
 
-  <!-- Bottom Interactive Controls & Power-On CTA -->
-  <div class="relative z-20 pb-10 px-6 max-w-xl mx-auto w-full flex flex-col items-center gap-4">
-    <!-- Instruction Pill -->
-    <div class="text-xs font-mono text-slate-400 bg-black/60 px-4 py-1.5 rounded-full border border-slate-800 backdrop-blur-md text-center">
-      Drag to rotate 3D view &bull; Click computer or press button to boot
+  <!-- Bottom Action Bar & Boot Button -->
+  <div class="relative z-20 pb-8 px-6 max-w-lg mx-auto w-full flex flex-col items-center gap-3.5">
+    <div class="flex items-center gap-2 text-[11px] font-mono text-slate-400 bg-black/75 px-4 py-1.5 rounded-full border border-slate-800 backdrop-blur-md">
+      <MousePointer class="w-3 h-3 text-emerald-400" />
+      <span>Drag to orbit &bull; Click monitor or press button below</span>
     </div>
 
-    <!-- The Big Boot Button -->
     <button
       id="power-on-btn"
-      class="group relative w-full sm:w-auto px-10 py-4 rounded-xl border-2 border-emerald-400 bg-emerald-950/80 hover:bg-emerald-400 text-emerald-300 hover:text-black font-black font-mono text-sm tracking-[0.2em] uppercase transition-all duration-300 shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:shadow-[0_0_50px_rgba(16,185,129,0.7)] flex items-center justify-center gap-3 cursor-pointer active:scale-95"
+      class="group relative w-full sm:w-auto px-8 py-3.5 rounded-xl border-2 border-emerald-400 bg-emerald-950/90 hover:bg-emerald-400 text-emerald-300 hover:text-black font-black font-mono text-xs sm:text-sm tracking-[0.2em] uppercase transition-all duration-300 shadow-[0_0_25px_rgba(16,185,129,0.35)] hover:shadow-[0_0_40px_rgba(16,185,129,0.7)] flex items-center justify-center gap-3 cursor-pointer active:scale-95"
     >
-      <Power class="w-5 h-5 text-emerald-400 group-hover:text-black transition-colors" />
-      <span>POWER ON COMPUTER (BOOT XP)</span>
+      <Power class="w-4 h-4 text-emerald-400 group-hover:text-black transition-colors" />
+      <span>POWER ON WORKSTATION (BOOT XP)</span>
     </button>
   </div>
 </div>
@@ -51,205 +50,299 @@ import { Power, RotateCcw, Volume2, VolumeX, Sparkles } from '@lucide/astro';
   const stage = document.getElementById('three-computer-stage');
 
   if (container) {
-    // 1. Scene & Camera Setup
+    // 1. Scene & Performance-Optimized Setup
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x070a0e, 0.035);
+    scene.fog = new THREE.FogExp2(0x080b11, 0.04);
 
     const camera = new THREE.PerspectiveCamera(
-      45,
+      42,
       window.innerWidth / window.innerHeight,
       0.1,
-      100
+      60
     );
-    camera.position.set(0, 1.2, 5.5);
+    camera.position.set(0, 1.4, 5.2);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    const renderer = new THREE.WebGLRenderer({ 
+      antialias: true, 
+      alpha: true,
+      powerPreference: 'high-performance'
+    });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
+    // Clamped pixel ratio to 1.25 to prevent any GPU stall / lag
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
+    // NO heavy shadow maps to ensure ultra-smooth 60 FPS
+    renderer.shadowMap.enabled = false;
     container.appendChild(renderer.domElement);
 
-    // 2. Lighting (Cool Synthwave Key & Ambient)
-    const ambientLight = new THREE.AmbientLight(0x223344, 1.2);
+    // 2. Beautiful Balanced Lighting
+    const ambientLight = new THREE.AmbientLight(0x334455, 1.5);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.0);
-    keyLight.position.set(3, 5, 4);
-    keyLight.castShadow = true;
-    scene.add(keyLight);
+    // Warm overhead desk spotlight
+    const deskSpot = new THREE.SpotLight(0xfff3d6, 3.5);
+    deskSpot.position.set(-2, 5, 3);
+    deskSpot.angle = Math.PI / 4;
+    deskSpot.penumbra = 0.6;
+    scene.add(deskSpot);
 
-    const neonGreenGlow = new THREE.PointLight(0x10b981, 3.5, 7);
-    neonGreenGlow.position.set(0, 0.8, 1.5);
-    scene.add(neonGreenGlow);
+    // Emerald accent glow from the monitor
+    const crtGlow = new THREE.PointLight(0x10b981, 2.5, 5);
+    crtGlow.position.set(0, 0.9, 1.2);
+    scene.add(crtGlow);
 
-    const rimCyan = new THREE.PointLight(0x06b6d4, 2.0, 8);
-    rimCyan.position.set(-3, 2, -2);
-    scene.add(rimCyan);
+    // Cool cyan rim light from rear-right
+    const rimLight = new THREE.DirectionalLight(0x38bdf8, 1.2);
+    rimLight.position.set(4, 2, -3);
+    scene.add(rimLight);
 
-    // 3. Synthwave Perspective Floor Grid (Matches Image 2 wireframe style)
-    const gridHelper = new THREE.GridHelper(50, 50, 0x10b981, 0x064e3b);
-    gridHelper.position.y = -1.2;
+    // 3. Grid Floor
+    const gridHelper = new THREE.GridHelper(30, 30, 0x10b981, 0x1e293b);
+    gridHelper.position.y = -1.1;
     scene.add(gridHelper);
 
-    // 4. Create Procedural Dynamic Canvas for CRT Screen
+    // 4. CRT Screen Texture (Rendered once, zero overhead)
     const screenCanvas = document.createElement('canvas');
     screenCanvas.width = 512;
     screenCanvas.height = 384;
     const ctx = screenCanvas.getContext('2d');
-
-    const screenTexture = new THREE.CanvasTexture(screenCanvas);
-    let cursorBlink = true;
-    setInterval(() => {
-      cursorBlink = !cursorBlink;
-      drawCrtScreen();
-    }, 500);
-
-    function drawCrtScreen() {
-      if (!ctx) return;
-      // Dark greenish CRT background
-      ctx.fillStyle = '#05180f';
+    if (ctx) {
+      // CRT glass scanline gradient
+      const grad = ctx.createLinearGradient(0, 0, 0, screenCanvas.height);
+      grad.addColorStop(0, '#04170d');
+      grad.addColorStop(1, '#020b06');
+      ctx.fillStyle = grad;
       ctx.fillRect(0, 0, screenCanvas.width, screenCanvas.height);
 
-      // Subtle scanline pattern
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+      // Scanlines
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.28)';
       for (let y = 0; y < screenCanvas.height; y += 4) {
         ctx.fillRect(0, y, screenCanvas.width, 2);
       }
 
-      // Terminal text
-      ctx.font = 'bold 20px "Courier New", monospace';
+      // Windows XP / System Analyst boot graphics
       ctx.fillStyle = '#34d399';
-      ctx.fillText('ANALYST BIOS v4.02 (C) 2026', 30, 50);
-      ctx.fillText('CPU: ARCHITECTURE CORE @ 3.8 GHz', 30, 85);
-      ctx.fillText('MEMORY: 640 KB OK (ALL SPECS VALIDATED)', 30, 120);
+      ctx.font = 'bold 22px "Courier New", monospace';
+      ctx.fillText('MICROSOFT(R) WINDOWS XP', 35, 50);
+      ctx.font = '16px "Courier New", monospace';
+      ctx.fillStyle = '#10b981';
+      ctx.fillText('System Analyst Architecture Build 2600', 35, 80);
 
       ctx.fillStyle = '#6ee7b7';
-      ctx.fillText('C:\\> BOOT_SYSTEM_ANALYST.EXE', 30, 180);
-      ctx.fillText('ROLES DETECTED: [SA] [DEV] [QA]', 30, 220);
+      ctx.fillText('Hardware Verification: PASSED', 35, 140);
+      ctx.fillText('Memory Cache: 512 MB SDRAM OK', 35, 170);
+      ctx.fillText('Roles: [SA] [DEV] [QA] LOADED', 35, 200);
 
-      ctx.fillStyle = '#10b981';
-      ctx.fillText('PRESS BUTTON TO BOOT OS...', 30, 280);
+      // Flashing boot prompt box
+      ctx.fillStyle = 'rgba(16, 185, 129, 0.2)';
+      ctx.fillRect(35, 250, 440, 50);
+      ctx.strokeStyle = '#34d399';
+      ctx.strokeRect(35, 250, 440, 50);
 
-      if (cursorBlink) {
-        ctx.fillRect(30, 310, 16, 24);
-      }
-
-      screenTexture.needsUpdate = true;
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 18px "Courier New", monospace';
+      ctx.fillText('> CLICK MONITOR TO POWER ON <', 65, 282);
     }
-    drawCrtScreen();
+    const screenTexture = new THREE.CanvasTexture(screenCanvas);
 
-    // 5. Build 3D Retro Workstation Geometry
-    const computerGroup = new THREE.Group();
-    scene.add(computerGroup);
+    // 5. Workstation Construction (Rich details, lightweight meshes)
+    const workstation = new THREE.Group();
+    scene.add(workstation);
 
-    // Materials
-    const chassisMat = new THREE.MeshStandardMaterial({
-      color: 0xd8d2c4, // Vintage off-white / retro cream
-      roughness: 0.5,
-      metalness: 0.1
-    });
+    // Color Palette
+    const retroBeige = new THREE.MeshLambertMaterial({ color: 0xd8d1c2 });
+    const retroBeigeDark = new THREE.MeshLambertMaterial({ color: 0xb5ad9e });
+    const deskWood = new THREE.MeshLambertMaterial({ color: 0x332219 });
+    const darkCharcoal = new THREE.MeshLambertMaterial({ color: 0x1c1e24 });
+    const screenGlassMat = new THREE.MeshBasicMaterial({ map: screenTexture });
+    const greenLedMat = new THREE.MeshBasicMaterial({ color: 0x22c55e });
+    const goldBadgeMat = new THREE.MeshLambertMaterial({ color: 0xd4af37 });
 
-    const darkBezelMat = new THREE.MeshStandardMaterial({
-      color: 0x222224,
-      roughness: 0.7
-    });
-
-    const screenMat = new THREE.MeshBasicMaterial({
-      map: screenTexture
-    });
-
-    // A. CRT Monitor Housing
-    const monitorBox = new THREE.Mesh(
-      new THREE.BoxGeometry(2.4, 1.8, 1.6),
-      chassisMat
+    // A. Desktop Wooden Surface
+    const desk = new THREE.Mesh(
+      new THREE.BoxGeometry(7.0, 0.15, 3.5),
+      deskWood
     );
-    monitorBox.position.set(0, 0.4, 0);
-    computerGroup.add(monitorBox);
+    desk.position.set(0, -1.05, 0.5);
+    workstation.add(desk);
 
-    // Monitor Bezel front
+    // B. CRT Monitor Unit
+    const monitorGroup = new THREE.Group();
+    monitorGroup.position.set(-0.3, 0.25, 0);
+    workstation.add(monitorGroup);
+
+    // Monitor Main Housing (Tapered back)
+    const monitorBody = new THREE.Mesh(
+      new THREE.BoxGeometry(2.3, 1.85, 1.6),
+      retroBeige
+    );
+    monitorGroup.add(monitorBody);
+
+    // Back CRT Bulb cone
+    const crtBackCone = new THREE.Mesh(
+      new THREE.BoxGeometry(1.6, 1.3, 0.8),
+      retroBeigeDark
+    );
+    crtBackCone.position.set(0, 0, -1.0);
+    monitorGroup.add(crtBackCone);
+
+    // Monitor Front Bezel
     const monitorBezel = new THREE.Mesh(
-      new THREE.BoxGeometry(2.2, 1.6, 0.15),
-      darkBezelMat
+      new THREE.BoxGeometry(2.2, 1.75, 0.15),
+      retroBeige
     );
-    monitorBezel.position.set(0, 0.4, 0.8);
-    computerGroup.add(monitorBezel);
+    monitorBezel.position.set(0, 0.05, 0.82);
+    monitorGroup.add(monitorBezel);
 
-    // Curved CRT Screen Mesh
+    // Curved CRT Screen Face
     const crtScreen = new THREE.Mesh(
-      new THREE.PlaneGeometry(1.9, 1.35),
-      screenMat
+      new THREE.PlaneGeometry(1.85, 1.35),
+      screenGlassMat
     );
-    crtScreen.position.set(0, 0.42, 0.88);
-    computerGroup.add(crtScreen);
+    crtScreen.position.set(0, 0.12, 0.91);
+    monitorGroup.add(crtScreen);
 
-    // Monitor Stand Neck & Base
-    const standNeck = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.2, 0.25, 0.3, 16),
-      chassisMat
+    // Gold/Silver Brand Badge on bottom bezel
+    const brandBadge = new THREE.Mesh(
+      new THREE.BoxGeometry(0.3, 0.06, 0.02),
+      goldBadgeMat
     );
-    standNeck.position.set(0, -0.6, 0);
-    computerGroup.add(standNeck);
+    brandBadge.position.set(0, -0.68, 0.9);
+    monitorGroup.add(brandBadge);
+
+    // Power Button on Monitor with glowing LED
+    const monPowerBtn = new THREE.Mesh(
+      new THREE.BoxGeometry(0.12, 0.08, 0.04),
+      darkCharcoal
+    );
+    monPowerBtn.position.set(0.85, -0.68, 0.9);
+    monitorGroup.add(monPowerBtn);
+
+    const monPowerLed = new THREE.Mesh(
+      new THREE.SphereGeometry(0.025, 8, 8),
+      greenLedMat
+    );
+    monPowerLed.position.set(0.72, -0.68, 0.91);
+    monitorGroup.add(monPowerLed);
+
+    // Monitor Stand Base & Swivel Neck
+    const standNeck = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.22, 0.28, 0.35, 12),
+      retroBeigeDark
+    );
+    standNeck.position.set(0, -1.0, 0);
+    monitorGroup.add(standNeck);
 
     const standBase = new THREE.Mesh(
-      new THREE.BoxGeometry(1.4, 0.1, 1.2),
-      chassisMat
+      new THREE.BoxGeometry(1.5, 0.08, 1.3),
+      retroBeige
     );
-    standBase.position.set(0, -0.75, 0);
-    computerGroup.add(standBase);
+    standBase.position.set(0, -1.18, 0.1);
+    monitorGroup.add(standBase);
 
-    // B. Desktop PC Tower (Under or Beside)
-    const towerBox = new THREE.Mesh(
-      new THREE.BoxGeometry(3.0, 0.5, 2.2),
-      chassisMat
+    // C. Computer Tower (Tower Case beside monitor)
+    const towerGroup = new THREE.Group();
+    towerGroup.position.set(1.7, -0.15, 0.2);
+    workstation.add(towerGroup);
+
+    const towerCase = new THREE.Mesh(
+      new THREE.BoxGeometry(1.0, 2.0, 2.2),
+      retroBeige
     );
-    towerBox.position.set(0, -1.05, 0);
-    computerGroup.add(towerBox);
+    towerGroup.add(towerCase);
 
-    // Power LED button on tower
-    const ledMat = new THREE.MeshBasicMaterial({ color: 0x10b981 });
-    const powerLed = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.04, 0.04, 0.05, 16),
-      ledMat
+    // 5.25" CD-ROM Drive Bay
+    const cdDrive = new THREE.Mesh(
+      new THREE.BoxGeometry(0.85, 0.18, 0.05),
+      retroBeigeDark
     );
-    powerLed.rotation.x = Math.PI / 2;
-    powerLed.position.set(1.1, -1.0, 1.11);
-    computerGroup.add(powerLed);
+    cdDrive.position.set(0, 0.72, 1.11);
+    towerGroup.add(cdDrive);
 
-    // Floppy Drive Slot
-    const driveSlot = new THREE.Mesh(
-      new THREE.BoxGeometry(0.8, 0.05, 0.05),
-      darkBezelMat
+    // 3.5" Floppy Disk Drive
+    const floppyDrive = new THREE.Mesh(
+      new THREE.BoxGeometry(0.85, 0.14, 0.05),
+      retroBeigeDark
     );
-    driveSlot.position.set(0.4, -0.95, 1.11);
-    computerGroup.add(driveSlot);
+    floppyDrive.position.set(0, 0.45, 1.11);
+    towerGroup.add(floppyDrive);
 
-    // C. Keyboard
-    const keyboard = new THREE.Mesh(
-      new THREE.BoxGeometry(2.2, 0.1, 0.8),
-      chassisMat
+    // Floppy activity green LED
+    const floppyLed = new THREE.Mesh(
+      new THREE.BoxGeometry(0.04, 0.04, 0.02),
+      greenLedMat
     );
-    keyboard.position.set(0, -1.15, 1.7);
-    keyboard.rotation.x = 0.08;
-    computerGroup.add(keyboard);
+    floppyLed.position.set(-0.3, 0.45, 1.14);
+    towerGroup.add(floppyLed);
 
-    // Keyboard keys plane
-    const keys = new THREE.Mesh(
-      new THREE.BoxGeometry(2.0, 0.06, 0.65),
-      darkBezelMat
+    // Tower Power Switch & LED
+    const towerPowerBtn = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.06, 0.06, 0.04, 12),
+      darkCharcoal
     );
-    keys.position.set(0, -1.12, 1.7);
-    keys.rotation.x = 0.08;
-    computerGroup.add(keys);
+    towerPowerBtn.rotation.x = Math.PI / 2;
+    towerPowerBtn.position.set(-0.25, 0.05, 1.11);
+    towerGroup.add(towerPowerBtn);
 
-    // 6. Interactive Mouse Parallax & Drag Rotation
+    const towerPowerLed = new THREE.Mesh(
+      new THREE.SphereGeometry(0.03, 8, 8),
+      greenLedMat
+    );
+    towerPowerLed.position.set(0.25, 0.05, 1.12);
+    towerGroup.add(towerPowerLed);
+
+    // Bottom Air Intake Slits
+    const ventGrill = new THREE.Mesh(
+      new THREE.BoxGeometry(0.7, 0.35, 0.04),
+      darkCharcoal
+    );
+    ventGrill.position.set(0, -0.55, 1.11);
+    towerGroup.add(ventGrill);
+
+    // D. Mechanical Keyboard
+    const kbGroup = new THREE.Group();
+    kbGroup.position.set(-0.3, -0.92, 1.4);
+    kbGroup.rotation.x = 0.1;
+    workstation.add(kbGroup);
+
+    const kbBase = new THREE.Mesh(
+      new THREE.BoxGeometry(2.3, 0.08, 0.8),
+      retroBeige
+    );
+    kbGroup.add(kbBase);
+
+    const kbKeys = new THREE.Mesh(
+      new THREE.BoxGeometry(2.1, 0.06, 0.65),
+      darkCharcoal
+    );
+    kbKeys.position.set(0, 0.05, 0);
+    kbGroup.add(kbKeys);
+
+    // E. Retro Mouse & Mousepad
+    const mousePad = new THREE.Mesh(
+      new THREE.BoxGeometry(0.9, 0.02, 1.1),
+      new THREE.MeshLambertMaterial({ color: 0x1d4ed8 }) // Classic Blue Mousepad
+    );
+    mousePad.position.set(1.4, -0.96, 1.4);
+    workstation.add(mousePad);
+
+    const mouseMesh = new THREE.Mesh(
+      new THREE.BoxGeometry(0.32, 0.12, 0.5),
+      retroBeige
+    );
+    mouseMesh.position.set(1.4, -0.91, 1.4);
+    workstation.add(mouseMesh);
+
+    // 6. Smooth Mouse Orbit & Parallax (Silky 60fps)
     let isDragging = false;
-    let previousMousePosition = { x: 0, y: 0 };
-    let targetRotationY = 0;
-    let targetRotationX = 0;
+    let prevMouseX = 0;
+    let prevMouseY = 0;
+    let rotY = 0;
+    let rotX = 0;
 
     container.addEventListener('mousedown', (e) => {
       isDragging = true;
-      previousMousePosition = { x: e.clientX, y: e.clientY };
+      prevMouseX = e.clientX;
+      prevMouseY = e.clientY;
     });
 
     window.addEventListener('mouseup', () => {
@@ -258,58 +351,58 @@ import { Power, RotateCcw, Volume2, VolumeX, Sparkles } from '@lucide/astro';
 
     window.addEventListener('mousemove', (e) => {
       if (isDragging) {
-        const deltaX = e.clientX - previousMousePosition.x;
-        const deltaY = e.clientY - previousMousePosition.y;
-
-        targetRotationY += deltaX * 0.005;
-        targetRotationX += deltaY * 0.003;
-        targetRotationX = Math.max(-0.2, Math.min(0.3, targetRotationX));
-
-        previousMousePosition = { x: e.clientX, y: e.clientY };
+        const dx = e.clientX - prevMouseX;
+        const dy = e.clientY - prevMouseY;
+        rotY += dx * 0.005;
+        rotX += dy * 0.003;
+        rotX = Math.max(-0.25, Math.min(0.25, rotX));
+        prevMouseX = e.clientX;
+        prevMouseY = e.clientY;
       } else {
-        // Subtle idle parallax
-        const normX = (e.clientX / window.innerWidth) * 2 - 1;
-        const normY = -(e.clientY / window.innerHeight) * 2 + 1;
-        camera.position.x += (normX * 0.4 - camera.position.x) * 0.05;
-        camera.position.y += (1.2 + normY * 0.2 - camera.position.y) * 0.05;
-        camera.lookAt(0, 0.2, 0);
+        const nx = (e.clientX / window.innerWidth) * 2 - 1;
+        const ny = -(e.clientY / window.innerHeight) * 2 + 1;
+        camera.position.x += (nx * 0.35 - camera.position.x) * 0.04;
+        camera.position.y += (1.4 + ny * 0.2 - camera.position.y) * 0.04;
+        camera.lookAt(0, 0.1, 0);
       }
     });
 
     // Touch support for mobile
     container.addEventListener('touchmove', (e) => {
       if (e.touches.length === 1) {
-        const touch = e.touches[0];
-        const normX = (touch.clientX / window.innerWidth) * 2 - 1;
-        targetRotationY = normX * 0.5;
+        const t = e.touches[0];
+        const nx = (t.clientX / window.innerWidth) * 2 - 1;
+        rotY = nx * 0.45;
       }
-    });
+    }, { passive: true });
 
-    // Click on canvas directly to boot
+    // Boot trigger on click
     container.addEventListener('click', () => {
-      triggerBootSequence();
+      triggerBoot();
     });
-
     powerBtn?.addEventListener('click', () => {
-      triggerBootSequence();
+      triggerBoot();
     });
 
-    // 7. Transition / Boot Sequence into Windows XP
+    // 7. Boot Sequence: Zoom into CRT & Play Real Windows XP Audio
     let isBooting = false;
-    function triggerBootSequence() {
+    let animFrameId: number;
+
+    function triggerBoot() {
       if (isBooting) return;
       isBooting = true;
 
-      // Animate Camera zoom directly into CRT monitor
+      // Play the authentic Windows XP Startup sound!
+      playRealXpSound('/sounds/xp-startup.wav');
+
       const startPos = { ...camera.position };
-      const targetPos = { x: 0, y: 0.42, z: 1.1 };
+      const targetPos = { x: -0.3, y: 0.38, z: 1.15 };
       const duration = 1200;
       const startTime = performance.now();
 
       function animateZoom(now: number) {
         const elapsed = now - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        // Ease In-Out Cubic
         const ease = progress < 0.5
           ? 4 * progress * progress * progress
           : 1 - Math.pow(-2 * progress + 2, 3) / 2;
@@ -317,94 +410,74 @@ import { Power, RotateCcw, Volume2, VolumeX, Sparkles } from '@lucide/astro';
         camera.position.x = startPos.x + (targetPos.x - startPos.x) * ease;
         camera.position.y = startPos.y + (targetPos.y - startPos.y) * ease;
         camera.position.z = startPos.z + (targetPos.z - startPos.z) * ease;
-        camera.lookAt(0, 0.42, 0.88);
+        camera.lookAt(-0.3, 0.38, 0.91);
 
         if (progress < 1) {
           requestAnimationFrame(animateZoom);
         } else {
-          // Play synthesized Windows XP Startup Sound!
-          playXpStartupChime();
-
-          // Dispatch event to show XP Desktop
+          // Transition to Windows XP Desktop
           window.dispatchEvent(new CustomEvent('xp:boot-desktop'));
 
-          // Fade out 3D stage
+          // CRITICAL LAG FIX: Cancel Three.js render loop while in Desktop!
+          cancelAnimationFrame(animFrameId);
+
           if (stage) {
             stage.classList.add('opacity-0', 'pointer-events-none');
             setTimeout(() => {
               stage.classList.add('hidden');
-            }, 800);
+            }, 700);
           }
         }
       }
-
       requestAnimationFrame(animateZoom);
     }
 
-    // 8. Synthesized Web Audio XP Chime (100% Zero External File Dependency)
-    function playXpStartupChime() {
+    // Play authentic audio file
+    function playRealXpSound(soundPath: string) {
       try {
-        const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
-        if (!AudioCtx) return;
-        const audioCtx = new AudioCtx();
-
-        // Iconic Windows XP Chord notes in Hz: Eb, Bb, Eb, G, Bb
-        const notes = [155.56, 233.08, 311.13, 392.00, 466.16];
-        const now = audioCtx.currentTime;
-
-        notes.forEach((freq, index) => {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(freq, now + index * 0.08);
-
-          // Soft attack and smooth decay
-          gain.gain.setValueAtTime(0.001, now + index * 0.08);
-          gain.gain.exponentialRampToValueAtTime(0.18, now + index * 0.08 + 0.1);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + index * 0.08 + 2.5);
-
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-
-          osc.start(now + index * 0.08);
-          osc.stop(now + index * 0.08 + 2.6);
+        const audio = new Audio(soundPath);
+        audio.volume = 0.85;
+        audio.play().catch(err => {
+          console.warn('Audio autoplay blocked by browser gesture policy:', err);
         });
       } catch (e) {
-        console.warn('AudioContext prevented by browser policy:', e);
+        console.error('Audio playback error:', e);
       }
     }
 
-    // 9. Render Loop
-    function animate() {
-      requestAnimationFrame(animate);
+    // 8. 60 FPS Render Loop with Zero Lag
+    function renderLoop() {
+      animFrameId = requestAnimationFrame(renderLoop);
 
       if (!isBooting) {
-        // Smooth interpolation for dragging rotation
-        computerGroup.rotation.y += (targetRotationY - computerGroup.rotation.y) * 0.08;
-        computerGroup.rotation.x += (targetRotationX - computerGroup.rotation.x) * 0.08;
+        workstation.rotation.y += (rotY - workstation.rotation.y) * 0.08;
+        workstation.rotation.x += (rotX - workstation.rotation.x) * 0.08;
       }
 
       renderer.render(scene, camera);
     }
-    animate();
+    renderLoop();
 
-    // 10. Resize handler
+    // Resize
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    // Listen to shutdown event to restore 3D scene
+    // Restore 3D workstation when user clicks "Turn Off Computer" in Windows XP
     window.addEventListener('xp:shutdown-to-3d', () => {
       isBooting = false;
-      camera.position.set(0, 1.2, 5.5);
-      camera.lookAt(0, 0.2, 0);
+      playRealXpSound('/sounds/xp-shutdown.wav');
+      camera.position.set(0, 1.4, 5.2);
+      camera.lookAt(0, 0.1, 0);
+
       if (stage) {
         stage.classList.remove('hidden');
         setTimeout(() => {
           stage.classList.remove('opacity-0', 'pointer-events-none');
+          // Resume Three.js render loop
+          renderLoop();
         }, 50);
       }
     });
