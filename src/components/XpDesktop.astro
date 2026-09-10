@@ -53,12 +53,15 @@ const renderedProjects = await Promise.all(
     };
   })
 );
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const blissImg = `${base}/images/bliss.jpg`;
 ---
 
 <div 
   id="xp-desktop-container" 
   class="fixed inset-0 z-30 w-screen h-screen hidden flex-col select-none overflow-hidden font-sans"
-  style="background-image: url('/images/bliss.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;"
+  style={`background-image: url('${blissImg}'); background-size: cover; background-position: center; background-repeat: no-repeat;`}
+  data-base-url={base}
 >
   <!-- Desktop Workspace Area -->
   <div id="xp-desktop-space" class="relative flex-1 w-full h-[calc(100vh-30px)] overflow-hidden">
@@ -1616,7 +1619,8 @@ DB::transaction(function() use ($request) &#123;
       if (wmpStatusDot) wmpStatusDot.className = 'w-2 h-2 rounded-xs bg-emerald-400 animate-pulse';
 
       if (!wmpAudio) {
-        wmpAudio = new Audio('/sounds/xp-startup.wav');
+        const assetBase = document.getElementById('xp-desktop-container')?.dataset.baseUrl || '';
+        wmpAudio = new Audio(`${assetBase}/sounds/xp-startup.wav`);
         wmpAudio.addEventListener('ended', () => {
           stopWmp();
         });
@@ -1750,7 +1754,8 @@ DB::transaction(function() use ($request) &#123;
     }
 
     try {
-      const audio = new Audio('/sounds/xp-shutdown.wav');
+      const assetBase = document.getElementById('xp-desktop-container')?.dataset.baseUrl || '';
+      const audio = new Audio(`${assetBase}/sounds/xp-shutdown.wav`);
       audio.play().catch(e => console.warn(e));
     } catch (e) {
       console.error(e);

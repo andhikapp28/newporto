@@ -1,8 +1,9 @@
 ---
 import { Monitor } from '@lucide/astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<div id="three-computer-stage" class="fixed inset-0 z-40 bg-[#05080c] flex flex-col justify-between select-none overflow-hidden transition-opacity duration-700">
+<div id="three-computer-stage" data-base-url={base} class="fixed inset-0 z-40 bg-[#05080c] flex flex-col justify-between select-none overflow-hidden transition-opacity duration-700">
   <!-- Three.js Canvas Container -->
   <div id="webgl-container" class="absolute inset-0 z-0 cursor-grab active:cursor-grabbing"></div>
 
@@ -376,7 +377,8 @@ import { Monitor } from '@lucide/astro';
       if (isBooting) return;
       isBooting = true;
 
-      playRealXpSound('/sounds/xp-startup.wav');
+      const assetBase = document.getElementById('three-computer-stage')?.dataset.baseUrl || '';
+      playRealXpSound(`${assetBase}/sounds/xp-startup.wav`);
 
       const startPos = { ...camera.position };
       const targetPos = { x: 0, y: 0.37, z: 1.15 };
@@ -449,8 +451,8 @@ import { Monitor } from '@lucide/astro';
 
     window.addEventListener('xp:shutdown-to-3d', () => {
       isBooting = false;
-      camera.position.set(0, 1.2, 5.0);
-      camera.lookAt(0, 0.1, 0);
+      const assetBase = document.getElementById('three-computer-stage')?.dataset.baseUrl || '';
+      playRealXpSound(`${assetBase}/sounds/xp-shutdown.wav`);
 
       if (stage) {
         stage.classList.remove('hidden');

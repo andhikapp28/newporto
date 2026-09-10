@@ -26,6 +26,8 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const blissImg = `${base}/images/bliss.jpg`;
 ---
 
 <Layout 
@@ -34,7 +36,7 @@ const { Content } = await render(project);
 >
   <div 
     class="fixed inset-0 w-screen h-screen flex flex-col select-none overflow-hidden font-sans"
-    style="background-image: url('/images/bliss.jpg'); background-size: cover; background-position: center;"
+    style={`background-image: url('${blissImg}'); background-size: cover; background-position: center;`}
   >
     <!-- Desktop Workspace -->
     <div class="relative flex-1 w-full h-[calc(100vh-30px)] p-2 sm:p-6 flex items-center justify-center overflow-hidden">
@@ -50,7 +52,7 @@ const { Content } = await render(project);
           <div class="flex items-center gap-1 shrink-0">
             <button class="w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
             <button class="w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
-            <a href="/" class="w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold" title="Back to Desktop"><X class="w-2.5 h-2.5" /></a>
+            <a href={`${base}/`} class="w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold" title="Back to Desktop"><X class="w-2.5 h-2.5" /></a>
           </div>
         </div>
 
@@ -67,7 +69,7 @@ const { Content } = await render(project);
         <!-- Toolbar -->
         <div class="h-9 px-2 flex items-center gap-2 bg-[#ece9d8] border-b border-[#d8d4c2] text-xs">
           <a
-            href="/"
+            href={`${base}/`}
             class="px-2.5 py-1 rounded bg-white/70 hover:bg-white border border-[#7f9db9] flex items-center gap-1 text-slate-800 font-medium cursor-pointer shadow-sm"
           >
             <ArrowLeft class="w-3.5 h-3.5 text-blue-600" />
