@@ -1,0 +1,128 @@
+---
+---
+
+<div id="xp-preloader" class="fixed inset-0 z-[100] bg-[#050608] flex flex-col items-center justify-center select-none transition-opacity duration-700">
+  <!-- Subtle CRT Scanline overlay -->
+  <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] opacity-60"></div>
+
+  <div class="relative z-10 flex flex-col items-center">
+    <!-- Circular Progress Gauge (Matches Image 1 style) -->
+    <div class="relative w-36 h-36 flex items-center justify-center mb-8">
+      <svg class="w-full h-full -rotate-90" viewBox="0 0 120 120">
+        <!-- Background Track -->
+        <circle
+          cx="60"
+          cy="60"
+          r="52"
+          class="stroke-slate-800"
+          stroke-width="3.5"
+          fill="none"
+        />
+        <!-- Active Progress Ring with Gradient -->
+        <defs>
+          <linearGradient id="ring-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff" />
+            <stop offset="70%" stop-color="#38bdf8" />
+            <stop offset="100%" stop-color="#0284c7" />
+          </linearGradient>
+        </defs>
+        <circle
+          id="preloader-circle"
+          cx="60"
+          cy="60"
+          r="52"
+          stroke="url(#ring-gradient)"
+          stroke-width="3.5"
+          stroke-linecap="round"
+          stroke-dasharray="326.72"
+          stroke-dashoffset="326.72"
+          fill="none"
+          class="transition-all duration-75"
+        />
+      </svg>
+
+      <!-- Percentage in Center -->
+      <div class="absolute inset-0 flex items-center justify-center">
+        <span id="preloader-pct" class="font-mono text-2xl font-black text-white tracking-tighter">
+          0%
+        </span>
+      </div>
+    </div>
+
+    <!-- Status Text / Action Button -->
+    <div class="text-center min-h-[60px] flex flex-col items-center justify-center">
+      <div id="preloader-status" class="font-mono text-xs uppercase tracking-[0.25em] text-slate-400 animate-pulse">
+        CALIBRATING HARDWARE...
+      </div>
+
+      <!-- Action Button after 100% (Like arcade INSERT COIN in Image 1) -->
+      <button
+        id="preloader-start-btn"
+        class="hidden px-7 py-3 rounded-none border-2 border-white bg-white hover:bg-cyan-400 hover:border-cyan-400 text-black font-black font-mono text-sm tracking-[0.2em] uppercase transition-all duration-200 shadow-[0_0_25px_rgba(255,255,255,0.4)] cursor-pointer active:scale-95"
+      >
+        INSERT COIN / START SYSTEM
+      </button>
+    </div>
+
+    <!-- Bottom Metadata -->
+    <div class="mt-12 text-[11px] font-mono text-slate-400 uppercase tracking-widest text-center">
+      PORTFOLIO ARCHITECTURE v2.6.0 &bull; ALL ASSETS VERIFIED
+    </div>
+  </div>
+</div>
+
+<script>
+  const circle = document.getElementById('preloader-circle');
+  const pctText = document.getElementById('preloader-pct');
+  const statusText = document.getElementById('preloader-status');
+  const startBtn = document.getElementById('preloader-start-btn');
+  const preloader = document.getElementById('xp-preloader');
+
+  const circumference = 326.72; // 2 * pi * 52
+  let currentPct = 0;
+
+  const interval = setInterval(() => {
+    // Variable step increment for natural feel
+    const increment = Math.floor(Math.random() * 6) + 3;
+    currentPct += increment;
+
+    if (currentPct >= 100) {
+      currentPct = 100;
+      clearInterval(interval);
+
+      if (circle) circle.style.strokeDashoffset = '0';
+      if (pctText) pctText.innerText = '100%';
+
+      // Switch from loading to ready button (Image 1 style)
+      setTimeout(() => {
+        if (statusText) statusText.classList.add('hidden');
+        if (startBtn) {
+          startBtn.classList.remove('hidden');
+          startBtn.classList.add('inline-block');
+        }
+      }, 300);
+    } else {
+      const offset = circumference - (currentPct / 100) * circumference;
+      if (circle) circle.style.strokeDashoffset = offset.toString();
+      if (pctText) pctText.innerText = `${currentPct}%`;
+
+      if (currentPct > 30 && currentPct < 70 && statusText) {
+        statusText.innerText = 'LOADING 3D WORKSTATION...';
+      } else if (currentPct >= 70 && statusText) {
+        statusText.innerText = 'MOUNTING SYSTEM BLUEPRINTS...';
+      }
+    }
+  }, 40);
+
+  startBtn?.addEventListener('click', () => {
+    // Custom event dispatched to notify stage 2 (3D computer scene)
+    window.dispatchEvent(new CustomEvent('xp:preloader-completed'));
+
+    if (preloader) {
+      preloader.classList.add('opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        preloader.classList.add('hidden');
+      }, 700);
+    }
+  });
+</script>

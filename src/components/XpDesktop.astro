@@ -1,0 +1,1023 @@
+---
+import { getCollection } from 'astro:content';
+import { 
+  FileText, 
+  Folder, 
+  Terminal, 
+  Mail, 
+  Trash2, 
+  X, 
+  Minus, 
+  Square, 
+  Layers, 
+  Network, 
+  Workflow, 
+  ShieldCheck, 
+  Code2, 
+  Power, 
+  Volume2, 
+  VolumeX, 
+  ChevronRight,
+  ExternalLink,
+  Copy,
+  Check,
+  Search,
+  ArrowRight
+} from '@lucide/astro';
+
+const allProjects = await getCollection('projects');
+---
+
+<div id="xp-desktop-container" class="fixed inset-0 z-30 hidden flex-col select-none overflow-hidden font-sans">
+  <!-- Desktop Background: Classic Windows XP Bliss Landscape (Pure SVG & CSS) -->
+  <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+    <svg class="w-full h-full object-cover" preserveAspectRatio="none" viewBox="0 0 1600 1000">
+      <defs>
+        <!-- Sky Gradient -->
+        <linearGradient id="bliss-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#196ee6" />
+          <stop offset="45%" stop-color="#499af7" />
+          <stop offset="85%" stop-color="#93c5fd" />
+          <stop offset="100%" stop-color="#dbeafe" />
+        </linearGradient>
+        <!-- Rolling Hills Gradients -->
+        <linearGradient id="hill-back" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#34a853" />
+          <stop offset="60%" stop-color="#248a3d" />
+          <stop offset="100%" stop-color="#166534" />
+        </linearGradient>
+        <linearGradient id="hill-front" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#4ade80" />
+          <stop offset="40%" stop-color="#22c55e" />
+          <stop offset="100%" stop-color="#15803d" />
+        </linearGradient>
+        <linearGradient id="hill-sunlight" x1="20%" y1="0%" x2="80%" y2="100%">
+          <stop offset="0%" stop-color="#86efac" />
+          <stop offset="50%" stop-color="#4ade80" />
+          <stop offset="100%" stop-color="#16a34a" />
+        </linearGradient>
+        <!-- Soft Clouds Filter -->
+        <filter id="cloud-blur" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="15" />
+        </filter>
+      </defs>
+
+      <!-- Sky -->
+      <rect width="1600" height="1000" fill="url(#bliss-sky)" />
+
+      <!-- Fluffy White Clouds -->
+      <g filter="url(#cloud-blur)" opacity="0.65">
+        <ellipse cx="400" cy="180" rx="260" ry="70" fill="#ffffff" />
+        <ellipse cx="600" cy="160" rx="190" ry="60" fill="#ffffff" />
+        <ellipse cx="1100" cy="220" rx="350" ry="80" fill="#ffffff" />
+        <ellipse cx="1350" cy="190" rx="200" ry="50" fill="#ffffff" />
+      </g>
+
+      <!-- Distant Hills -->
+      <path d="M-100,680 Q300,500 800,600 T1700,650 L1700,1000 L-100,1000 Z" fill="url(#hill-back)" opacity="0.85" />
+      <!-- Mid Hills -->
+      <path d="M-100,720 Q450,560 1050,700 T1700,720 L1700,1000 L-100,1000 Z" fill="url(#hill-sunlight)" opacity="0.95" />
+      <!-- Foreground Lush Green Hill (The iconic Bliss sweep) -->
+      <path d="M-100,760 Q380,620 900,750 T1700,740 L1700,1000 L-100,1000 Z" fill="url(#hill-front)" />
+    </svg>
+  </div>
+
+  <!-- Desktop Icons Grid (Left column) -->
+  <div class="relative z-10 p-4 grid grid-flow-col grid-rows-6 gap-y-4 gap-x-6 w-max pointer-events-auto">
+    <!-- Icon 1: Welcome_SA.doc -->
+    <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1.5 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-welcome">
+      <div class="w-11 h-11 mb-1 rounded flex items-center justify-center bg-white/90 border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
+        <FileText class="w-7 h-7 text-blue-600" />
+      </div>
+      <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_1px_rgba(0,0,0,0.9)] font-medium leading-tight px-1">
+        Welcome_SA.doc
+      </span>
+    </div>
+
+    <!-- Icon 2: C:\Case_Studies -->
+    <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1.5 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-projects">
+      <div class="w-11 h-11 mb-1 rounded flex items-center justify-center bg-amber-100/90 border border-amber-300 shadow-md group-hover:scale-105 transition-transform">
+        <Folder class="w-7 h-7 text-amber-500 fill-amber-400" />
+      </div>
+      <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_1px_rgba(0,0,0,0.9)] font-medium leading-tight px-1">
+        Case_Studies
+      </span>
+    </div>
+
+    <!-- Icon 3: SDLC_Lens.exe -->
+    <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1.5 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-sdlc">
+      <div class="w-11 h-11 mb-1 rounded flex items-center justify-center bg-slate-900 border border-cyan-400 shadow-md group-hover:scale-105 transition-transform">
+        <Layers class="w-6 h-6 text-cyan-400" />
+      </div>
+      <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_1px_rgba(0,0,0,0.9)] font-medium leading-tight px-1">
+        SDLC_Lens.exe
+      </span>
+    </div>
+
+    <!-- Icon 4: System_Flow.exe -->
+    <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1.5 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-flow">
+      <div class="w-11 h-11 mb-1 rounded flex items-center justify-center bg-indigo-900 border border-indigo-400 shadow-md group-hover:scale-105 transition-transform">
+        <Network class="w-6 h-6 text-indigo-300" />
+      </div>
+      <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_1px_rgba(0,0,0,0.9)] font-medium leading-tight px-1">
+        System_Flow.exe
+      </span>
+    </div>
+
+    <!-- Icon 5: cmd.exe -->
+    <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1.5 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-cmd">
+      <div class="w-11 h-11 mb-1 rounded flex items-center justify-center bg-black border border-slate-600 shadow-md group-hover:scale-105 transition-transform">
+        <Terminal class="w-6 h-6 text-emerald-400" />
+      </div>
+      <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_1px_rgba(0,0,0,0.9)] font-medium leading-tight px-1">
+        cmd.exe
+      </span>
+    </div>
+
+    <!-- Icon 6: Outlook Express / Contact -->
+    <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1.5 rounded hover:bg-blue-600/30 active:bg-blue-600/50" data-open="win-contact">
+      <div class="w-11 h-11 mb-1 rounded flex items-center justify-center bg-sky-100 border border-sky-400 shadow-md group-hover:scale-105 transition-transform">
+        <Mail class="w-6 h-6 text-sky-600" />
+      </div>
+      <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_1px_rgba(0,0,0,0.9)] font-medium leading-tight px-1">
+        Outlook_Express
+      </span>
+    </div>
+  </div>
+
+  <!-- ==================== DRAGGABLE WINDOWS ==================== -->
+
+  <!-- WINDOW 1: Welcome_SA.doc (Hero / About) -->
+  <div
+    id="win-welcome"
+    class="xp-window absolute top-12 left-28 w-[92vw] sm:w-[580px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-20 flex flex-col overflow-hidden"
+    style="display: flex;"
+  >
+    <!-- XP Luna Titlebar -->
+    <div class="xp-titlebar h-8 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.6)] truncate">
+        <FileText class="w-4 h-4 text-blue-200 shrink-0" />
+        <span>Welcome_SA.doc - Microsoft WordPad</span>
+      </div>
+      <div class="flex items-center gap-1 shrink-0">
+        <button class="win-btn-minimize w-5 h-5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none" title="Minimize">
+          <Minus class="w-3 h-3" />
+        </button>
+        <button class="win-btn-maximize w-5 h-5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none" title="Maximize">
+          <Square class="w-2.5 h-2.5" />
+        </button>
+        <button class="win-btn-close w-5 h-5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none" title="Close">
+          <X class="w-3 h-3" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu bar -->
+    <div class="h-6 px-2 flex items-center gap-3 text-xs bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700 select-none">
+      <span class="hover:underline cursor-pointer">File</span>
+      <span class="hover:underline cursor-pointer">Edit</span>
+      <span class="hover:underline cursor-pointer">View</span>
+      <span class="hover:underline cursor-pointer">Insert</span>
+      <span class="hover:underline cursor-pointer">Format</span>
+      <span class="hover:underline cursor-pointer">Help</span>
+    </div>
+
+    <!-- Window Body: WordPad Document -->
+    <div class="p-6 bg-white overflow-y-auto max-h-[68vh] text-slate-800 leading-relaxed font-sans">
+      <!-- Document Banner -->
+      <div class="border-b-2 border-blue-600 pb-4 mb-4">
+        <div class="text-[11px] font-mono uppercase tracking-widest text-blue-700 font-bold">
+          EXECUTIVE TECHNICAL BRIEF &bull; SPECIFICATION SHEET
+        </div>
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1 leading-tight">
+          System Analyst with Hands-on Dev & QA Rigor
+        </h2>
+        <div class="text-xs text-slate-500 mt-1">
+          Bridging Business Requirements, Realistic Engineering & Zero-Defect Delivery
+        </div>
+      </div>
+
+      <p class="text-xs sm:text-sm text-slate-700 mb-4">
+        Welcome to my interactive workspace. Unlike theoretical analysts, my specifications are grounded in <strong>direct development feasibility</strong> (API idempotency, database indexing, latency budgets) and verified through <strong>defensive QA test suites</strong> (Gherkin BDD, boundary assertions, chaos failure cases).
+      </p>
+
+      <!-- 3-Pillar Capability Matrix Preview -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 my-4">
+        <div class="p-3 rounded border border-blue-200 bg-blue-50/70">
+          <div class="font-bold text-xs text-blue-800 mb-1 flex items-center gap-1.5">
+            <Workflow class="w-3.5 h-3.5 text-blue-600" />
+            <span>1. Analysis (Core)</span>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-tight">
+            BRD/SRS, BPMN 2.0 swimlanes, 3NF ERD database design, and OpenAPI specs.
+          </p>
+        </div>
+
+        <div class="p-3 rounded border border-indigo-200 bg-indigo-50/70">
+          <div class="font-bold text-xs text-indigo-800 mb-1 flex items-center gap-1.5">
+            <Code2 class="w-3.5 h-3.5 text-indigo-600" />
+            <span>2. Dev Feasibility</span>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-tight">
+            SQL optimization, distributed locking (Redis), REST contracts & rapid PoC.
+          </p>
+        </div>
+
+        <div class="p-3 rounded border border-emerald-200 bg-emerald-50/70">
+          <div class="font-bold text-xs text-emerald-800 mb-1 flex items-center gap-1.5">
+            <ShieldCheck class="w-3.5 h-3.5 text-emerald-600" />
+            <span>3. QA Rigor</span>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-tight">
+            BDD Given/When/Then scenarios, Postman API collections & negative test matrix.
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons inside Doc -->
+      <div class="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <button
+            class="xp-btn px-4 py-1.5 rounded text-xs font-semibold bg-[#ece9d8] border border-[#7f9db9] shadow-[inset_-1px_-1px_1px_rgba(0,0,0,0.2),inset_1px_1px_1px_#fff] hover:bg-[#f7f5ec] active:bg-[#e0dccb] cursor-pointer"
+            onclick="document.querySelector('[data-open=\'win-projects\']').click()"
+          >
+            Open Case Studies Folder &rarr;
+          </button>
+          <button
+            class="xp-btn px-4 py-1.5 rounded text-xs font-semibold bg-[#ece9d8] border border-[#7f9db9] shadow-[inset_-1px_-1px_1px_rgba(0,0,0,0.2),inset_1px_1px_1px_#fff] hover:bg-[#f7f5ec] active:bg-[#e0dccb] cursor-pointer"
+            onclick="document.querySelector('[data-open=\'win-sdlc\']').click()"
+          >
+            Launch SDLC Switcher
+          </button>
+        </div>
+
+        <span class="text-[11px] font-mono text-emerald-700 font-bold">
+          &bull; Status: Available for Opportunities
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- WINDOW 2: Case Studies (Windows Explorer) -->
+  <div
+    id="win-projects"
+    class="xp-window absolute top-20 left-44 w-[92vw] sm:w-[640px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex-col overflow-hidden hidden"
+  >
+    <div class="xp-titlebar h-8 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.6)] truncate">
+        <Folder class="w-4 h-4 text-amber-300 fill-amber-300 shrink-0" />
+        <span>C:\System_Projects\ - Windows Explorer</span>
+      </div>
+      <div class="flex items-center gap-1 shrink-0">
+        <button class="win-btn-minimize w-5 h-5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none"><Minus class="w-3 h-3" /></button>
+        <button class="win-btn-maximize w-5 h-5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none"><Square class="w-2.5 h-2.5" /></button>
+        <button class="win-btn-close w-5 h-5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none"><X class="w-3 h-3" /></button>
+      </div>
+    </div>
+
+    <!-- Address Bar -->
+    <div class="h-8 px-2 flex items-center gap-2 text-xs bg-[#ece9d8] border-b border-[#d8d4c2] select-none">
+      <span class="text-slate-600 font-medium">Address:</span>
+      <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-xs font-mono text-slate-800 flex items-center">
+        C:\System_Projects\Case_Studies\
+      </div>
+    </div>
+
+    <!-- Explorer Content (List view) -->
+    <div class="bg-white overflow-y-auto max-h-[65vh] p-2">
+      <table class="w-full text-left text-xs border-collapse font-sans">
+        <thead>
+          <tr class="border-b border-slate-200 text-slate-500 bg-[#f7f7f7]">
+            <th class="py-1.5 px-2 font-semibold">Name</th>
+            <th class="py-1.5 px-2 font-semibold">Domain</th>
+            <th class="py-1.5 px-2 font-semibold">Role</th>
+            <th class="py-1.5 px-2 font-semibold">Key Metric</th>
+            <th class="py-1.5 px-2 font-semibold text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          {allProjects.map((project) => (
+            <tr class="hover:bg-blue-50/80 cursor-pointer group">
+              <td class="py-2.5 px-2 font-semibold text-blue-900 flex items-center gap-2">
+                <FileText class="w-4 h-4 text-blue-600 shrink-0" />
+                <a href={`/projects/${project.id}`} class="hover:underline">
+                  {project.data.title}
+                </a>
+              </td>
+              <td class="py-2.5 px-2 text-slate-600">{project.data.category}</td>
+              <td class="py-2.5 px-2 text-slate-600">{project.data.role}</td>
+              <td class="py-2.5 px-2 font-mono text-emerald-700 font-bold">
+                {project.data.metrics[0]?.value} ({project.data.metrics[0]?.label})
+              </td>
+              <td class="py-2.5 px-2 text-right">
+                <a
+                  href={`/projects/${project.id}`}
+                  class="inline-flex items-center gap-1 px-2 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] text-[11px] font-semibold text-slate-800 hover:bg-white"
+                >
+                  <span>Open Spec</span>
+                  <ExternalLink class="w-3 h-3" />
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- WINDOW 3: SDLC_Lens.exe (Interactive Perspective Switcher) -->
+  <div
+    id="win-sdlc"
+    class="xp-window absolute top-16 left-36 w-[92vw] sm:w-[680px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex-col overflow-hidden hidden"
+  >
+    <div class="xp-titlebar h-8 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.6)] truncate">
+        <Layers class="w-4 h-4 text-cyan-300 shrink-0" />
+        <span>SDLC_Lens.exe - [Feature Spec #SA-104]</span>
+      </div>
+      <div class="flex items-center gap-1 shrink-0">
+        <button class="win-btn-minimize w-5 h-5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none"><Minus class="w-3 h-3" /></button>
+        <button class="win-btn-maximize w-5 h-5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none"><Square class="w-2.5 h-2.5" /></button>
+        <button class="win-btn-close w-5 h-5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none"><X class="w-3 h-3" /></button>
+      </div>
+    </div>
+
+    <!-- Subheader with 3 Tabs -->
+    <div class="p-3 bg-[#ece9d8] border-b border-[#d8d4c2] flex flex-wrap gap-2">
+      <button class="xp-lens-tab active px-3 py-1 rounded-t text-xs font-bold bg-white border-t-2 border-l-2 border-r-2 border-[#7f9db9] text-blue-900 cursor-pointer" data-view="analyst">
+        1. System Analyst Lens
+      </button>
+      <button class="xp-lens-tab px-3 py-1 rounded-t text-xs font-bold bg-[#ece9d8] border border-[#7f9db9] text-slate-600 hover:bg-white/50 cursor-pointer" data-view="dev">
+        2. Developer Feasibility
+      </button>
+      <button class="xp-lens-tab px-3 py-1 rounded-t text-xs font-bold bg-[#ece9d8] border border-[#7f9db9] text-slate-600 hover:bg-white/50 cursor-pointer" data-view="qa">
+        3. QA Test Rigor
+      </button>
+    </div>
+
+    <!-- Body Content Area -->
+    <div class="p-5 bg-white overflow-y-auto max-h-[62vh] font-sans text-xs">
+      <!-- Analyst View -->
+      <div id="xp-view-analyst" class="space-y-3">
+        <div class="p-3 rounded bg-blue-50 border border-blue-200">
+          <div class="font-bold text-blue-900 text-sm mb-1">BRD &amp; Business Process Elicitation</div>
+          <p class="text-slate-700 leading-relaxed">
+            Eliminating double charges and ghost inventory during flash sales through an automated 5-minute stock reservation state machine.
+          </p>
+        </div>
+        <div class="font-mono text-[11px] bg-slate-900 text-slate-200 p-3 rounded space-y-1">
+          <div class="text-cyan-400 font-bold">STATE TRANSITION:</div>
+          <div>DRAFT &rarr; RESERVED (5m TTL) &rarr; PAID &rarr; DEDUCTED &rarr; FULFILLED</div>
+        </div>
+        <ul class="space-y-1.5 text-slate-700 list-disc pl-4">
+          <li><strong>Anti-Double Charge:</strong> Network retries from customer app within 60s window must resolve to existing payment transaction.</li>
+          <li><strong>Reservation TTL:</strong> If payment is unconfirmed after 300s, automatic asynchronous event triggers stock restoration.</li>
+        </ul>
+      </div>
+
+      <!-- Dev View -->
+      <div id="xp-view-dev" class="space-y-3 hidden">
+        <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+          <div class="font-bold text-indigo-900 text-sm mb-1">API Contract &amp; Locking Mechanism</div>
+          <p class="text-slate-700 leading-relaxed">
+            Stateless REST endpoint with strictly enforced idempotency keys and Redis distributed locking.
+          </p>
+        </div>
+        <pre class="font-mono text-[11px] bg-slate-900 text-indigo-300 p-3 rounded overflow-x-auto">POST /api/v1/checkout/charge
+Header: X-Idempotency-Key: "uuid_98231a"
+Lock: Redis Redlock "SET lock:order:8891 $UUID NX PX 4000"</pre>
+        <ul class="space-y-1.5 text-slate-700 list-disc pl-4">
+          <li><strong>ACID Concurrency:</strong> PostgreSQL transaction with <code>SELECT ... FOR UPDATE</code> on SKU table to prevent phantom inventory reads.</li>
+          <li><strong>Circuit Breaker:</strong> Downstream payment gateway timeout fallback with exponential backoff retry.</li>
+        </ul>
+      </div>
+
+      <!-- QA View -->
+      <div id="xp-view-qa" class="space-y-3 hidden">
+        <div class="p-3 rounded bg-emerald-50 border border-emerald-200">
+          <div class="font-bold text-emerald-900 text-sm mb-1">BDD Gherkin &amp; Boundary Assertions</div>
+          <p class="text-slate-700 leading-relaxed">
+            Exhaustive acceptance criteria covering network drop during payment gateway callback.
+          </p>
+        </div>
+        <pre class="font-mono text-[11px] bg-slate-900 text-emerald-300 p-3 rounded overflow-x-auto">Scenario: Duplicate checkout under unstable network
+  Given order #8891 has stock reserved
+  When client sends 2 identical POST requests concurrently
+  Then only 1 ledger entry is written to 'transactions'
+  And stock decreases by exactly 1 unit</pre>
+        <ul class="space-y-1.5 text-slate-700 list-disc pl-4">
+          <li><strong>Negative Test:</strong> Assert HTTP 409 Conflict if checkout is submitted at second 301.</li>
+          <li><strong>Tampering Check:</strong> Assert HTTP 401 Unauthorized if webhook HMAC does not match SHA-256 secret.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WINDOW 4: System_Flow.exe (Interactive Diagram) -->
+  <div
+    id="win-flow"
+    class="xp-window absolute top-24 left-24 w-[92vw] sm:w-[680px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex-col overflow-hidden hidden"
+  >
+    <div class="xp-titlebar h-8 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.6)] truncate">
+        <Network class="w-4 h-4 text-indigo-300 shrink-0" />
+        <span>System_Flow.exe - Architecture Inspector</span>
+      </div>
+      <div class="flex items-center gap-1 shrink-0">
+        <button class="win-btn-minimize w-5 h-5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none"><Minus class="w-3 h-3" /></button>
+        <button class="win-btn-maximize w-5 h-5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none"><Square class="w-2.5 h-2.5" /></button>
+        <button class="win-btn-close w-5 h-5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none"><X class="w-3 h-3" /></button>
+      </div>
+    </div>
+
+    <!-- Node Selector -->
+    <div class="p-3 bg-[#ece9d8] border-b border-[#d8d4c2] flex flex-wrap items-center gap-1 text-xs">
+      <span class="font-bold text-slate-700 mr-1">Select Node:</span>
+      <button class="xp-flow-btn active px-2.5 py-1 rounded bg-white border border-[#7f9db9] font-semibold text-blue-900" data-node="client">1. Client / POS</button>
+      <button class="xp-flow-btn px-2.5 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] text-slate-700 hover:bg-white" data-node="gateway">2. API Gateway</button>
+      <button class="xp-flow-btn px-2.5 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] text-slate-700 hover:bg-white" data-node="service">3. Core Engine</button>
+      <button class="xp-flow-btn px-2.5 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] text-slate-700 hover:bg-white" data-node="queue">4. Message Queue</button>
+      <button class="xp-flow-btn px-2.5 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] text-slate-700 hover:bg-white" data-node="database">5. DB Cluster</button>
+    </div>
+
+    <div class="p-5 bg-white overflow-y-auto max-h-[60vh] text-xs font-sans">
+      <div id="xp-flow-details" class="space-y-3">
+        <!-- Content dynamic via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- WINDOW 5: cmd.exe (Command Prompt) -->
+  <div
+    id="win-cmd"
+    class="xp-window absolute top-28 left-20 w-[92vw] sm:w-[560px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-black text-white z-10 flex-col overflow-hidden hidden"
+  >
+    <div class="xp-titlebar h-8 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.6)] truncate">
+        <Terminal class="w-4 h-4 text-emerald-400 shrink-0" />
+        <span>Command Prompt - cmd.exe</span>
+      </div>
+      <div class="flex items-center gap-1 shrink-0">
+        <button class="win-btn-minimize w-5 h-5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none"><Minus class="w-3 h-3" /></button>
+        <button class="win-btn-maximize w-5 h-5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none"><Square class="w-2.5 h-2.5" /></button>
+        <button class="win-btn-close w-5 h-5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none"><X class="w-3 h-3" /></button>
+      </div>
+    </div>
+
+    <!-- Terminal Screen -->
+    <div id="cmd-screen" class="p-4 bg-black font-mono text-xs text-[#00ff66] min-h-[260px] max-h-[50vh] overflow-y-auto leading-relaxed">
+      <div>Microsoft Windows XP [Version 5.1.2600]</div>
+      <div>(C) Copyright 1985-2001 Microsoft Corp.</div>
+      <div class="my-2 text-slate-400">Type <span class="text-white font-bold">help</span> to see available commands (skills, projects, contact, clear).</div>
+      <div id="cmd-output" class="space-y-2"></div>
+      <div class="flex items-center gap-1 mt-2">
+        <span class="text-slate-300">C:\Users\SystemAnalyst&gt;</span>
+        <input
+          id="cmd-input"
+          type="text"
+          class="bg-transparent text-[#00ff66] border-none outline-none font-mono text-xs flex-1 caret-white"
+          autofocus
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- WINDOW 6: Outlook Express (Contact) -->
+  <div
+    id="win-contact"
+    class="xp-window absolute top-32 left-32 w-[92vw] sm:w-[540px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex-col overflow-hidden hidden"
+  >
+    <div class="xp-titlebar h-8 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.6)] truncate">
+        <Mail class="w-4 h-4 text-sky-300 shrink-0" />
+        <span>New Message - Outlook Express</span>
+      </div>
+      <div class="flex items-center gap-1 shrink-0">
+        <button class="win-btn-minimize w-5 h-5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none"><Minus class="w-3 h-3" /></button>
+        <button class="win-btn-maximize w-5 h-5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none"><Square class="w-2.5 h-2.5" /></button>
+        <button class="win-btn-close w-5 h-5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/60 flex items-center justify-center text-white text-xs font-bold leading-none"><X class="w-3 h-3" /></button>
+      </div>
+    </div>
+
+    <!-- Email Header toolbar -->
+    <div class="h-8 px-3 flex items-center gap-2 bg-[#ece9d8] border-b border-[#d8d4c2] text-xs">
+      <a
+        href="mailto:analyst.dipa@example.com"
+        class="px-3 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] font-bold text-slate-800 hover:bg-white flex items-center gap-1.5 shadow-sm"
+      >
+        <Mail class="w-3.5 h-3.5 text-blue-600" />
+        <span>Send Mail</span>
+      </a>
+      <button
+        id="xp-copy-email-btn"
+        class="px-3 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] font-bold text-slate-800 hover:bg-white flex items-center gap-1.5 shadow-sm cursor-pointer"
+      >
+        <Copy class="w-3.5 h-3.5" id="xp-copy-icon" />
+        <Check class="w-3.5 h-3.5 text-emerald-600 hidden" id="xp-copied-icon" />
+        <span id="xp-copy-text">Copy Address</span>
+      </button>
+    </div>
+
+    <!-- Form fields -->
+    <div class="p-4 bg-white space-y-3 text-xs font-sans">
+      <div class="flex items-center gap-2">
+        <label class="w-16 text-slate-600 font-semibold">To:</label>
+        <div class="flex-1 px-2 py-1 bg-slate-100 border border-slate-300 rounded text-slate-800 font-mono">
+          analyst.dipa@example.com
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="w-16 text-slate-600 font-semibold">Subject:</label>
+        <input
+          type="text"
+          value="Architecture Consultation / Job Opportunity"
+          class="flex-1 px-2 py-1 border border-[#7f9db9] rounded text-slate-800 outline-none focus:border-blue-500"
+        />
+      </div>
+      <div>
+        <label class="block text-slate-600 font-semibold mb-1">Message:</label>
+        <textarea
+          rows="5"
+          class="w-full p-2 border border-[#7f9db9] rounded text-slate-800 outline-none focus:border-blue-500 resize-none"
+          placeholder="Hi, I'm reaching out regarding a System Analyst / Technical Architect role..."
+        ></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== WINDOWS XP START MENU ==================== -->
+  <div
+    id="xp-start-menu"
+    class="absolute bottom-9 left-0 w-80 rounded-t-lg bg-white border-2 border-[#0055ea] shadow-2xl z-50 flex-col overflow-hidden hidden"
+  >
+    <!-- Blue Header with User Avatar -->
+    <div class="h-14 px-3 flex items-center gap-3 bg-gradient-to-r from-[#0058ee] to-[#3593ff] text-white shadow-inner">
+      <div class="w-9 h-9 rounded bg-white p-0.5 border border-white shadow">
+        <div class="w-full h-full bg-blue-700 rounded flex items-center justify-center text-white font-black text-sm">
+          SA
+        </div>
+      </div>
+      <div class="font-bold text-sm drop-shadow-[1px_1px_1px_rgba(0,0,0,0.6)]">
+        System Analyst
+      </div>
+    </div>
+
+    <!-- Two-column Body -->
+    <div class="flex bg-[#d3e5fa] text-xs">
+      <!-- Left Column: White background programs -->
+      <div class="w-1/2 bg-white p-2 space-y-1 border-r border-[#95bdee]">
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-welcome\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <FileText class="w-4 h-4 text-blue-600" />
+          <span class="font-bold text-slate-800">Welcome SA</span>
+        </div>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-projects\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <Folder class="w-4 h-4 text-amber-500" />
+          <span class="font-bold text-slate-800">Case Studies</span>
+        </div>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-sdlc\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <Layers class="w-4 h-4 text-cyan-600" />
+          <span class="font-bold text-slate-800">SDLC Lens</span>
+        </div>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-flow\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <Network class="w-4 h-4 text-indigo-600" />
+          <span class="font-bold text-slate-800">System Flow</span>
+        </div>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="document.querySelector('[data-open=\'win-cmd\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <Terminal class="w-4 h-4 text-emerald-600" />
+          <span class="font-bold text-slate-800">Command Prompt</span>
+        </div>
+      </div>
+
+      <!-- Right Column: System folders -->
+      <div class="w-1/2 p-2 space-y-1 text-slate-700">
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="document.querySelector('[data-open=\'win-projects\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+          My Documents
+        </div>
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="document.querySelector('[data-open=\'win-flow\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+          My Network
+        </div>
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="document.querySelector('[data-open=\'win-contact\']').click(); document.getElementById('xp-start-menu').classList.add('hidden');">
+          Outlook Express
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Footer: Log Off & Turn Off Computer -->
+    <div class="h-10 px-3 flex items-center justify-end gap-3 bg-gradient-to-r from-[#0058ee] to-[#3593ff] text-white select-none">
+      <button
+        id="xp-shutdown-btn"
+        class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#c75050] hover:bg-[#e04343] border border-white/50 text-xs font-bold shadow cursor-pointer active:scale-95"
+      >
+        <Power class="w-3.5 h-3.5" />
+        <span>Turn Off Computer</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== WINDOWS XP TASKBAR ==================== -->
+  <div class="relative z-40 h-9 w-full bg-gradient-to-b from-[#245edb] via-[#3f8cf3] to-[#1941a5] border-t border-[#468df2] flex items-center justify-between select-none shadow-lg">
+    <!-- Left: Start Button -->
+    <div class="flex items-center h-full">
+      <button
+        id="xp-start-btn"
+        class="h-full px-4 rounded-r-xl bg-gradient-to-b from-[#388e3c] via-[#4caf50] to-[#2e7d32] hover:brightness-110 active:brightness-90 border-r border-[#1b5e20] shadow-[inset_1px_1px_1px_rgba(255,255,255,0.6)] flex items-center gap-2 cursor-pointer"
+      >
+        <!-- Windows 4-color flag SVG -->
+        <svg class="w-4 h-4 drop-shadow" viewBox="0 0 24 24">
+          <rect x="2" y="2" width="9" height="9" fill="#f44336" rx="1" />
+          <rect x="13" y="2" width="9" height="9" fill="#4caf50" rx="1" />
+          <rect x="2" y="13" width="9" height="9" fill="#2196f3" rx="1" />
+          <rect x="13" y="13" width="9" height="9" fill="#ffeb3b" rx="1" />
+        </svg>
+        <span class="font-black italic text-white text-sm drop-shadow-[1px_1px_2px_rgba(0,0,0,0.8)]">
+          start
+        </span>
+      </button>
+
+      <!-- Open Window Tabs on Taskbar -->
+      <div id="xp-taskbar-items" class="flex items-center gap-1 px-2 h-full overflow-x-auto">
+        <!-- Tabs injected dynamically via JS -->
+      </div>
+    </div>
+
+    <!-- Right: System Tray (Notification Area) -->
+    <div class="h-full px-3 bg-gradient-to-b from-[#0f388a] via-[#16439e] to-[#0d2f78] border-l border-[#194bb5] shadow-inner flex items-center gap-3 text-xs text-white font-mono">
+      <Volume2 class="w-3.5 h-3.5 text-blue-200" />
+      <span id="xp-clock">12:00 PM</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 1. Listen for boot event from 3D computer stage
+  window.addEventListener('xp:boot-desktop', () => {
+    const desktop = document.getElementById('xp-desktop-container');
+    if (desktop) {
+      desktop.classList.remove('hidden');
+      desktop.classList.add('flex');
+    }
+  });
+
+  // 2. Start Menu Toggle
+  const startBtn = document.getElementById('xp-start-btn');
+  const startMenu = document.getElementById('xp-start-menu');
+
+  startBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    startMenu?.classList.toggle('hidden');
+    startMenu?.classList.toggle('flex');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (startMenu && !startMenu.contains(e.target as Node) && e.target !== startBtn) {
+      startMenu.classList.add('hidden');
+      startMenu.classList.remove('flex');
+    }
+  });
+
+  // 3. System Tray Clock
+  function updateClock() {
+    const clockEl = document.getElementById('xp-clock');
+    if (!clockEl) return;
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    clockEl.innerText = `${hours}:${minutes} ${ampm}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // 4. Draggable Windows Logic & Active Z-Index
+  let highestZIndex = 30;
+
+  function bringToFront(win: HTMLElement) {
+    highestZIndex += 1;
+    win.style.zIndex = highestZIndex.toString();
+  }
+
+  const windows = document.querySelectorAll<HTMLElement>('.xp-window');
+  windows.forEach((win) => {
+    win.addEventListener('mousedown', () => bringToFront(win));
+
+    const titlebar = win.querySelector<HTMLElement>('.xp-titlebar');
+    if (titlebar) {
+      let isDragging = false;
+      let startX = 0;
+      let startY = 0;
+      let initialLeft = 0;
+      let initialTop = 0;
+
+      titlebar.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        bringToFront(win);
+        startX = e.clientX;
+        startY = e.clientY;
+        initialLeft = win.offsetLeft;
+        initialTop = win.offsetTop;
+
+        function onMouseMove(moveEvent: MouseEvent) {
+          if (!isDragging) return;
+          const dx = moveEvent.clientX - startX;
+          const dy = moveEvent.clientY - startY;
+          win.style.left = `${Math.max(0, initialLeft + dx)}px`;
+          win.style.top = `${Math.max(0, initialTop + dy)}px`;
+        }
+
+        function onMouseUp() {
+          isDragging = false;
+          window.removeEventListener('mousemove', onMouseMove);
+          window.removeEventListener('mouseup', onMouseUp);
+        }
+
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
+      });
+    }
+
+    // Window controls
+    const btnClose = win.querySelector('.win-btn-close');
+    btnClose?.addEventListener('click', () => {
+      win.style.display = 'none';
+      updateTaskbar();
+    });
+
+    const btnMinimize = win.querySelector('.win-btn-minimize');
+    btnMinimize?.addEventListener('click', () => {
+      win.style.display = 'none';
+      updateTaskbar();
+    });
+
+    const btnMaximize = win.querySelector('.win-btn-maximize');
+    btnMaximize?.addEventListener('click', () => {
+      if (win.dataset.maximized === 'true') {
+        win.style.width = win.dataset.prevWidth || '580px';
+        win.style.height = win.dataset.prevHeight || 'auto';
+        win.style.top = win.dataset.prevTop || '60px';
+        win.style.left = win.dataset.prevLeft || '80px';
+        win.dataset.maximized = 'false';
+      } else {
+        win.dataset.prevWidth = win.style.width || `${win.offsetWidth}px`;
+        win.dataset.prevHeight = win.style.height || `${win.offsetHeight}px`;
+        win.dataset.prevTop = `${win.offsetTop}px`;
+        win.dataset.prevLeft = `${win.offsetLeft}px`;
+        win.style.width = '100vw';
+        win.style.height = 'calc(100vh - 36px)';
+        win.style.top = '0px';
+        win.style.left = '0px';
+        win.dataset.maximized = 'true';
+      }
+    });
+  });
+
+  // 5. Desktop Icons Opening Windows
+  const desktopIcons = document.querySelectorAll('.xp-desktop-icon');
+  desktopIcons.forEach((icon) => {
+    icon.addEventListener('click', () => {
+      const targetId = icon.getAttribute('data-open');
+      if (targetId) {
+        const targetWin = document.getElementById(targetId);
+        if (targetWin) {
+          targetWin.style.display = 'flex';
+          bringToFront(targetWin);
+          updateTaskbar();
+        }
+      }
+    });
+  });
+
+  // 6. Update Taskbar open window items
+  function updateTaskbar() {
+    const taskbarContainer = document.getElementById('xp-taskbar-items');
+    if (!taskbarContainer) return;
+    taskbarContainer.innerHTML = '';
+
+    windows.forEach((win) => {
+      const isVisible = win.style.display !== 'none';
+      const title = win.querySelector('.xp-titlebar span')?.textContent || 'Window';
+      const id = win.id;
+
+      const btn = document.createElement('button');
+      btn.className = `h-7 px-3 rounded text-xs font-bold flex items-center gap-1.5 cursor-pointer max-w-[150px] truncate shadow-inner ${
+        isVisible
+          ? 'bg-[#1b3f94] text-white border border-[#0d2358]'
+          : 'bg-[#2c7cfc]/40 hover:bg-[#2c7cfc]/70 text-blue-100 border border-blue-400/30'
+      }`;
+      btn.innerText = title.split(' - ')[0];
+
+      btn.addEventListener('click', () => {
+        if (win.style.display === 'none') {
+          win.style.display = 'flex';
+          bringToFront(win);
+        } else {
+          // Toggle minimize
+          win.style.display = 'none';
+        }
+        updateTaskbar();
+      });
+
+      taskbarContainer.appendChild(btn);
+    });
+  }
+  updateTaskbar();
+
+  // 7. Interactive SDLC Switcher inside Windows XP
+  const sdlcTabs = document.querySelectorAll('.xp-lens-tab');
+  sdlcTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const view = tab.getAttribute('data-view');
+      sdlcTabs.forEach((t) => {
+        t.classList.remove('active', 'bg-white', 'border-t-2', 'border-l-2', 'border-r-2', 'text-blue-900');
+        t.classList.add('bg-[#ece9d8]', 'text-slate-600');
+      });
+      tab.classList.add('active', 'bg-white', 'border-t-2', 'border-l-2', 'border-r-2', 'text-blue-900');
+      tab.classList.remove('bg-[#ece9d8]', 'text-slate-600');
+
+      document.getElementById('xp-view-analyst')?.classList.add('hidden');
+      document.getElementById('xp-view-dev')?.classList.add('hidden');
+      document.getElementById('xp-view-qa')?.classList.add('hidden');
+
+      if (view === 'analyst') document.getElementById('xp-view-analyst')?.classList.remove('hidden');
+      if (view === 'dev') document.getElementById('xp-view-dev')?.classList.remove('hidden');
+      if (view === 'qa') document.getElementById('xp-view-qa')?.classList.remove('hidden');
+    });
+  });
+
+  // 8. Interactive Architecture Node Flow inside Windows XP
+  const flowButtons = document.querySelectorAll('.xp-flow-btn');
+  const flowDetails = document.getElementById('xp-flow-details');
+
+  const nodeDescriptions: Record<string, { title: string; sla: string; req: string; dev: string; qa: string }> = {
+    client: {
+      title: "Node 01: Client POS / Terminal",
+      sla: "P99 UI Latency <100ms",
+      req: "Offline-first local storage (SQLite/IndexedDB) allowing transactions to proceed during network partition.",
+      dev: "Payload compression (gzip) for bulk batches; client-side UUIDv4 idempotency key attached to every button click.",
+      qa: "Simulate airplane mode during checkout submission: assert zero data loss and background queue retry."
+    },
+    gateway: {
+      title: "Node 02: API Gateway & Reverse Proxy",
+      sla: "15,000 req/sec | Latency <5ms",
+      req: "Strict rate limiting (100 req/min/IP) and mTLS/HMAC validation on third-party webhook payloads.",
+      dev: "Redis token bucket rate limiter; correlation-id forwarding to all downstream microservices.",
+      qa: "Assert HTTP 429 Too Many Requests with Retry-After header once rate threshold is crossed."
+    },
+    service: {
+      title: "Node 03: Core Engine & State Machine",
+      sla: "TAT <120ms | 99.95% SLA",
+      req: "Deterministic finite state machine: DRAFT -> RESERVED -> CHARGED -> FULFILLED with 5-minute stock hold TTL.",
+      dev: "Redis distributed locking (Redlock) on SKU ID + PostgreSQL row-level locks (FOR UPDATE).",
+      qa: "Assert simultaneous requests with same Idempotency-Key return identical cached response body without duplicate charge."
+    },
+    queue: {
+      title: "Node 04: Message Queue (RabbitMQ)",
+      sla: "Delivery Guarantee: At-least-once",
+      req: "Decouples synchronous checkout responses from slow notification dispatch and ERP syncing.",
+      dev: "Dead Letter Queue (DLQ) retry policy with exponential backoff for poison-pill payloads.",
+      qa: "Simulate consumer service crash midway through processing: verify message is re-queued without drop."
+    },
+    database: {
+      title: "Node 05: Database (PostgreSQL + Redis)",
+      sla: "Zero Data Loss (RPO = 0)",
+      req: "3NF normalized schema with soft-delete audit history on all financial transactions.",
+      dev: "Master-Slave cluster with read-write splitting and connection pooling via PgBouncer.",
+      qa: "Assert simultaneous debit transactions respect ACID Serializable isolation without deadlocks."
+    }
+  };
+
+  function renderFlowDetail(key: string) {
+    if (!flowDetails) return;
+    const d = nodeDescriptions[key] || nodeDescriptions.client;
+    flowDetails.innerHTML = `
+      <div class="p-3 bg-blue-50 border border-blue-200 rounded">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-blue-900 text-sm">${d.title}</span>
+          <span class="font-mono text-[11px] text-emerald-700 font-bold">${d.sla}</span>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
+          <strong class="text-blue-800 block mb-0.5">Analyst Requirement:</strong>
+          <span class="text-slate-700">${d.req}</span>
+        </div>
+        <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
+          <strong class="text-indigo-800 block mb-0.5">Developer Implementation:</strong>
+          <span class="text-slate-700">${d.dev}</span>
+        </div>
+        <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
+          <strong class="text-emerald-800 block mb-0.5">QA Edge-Case Assertion:</strong>
+          <span class="text-slate-700">${d.qa}</span>
+        </div>
+      </div>
+    `;
+  }
+  renderFlowDetail('client');
+
+  flowButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const nodeKey = btn.getAttribute('data-node') || 'client';
+      flowButtons.forEach((b) => {
+        b.classList.remove('active', 'bg-white', 'text-blue-900', 'font-semibold');
+        b.classList.add('bg-[#ece9d8]', 'text-slate-700');
+      });
+      btn.classList.add('active', 'bg-white', 'text-blue-900', 'font-semibold');
+      btn.classList.remove('bg-[#ece9d8]', 'text-slate-700');
+      renderFlowDetail(nodeKey);
+    });
+  });
+
+  // 9. Command Prompt (cmd.exe) Interactive CLI
+  const cmdInput = document.getElementById('cmd-input') as HTMLInputElement;
+  const cmdOutput = document.getElementById('cmd-output');
+  const cmdScreen = document.getElementById('cmd-screen');
+
+  cmdInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const val = cmdInput.value.trim().toLowerCase();
+      if (!val) return;
+
+      const line = document.createElement('div');
+      line.innerHTML = `<span class="text-slate-400">C:\\Users\\SystemAnalyst&gt;</span> <span class="text-white">${cmdInput.value}</span>`;
+      cmdOutput?.appendChild(line);
+
+      const resp = document.createElement('div');
+      resp.className = 'text-emerald-300 pl-2';
+
+      if (val === 'help') {
+        resp.innerHTML = `
+          Commands available:<br/>
+          &bull; <span class="text-yellow-300">skills</span>   - List System Analyst, Dev & QA matrix<br/>
+          &bull; <span class="text-yellow-300">projects</span> - View active architecture case studies<br/>
+          &bull; <span class="text-yellow-300">contact</span>  - Show email and direct communication channels<br/>
+          &bull; <span class="text-yellow-300">matrix</span>   - Launch SDLC Lens perspective<br/>
+          &bull; <span class="text-yellow-300">clear</span>    - Clear the command prompt
+        `;
+      } else if (val === 'skills') {
+        resp.innerHTML = `
+          [CORE SA]: BRD/SRS, BPMN 2.0, ERD 3NF Modeling, OpenAPI 3.1<br/>
+          [DEV FEASIBILITY]: PostgreSQL, SQL Tuning, REST APIs, Redis Redlock<br/>
+          [QA RIGOR]: BDD Gherkin, Postman Automation, Chaos Fault Injection
+        `;
+      } else if (val === 'projects') {
+        resp.innerHTML = `
+          1. Omnichannel POS & Real-Time Sync (Discrepancy: 0.01%)<br/>
+          2. Automated Loan Scoring Engine (Approval TAT: 45s)<br/>
+          3. Hospital E-Prescription ERP (Dispensing Errors: 0)
+        `;
+      } else if (val === 'contact') {
+        resp.innerHTML = `
+          Email: analyst.dipa@example.com<br/>
+          Status: Available for Fulltime & Strategic Architecture Projects
+        `;
+      } else if (val === 'matrix') {
+        document.querySelector<HTMLElement>('[data-open="win-sdlc"]')?.click();
+        resp.innerText = 'Launching SDLC_Lens.exe...';
+      } else if (val === 'clear') {
+        if (cmdOutput) cmdOutput.innerHTML = '';
+        cmdInput.value = '';
+        return;
+      } else {
+        resp.innerHTML = `'${val}' is not recognized as an internal or external command. Type 'help'.`;
+      }
+
+      cmdOutput?.appendChild(resp);
+      cmdInput.value = '';
+      if (cmdScreen) cmdScreen.scrollTop = cmdScreen.scrollHeight;
+    }
+  });
+
+  // 10. Copy Email in Outlook Express
+  const copyBtn = document.getElementById('xp-copy-email-btn');
+  const copyIcon = document.getElementById('xp-copy-icon');
+  const copiedIcon = document.getElementById('xp-copied-icon');
+  const copyText = document.getElementById('xp-copy-text');
+
+  copyBtn?.addEventListener('click', () => {
+    navigator.clipboard.writeText('analyst.dipa@example.com').then(() => {
+      copyIcon?.classList.add('hidden');
+      copiedIcon?.classList.remove('hidden');
+      if (copyText) copyText.innerText = 'Copied!';
+      setTimeout(() => {
+        copyIcon?.classList.remove('hidden');
+        copiedIcon?.classList.add('hidden');
+        if (copyText) copyText.innerText = 'Copy Address';
+      }, 2000);
+    });
+  });
+
+  // 11. Shut down button back to 3D computer stage
+  const shutdownBtn = document.getElementById('xp-shutdown-btn');
+  shutdownBtn?.addEventListener('click', () => {
+    const confirmShutdown = confirm('Are you sure you want to shut down and return to the 3D Workstation?');
+    if (confirmShutdown) {
+      const desktop = document.getElementById('xp-desktop-container');
+      if (desktop) {
+        desktop.classList.add('hidden');
+        desktop.classList.remove('flex');
+      }
+      startMenu?.classList.add('hidden');
+      window.dispatchEvent(new CustomEvent('xp:shutdown-to-3d'));
+    }
+  });
+</script>

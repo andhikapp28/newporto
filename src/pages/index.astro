@@ -1,26 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import SdlcLensWidget from '../components/SdlcLensWidget.astro';
-import ThreePillars from '../components/ThreePillars.astro';
-import InteractiveFlow from '../components/InteractiveFlow.astro';
-import CaseStudies from '../components/CaseStudies.astro';
-import Methodology from '../components/Methodology.astro';
-import ContactSection from '../components/ContactSection.astro';
-import Footer from '../components/Footer.astro';
+import XpPreloader from '../components/XpPreloader.astro';
+import ThreeComputerScene from '../components/ThreeComputerScene.astro';
+import XpDesktop from '../components/XpDesktop.astro';
 ---
 
-<Layout>
-  <Header />
-  <main class="flex-grow">
-    <Hero />
-    <SdlcLensWidget />
-    <ThreePillars />
-    <InteractiveFlow />
-    <CaseStudies />
-    <Methodology />
-    <ContactSection />
+<Layout 
+  title="System Analyst Workstation | Interactive 3D & Windows XP Experience"
+  description="Interactive System Analyst portfolio featuring a retro 3D computer workstation, SDLC architecture specifications, and an authentic Windows XP draggable desktop."
+>
+  <main class="relative w-screen h-screen overflow-hidden bg-black select-none">
+    <!-- Stage 1: Circular 0-100% Preloader (Image 1 style) -->
+    <XpPreloader />
+
+    <!-- Stage 2: 3D Retro Workstation with Three.js (Image 2 & Threejs Journey style) -->
+    <ThreeComputerScene />
+
+    <!-- Stage 3: Interactive Windows XP Draggable Desktop (Image 3 style) -->
+    <XpDesktop />
   </main>
-  <Footer />
 </Layout>
