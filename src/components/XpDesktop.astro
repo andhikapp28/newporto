@@ -560,7 +560,7 @@ const sampleWorkDocs = [
           <!-- File 1: ATS CV -->
           <div 
             class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
-            onclick="openSampleDoc('cv-ats')"
+            onclick="openCvPdf()"
           >
             <FileText class="w-7 h-7 text-indigo-600 shrink-0 mt-0.5" />
             <div class="truncate">
@@ -1043,10 +1043,10 @@ const sampleWorkDocs = [
           <div class="text-center space-y-0.5">
             <div class="text-2xl animate-bounce" id="wmp-mascot">🐥</div>
             <div class="text-xs font-bold text-white tracking-wide truncate max-w-[340px]" id="wmp-track-title">
-              1. Lofi Girl - Chill Beats
+              1. E U MIRACLE
             </div>
             <div class="text-[10px] font-mono text-slate-400" id="wmp-artist">
-              Relaxing Coding Beats &bull; YouTube LoFi
+              Album - Cafe lofi | Kichijoji Cafe
             </div>
           </div>
           
@@ -1116,8 +1116,8 @@ const sampleWorkDocs = [
         <!-- 5 LoFi Track Playlist List -->
         <div class="w-full bg-white rounded border border-[#a2b4d4] p-1.5 overflow-y-auto max-h-24 text-[10.5px]">
           <div class="font-bold text-slate-700 border-b border-slate-200 pb-0.5 mb-1 flex items-center justify-between">
-            <span>Playlist: 5 Lagu Lo-Fi</span>
-            <span class="text-blue-700 font-mono">YouTube Stream</span>
+            <span>Album - Cafe lofi | Kichijoji Cafe</span>
+            <span class="text-blue-700 font-mono">35 tracks</span>
           </div>
           <div id="wmp-playlist-items" class="space-y-0.5">
             <!-- Injected dynamically via JS -->
@@ -1661,7 +1661,9 @@ const sampleWorkDocs = [
   // Desktop Icons Opening Windows
   const desktopIcons = document.querySelectorAll('.xp-desktop-icon');
   desktopIcons.forEach((icon) => {
-    icon.addEventListener('click', () => {
+    icon.addEventListener('click', (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
       const targetId = icon.getAttribute('data-open');
       if (targetId) {
         (window as any).openWindow(targetId);
@@ -1823,6 +1825,11 @@ const sampleWorkDocs = [
     }
   };
 
+  (window as any).openCvPdf = function() {
+    const baseUrl = document.body.dataset.baseUrl || document.getElementById('xp-desktop-container')?.dataset.baseUrl || '/newporto';
+    window.open(`${baseUrl}/documents/CV_ATS_Andhika_Putra_Pratama.pdf`, '_blank');
+  };
+
   (window as any).openSampleDoc = function(docKey: string) {
     const data = sampleDocsData[docKey];
     if (!data) return;
@@ -1948,17 +1955,47 @@ const sampleWorkDocs = [
 
   // 8. Windows Media Player with 5 LoFi YouTube Tracks
   const lofiPlaylist = [
-    { title: "1. Lofi Girl - Relaxing Chill Beats", artist: "Lofi Records", id: "jfKfPfyJRdk" },
-    { title: "2. Coffee Shop Vibes - Study Jazz", artist: "Chillhop Music", id: "5yx6BWlEVcY" },
-    { title: "3. Rainy Night Lofi - Deep Work Beats", artist: "Retro Lofi", id: "7NOSDKb0HlU" },
-    { title: "4. Cozy Sunset - Relaxing Study", artist: "Dreamy Lofi", id: "lTRiuFIWV54" },
-    { title: "5. Windows XP Nostalgia Lofi Remix", artist: "Vaporwave Beats", id: "2atQnvunGCo" }
+    { title: "1. E U MIRACLE", artist: "Kichijoji Cafe", id: "ykQKvHeIH4k" },
+    { title: "2. Shadow Bubbles", artist: "Kichijoji Cafe", id: "Xxt_SH_VAe0" },
+    { title: "3. Akihabara Blues", artist: "Kichijoji Cafe", id: "N52zRq8vq5k" },
+    { title: "4. Asakusa Memories", artist: "Kichijoji Cafe", id: "l6vuNAqIwEs" },
+    { title: "5. Daikanyama Dreams", artist: "Kichijoji Cafe", id: "cyeD9g7PYBY" },
+    { title: "6. Fussa Forest Walk", artist: "Kichijoji Cafe", id: "8JYpydsZRgU" },
+    { title: "7. Futakotamagawa Reflections", artist: "Kichijoji Cafe", id: "XgbeGTw6V_0" },
+    { title: "8. Ginza Nights", artist: "Kichijoji Cafe", id: "hBvdlK-Ih2g" },
+    { title: "9. Gotanda Guitar Blues", artist: "Kichijoji Cafe", id: "U3-BzsIfZ8I" },
+    { title: "10. Harajuku Dreams", artist: "Kichijoji Cafe", id: "t1nr4Q3QsO0" },
+    { title: "11. Ikebukuro Lullaby", artist: "Kichijoji Cafe", id: "k0PoaPU9bUg" },
+    { title: "12. Kamakura Coastal Drive", artist: "Kichijoji Cafe", id: "l8TuL_bRB2M" },
+    { title: "13. Kichijoji Café", artist: "Kichijoji Cafe", id: "JHfdbuPUpPw" },
+    { title: "14. Kinshicho Serenade", artist: "Kichijoji Cafe", id: "748aD1d3t58" },
+    { title: "15. Komazawa Park Picnic", artist: "Kichijoji Cafe", id: "rCEFfK4DmzM" },
+    { title: "16. Marunouchi Morning", artist: "Kichijoji Cafe", id: "kMKM65sHepc" },
+    { title: "17. Meguro River Melodies", artist: "Kichijoji Cafe", id: "keZagZY0mzM" },
+    { title: "18. Meiji Shrine Melodies", artist: "Kichijoji Cafe", id: "3clS8Z1qA8A" },
+    { title: "19. Musashino Moonlight", artist: "Kichijoji Cafe", id: "_RE-7VYsTHs" },
+    { title: "20. Nakameguro Nights", artist: "Kichijoji Cafe", id: "b1t65WTbijw" },
+    { title: "21. Nakano Broadway Blues", artist: "Kichijoji Cafe", id: "UIYtElo4_LI" },
+    { title: "22. Nihonbashi Nights", artist: "Kichijoji Cafe", id: "3_Jc9onhfGY" },
+    { title: "23. Odaiba Sunset", artist: "Kichijoji Cafe", id: "04dwyGwV_ss" },
+    { title: "24. Omotesando Avenue", artist: "Kichijoji Cafe", id: "MHlzEzv_ZP0" },
+    { title: "25. Roppongi Rhapsody", artist: "Kichijoji Cafe", id: "MPWotMoO1d4" },
+    { title: "26. Shibuya Streets", artist: "Kichijoji Cafe", id: "f8-UjtazsfE" },
+    { title: "27. Shimbashi Station Blues", artist: "Kichijoji Cafe", id: "yTXmqfMvsNg" },
+    { title: "28. Shimokitazawa Nights", artist: "Kichijoji Cafe", id: "FIi9JgXBtNc" },
+    { title: "29. Shinjuku Serenade", artist: "Kichijoji Cafe", id: "U2jXVlsWDXs" },
+    { title: "30. Suginami Sunset", artist: "Kichijoji Cafe", id: "vJ-wYnuycys" },
+    { title: "31. Tachikawa Train Station Blues", artist: "Kichijoji Cafe", id: "31rOFZIMm2U" },
+    { title: "32. Tsukiji Fish Market Blues", artist: "Kichijoji Cafe", id: "U9uHxHK96zM" },
+    { title: "33. Ueno Park Serenade", artist: "Kichijoji Cafe", id: "vnd-Lon2cxM" },
+    { title: "34. Yoyogi Park Reflections", artist: "Kichijoji Cafe", id: "5cSO7jVzrgY" },
+    { title: "35. Yurakucho Twilight", artist: "Kichijoji Cafe", id: "cNXC9-eVUMc" }
   ];
 
   let currentTrackIdx = 0;
   let isWmpPlaying = false;
   let ytPlayerInstance: any = null;
-  let localAudioFallback: HTMLAudioElement | null = null;
+  // WMP uses only the YouTube iframe API; local .wav files are never used here.
   let wmpScrubInterval: any = null;
 
   // Render Playlist HTML
@@ -2050,10 +2087,6 @@ const sampleWorkDocs = [
     if (ytPlayerInstance && ytPlayerInstance.stopVideo) {
       ytPlayerInstance.stopVideo();
     }
-    if (localAudioFallback) {
-      localAudioFallback.pause();
-      localAudioFallback.currentTime = 0;
-    }
     clearInterval(wmpScrubInterval);
     setWmpPlayingState(false);
   }
@@ -2064,8 +2097,8 @@ const sampleWorkDocs = [
     const t = lofiPlaylist[idx];
     const titleEl = document.getElementById('wmp-track-title');
     const artistEl = document.getElementById('wmp-artist');
-    if (titleEl) titleEl.innerText = t.title;
-    if (artistEl) artistEl.innerText = `${t.artist} • YouTube LoFi`;
+    if (titleEl) titleEl.innerText = `${idx + 1}. ${t.title}`;
+    if (artistEl) artistEl.innerText = `Album - Cafe lofi | Kichijoji Cafe`;
 
     // Highlight row in playlist
     document.querySelectorAll('.wmp-track-row').forEach((r, rIdx) => {
@@ -2080,13 +2113,8 @@ const sampleWorkDocs = [
       ytPlayerInstance.loadVideoById(t.id);
       ytPlayerInstance.playVideo();
     } else {
-      // Fallback to local audio
-      if (!localAudioFallback) {
-        const assetBase = document.getElementById('xp-desktop-container')?.dataset.baseUrl || '';
-        localAudioFallback = new Audio(`${assetBase}/sounds/xp-startup.wav`);
-      }
-      localAudioFallback.play().catch(e => console.warn(e));
-      setWmpPlayingState(true);
+      // WMP relies exclusively on the YouTube iframe API; never fall back to local WAV.
+      console.warn('WMP: YouTube player not ready yet');
     }
   }
 
@@ -2102,14 +2130,11 @@ const sampleWorkDocs = [
       if (ytPlayerInstance && ytPlayerInstance.playVideo) {
         ytPlayerInstance.playVideo();
       } else {
-        playTrack(currentTrackIdx);
+        console.warn('WMP: YouTube player not ready yet');
       }
     } else {
       if (ytPlayerInstance && ytPlayerInstance.pauseVideo) {
         ytPlayerInstance.pauseVideo();
-      } else if (localAudioFallback) {
-        localAudioFallback.pause();
-        setWmpPlayingState(false);
       }
     }
   });
@@ -2117,10 +2142,6 @@ const sampleWorkDocs = [
   document.getElementById('wmp-stop-btn')?.addEventListener('click', () => {
     if (ytPlayerInstance && ytPlayerInstance.stopVideo) {
       ytPlayerInstance.stopVideo();
-    }
-    if (localAudioFallback) {
-      localAudioFallback.pause();
-      localAudioFallback.currentTime = 0;
     }
     setWmpPlayingState(false);
     const bar = document.getElementById('wmp-progress-bar');
@@ -2133,9 +2154,6 @@ const sampleWorkDocs = [
   function setWmpVolume(vol: number) {
     if (ytPlayerInstance && ytPlayerInstance.setVolume) {
       ytPlayerInstance.setVolume(vol);
-    }
-    if (localAudioFallback) {
-      localAudioFallback.volume = vol / 100;
     }
     if (volumeDisplay) volumeDisplay.innerText = `${vol}%`;
     if (volumeSlider) volumeSlider.value = String(vol);
@@ -2252,130 +2270,431 @@ const sampleWorkDocs = [
   const sdlcData: Record<string, { analyst: string; dev: string; qa: string }> = {
     pumk: {
       analyst: `
-        <div class="p-3 rounded bg-blue-50 border border-blue-200">
-          <div class="font-bold text-blue-900 text-sm mb-1">Analyst Lens: Penyelarasan Kamus Data & Alur Bisnis PUMK</div>
-          <p class="text-slate-800 leading-relaxed">
-            Memetakan lembar kerja operasional Excel dari unit TJSL/PKBL (MB, Kode MB, Monthly Review PK, Realisasi TW I-IV) ke dalam arsitektur data relasional formal (ref_mitra, tr_tjsl_pembayaran).
-          </p>
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg bg-blue-50 border border-blue-200">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded bg-blue-700 text-white text-[10px] font-bold uppercase">Analyst Lens</span>
+              <span class="font-bold text-blue-900 text-sm">PUMK - TJSL/PKBL Fund Management & Mitra Unique ID</span>
+            </div>
+            <p class="text-slate-800 text-xs leading-relaxed">
+              Sistem PUMK Perum DAMRI dirancang untuk mengelola penyaluran dana TJSL/PKBL kepada mitra UMKM di seluruh cabang. Peran Analyst menentukan kebutuhan bisnis end-to-end, memetakan proses dari unit TJSL/PKBL di kantor pusat hingga cabang pelaksana, dan memastikan data Excel historis bermigrasi ke PostgreSQL secara konsisten.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-3 rounded bg-white border border-blue-200">
+              <div class="font-bold text-blue-900 text-xs mb-2">Stakeholder Mapping</div>
+              <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+                <li><strong>Unit TJSL/PKBL Pusat:</strong> menetapkan kuota anggaran & kebijakan program.</li>
+                <li><strong>Business Unit (BU):</strong> melakukan verifikasi legal & financial mitra.</li>
+                <li><strong>Cabang Operasional:</strong> mengusulkan mitra baru, memonitor realisasi.</li>
+                <li><strong>Audit Internal & OJK:</strong> memerlukan laporan real-time & audit trail.</li>
+              </ul>
+            </div>
+            <div class="p-3 rounded bg-white border border-blue-200">
+              <div class="font-bold text-blue-900 text-xs mb-2">Struktur BRD Utama</div>
+              <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+                <li>BRD-PUMK-01: Pembentukan Kode Mitra Unik</li>
+                <li>BRD-PUMK-02: Validasi NIK vs Dukcapil</li>
+                <li>BRD-PUMK-03: Alur Persetujuan Pengajuan</li>
+                <li>BRD-PUMK-04: Monitoring Cicilan & Realisasi</li>
+                <li>BRD-PUMK-05: Pelaporan OJK TJSL/PKBL</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-2">Data Flow: Excel &rarr; PostgreSQL</div>
+            <div class="grid grid-cols-5 gap-2 text-center text-[10px]">
+              <div class="p-2 rounded bg-white border border-blue-200"><strong>1. Excel Legacy</strong><br/><span class="text-slate-500">MB, Kode MB, Review PK</span></div>
+              <div class="self-center text-blue-700 font-bold">&rarr;</div>
+              <div class="p-2 rounded bg-white border border-blue-200"><strong>2. ETL Cleansing</strong><br/><span class="text-slate-500">Normalisasi, deduplikasi</span></div>
+              <div class="self-center text-blue-700 font-bold">&rarr;</div>
+              <div class="p-2 rounded bg-white border border-blue-200"><strong>3. PostgreSQL</strong><br/><span class="text-slate-500">ref_mitra, tr_tjsl</span></div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded bg-slate-50 border border-slate-200">
+            <div class="font-bold text-slate-900 text-xs mb-2">Entity Relationship Highlights</div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[10px]">
+              <div class="p-2 rounded bg-white border border-slate-300"><strong>ref_mitra</strong><br/>id, kode_mitra, nik, nama_umkm, cabang_id</div>
+              <div class="p-2 rounded bg-white border border-slate-300"><strong>tr_pengajuan</strong><br/>id, mitra_id, nilai, status_approval</div>
+              <div class="p-2 rounded bg-white border border-slate-300"><strong>tr_pembayaran</strong><br/>id, pengajuan_id, periode, nominal</div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-2">Compliance Requirements (OJK Reporting)</div>
+            <p class="text-slate-800 text-xs leading-relaxed">
+              Laporan TJSL/PKBL harus memenuhi format OJK: realisasi dana per triwulan, jumlah mitra aktif, sektor usaha, dan dampak sosial. Sistem menyediakan export Excel/CSV otomatis dengan primary key kode mitra yang konsisten agar auditor dapat melakukan vlookup lintas periode tanpa mismatch ID.
+            </p>
+          </div>
         </div>
-        <div class="p-3 rounded bg-slate-50 border border-slate-200 font-mono text-[11px] text-slate-800 space-y-1">
-          <div class="text-blue-700 font-bold">ATURAN BISNIS KODE MITRA (BRD-PUMK-01):</div>
-          <div>Format standar: <strong>PUMK-{tahun}-{urutan 3 digit}</strong> (Contoh: PUMK-2026-001).</div>
-          <div>Syarat wajib: NIK pemilik UMKM wajib tepat 16 karakter numerik, terverifikasi ke data Dukcapil.</div>
-        </div>
-        <ul class="space-y-1.5 text-slate-800 list-disc pl-4">
-          <li><strong>Zero Plaintext Credential:</strong> Karyawan login menggunakan NIK SSO Pusat, sistem membuat shadow record lokal di ref_users.</li>
-          <li><strong>Siklus Pembiayaan:</strong> Pengajuan → Verifikasi BU → Penetapan Kuota → Akad Penyaluran → Monitoring Cicilan Bulanan TJSL.</li>
-        </ul>
       `,
       dev: `
-        <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
-          <div class="font-bold text-indigo-900 text-sm mb-1">Developer Feasibility: PostgreSQL Transaction Locking</div>
-          <p class="text-slate-800 leading-relaxed">
-            Menghindari duplikasi primary key saat puluhan cabang men-submit mitra baru secara bersamaan dengan penguncian baris basis data (Pessimistic Lock).
-          </p>
-        </div>
-        <pre class="font-mono text-[11px] bg-slate-950 text-indigo-300 p-3 rounded overflow-x-auto">// Implementasi di MitraController.php
-DB::transaction(function() use ($request) {
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded bg-indigo-700 text-white text-[10px] font-bold uppercase">Developer Lens</span>
+              <span class="font-bold text-indigo-900 text-sm">PUMK Architecture & Concurrency Control</span>
+            </div>
+            <p class="text-slate-800 text-xs leading-relaxed">
+              Arsitektur dibangun dengan Laravel 12, PostgreSQL, dan Redis caching untuk performa data master. Keamanan mengintegrasikan SSO DAMRI dengan RBAC berbasis peran cabang/pusat. Mekanisme <code>lockForUpdate()</code> mencegah race condition saat puluhan cabang menciptakan mitra secara serentak.
+            </p>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2 py-1 rounded bg-slate-800 text-indigo-300 text-[10px] font-bold">Laravel 12</span>
+            <span class="px-2 py-1 rounded bg-slate-800 text-indigo-300 text-[10px] font-bold">PostgreSQL 15</span>
+            <span class="px-2 py-1 rounded bg-slate-800 text-indigo-300 text-[10px] font-bold">Redis</span>
+            <span class="px-2 py-1 rounded bg-slate-800 text-indigo-300 text-[10px] font-bold">SSO OAuth2</span>
+            <span class="px-2 py-1 rounded bg-slate-800 text-indigo-300 text-[10px] font-bold">RBAC</span>
+            <span class="px-2 py-1 rounded bg-slate-800 text-indigo-300 text-[10px] font-bold">PHPUnit</span>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+            <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">99.9%</div><div class="text-[10px] text-slate-600">Uptime Target</div></div>
+            <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">&lt;500ms</div><div class="text-[10px] text-slate-600">Lock Latency</div></div>
+            <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">50+</div><div class="text-[10px] text-slate-600">Cabang Aktif</div></div>
+            <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">0</div><div class="text-[10px] text-slate-600">Duplikat Kode</div></div>
+          </div>
+
+          <div class="p-3 rounded bg-slate-50 border border-slate-200">
+            <div class="font-bold text-indigo-900 text-xs mb-2">Database Schema Highlights</div>
+            <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+              <li><strong>ref_mitra:</strong> primary key serial + kode_mitra unik, indexed by nik & cabang_id.</li>
+              <li><strong>tr_pengajuan:</strong> foreign key ke ref_mitra, status_approval dengan state machine.</li>
+              <li><strong>tr_pembayaran:</strong> partition by year untuk performa historis.</li>
+              <li><strong>ref_users_shadow:</strong> mapping NIK SSO ke user lokal tanpa menyimpan password.</li>
+            </ul>
+          </div>
+
+          <pre class="font-mono text-[11px] bg-slate-950 text-indigo-300 p-3 rounded overflow-x-auto">// MitraController.php - pessimistic locking untuk kode unik
+DB::transaction(function () use ($request) {
     $last = RefMitra::whereYear('created_at', now()->year)
         ->lockForUpdate()
-        ->latest('id')
+        ->orderBy('urutan', 'desc')
         ->first();
-    $urutan = $last ? ($last->urutan + 1) : 1;
-    $kode = sprintf('PUMK-%s-%03d', now()->year, $urutan);
+
+    $urutan = $last ? $last->urutan + 1 : 1;
+    $kode   = sprintf('PUMK-%s-%03d', now()->year, $urutan);
+
     return RefMitra::create(array_merge($request->validated(), [
-        'kode_mitra' => $kode,
-        'urutan' => $urutan,
-        'status_approval' => 'DRAFT'
+        'kode_mitra'      => $kode,
+        'urutan'          => $urutan,
+        'status_approval' => 'DRAFT',
     ]));
-});</pre>
-        <div class="grid grid-cols-3 gap-2 p-2.5 rounded bg-slate-50 border border-slate-200 text-center font-mono text-[11px]">
-          <div><span class="text-slate-500 block">Stack</span>Laravel 12</div>
-          <div><span class="text-slate-500 block">Database</span>PostgreSQL</div>
-          <div><span class="text-slate-500 block">Lock</span>lockForUpdate</div>
+}, 5);</pre>
+
+          <div class="p-3 rounded bg-slate-50 border border-slate-200">
+            <div class="font-bold text-indigo-900 text-xs mb-2">API Endpoint Design (REST)</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px] font-mono">
+              <div class="p-2 rounded bg-white border border-slate-300">POST /api/v1/mitra</div>
+              <div class="p-2 rounded bg-white border border-slate-300">GET /api/v1/mitra/{kode}</div>
+              <div class="p-2 rounded bg-white border border-slate-300">PATCH /api/v1/pengajuan/{id}/approve</div>
+              <div class="p-2 rounded bg-white border border-slate-300">GET /api/v1/reports/tjsl</div>
+            </div>
+          </div>
         </div>
       `,
       qa: `
-        <div class="p-3 rounded bg-emerald-50 border border-emerald-200">
-          <div class="font-bold text-emerald-900 text-sm mb-1">QA Rigor: Skenario Uji Concurrency & Boundary Value</div>
-          <p class="text-slate-800 leading-relaxed">
-            Pengujian ketat terhadap kondisi kegagalan, validasi panjang string NIK, dan isolasi kegagalan koneksi SSO.
-          </p>
-        </div>
-        <div class="space-y-2 text-xs">
-          <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
-            <strong class="text-emerald-800 block">Test Case 1: Concurrency Race Condition (20 Concurrent Requests)</strong>
-            <span class="text-slate-700">Simulasikan 20 request POST simultan. Assert: Seluruh 20 mitra mendapatkan nomor urut berurutan tanpa duplikat atau deadlock.</span>
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-200">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded bg-emerald-700 text-white text-[10px] font-bold uppercase">QA Rigor</span>
+              <span class="font-bold text-emerald-900 text-sm">PUMK Test Strategy & Quality Gates</span>
+            </div>
+            <p class="text-slate-800 text-xs leading-relaxed">
+              Strategi pengujian PUMK mencakup unit test, integration test SSO, E2E alur pendaftaran mitra, performance test konkurensi, dan regression matrix sebelum setiap release. Target coverage unit test &ge; 80% dan zero critical defect masuk ke production.
+            </p>
           </div>
-          <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
-            <strong class="text-emerald-800 block">Test Case 2: Boundary NIK Invalid (15 & 17 Digit)</strong>
-            <span class="text-slate-700">Input NIK 15 & 17 digit. Assert: HTTP 422 Unprocessable Entity dengan error message presisi.</span>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+            <div class="p-2 rounded bg-white border border-emerald-200"><div class="text-lg font-black text-emerald-700">&ge;80%</div><div class="text-[10px] text-slate-600">Unit Coverage</div></div>
+            <div class="p-2 rounded bg-white border border-emerald-200"><div class="text-lg font-black text-emerald-700">100</div><div class="text-[10px] text-slate-600">Concurrent Users</div></div>
+            <div class="p-2 rounded bg-white border border-emerald-200"><div class="text-lg font-black text-emerald-700">&lt;2s</div><div class="text-[10px] text-slate-600">E2E Response</div></div>
+            <div class="p-2 rounded bg-white border border-emerald-200"><div class="text-lg font-black text-emerald-700">0</div><div class="text-[10px] text-slate-600">P1 Defect</div></div>
+          </div>
+
+          <div class="p-3 rounded bg-slate-50 border border-slate-200">
+            <div class="font-bold text-emerald-900 text-xs mb-2">Integration Test Scenarios (SSO)</div>
+            <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+              <li>Login dengan NIK valid mengembalikan token JWT dan membuat shadow user otomatis.</li>
+              <li>Login dengan NIK tidak terdaftar SSO ditolak dengan HTTP 401 dan tidak membuat shadow.</li>
+              <li>Token expired menghasilkan redirect ke SSO DAMRI dengan state parameter.</li>
+              <li>Role cabang hanya bisa mengakses data cabangnya sendiri (row-level security).</li>
+            </ul>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-emerald-200 overflow-x-auto">
+            <div class="font-bold text-emerald-900 text-xs mb-2">E2E Test: Full Mitra Registration Flow</div>
+            <table class="w-full text-[10px] border-collapse">
+              <thead>
+                <tr class="bg-emerald-100 text-emerald-900">
+                  <th class="border border-emerald-200 p-1.5 text-left">Step</th>
+                  <th class="border border-emerald-200 p-1.5 text-left">Action</th>
+                  <th class="border border-emerald-200 p-1.5 text-left">Expected Result</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-700">
+                <tr><td class="border border-emerald-200 p-1.5">1</td><td class="border border-emerald-200 p-1.5">Cabang input NIK 16 digit</td><td class="border border-emerald-200 p-1.5">Validasi sukses, nama terisi otomatis</td></tr>
+                <tr><td class="border border-emerald-200 p-1.5">2</td><td class="border border-emerald-200 p-1.5">Submit 20 request bersamaan</td><td class="border border-emerald-200 p-1.5">Kode mitra unik, tidak ada duplikat</td></tr>
+                <tr><td class="border border-emerald-200 p-1.5">3</td><td class="border border-emerald-200 p-1.5">BU approve pengajuan</td><td class="border border-emerald-200 p-1.5">Status approval berubah menjadi APPROVED</td></tr>
+                <tr><td class="border border-emerald-200 p-1.5">4</td><td class="border border-emerald-200 p-1.5">Generate laporan TJSL</td><td class="border border-emerald-200 p-1.5">Export CSV sesuai template OJK</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-3 rounded bg-emerald-50 border border-emerald-200">
+              <div class="font-bold text-emerald-900 text-xs mb-2">Regression Matrix</div>
+              <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+                <li>CRUD mitra setelah update RBAC</li>
+                <li>Export laporan setelah partition baru</li>
+                <li>SSO login setelah library upgrade</li>
+                <li>lockForUpdate setelah index rebuild</li>
+              </ul>
+            </div>
+            <div class="p-3 rounded bg-emerald-50 border border-emerald-200">
+              <div class="font-bold text-emerald-900 text-xs mb-2">UAT Checklist</div>
+              <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+                <li>Skenario happy path end-to-end</li>
+                <li>Boundary NIK 15, 16, 17 digit</li>
+                <li>Multi-cabang concurrent entry</li>
+                <li>Approval workflow & audit trail</li>
+              </ul>
+            </div>
           </div>
         </div>
       `
     },
     push: {
       analyst: `
-        <div class="p-3 rounded bg-blue-50 border border-blue-200">
-          <div class="font-bold text-blue-900 text-sm mb-1">Analyst Lens: Governance Perubahan Kode Produksi</div>
-          <p class="text-slate-800 leading-relaxed">
-            Mendefinisikan alur audit agar setiap perubahan kode dari tim developer tercatat, terverifikasi, dan memiliki approval eksplisit sebelum masuk ke server production.
-          </p>
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg bg-blue-50 border border-blue-200">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded bg-blue-700 text-white text-[10px] font-bold uppercase">Analyst Lens</span>
+              <span class="font-bold text-blue-900 text-sm">Push Request - Change Management Governance</span>
+            </div>
+            <p class="text-slate-800 text-xs leading-relaxed">
+              Push Request Tracker adalah sistem governance perubahan kode produksi yang mengadopsi ITIL Change Management. Sistem mencatat setiap push, pull request, commit, dan deployment agar proses go-live memiliki jejak audit yang utuh dan dapat diverifikasi.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-3 rounded bg-white border border-blue-200">
+              <div class="font-bold text-blue-900 text-xs mb-2">ITIL-Aligned Change Categories</div>
+              <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+                <li><strong>Standard:</strong> low-risk patch & hotfix tanpa CAB.</li>
+                <li><strong>Normal:</strong> feature change dengan assessment ringan.</li>
+                <li><strong>Emergency:</strong> critical bug fix dengan post-approval.</li>
+                <li><strong>Major:</strong> breaking change memerlukan CAB review.</li>
+              </ul>
+            </div>
+            <div class="p-3 rounded bg-white border border-blue-200">
+              <div class="font-bold text-blue-900 text-xs mb-2">Audit Trail Requirements</div>
+              <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+                <li>Commit hash (SHA) wajib tersimpan.</li>
+                <li>Author, reviewer, approver tercatat.</li>
+                <li>Timestamp push & deployment presisi.</li>
+                <li>Daftar file yang berubah tersimpan otomatis.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-2">Risk Assessment Matrix</div>
+            <table class="w-full text-[10px] border-collapse mt-2">
+              <thead>
+                <tr class="bg-blue-100 text-blue-900">
+                  <th class="border border-blue-200 p-1.5 text-left">Risk</th>
+                  <th class="border border-blue-200 p-1.5 text-left">Impact</th>
+                  <th class="border border-blue-200 p-1.5 text-left">Mitigation</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-700">
+                <tr><td class="border border-blue-200 p-1.5">Unreviewed push</td><td class="border border-blue-200 p-1.5">High</td><td class="border border-blue-200 p-1.5">Mandatory PR approval before merge</td></tr>
+                <tr><td class="border border-blue-200 p-1.5">Deployment conflict</td><td class="border border-blue-200 p-1.5">Medium</td><td class="border border-blue-200 p-1.5">Deployment window & rollback plan</td></tr>
+                <tr><td class="border border-blue-200 p-1.5">Webhook spoofing</td><td class="border border-blue-200 p-1.5">High</td><td class="border border-blue-200 p-1.5">HMAC SHA-256 verification</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-3 rounded bg-slate-50 border border-slate-200">
+            <div class="font-bold text-blue-900 text-xs mb-2">RACI Matrix - Approval Workflow</div>
+            <div class="grid grid-cols-4 gap-2 text-center text-[10px] font-bold">
+              <div class="p-2 rounded bg-white border border-slate-300">Role</div>
+              <div class="p-2 rounded bg-white border border-slate-300">Request</div>
+              <div class="p-2 rounded bg-white border border-slate-300">Review</div>
+              <div class="p-2 rounded bg-white border border-slate-300">Approve</div>
+              <div class="p-2 rounded bg-blue-100 border border-blue-200 text-blue-900">Developer</div>
+              <div class="p-2 rounded bg-blue-50 border border-blue-200 text-slate-700">R</div>
+              <div class="p-2 rounded bg-blue-50 border border-blue-200 text-slate-700">C</div>
+              <div class="p-2 rounded bg-blue-50 border border-blue-200 text-slate-700">I</div>
+              <div class="p-2 rounded bg-blue-100 border border-blue-200 text-blue-900">Tech Lead</div>
+              <div class="p-2 rounded bg-blue-50 border border-blue-200 text-slate-700">A</div>
+              <div class="p-2 rounded bg-blue-50 border border-blue-200 text-slate-700">R</div>
+              <div class="p-2 rounded bg-blue-50 border border-blue-200 text-slate-700">C</div>
+              <div class="p-2 rounded bg-blue-100 border border-blue-200 text-blue-900">Release Manager</div>
+              <div class="p-2 rounded bg-blue-50 border border-blue-200 text-slate-700">I</div>
+              <div class="p-2 rounded bg-blue-50 border border-blue-200 text-slate-700">A</div>
+              <div class="p-2 rounded bg-blue-50 border border-blue-200 text-slate-700">R</div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <div class="p-2 rounded bg-white border border-blue-200"><div class="text-lg font-black text-blue-700">&lt;5</div><div class="text-[10px] text-slate-600">Lead Time (days)</div></div>
+            <div class="p-2 rounded bg-white border border-blue-200"><div class="text-lg font-black text-blue-700">100%</div><div class="text-[10px] text-slate-600">Approval Traceability</div></div>
+            <div class="p-2 rounded bg-white border border-blue-200"><div class="text-lg font-black text-blue-700">24h</div><div class="text-[10px] text-slate-600">Rollback SLA</div></div>
+          </div>
         </div>
-        <div class="p-3 rounded bg-slate-50 border border-slate-200 font-mono text-[11px] text-slate-800 space-y-1">
-          <div class="text-blue-700 font-bold">ATURAN BISNIS AUDIT (BRD-PUSH-01):</div>
-          <div>Setiap event push ke repository utama wajib terekam: commit hash, author, timestamp, dan daftar file yang berubah.</div>
-          <div>Proses go-live hanya dapat dilakukan setelah checklist approval terpenuhi.</div>
-        </div>
-        <ul class="space-y-1.5 text-slate-800 list-disc pl-4">
-          <li><strong>Traceability:</strong> Seluruh riwayat commit dapat ditelusuri dari development hingga production.</li>
-          <li><strong>Rollback Plan:</strong> Setiap deployment disertai catatan versi sebelumnya untuk mitigasi kegagalan.</li>
-        </ul>
       `,
       dev: `
-        <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
-          <div class="font-bold text-indigo-900 text-sm mb-1">Developer Feasibility: GitHub Webhook & Diff Tracking</div>
-          <p class="text-slate-800 leading-relaxed">
-            Integrasi webhook GitHub untuk menangkap event push secara real-time, memvalidasi signature HMAC, dan menyimpan metadata commit ke database.
-          </p>
-        </div>
-        <pre class="font-mono text-[11px] bg-slate-950 text-indigo-300 p-3 rounded overflow-x-auto">// Verifikasi webhook GitHub
-$signature = $request->header('X-Hub-Signature-256');
-$expected = 'sha256=' . hash_hmac('sha256', $payload, $secret);
-if (!hash_equals($expected, $signature)) {
-    abort(401, 'Invalid webhook signature');
-}
-AuditPush::create([
-    'commit_hash' => $data['after'],
-    'author' => $data['pusher']['name'],
-    'files' => implode(', ', $changedFiles),
-]);</pre>
-        <div class="grid grid-cols-3 gap-2 p-2.5 rounded bg-slate-50 border border-slate-200 text-center font-mono text-[11px]">
-          <div><span class="text-slate-500 block">Trigger</span>GitHub Push</div>
-          <div><span class="text-slate-500 block">Auth</span>HMAC SHA-256</div>
-          <div><span class="text-slate-500 block">Board</span>Kanban Tasks</div>
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded bg-indigo-700 text-white text-[10px] font-bold uppercase">Developer Lens</span>
+              <span class="font-bold text-indigo-900 text-sm">Push Request - GitHub Webhook & Audit Pipeline</span>
+            </div>
+            <p class="text-slate-800 text-xs leading-relaxed">
+              Sistem menerima event push dari GitHub via webhook, memverifikasi HMAC signature, menyimpan metadata ke PostgreSQL, dan memperbarui kanban deployment secara real-time melalui WebSocket. Diff viewer memudahkan reviewer membandingkan versi kode.
+            </p>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2 py-1 rounded bg-slate-800 text-indigo-300 text-[10px] font-bold">GitHub Webhook</span>
+            <span class="px-2 py-1 rounded bg-slate-800 text-indigo-300 text-[10px] font-bold">HMAC SHA-256</span>
+            <span class="px-2 py-1 rounded bg-slate-800 text-indigo-300 text-[10px] font-bold">WebSocket</span>
+            <span class="px-2 py-1 rounded bg-slate-800 text-indigo-300 text-[10px] font-bold">Laravel Queue</span>
+            <span class="px-2 py-1 rounded bg-slate-800 text-indigo-300 text-[10px] font-bold">Diff Viewer</span>
+            <span class="px-2 py-1 rounded bg-slate-800 text-indigo-300 text-[10px] font-bold">CI/CD</span>
+          </div>
+
+          <div class="p-3 rounded bg-slate-50 border border-slate-200">
+            <div class="font-bold text-indigo-900 text-xs mb-2">Webhook Integration Architecture</div>
+            <div class="grid grid-cols-5 gap-2 text-center text-[10px]">
+              <div class="p-2 rounded bg-white border border-indigo-200"><strong>GitHub Push</strong></div>
+              <div class="self-center text-indigo-700 font-bold">&rarr;</div>
+              <div class="p-2 rounded bg-white border border-indigo-200"><strong>Laravel Route</strong><br/><span class="text-slate-500">HMAC Verify</span></div>
+              <div class="self-center text-indigo-700 font-bold">&rarr;</div>
+              <div class="p-2 rounded bg-white border border-indigo-200"><strong>Queue + DB</strong><br/><span class="text-slate-500">WS Broadcast</span></div>
+            </div>
+          </div>
+
+          <pre class="font-mono text-[11px] bg-slate-950 text-indigo-300 p-3 rounded overflow-x-auto">// WebhookController.php - HMAC verification & audit log
+public function handlePush(Request $request)
+{
+    $signature = $request->header('X-Hub-Signature-256');
+    $payload   = $request->getContent();
+    $expected  = 'sha256=' . hash_hmac('sha256', $payload, config('github.secret'));
+
+    if (!hash_equals($expected, $signature)) {
+        abort(401, 'Invalid webhook signature');
+    }
+
+    $data = $request->input('commits');
+    AuditPush::create([
+        'repo'        => $request->input('repository.full_name'),
+        'commit_hash' => $request->input('after'),
+        'author'      => $request->input('pusher.name'),
+        'files'       => collect($data)->pluck('modified')->flatten()->unique()->implode(', '),
+        'status'      => 'VERIFIED',
+    ]);
+
+    broadcast(new DeploymentUpdated($audit))->toOthers();
+
+    return response()->json(['status' => 'accepted']);
+}</pre>
+
+          <div class="p-3 rounded bg-slate-50 border border-slate-200">
+            <div class="font-bold text-indigo-900 text-xs mb-2">Database Schema for Audit Logs</div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[10px]">
+              <div class="p-2 rounded bg-white border border-slate-300"><strong>audit_pushes</strong><br/>id, repo, commit_hash, author, files, status</div>
+              <div class="p-2 rounded bg-white border border-slate-300"><strong>deployments</strong><br/>id, push_id, env, deployed_at, rollback_hash</div>
+              <div class="p-2 rounded bg-white border border-slate-300"><strong>approvals</strong><br/>id, deployment_id, approver, decision, timestamp</div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded bg-slate-50 border border-slate-200">
+            <div class="font-bold text-indigo-900 text-xs mb-2">Real-Time Notification & Diff Viewer</div>
+            <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+              <li><strong>WebSocket:</strong> Laravel Echo + Reverb memperbarui kanban deployment tanpa refresh.</li>
+              <li><strong>Diff Viewer:</strong> membandingkan diff dua commit via GitHub API dan menampilkan statistik +/- lines.</li>
+              <li><strong>Pipeline Automation:</strong> webhook trigger menjalankan GitHub Actions untuk build & unit test.</li>
+              <li><strong>Security:</strong> secret webhook disimpan di environment, tidak di codebase.</li>
+            </ul>
+          </div>
         </div>
       `,
       qa: `
-        <div class="p-3 rounded bg-emerald-50 border border-emerald-200">
-          <div class="font-bold text-emerald-900 text-sm mb-1">QA Rigor: Validasi Integritas & Approval Workflow</div>
-          <p class="text-slate-800 leading-relaxed">
-            Memastikan webhook tidak dapat dipalsukan, payload tersimpan utuh, dan proses deployment mengikuti checklist approval.
-          </p>
-        </div>
-        <div class="space-y-2 text-xs">
-          <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
-            <strong class="text-emerald-800 block">Test Case 1: Webhook Signature Tampering</strong>
-            <span class="text-slate-700">Kirim payload dengan signature salah. Assert: Sistem mengembalikan HTTP 401 tanpa menyimpan data.</span>
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-200">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded bg-emerald-700 text-white text-[10px] font-bold uppercase">QA Rigor</span>
+              <span class="font-bold text-emerald-900 text-sm">Push Request - Security & Load Testing</span>
+            </div>
+            <p class="text-slate-800 text-xs leading-relaxed">
+              Pengujian Push Request difokuskan pada keamanan webhook, integritas data audit, dan ketahanan sistem terhadap lonjakan event GitHub. Setiap skenario negative test dieksekusi sebelum deployment pipeline dinyatakan aman.
+            </p>
           </div>
-          <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
-            <strong class="text-emerald-800 block">Test Case 2: Missing Approval Block Deployment</strong>
-            <span class="text-slate-700">Coba eksekusi go-live tanpa checklist approval. Assert: Tombol deployment disabled dan muncul peringatan.</span>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+            <div class="p-2 rounded bg-white border border-emerald-200"><div class="text-lg font-black text-emerald-700">401</div><div class="text-[10px] text-slate-600">Invalid Signature</div></div>
+            <div class="p-2 rounded bg-white border border-emerald-200"><div class="text-lg font-black text-emerald-700">200 req/s</div><div class="text-[10px] text-slate-600">Webhook Load</div></div>
+            <div class="p-2 rounded bg-white border border-emerald-200"><div class="text-lg font-black text-emerald-700">100%</div><div class="text-[10px] text-slate-600">Replay Rejected</div></div>
+            <div class="p-2 rounded bg-white border border-emerald-200"><div class="text-lg font-black text-emerald-700">&lt;1s</div><div class="text-[10px] text-slate-600">Audit Persist</div></div>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-emerald-200 overflow-x-auto">
+            <div class="font-bold text-emerald-900 text-xs mb-2">Webhook Security Testing</div>
+            <table class="w-full text-[10px] border-collapse">
+              <thead>
+                <tr class="bg-emerald-100 text-emerald-900">
+                  <th class="border border-emerald-200 p-1.5 text-left">Scenario</th>
+                  <th class="border border-emerald-200 p-1.5 text-left">Attack Vector</th>
+                  <th class="border border-emerald-200 p-1.5 text-left">Expected</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-700">
+                <tr><td class="border border-emerald-200 p-1.5">Signature tampering</td><td class="border border-emerald-200 p-1.5">Modify X-Hub-Signature-256</td><td class="border border-emerald-200 p-1.5">HTTP 401, no DB write</td></tr>
+                <tr><td class="border border-emerald-200 p-1.5">Replay attack</td><td class="border border-emerald-200 p-1.5">Resend same payload</td><td class="border border-emerald-200 p-1.5">Rejected by idempotency key</td></tr>
+                <tr><td class="border border-emerald-200 p-1.5">Missing secret</td><td class="border border-emerald-200 p-1.5">Empty GITHUB_SECRET</td><td class="border border-emerald-200 p-1.5">Controller throws 500 on staging only</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-3 rounded bg-emerald-50 border border-emerald-200">
+            <div class="font-bold text-emerald-900 text-xs mb-2">Integration Testing with GitHub API Mocks</div>
+            <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+              <li>Mock GitHub push payload dengan 3 commit & file changes tervalidasi.</li>
+              <li>Assert record audit_pushes berisi commit hash & daftar file yang tepat.</li>
+              <li>Simulasikan event branch deletion untuk memastikan tidak tercatat sebagai push.</li>
+              <li>Verifikasi broadcast WebSocket terkirim ke channel deployment-updates.</li>
+            </ul>
+          </div>
+
+          <div class="p-3 rounded bg-slate-50 border border-slate-200">
+            <div class="font-bold text-emerald-900 text-xs mb-2">Load & Workflow Edge Cases</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] text-slate-700">
+              <div class="p-2 rounded bg-white border border-slate-300">
+                <strong>Concurrent Webhooks:</strong> 200 push events/detik selama 60 detik tanpa message loss atau duplikat audit.
+              </div>
+              <div class="p-2 rounded bg-white border border-slate-300">
+                <strong>Approval Edge Cases:</strong> approve sebelum review, double approve, approve setelah rollback semua ditolak sistem.
+              </div>
+              <div class="p-2 rounded bg-white border border-slate-300">
+                <strong>Rollback Verification:</strong> setelah rollback, deployment.status = ROLLED_BACK dan rollback_hash terisi.
+              </div>
+              <div class="p-2 rounded bg-white border border-slate-300">
+                <strong>Diff Viewer Accuracy:</strong> perbandingan commit menghasilkan statistik lines added/removed sama dengan GitHub.
+              </div>
+            </div>
           </div>
         </div>
       `
     }
   };
+
 
   let currentSdlcProject = 'pumk';
   let currentSdlcView = 'analyst';

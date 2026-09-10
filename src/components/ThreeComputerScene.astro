@@ -372,6 +372,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     // 7. Boot Sequence: Zoom into CRT & Play Real Windows XP Audio
     let isBooting = false;
     let animFrameId: number;
+    let bootAnimationCompleted = false;
 
     function triggerBoot() {
       if (isBooting) return;
@@ -379,6 +380,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       const assetBase = document.getElementById('three-computer-stage')?.dataset.baseUrl || '';
       playRealXpSound(`${assetBase}/sounds/xp-startup.wav`);
+
+      // If returning from shutdown, just fade stage and show desktop again
+      if (bootAnimationCompleted) {
+        window.dispatchEvent(new CustomEvent('xp:boot-desktop'));
+        if (stage) {
+          stage.classList.add('opacity-0', 'pointer-events-none');
+          setTimeout(() => {
+            stage.classList.add('hidden');
+          }, 700);
+        }
+        setTimeout(() => { isBooting = false; }, 800);
+        return;
+      }
 
       const startPos = { ...camera.position };
       const targetPos = { x: 0, y: 0.37, z: 1.15 };
@@ -400,6 +414,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         if (progress < 1) {
           requestAnimationFrame(animateZoom);
         } else {
+          bootAnimationCompleted = true;
           window.dispatchEvent(new CustomEvent('xp:boot-desktop'));
           cancelAnimationFrame(animFrameId);
 
@@ -449,8 +464,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
+    // 9. Handle shutdown -> return to 3D
     window.addEventListener('xp:shutdown-to-3d', () => {
       isBooting = false;
+      isMouseDown = false;
+      hasDragged = false;
       const assetBase = document.getElementById('three-computer-stage')?.dataset.baseUrl || '';
       playRealXpSound(`${assetBase}/sounds/xp-shutdown.wav`);
 
@@ -467,6 +485,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           stage.classList.remove('opacity-0', 'pointer-events-none');
           renderLoop();
         }, 50);
+      }
+    });
+
+    // 10. Backup boot trigger: any click/tap on the visible stage powers on
+    // (pointerup logic above handles first boot with raycast; this ensures reboot works on all devices)
+    stage?.addEventListener('click', (e) => {
+      if (stage && !stage.classList.contains('hidden') && !stage.classList.contains('opacity-0') && !isBooting) {
+        // Don't trigger if user was dragging the 3D model
+        if (hasDragged) {
+          hasDragged = false;
+          return;
+        }
+        triggerBoot();
       }
     });
   }
