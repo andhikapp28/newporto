@@ -386,7 +386,7 @@ const sampleWorkDocs = [
           <span class="hover:underline cursor-pointer" onclick="openWindow('win-contact')">Contact Me</span>
           <span class="hover:underline cursor-pointer" onclick="openWindow('win-gallery')">Lihat Sertifikat Asli</span>
         </div>
-        <span class="text-[10.5px] font-mono text-emerald-800 font-bold">IPK: 3.73 (Cum Laude)</span>
+        <span class="text-[10.5px] font-mono text-emerald-800 font-bold">IPK: 3.73 / 4.00</span>
       </div>
 
       <div class="flex-1 p-6 sm:p-8 bg-white overflow-y-auto max-h-[64vh] text-slate-900 font-sans text-xs sm:text-sm leading-relaxed">
@@ -630,13 +630,38 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Main Viewer Area -->
-      <div class="flex-1 p-4 bg-[#4a5568] flex flex-col items-center justify-center overflow-y-auto max-h-[52vh] relative">
+      <div id="gallery-viewport" class="flex-1 p-4 bg-[#4a5568] flex flex-col items-center justify-center overflow-hidden relative">
         <img
           id="gallery-main-img"
           src={certificates[0].img}
           alt={certificates[0].title}
-          class="max-h-[46vh] max-w-full object-contain rounded shadow-2xl border border-slate-900 bg-white"
+          class="max-w-full max-h-full object-contain rounded shadow-2xl border border-slate-900 bg-white transition-transform duration-200"
         />
+      </div>
+
+      <!-- Zoom Controls -->
+      <div class="absolute top-10 right-3 flex items-center gap-1 z-20">
+        <button 
+          id="gallery-zoom-out" 
+          class="w-7 h-7 rounded bg-[#ece9d8] border border-[#7f9db9] hover:bg-white flex items-center justify-center shadow-sm cursor-pointer"
+          title="Zoom Out"
+        >
+          <ZoomOut class="w-3.5 h-3.5" />
+        </button>
+        <button 
+          id="gallery-zoom-in" 
+          class="w-7 h-7 rounded bg-[#ece9d8] border border-[#7f9db9] hover:bg-white flex items-center justify-center shadow-sm cursor-pointer"
+          title="Zoom In"
+        >
+          <ZoomIn class="w-3.5 h-3.5" />
+        </button>
+        <button 
+          id="gallery-zoom-reset" 
+          class="px-2 h-7 rounded bg-[#ece9d8] border border-[#7f9db9] hover:bg-white flex items-center justify-center shadow-sm cursor-pointer text-[10px] font-bold"
+          title="Reset Zoom"
+        >
+          Reset
+        </button>
       </div>
 
       <!-- Certificate Meta Info Strip -->
@@ -1075,7 +1100,16 @@ const sampleWorkDocs = [
 
           <div class="flex items-center gap-2 text-[11px] font-mono text-slate-700">
             <Volume2 class="w-4 h-4 text-blue-700" />
-            <span id="wmp-time-display">0:00</span>
+            <input 
+              id="wmp-volume-slider" 
+              type="range" 
+              min="0" 
+              max="100" 
+              value="85" 
+              class="w-20 h-1.5 bg-[#9bb0d6] rounded-lg appearance-none cursor-pointer accent-blue-700"
+            />
+            <span id="wmp-volume-display">85%</span>
+            <span class="ml-1" id="wmp-time-display">0:00</span>
           </div>
         </div>
 
@@ -1098,15 +1132,15 @@ const sampleWorkDocs = [
       </div>
     </div>
 
-    <!-- WINDOW 10: SDLC_Lens.exe (In-Depth Technical Comparison) -->
+    <!-- WINDOW 10: SDLC_Lens.exe — Interactive Project Analysis Dashboard -->
     <div
       id="win-sdlc"
-      class="xp-window absolute top-14 left-36 w-[94vw] sm:w-[720px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
+      class="xp-window absolute top-14 left-36 w-[94vw] sm:w-[780px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
       <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Layers class="w-3.5 h-3.5 text-cyan-300 shrink-0" />
-          <span>SDLC_Lens.exe - [Analyst vs Dev vs QA Matrix]</span>
+          <span>SDLC_Lens.exe - Project Analysis Dashboard</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
           <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
@@ -1117,106 +1151,30 @@ const sampleWorkDocs = [
 
       <div class="p-2 bg-[#ece9d8] border-b border-[#d8d4c2] flex flex-wrap items-center justify-between gap-2 text-xs">
         <div class="flex items-center gap-1.5">
-          <span class="font-bold text-slate-700">Modul:</span>
-          <select id="sdlc-feature-select" class="px-2 py-0.5 bg-white border border-[#7f9db9] rounded text-xs text-slate-800 font-semibold cursor-pointer">
-            <option value="pumk">Feature 1: PUMK Mitra Concurrency &amp; Unique ID</option>
-            <option value="push">Feature 2: Push Request GitHub Webhook &amp; Diff Audit</option>
+          <span class="font-bold text-slate-700 i18n" data-en="Project:" data-id="Proyek:">Proyek:</span>
+          <select id="sdlc-feature-select" class="px-2 py-0.5 bg-white border border-[#7f9db9] rounded text-xs text-slate-800 font-semibold cursor-pointer min-w-[240px]">
+            <option value="pumk">1. PUMK - Mitra Unique ID &amp; Concurrency Control</option>
+            <option value="push">2. Push Request - GitHub Audit &amp; Deployment Tracking</option>
           </select>
         </div>
 
-        <div class="flex items-center gap-1">
-          <button class="xp-lens-tab active px-2.5 py-0.5 rounded-t text-xs font-bold bg-white border-t-2 border-l-2 border-r-2 border-[#7f9db9] text-blue-900 cursor-pointer" data-view="analyst">
-            1. Analyst
+        <div class="flex items-center gap-1 bg-[#d4d0c8] p-0.5 rounded border border-[#b8b4a8]">
+          <button class="xp-lens-tab active px-3 py-0.5 rounded text-xs font-bold bg-white border border-[#7f9db9] text-blue-900 shadow-sm cursor-pointer" data-view="analyst">
+            Analyst
           </button>
-          <button class="xp-lens-tab px-2.5 py-0.5 rounded-t text-xs font-bold bg-[#ece9d8] border border-[#7f9db9] text-slate-700 hover:bg-white/50 cursor-pointer" data-view="dev">
-            2. Developer
+          <button class="xp-lens-tab px-3 py-0.5 rounded text-xs font-bold bg-[#ece9d8] border border-transparent text-slate-700 hover:bg-white/70 cursor-pointer" data-view="dev">
+            Developer
           </button>
-          <button class="xp-lens-tab px-2.5 py-0.5 rounded-t text-xs font-bold bg-[#ece9d8] border border-[#7f9db9] text-slate-700 hover:bg-white/50 cursor-pointer" data-view="qa">
-            3. QA Rigor
+          <button class="xp-lens-tab px-3 py-0.5 rounded text-xs font-bold bg-[#ece9d8] border border-transparent text-slate-700 hover:bg-white/70 cursor-pointer" data-view="qa">
+            QA Rigor
           </button>
         </div>
       </div>
 
-      <div class="flex-1 p-5 bg-white overflow-y-auto max-h-[62vh] font-sans text-xs">
-        <!-- Feature 1: PUMK Content -->
-        <div id="sdlc-content-pumk" class="sdlc-feature-block space-y-3">
-          <div id="xp-view-analyst" class="space-y-3">
-            <div class="p-3 rounded bg-blue-50 border border-blue-200">
-              <div class="font-bold text-blue-900 text-sm mb-1">Analyst Lens: Penyelarasan Kamus Data &amp; Alur Bisnis PUMK</div>
-              <p class="text-slate-800 leading-relaxed">
-                Memetakan lembar kerja operasional Excel dari unit TJSL/PKBL (*MB, Kode MB, Monthly Review PK, Realisasi TW I-IV*) ke dalam arsitektur data relasional formal (<code>ref_mitra</code>, <code>tr_tjsl_pembayaran</code>).
-              </p>
-            </div>
-            <div class="p-3 rounded bg-slate-50 border border-slate-200 font-mono text-[11px] text-slate-800 space-y-1">
-              <div class="text-blue-700 font-bold">ATURAN BISNIS KODE MITRA (BRD-PUMK-01):</div>
-              <div>Format standar: <strong>PUMK-&#123;tahun&#125;-&#123;urutan 3 digit&#125;</strong> (Contoh: PUMK-2026-001).</div>
-              <div>Syarat wajib: NIK pemilik UMKM wajib tepat 16 karakter numerik, terverifikasi ke data Dukcapil.</div>
-            </div>
-            <ul class="space-y-1.5 text-slate-800 list-disc pl-4">
-              <li><strong>Zero Plaintext Credential:</strong> Karyawan login menggunakan NIK SSO Pusat DAMRI, sistem membuat shadow record lokal di <code>ref_users</code>.</li>
-              <li><strong>Siklus Pembiayaan:</strong> Pengajuan &rarr; Verifikasi BU &rarr; Penetapan Kuota &rarr; Akad Penyaluran &rarr; Monitoring Cicilan Bulanan TJSL.</li>
-            </ul>
-          </div>
-
-          <div id="xp-view-dev" class="space-y-3 hidden">
-            <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
-              <div class="font-bold text-indigo-900 text-sm mb-1">Developer Feasibility: PostgreSQL Transaction Locking</div>
-              <p class="text-slate-800 leading-relaxed">
-                Menghindari duplikasi primary key saat puluhan cabang men-submit mitra baru secara bersamaan dengan penguncian baris basis data (Pessimistic Lock).
-              </p>
-            </div>
-            <pre class="font-mono text-[11px] bg-slate-950 text-indigo-300 p-3 rounded overflow-x-auto">// Implementasi di MitraController.php
-DB::transaction(function() use ($request) &#123;
-    $last = RefMitra::whereYear('created_at', now()->year)
-        ->lockForUpdate() // Kunci baris hingga transaksi commit
-        ->latest('id')
-        ->first();
-
-    $urutan = $last ? ($last->urutan + 1) : 1;
-    $kode = sprintf('PUMK-%s-%03d', now()->year, $urutan);
-
-    return RefMitra::create(array_merge($request->validated(), [
-        'kode_mitra' => $kode,
-        'urutan' => $urutan,
-        'status_approval' => 'DRAFT'
-    ]));
-&#125;);</pre>
-          </div>
-
-          <div id="xp-view-qa" class="space-y-3 hidden">
-            <div class="p-3 rounded bg-emerald-50 border border-emerald-200">
-              <div class="font-bold text-emerald-900 text-sm mb-1">QA Rigor: Skenario Uji Concurrency &amp; Boundary Value</div>
-              <p class="text-slate-800 leading-relaxed">
-                Pengujian ketat terhadap kondisi kegagalan, validasi panjang string NIK, dan isolasi kegagalan koneksi SSO.
-              </p>
-            </div>
-            <div class="space-y-2 text-xs">
-              <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
-                <strong class="text-emerald-800 block">Test Case 1: Concurrency Race Condition (20 Concurrent Requests)</strong>
-                <span class="text-slate-700">Simulasikan 20 request POST simultan pada detik yang sama. Assert: Seluruh 20 mitra mendapatkan 20 nomor urut berurutan tanpa satu pun duplikat atau deadlock.</span>
-              </div>
-              <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
-                <strong class="text-emerald-800 block">Test Case 2: Boundary NIK Invalid (15 &amp; 17 Digit)</strong>
-                <span class="text-slate-700">Input NIK dengan 15 digit dan 17 digit. Assert: Sistem mengembalikan HTTP 422 Unprocessable Entity dengan error message presisi.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Feature 2: Push Request Content -->
-        <div id="sdlc-content-push" class="sdlc-feature-block space-y-3 hidden">
-          <div class="p-3 rounded bg-blue-50 border border-blue-200">
-            <div class="font-bold text-blue-900 text-sm mb-1">Sistem Push Request: GitHub Webhook &amp; Production Audit</div>
-            <p class="text-slate-800 leading-relaxed">
-              Memastikan setiap perubahan baris kode (diff) terverifikasi, terdokumentasi, dan diverifikasi sebelum di-pull ke server live DAMRI.
-            </p>
-          </div>
-          <div class="grid grid-cols-3 gap-2 p-2.5 rounded bg-slate-50 border border-slate-200 text-center font-mono text-xs">
-            <div><span class="text-slate-500 block">Event Trigger</span>GitHub Push</div>
-            <div><span class="text-slate-500 block">Validation</span>SHA-256 HMAC</div>
-            <div><span class="text-slate-500 block">Tracking</span>Pull to Prod</div>
-          </div>
-        </div>
+      <div class="flex-1 p-4 bg-white overflow-y-auto max-h-[62vh] font-sans text-xs leading-relaxed">
+        <div id="sdlc-analyst" class="sdlc-view space-y-3"></div>
+        <div id="sdlc-dev" class="sdlc-view hidden space-y-3"></div>
+        <div id="sdlc-qa" class="sdlc-view hidden space-y-3"></div>
       </div>
 
       <div class="win-resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-se-resize flex items-end justify-end p-0.5 z-30">
@@ -1245,7 +1203,7 @@ DB::transaction(function() use ($request) &#123;
       <div id="cmd-screen" class="p-4 bg-black font-mono text-xs text-[#00ff66] min-h-[260px] max-h-[50vh] overflow-y-auto leading-relaxed">
         <div>Microsoft Windows XP [Version 5.1.2600]</div>
         <div>(C) Copyright 1985-2001 Microsoft Corp.</div>
-        <div class="my-2 text-slate-400">Ketik <span class="text-white font-bold">help</span> untuk daftar perintah (andhika, pumk, push, skills, clear).</div>
+        <div class="my-2 text-slate-400">Ketik <span class="text-white font-bold">help</span> untuk daftar perintah (andhika, projects, skills, contact, clear).</div>
         <div id="cmd-output" class="space-y-1.5"></div>
         <div class="flex items-center gap-1 mt-2">
           <span class="text-slate-300">C:\Users\Andhika&gt;</span>
@@ -1507,7 +1465,27 @@ DB::transaction(function() use ($request) &#123;
         ID &bull; EN
       </button>
 
-      <Volume2 class="w-3 h-3 text-blue-200" />
+      <div class="relative flex items-center gap-1">
+        <button id="xp-volume-btn" class="p-0.5 rounded hover:bg-blue-900 cursor-pointer flex items-center justify-center" title="Volume">
+          <svg id="xp-volume-icon" class="w-3 h-3 text-blue-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path id="xp-volume-wave" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+        <div id="xp-volume-popup" class="hidden absolute bottom-7 right-0 w-32 bg-[#ece9d8] border border-[#7f9db9] rounded shadow-lg p-2 z-[100000]">
+          <div class="text-[10px] font-bold text-slate-700 mb-1">Volume</div>
+          <input 
+            id="xp-volume-slider" 
+            type="range" 
+            min="0" 
+            max="100" 
+            value="85" 
+            class="w-full h-1.5 bg-[#9bb0d6] rounded-lg appearance-none cursor-pointer accent-blue-700"
+          />
+          <div class="text-[10px] text-right text-slate-600 mt-0.5" id="xp-volume-value">85%</div>
+        </div>
+      </div>
+
       <span id="xp-clock" class="text-[11px]">12:00 PM</span>
     </div>
   </div>
@@ -1839,21 +1817,9 @@ DB::transaction(function() use ($request) &#123;
 
   // 6. Sample Work Documents Viewer
   const sampleDocsData: Record<string, { title: string; snippet: string }> = {
-    "srs-pumk": {
-      title: "SRS_PUMK_Spesifikasi_Kebutuhan.doc",
-      snippet: `DOKUMEN SOFTWARE REQUIREMENTS SPECIFICATION (SRS)\nPROYEK: APLIKASI PUMK - PERUM DAMRI\nNOMOR DOKUMEN: SRS-PUMK-2024-V1.2\n\n1. PENDAHULUAN\nSistem PUMK (Program Usaha Mikro Kecil) dirancang untuk mengelola tata kelola pembiayaan kemitraan BUMN di lingkungan Perum DAMRI.\n\n2. KEBUTUHAN FUNGSIONAL UTAMA\n- FR-01: Verifikasi NIK Pemilik Usaha 16 Digit numerik valid.\n- FR-02: Auto-Generate Kode Mitra format PUMK-{tahun}-{urutan 3 digit} dengan Pessimistic Concurrency Lock (lockForUpdate).\n- FR-03: Otentikasi Shadow User terintegrasi SSO DAMRI tanpa penyimpanan plaintext password.\n- FR-04: Modul monitoring cicilan dan restrukturisasi pinjaman TJSL triwulanan (TW1 - TW4).`
-    },
-    "kamus-data": {
-      title: "Kamus_Data_Teknis_Aplikasi_PUMK.doc",
-      snippet: `KAMUS DATA TEKNIS — SISTEM PUMK DAMRI (32 KB)\nVERSI: 1.0\n\n[TABEL: ref_mitra]\n- id (bigserial, PK)\n- kode_mitra (varchar 20, UNIQUE, Format PUMK-YYYY-XXX)\n- nama_usaha (varchar 150)\n- nama_pemilik (varchar 100)\n- nik_pemilik (char 16, Validasi Dukcapil)\n- id_bu (int, Foreign Key unit bisnis SSO)\n\n[TABEL: tr_tjsl_pembayaran]\n- id (bigserial, PK)\n- id_mitra (bigint, FK ref_mitra.id)\n- nominal_angsuran (decimal 15,2)\n- tanggal_bayar (date)\n- status_verifikasi (enum: DRAFT, APPROVED, REJECTED)`
-    },
-    "audit-push": {
-      title: "SOP_Audit_Deployment_PushRequest.doc",
-      snippet: `STANDAR OPERASIONAL PROSEDUR (SOP) AUDIT DEPLOYMENT\nSISTEM INFORMASI IT — PERUM DAMRI\n\n1. TUJUAN\nMenjamin seluruh baris kode yang dirilis ke server production telah melalui tahapan review System Analyst dan Tech Lead.\n\n2. ALUR AUDIT GITHUB PUSH\n- Webhook GitHub mengirimkan payload event push ke endpoint /api/webhook/github-push.\n- Sistem memvalidasi X-Hub-Signature-256 menggunakan secret key rahasia.\n- Commit hash, author, dan diff file tercatat otomatis ke tabel audit_pushes.\n- Go-Live Checklist ditandatangani digital sebelum proses 'git pull' dieksekusi di server live.`
-    },
-    "qa-matrix": {
-      title: "Matriks_Skenario_Uji_QA_Boundary.doc",
-      snippet: `MATRIKS SKENARIO PENGUJIAN QUALITY ASSURANCE (QA)\n\nTC-01: Concurrency Race Condition Registrasi Mitra\n- Given: 20 request POST registrasi mitra binaan dikirim simultan pada milidetik yang sama.\n- Expected: Seluruh 20 mitra mendapatkan nomor urut berurutan tanpa satu pun duplikasi nomor PUMK-2026-XXX.\n- Result: PASS (PostgreSQL lockForUpdate berhasil mengantrikan transaksi).\n\nTC-02: Boundary NIK Invalid (15 dan 17 digit)\n- Input: NIK string '157107280200006' (15 digit) atau '15710728020000611' (17 digit).\n- Expected: HTTP 422 Unprocessable Entity dengan error message presisi.\n- Result: PASS.`
+    "cv-ats": {
+      title: "CV_ATS_Andhika_Putra.doc",
+      snippet: `CURRICULUM VITAE\nANDHIKA PUTRA PRATAMA, S.Kom.\n\nRINGKASAN PROFESIONAL\nSystem Analyst dengan fondasi langsung di Software Development dan Quality Assurance. Mampu menjembatani kebutuhan bisnis kompleks dengan solusi teknis yang teruji, terstruktur, dan mudah diskalakan.\n\nPENDIDIKAN\nSarjana Komputer (S.Kom.) — Teknik Informatika\nInstitut Teknologi Sumatera (ITERA) | 2019 – 2023 | IPK 3.73/4.00 (Sangat Memuaskan)\n\nKEAHLIAN UTAMA\nSystem Analysis: BPMN, BRD/SRS, Use Case, ERD 3NF, Data Dictionary, Flowchart\nDevelopment: PHP Laravel, PostgreSQL, REST API, Git, GitHub API, SSO Integration\nQA Testing: Test Case, Boundary/Negative Testing, Postman, Concurrency Validation\n\nSERTIFIKASI\n• IT Specialist in Python (Pearson/Certiport)\n• Machine Learning Specialization (DeepLearning.AI / Stanford)\n• Crash Course on Python (Google / Coursera)\n• TOEFL ITP Score: 640`
     }
   };
 
@@ -1957,6 +1923,18 @@ DB::transaction(function() use ($request) &#123;
       }
     });
   }
+
+  let galleryZoom = 1;
+  const galleryImg = document.getElementById('gallery-main-img') as HTMLImageElement;
+
+  function setGalleryZoom(z: number) {
+    galleryZoom = Math.max(0.5, Math.min(4, z));
+    if (galleryImg) galleryImg.style.transform = `scale(${galleryZoom})`;
+  }
+
+  document.getElementById('gallery-zoom-in')?.addEventListener('click', () => setGalleryZoom(galleryZoom + 0.25));
+  document.getElementById('gallery-zoom-out')?.addEventListener('click', () => setGalleryZoom(galleryZoom - 0.25));
+  document.getElementById('gallery-zoom-reset')?.addEventListener('click', () => setGalleryZoom(1));
 
   document.getElementById('gallery-btn-prev')?.addEventListener('click', () => showCertificate(currentCertIndex - 1));
   document.getElementById('gallery-btn-next')?.addEventListener('click', () => showCertificate(currentCertIndex + 1));
@@ -2149,6 +2127,67 @@ DB::transaction(function() use ($request) &#123;
     if (bar) bar.style.width = '0%';
   });
 
+  // Volume control
+  const volumeSlider = document.getElementById('wmp-volume-slider') as HTMLInputElement;
+  const volumeDisplay = document.getElementById('wmp-volume-display');
+  function setWmpVolume(vol: number) {
+    if (ytPlayerInstance && ytPlayerInstance.setVolume) {
+      ytPlayerInstance.setVolume(vol);
+    }
+    if (localAudioFallback) {
+      localAudioFallback.volume = vol / 100;
+    }
+    if (volumeDisplay) volumeDisplay.innerText = `${vol}%`;
+    if (volumeSlider) volumeSlider.value = String(vol);
+  }
+  volumeSlider?.addEventListener('input', () => {
+    const vol = parseInt(volumeSlider.value, 10);
+    setWmpVolume(vol);
+  });
+  setWmpVolume(85);
+
+  // System volume control (taskbar)
+  const xpVolumeBtn = document.getElementById('xp-volume-btn');
+  const xpVolumePopup = document.getElementById('xp-volume-popup');
+  const xpVolumeSlider = document.getElementById('xp-volume-slider') as HTMLInputElement;
+  const xpVolumeValue = document.getElementById('xp-volume-value');
+  const xpVolumeIcon = document.getElementById('xp-volume-icon');
+
+  function updateXpVolume(vol: number) {
+    if (xpVolumeSlider) xpVolumeSlider.value = String(vol);
+    if (xpVolumeValue) xpVolumeValue.innerText = `${vol}%`;
+    if (xpVolumeIcon) {
+      const wave = xpVolumeIcon.querySelector('#xp-volume-wave') as SVGPathElement;
+      if (vol === 0) {
+        if (wave) wave.setAttribute('d', 'M18 9l-3 3 3 3');
+      } else if (vol < 50) {
+        if (wave) wave.setAttribute('d', 'M15.54 8.46a5 5 0 0 1 0 7.07');
+      } else {
+        if (wave) wave.setAttribute('d', 'M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07');
+      }
+    }
+    // Sync with WMP
+    setWmpVolume(vol);
+  }
+
+  xpVolumeBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    xpVolumePopup?.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (xpVolumePopup && !xpVolumePopup.contains(e.target as Node) && e.target !== xpVolumeBtn && !xpVolumeBtn?.contains(e.target as Node)) {
+      xpVolumePopup.classList.add('hidden');
+    }
+  });
+
+  xpVolumeSlider?.addEventListener('input', () => {
+    const vol = parseInt(xpVolumeSlider.value, 10);
+    updateXpVolume(vol);
+  });
+
+  updateXpVolume(85);
+
   document.getElementById('wmp-prev-btn')?.addEventListener('click', () => {
     const prev = (currentTrackIdx - 1 + lofiPlaylist.length) % lofiPlaylist.length;
     playTrack(prev);
@@ -2209,25 +2248,183 @@ DB::transaction(function() use ($request) &#123;
     }
   });
 
+  // SDLC Lens data
+  const sdlcData: Record<string, { analyst: string; dev: string; qa: string }> = {
+    pumk: {
+      analyst: `
+        <div class="p-3 rounded bg-blue-50 border border-blue-200">
+          <div class="font-bold text-blue-900 text-sm mb-1">Analyst Lens: Penyelarasan Kamus Data & Alur Bisnis PUMK</div>
+          <p class="text-slate-800 leading-relaxed">
+            Memetakan lembar kerja operasional Excel dari unit TJSL/PKBL (MB, Kode MB, Monthly Review PK, Realisasi TW I-IV) ke dalam arsitektur data relasional formal (ref_mitra, tr_tjsl_pembayaran).
+          </p>
+        </div>
+        <div class="p-3 rounded bg-slate-50 border border-slate-200 font-mono text-[11px] text-slate-800 space-y-1">
+          <div class="text-blue-700 font-bold">ATURAN BISNIS KODE MITRA (BRD-PUMK-01):</div>
+          <div>Format standar: <strong>PUMK-{tahun}-{urutan 3 digit}</strong> (Contoh: PUMK-2026-001).</div>
+          <div>Syarat wajib: NIK pemilik UMKM wajib tepat 16 karakter numerik, terverifikasi ke data Dukcapil.</div>
+        </div>
+        <ul class="space-y-1.5 text-slate-800 list-disc pl-4">
+          <li><strong>Zero Plaintext Credential:</strong> Karyawan login menggunakan NIK SSO Pusat, sistem membuat shadow record lokal di ref_users.</li>
+          <li><strong>Siklus Pembiayaan:</strong> Pengajuan → Verifikasi BU → Penetapan Kuota → Akad Penyaluran → Monitoring Cicilan Bulanan TJSL.</li>
+        </ul>
+      `,
+      dev: `
+        <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+          <div class="font-bold text-indigo-900 text-sm mb-1">Developer Feasibility: PostgreSQL Transaction Locking</div>
+          <p class="text-slate-800 leading-relaxed">
+            Menghindari duplikasi primary key saat puluhan cabang men-submit mitra baru secara bersamaan dengan penguncian baris basis data (Pessimistic Lock).
+          </p>
+        </div>
+        <pre class="font-mono text-[11px] bg-slate-950 text-indigo-300 p-3 rounded overflow-x-auto">// Implementasi di MitraController.php
+DB::transaction(function() use ($request) {
+    $last = RefMitra::whereYear('created_at', now()->year)
+        ->lockForUpdate()
+        ->latest('id')
+        ->first();
+    $urutan = $last ? ($last->urutan + 1) : 1;
+    $kode = sprintf('PUMK-%s-%03d', now()->year, $urutan);
+    return RefMitra::create(array_merge($request->validated(), [
+        'kode_mitra' => $kode,
+        'urutan' => $urutan,
+        'status_approval' => 'DRAFT'
+    ]));
+});</pre>
+        <div class="grid grid-cols-3 gap-2 p-2.5 rounded bg-slate-50 border border-slate-200 text-center font-mono text-[11px]">
+          <div><span class="text-slate-500 block">Stack</span>Laravel 12</div>
+          <div><span class="text-slate-500 block">Database</span>PostgreSQL</div>
+          <div><span class="text-slate-500 block">Lock</span>lockForUpdate</div>
+        </div>
+      `,
+      qa: `
+        <div class="p-3 rounded bg-emerald-50 border border-emerald-200">
+          <div class="font-bold text-emerald-900 text-sm mb-1">QA Rigor: Skenario Uji Concurrency & Boundary Value</div>
+          <p class="text-slate-800 leading-relaxed">
+            Pengujian ketat terhadap kondisi kegagalan, validasi panjang string NIK, dan isolasi kegagalan koneksi SSO.
+          </p>
+        </div>
+        <div class="space-y-2 text-xs">
+          <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
+            <strong class="text-emerald-800 block">Test Case 1: Concurrency Race Condition (20 Concurrent Requests)</strong>
+            <span class="text-slate-700">Simulasikan 20 request POST simultan. Assert: Seluruh 20 mitra mendapatkan nomor urut berurutan tanpa duplikat atau deadlock.</span>
+          </div>
+          <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
+            <strong class="text-emerald-800 block">Test Case 2: Boundary NIK Invalid (15 & 17 Digit)</strong>
+            <span class="text-slate-700">Input NIK 15 & 17 digit. Assert: HTTP 422 Unprocessable Entity dengan error message presisi.</span>
+          </div>
+        </div>
+      `
+    },
+    push: {
+      analyst: `
+        <div class="p-3 rounded bg-blue-50 border border-blue-200">
+          <div class="font-bold text-blue-900 text-sm mb-1">Analyst Lens: Governance Perubahan Kode Produksi</div>
+          <p class="text-slate-800 leading-relaxed">
+            Mendefinisikan alur audit agar setiap perubahan kode dari tim developer tercatat, terverifikasi, dan memiliki approval eksplisit sebelum masuk ke server production.
+          </p>
+        </div>
+        <div class="p-3 rounded bg-slate-50 border border-slate-200 font-mono text-[11px] text-slate-800 space-y-1">
+          <div class="text-blue-700 font-bold">ATURAN BISNIS AUDIT (BRD-PUSH-01):</div>
+          <div>Setiap event push ke repository utama wajib terekam: commit hash, author, timestamp, dan daftar file yang berubah.</div>
+          <div>Proses go-live hanya dapat dilakukan setelah checklist approval terpenuhi.</div>
+        </div>
+        <ul class="space-y-1.5 text-slate-800 list-disc pl-4">
+          <li><strong>Traceability:</strong> Seluruh riwayat commit dapat ditelusuri dari development hingga production.</li>
+          <li><strong>Rollback Plan:</strong> Setiap deployment disertai catatan versi sebelumnya untuk mitigasi kegagalan.</li>
+        </ul>
+      `,
+      dev: `
+        <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+          <div class="font-bold text-indigo-900 text-sm mb-1">Developer Feasibility: GitHub Webhook & Diff Tracking</div>
+          <p class="text-slate-800 leading-relaxed">
+            Integrasi webhook GitHub untuk menangkap event push secara real-time, memvalidasi signature HMAC, dan menyimpan metadata commit ke database.
+          </p>
+        </div>
+        <pre class="font-mono text-[11px] bg-slate-950 text-indigo-300 p-3 rounded overflow-x-auto">// Verifikasi webhook GitHub
+$signature = $request->header('X-Hub-Signature-256');
+$expected = 'sha256=' . hash_hmac('sha256', $payload, $secret);
+if (!hash_equals($expected, $signature)) {
+    abort(401, 'Invalid webhook signature');
+}
+AuditPush::create([
+    'commit_hash' => $data['after'],
+    'author' => $data['pusher']['name'],
+    'files' => implode(', ', $changedFiles),
+]);</pre>
+        <div class="grid grid-cols-3 gap-2 p-2.5 rounded bg-slate-50 border border-slate-200 text-center font-mono text-[11px]">
+          <div><span class="text-slate-500 block">Trigger</span>GitHub Push</div>
+          <div><span class="text-slate-500 block">Auth</span>HMAC SHA-256</div>
+          <div><span class="text-slate-500 block">Board</span>Kanban Tasks</div>
+        </div>
+      `,
+      qa: `
+        <div class="p-3 rounded bg-emerald-50 border border-emerald-200">
+          <div class="font-bold text-emerald-900 text-sm mb-1">QA Rigor: Validasi Integritas & Approval Workflow</div>
+          <p class="text-slate-800 leading-relaxed">
+            Memastikan webhook tidak dapat dipalsukan, payload tersimpan utuh, dan proses deployment mengikuti checklist approval.
+          </p>
+        </div>
+        <div class="space-y-2 text-xs">
+          <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
+            <strong class="text-emerald-800 block">Test Case 1: Webhook Signature Tampering</strong>
+            <span class="text-slate-700">Kirim payload dengan signature salah. Assert: Sistem mengembalikan HTTP 401 tanpa menyimpan data.</span>
+          </div>
+          <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
+            <strong class="text-emerald-800 block">Test Case 2: Missing Approval Block Deployment</strong>
+            <span class="text-slate-700">Coba eksekusi go-live tanpa checklist approval. Assert: Tombol deployment disabled dan muncul peringatan.</span>
+          </div>
+        </div>
+      `
+    }
+  };
+
+  let currentSdlcProject = 'pumk';
+  let currentSdlcView = 'analyst';
+
+  function renderSdlc() {
+    const data = sdlcData[currentSdlcProject];
+    if (!data) return;
+
+    const analystEl = document.getElementById('sdlc-analyst');
+    const devEl = document.getElementById('sdlc-dev');
+    const qaEl = document.getElementById('sdlc-qa');
+
+    if (analystEl) analystEl.innerHTML = data.analyst;
+    if (devEl) devEl.innerHTML = data.dev;
+    if (qaEl) qaEl.innerHTML = data.qa;
+
+    document.querySelectorAll('.sdlc-view').forEach(el => el.classList.add('hidden'));
+    const activeEl = document.getElementById(`sdlc-${currentSdlcView}`);
+    if (activeEl) activeEl.classList.remove('hidden');
+  }
+
+  function setSdlcView(view: string) {
+    currentSdlcView = view;
+    sdlcTabs.forEach((t) => {
+      const isActive = t.getAttribute('data-view') === view;
+      if (isActive) {
+        t.classList.add('active', 'bg-white', 'border-[#7f9db9]', 'text-blue-900', 'shadow-sm');
+        t.classList.remove('bg-[#ece9d8]', 'border-transparent', 'text-slate-700');
+      } else {
+        t.classList.remove('active', 'bg-white', 'border-[#7f9db9]', 'text-blue-900', 'shadow-sm');
+        t.classList.add('bg-[#ece9d8]', 'border-transparent', 'text-slate-700');
+      }
+    });
+    renderSdlc();
+  }
+
+  sdlcSelect?.addEventListener('change', () => {
+    currentSdlcProject = sdlcSelect.value;
+    renderSdlc();
+  });
+
   sdlcTabs.forEach((tab) => {
     tab.addEventListener('click', () => {
       const view = tab.getAttribute('data-view');
-      sdlcTabs.forEach((t) => {
-        t.classList.remove('active', 'bg-white', 'border-t-2', 'border-l-2', 'border-r-2', 'text-blue-900');
-        t.classList.add('bg-[#ece9d8]', 'text-slate-700');
-      });
-      tab.classList.add('active', 'bg-white', 'border-t-2', 'border-l-2', 'border-r-2', 'text-blue-900');
-      tab.classList.remove('bg-[#ece9d8]', 'text-slate-700');
-
-      document.getElementById('xp-view-analyst')?.classList.add('hidden');
-      document.getElementById('xp-view-dev')?.classList.add('hidden');
-      document.getElementById('xp-view-qa')?.classList.add('hidden');
-
-      if (view === 'analyst') document.getElementById('xp-view-analyst')?.classList.remove('hidden');
-      if (view === 'dev') document.getElementById('xp-view-dev')?.classList.remove('hidden');
-      if (view === 'qa') document.getElementById('xp-view-qa')?.classList.remove('hidden');
+      if (view) setSdlcView(view);
     });
   });
+
+  renderSdlc();
 
   // 11. Command Prompt (cmd.exe)
   const cmdInput = document.getElementById('cmd-input') as HTMLInputElement;
