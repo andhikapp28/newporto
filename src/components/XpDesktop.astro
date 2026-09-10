@@ -41,7 +41,8 @@ import {
   Download, 
   ZoomIn, 
   ZoomOut, 
-  Music 
+  Music,
+  Printer 
 } from '@lucide/astro';
 
 const allProjects = await getCollection('projects');
@@ -190,7 +191,7 @@ const sampleWorkDocs = [
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-white/95 border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
           <FileText class="w-6 h-6 text-blue-600" />
         </div>
-        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Welcome.doc" data-id="Welcome.doc">
           Welcome.doc
         </span>
       </div>
@@ -204,8 +205,22 @@ const sampleWorkDocs = [
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-white/95 border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
           <Briefcase class="w-6 h-6 text-indigo-600" />
         </div>
-        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Resume.doc" data-id="Resume.doc">
           Resume.doc
+        </span>
+      </div>
+
+      <!-- Icon 2b: CV_ATS.pdf (Adobe Reader in Windows XP) -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+           data-open="win-pdf-viewer"
+           title="CV_ATS.pdf"
+           data-tooltip-title="CV_ATS.pdf (Adobe Reader)"
+           data-tooltip-desc="Buka CV format PDF standar ATS di dalam Adobe Reader Windows XP. | Open ATS-friendly CV PDF inside Windows XP Adobe Reader.">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-white border border-red-300 shadow-md group-hover:scale-105 transition-transform">
+          <svg class="w-6 h-6 fill-red-600" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9.5 8.5h-1v2h1c.55 0 1-.45 1-1s-.45-1-1-1zm5 0h-1v3h1c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1zm-6-2.5h-2v7h2c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm5 0h-2v7h2c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm5.5 0h-3v7h1.5v-2.5h1.5v-1.5h-1.5v-1.5h1.5v-1.5z"/></svg>
+        </div>
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="CV_ATS.pdf" data-id="CV_ATS.pdf">
+          CV_ATS.pdf
         </span>
       </div>
 
@@ -260,7 +275,7 @@ const sampleWorkDocs = [
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-slate-900 border border-cyan-400 shadow-md group-hover:scale-105 transition-transform">
           <Layers class="w-5 h-5 text-cyan-400" />
         </div>
-        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="SDLC_Lens.exe" data-id="SDLC_Lens.exe">
           SDLC_Lens.exe
         </span>
       </div>
@@ -274,7 +289,7 @@ const sampleWorkDocs = [
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-gradient-to-br from-slate-200 to-slate-400 border border-slate-400 shadow-md group-hover:scale-105 transition-transform">
           <Play class="w-5 h-5 text-blue-800 fill-blue-800 ml-0.5" />
         </div>
-        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Media Player" data-id="Media Player">
           Media Player
         </span>
       </div>
@@ -288,7 +303,7 @@ const sampleWorkDocs = [
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-black border border-slate-600 shadow-md group-hover:scale-105 transition-transform">
           <Terminal class="w-5 h-5 text-emerald-400" />
         </div>
-        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1">
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="cmd.exe" data-id="cmd.exe">
           cmd.exe
         </span>
       </div>
@@ -343,15 +358,15 @@ const sampleWorkDocs = [
       class="xp-window absolute top-6 left-28 w-[92vw] sm:w-[580px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-20 flex flex-col overflow-hidden"
       style="display: flex;"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.7)] truncate">
           <FileText class="w-3.5 h-3.5 text-blue-200 shrink-0" />
           <span>Welcome.doc - Microsoft WordPad</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold" title="Maximize"><Square class="w-2 h-2" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold" title="Close"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize" title="Maximize"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
@@ -391,9 +406,9 @@ const sampleWorkDocs = [
           <div class="p-3 rounded border border-blue-200 bg-blue-50/80">
             <div class="font-bold text-xs text-blue-900 mb-1 flex items-center gap-1.5">
               <Workflow class="w-3.5 h-3.5 text-blue-600 shrink-0" />
-              <span>1. System Analysis</span>
+              <span class="i18n" data-en="1. System Analysis" data-id="1. Analisis Sistem">1. Analisis Sistem</span>
             </div>
-            <p class="text-[11px] text-slate-700 leading-tight">
+            <p class="text-[11px] text-slate-700 leading-tight i18n" data-en="BRD/SRS, BPMN 2.0 swimlanes, 32KB technical data dictionary, 3NF ERD normalization, and scope control." data-id="BRD/SRS, BPMN 2.0 swimlanes, 32KB Kamus Data teknis, normalisasi skema ERD 3NF, dan manajemen scope.">
               BRD/SRS, BPMN 2.0 swimlanes, 32KB Kamus Data teknis, normalisasi skema ERD 3NF, dan manajemen scope.
             </p>
           </div>
@@ -401,9 +416,9 @@ const sampleWorkDocs = [
           <div class="p-3 rounded border border-indigo-200 bg-indigo-50/80">
             <div class="font-bold text-xs text-indigo-900 mb-1 flex items-center gap-1.5">
               <Code2 class="w-3.5 h-3.5 text-indigo-600 shrink-0" />
-              <span>2. Dev Feasibility</span>
+              <span class="i18n" data-en="2. Dev Feasibility" data-id="2. Kelayakan Pengembang">2. Kelayakan Pengembang</span>
             </div>
-            <p class="text-[11px] text-slate-700 leading-tight">
+            <p class="text-[11px] text-slate-700 leading-tight i18n" data-en="Laravel 12, PostgreSQL lockForUpdate, GitHub API webhook tracking, REST contracts &amp; SSO auth." data-id="Laravel 12, PostgreSQL lockForUpdate, GitHub API webhook tracking, REST contracts &amp; SSO auth.">
               Laravel 12, PostgreSQL lockForUpdate, GitHub API webhook tracking, REST contracts &amp; SSO auth.
             </p>
           </div>
@@ -411,9 +426,9 @@ const sampleWorkDocs = [
           <div class="p-3 rounded border border-emerald-200 bg-emerald-50/80">
             <div class="font-bold text-xs text-emerald-900 mb-1 flex items-center gap-1.5">
               <ShieldCheck class="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-              <span>3. QA Test Rigor</span>
+              <span class="i18n" data-en="3. QA Test Rigor" data-id="3. Rigor Pengujian QA">3. Rigor Pengujian QA</span>
             </div>
-            <p class="text-[11px] text-slate-700 leading-tight">
+            <p class="text-[11px] text-slate-700 leading-tight i18n" data-en="Race-condition test scenarios, 16-digit NIK boundary validation, Postman collections &amp; failure matrix." data-id="Skenario uji race-condition, boundary validation NIK 16 digit, Postman collections &amp; failure matrix.">
               Skenario uji race-condition, boundary validation NIK 16 digit, Postman collections &amp; failure matrix.
             </p>
           </div>
@@ -422,45 +437,52 @@ const sampleWorkDocs = [
         <div class="pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2.5">
           <div class="flex flex-wrap items-center gap-2">
             <button
-              class="px-3 py-1.5 rounded text-xs font-semibold bg-[#ece9d8] border border-[#7f9db9] shadow-sm hover:bg-white active:scale-95 cursor-pointer"
+              class="xp-btn font-semibold cursor-pointer"
               onclick="openWindow('win-resume')"
             >
-              Lihat Resume Lengkap &rarr;
+              <span class="i18n" data-en="View Full Resume &rarr;" data-id="Lihat Resume Lengkap &rarr;">Lihat Resume Lengkap &rarr;</span>
             </button>
             <button
-              class="px-3 py-1.5 rounded text-xs font-semibold bg-[#ece9d8] border border-[#7f9db9] shadow-sm hover:bg-white active:scale-95 cursor-pointer"
+              class="xp-btn font-semibold cursor-pointer"
               onclick="openWindow('win-docs-folder')"
             >
-              Folder Dokumen Kerja
+              <span class="i18n" data-en="Work Docs Folder" data-id="Folder Dokumen Kerja">Folder Dokumen Kerja</span>
+            </button>
+            <button
+              onclick="openCvPdf(); return false;"
+              class="xp-btn xp-btn-default font-bold flex items-center gap-1.5 cursor-pointer"
+            >
+              <FileText class="w-3.5 h-3.5 text-red-600" />
+              <span class="i18n" data-en="Open CV (PDF)" data-id="Buka CV (PDF)">Buka CV (PDF)</span>
             </button>
             <a
-              href="#"
-              onclick="openCvPdf(); return false;"
-              class="px-3 py-1.5 rounded text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm flex items-center gap-1.5"
+              href={`${base}/documents/CV_ATS_Andhika_Putra_Pratama.pdf`}
+              download="CV_ATS_Andhika_Putra_Pratama.pdf"
+              class="xp-btn flex items-center gap-1.5"
             >
-              <Download class="w-3.5 h-3.5" />
-              <span class="i18n" data-en="Download CV (PDF)" data-id="Unduh CV (PDF)">Unduh CV (PDF)</span>
+              <Save class="w-3.5 h-3.5 text-blue-700" />
+              <span class="i18n" data-en="Download PDF" data-id="Unduh PDF">Unduh PDF</span>
             </a>
             <a
               href="https://github.com/andhikapp28"
               target="_blank"
-              class="px-3 py-1.5 rounded text-xs font-semibold bg-slate-800 hover:bg-slate-900 text-white shadow-sm flex items-center gap-1.5"
+              class="xp-btn flex items-center gap-1.5"
             >
-              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.286-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.42-1.305.763-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.468-2.382 1.235-3.22-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.3 1.23A11.51 11.51 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.838 1.233 1.91 1.233 3.22 0 4.61-2.807 5.625-5.48 5.92.43.372.815 1.103.815 2.222 0 1.606-.015 2.898-.015 3.293 0 .32.218.694.825.577C20.565 21.795 24 17.298 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              <svg class="w-3.5 h-3.5 fill-current text-slate-800" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.286-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.42-1.305.763-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.468-2.382 1.235-3.22-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.3 1.23A11.51 11.51 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.838 1.233 1.91 1.233 3.22 0 4.61-2.807 5.625-5.48 5.92.43.372.815 1.103.815 2.222 0 1.606-.015 2.898-.015 3.293 0 .32.218.694.825.577C20.565 21.795 24 17.298 24 12c0-6.627-5.373-12-12-12z"/></svg>
               GitHub
             </a>
             <a
               href="https://linkedin.com/in/andhikaputrapratama"
               target="_blank"
-              class="px-3 py-1.5 rounded text-xs font-semibold bg-[#0077b5] hover:bg-[#005582] text-white shadow-sm flex items-center gap-1.5"
+              class="xp-btn flex items-center gap-1.5"
             >
-              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.5c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zm15.5 11.5h-3v-5.5c0-1.38-1.12-2.5-2.5-2.5s-2.5 1.12-2.5 2.5v5.5h-3v-10h3v1.5c.88-1.32 2.36-2.12 3.94-2.12 2.62 0 4.56 2.03 4.56 4.75v6.37z"/></svg>
+              <svg class="w-3.5 h-3.5 fill-[#0077b5]" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.5c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zm15.5 11.5h-3v-5.5c0-1.38-1.12-2.5-2.5-2.5s-2.5 1.12-2.5 2.5v5.5h-3v-10h3v1.5c.88-1.32 2.36-2.12 3.94-2.12 2.62 0 4.56 2.03 4.56 4.75v6.37z"/></svg>
               LinkedIn
             </a>
           </div>
 
-          <span class="text-xs font-mono text-emerald-700 font-bold">
-            &bull; Open for Opportunities
+          <span class="text-xs font-mono text-emerald-700 font-bold i18n" data-en="&bull; Open for Opportunities" data-id="&bull; Siap untuk Peluang Baru">
+            &bull; Siap untuk Peluang Baru
           </span>
         </div>
       </div>
@@ -477,23 +499,23 @@ const sampleWorkDocs = [
       id="win-resume"
       class="xp-window absolute top-8 left-32 w-[94vw] sm:w-[680px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.7)] truncate">
           <Briefcase class="w-3.5 h-3.5 text-indigo-200 shrink-0" />
           <span>Curriculum_Vitae_Andhika.doc - WordPad</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize" title="Maximize"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
       <div class="h-6 px-2 flex items-center justify-between text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700">
         <div class="flex items-center gap-3">
-          <span class="hover:underline cursor-pointer" onclick="window.print()">Print</span>
-          <span class="hover:underline cursor-pointer" onclick="openWindow('win-contact')">Contact Me</span>
-          <span class="hover:underline cursor-pointer" onclick="openWindow('win-gallery')">Lihat Sertifikat Asli</span>
+          <span class="hover:underline cursor-pointer i18n" data-en="Print" data-id="Cetak" onclick="window.print()">Cetak</span>
+          <span class="hover:underline cursor-pointer i18n" data-en="Contact Me" data-id="Hubungi Saya" onclick="openWindow('win-contact')">Hubungi Saya</span>
+          <span class="hover:underline cursor-pointer i18n" data-en="View Certificates" data-id="Lihat Sertifikat Asli" onclick="openWindow('win-gallery')">Lihat Sertifikat Asli</span>
         </div>
         <span class="text-[10.5px] font-mono text-emerald-800 font-bold">IPK: 3.73 / 4.00</span>
       </div>
@@ -617,39 +639,47 @@ const sampleWorkDocs = [
         <div class="pt-4 border-t border-slate-200 flex flex-wrap items-center gap-2">
           <a
             href="mailto:andhikapp28@gmail.com"
-            class="px-4 py-1.5 rounded bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm"
+            class="xp-btn font-semibold"
           >
-            Hubungi via Email (andhikapp28@gmail.com)
+            <Mail class="w-3.5 h-3.5 text-blue-700" />
+            <span class="i18n" data-en="Email (andhikapp28@gmail.com)" data-id="Kirim Email (andhikapp28@gmail.com)">Kirim Email (andhikapp28@gmail.com)</span>
           </a>
-          <a
-            href="#"
+          <button
             onclick="openCvPdf(); return false;"
-            class="px-3 py-1.5 rounded text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm flex items-center gap-1.5"
+            class="xp-btn xp-btn-default font-bold flex items-center gap-1.5 cursor-pointer"
           >
-            <Download class="w-3.5 h-3.5" />
-            <span class="i18n" data-en="Download CV (PDF)" data-id="Unduh CV (PDF)">Unduh CV (PDF)</span>
+            <FileText class="w-3.5 h-3.5 text-red-600" />
+            <span class="i18n" data-en="Open CV (PDF)" data-id="Buka CV (PDF)">Buka CV (PDF)</span>
+          </button>
+          <a
+            href={`${base}/documents/CV_ATS_Andhika_Putra_Pratama.pdf`}
+            download="CV_ATS_Andhika_Putra_Pratama.pdf"
+            class="xp-btn flex items-center gap-1.5"
+          >
+            <Save class="w-3.5 h-3.5 text-blue-700" />
+            <span class="i18n" data-en="Download PDF" data-id="Unduh PDF">Unduh PDF</span>
           </a>
           <a
             href="https://github.com/andhikapp28"
             target="_blank"
-            class="px-3 py-1.5 rounded text-xs font-semibold bg-slate-800 hover:bg-slate-900 text-white shadow-sm flex items-center gap-1.5"
+            class="xp-btn flex items-center gap-1.5"
           >
-            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.286-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.42-1.305.763-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.468-2.382 1.235-3.22-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.3 1.23A11.51 11.51 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.838 1.233 1.91 1.233 3.22 0 4.61-2.807 5.625-5.48 5.92.43.372.815 1.103.815 2.222 0 1.606-.015 2.898-.015 3.293 0 .32.218.694.825.577C20.565 21.795 24 17.298 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            <svg class="w-3.5 h-3.5 fill-current text-slate-800" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.286-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.42-1.305.763-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.468-2.382 1.235-3.22-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.3 1.23A11.51 11.51 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.838 1.233 1.91 1.233 3.22 0 4.61-2.807 5.625-5.48 5.92.43.372.815 1.103.815 2.222 0 1.606-.015 2.898-.015 3.293 0 .32.218.694.825.577C20.565 21.795 24 17.298 24 12c0-6.627-5.373-12-12-12z"/></svg>
             GitHub
           </a>
           <a
             href="https://linkedin.com/in/andhikaputrapratama"
             target="_blank"
-            class="px-3 py-1.5 rounded text-xs font-semibold bg-[#0077b5] hover:bg-[#005582] text-white shadow-sm flex items-center gap-1.5"
+            class="xp-btn flex items-center gap-1.5"
           >
-            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.5c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zm15.5 11.5h-3v-5.5c0-1.38-1.12-2.5-2.5-2.5s-2.5 1.12-2.5 2.5v5.5h-3v-10h3v1.5c.88-1.32 2.36-2.12 3.94-2.12 2.62 0 4.56 2.03 4.56 4.75v6.37z"/></svg>
+            <svg class="w-3.5 h-3.5 fill-[#0077b5]" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.5c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zm15.5 11.5h-3v-5.5c0-1.38-1.12-2.5-2.5-2.5s-2.5 1.12-2.5 2.5v5.5h-3v-10h3v1.5c.88-1.32 2.36-2.12 3.94-2.12 2.62 0 4.56 2.03 4.56 4.75v6.37z"/></svg>
             LinkedIn
           </a>
           <button
-            class="px-3 py-1.5 rounded bg-[#ece9d8] border border-[#7f9db9] font-bold text-xs hover:bg-white cursor-pointer"
+            class="xp-btn font-semibold cursor-pointer"
             onclick="openWindow('win-gallery')"
           >
-            Buka Galeri Sertifikat Fisik &rarr;
+            <span class="i18n" data-en="Physical Certificates &rarr;" data-id="Buka Galeri Sertifikat Fisik &rarr;">Buka Galeri Sertifikat Fisik &rarr;</span>
           </button>
         </div>
       </div>
@@ -666,15 +696,15 @@ const sampleWorkDocs = [
       id="win-docs-folder"
       class="xp-window absolute top-12 left-36 w-[94vw] sm:w-[680px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Folder class="w-3.5 h-3.5 text-amber-300 fill-amber-300 shrink-0" />
           <span>C:\Documents and Settings\Andhika\Dokumen_Kerja\</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize" title="Maximize"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
@@ -686,34 +716,43 @@ const sampleWorkDocs = [
       </div>
 
       <div class="flex-1 p-4 bg-white overflow-y-auto max-h-[60vh] text-xs">
-        <div class="text-[11px] text-slate-500 mb-3 font-medium">
+        <div class="text-[11px] text-slate-500 mb-3 font-medium i18n" data-en="List of technical portfolio documents and work artifacts by Andhika Putra Pratama:" data-id="Daftar dokumen portofolio teknis dan artefak kerja yang disusun oleh Andhika Putra Pratama:">
           Daftar dokumen portofolio teknis dan artefak kerja yang disusun oleh Andhika Putra Pratama:
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <!-- File 1: ATS CV -->
+          <!-- File 1: ATS CV (PDF Viewer in XP) -->
           <div 
             class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
             onclick="openCvPdf()"
           >
-            <FileText class="w-7 h-7 text-indigo-600 shrink-0 mt-0.5" />
+            <div class="w-8 h-8 rounded bg-white border border-red-200 flex items-center justify-center shrink-0 mt-0.5">
+              <svg class="w-5 h-5 fill-red-600" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9.5 8.5h-1v2h1c.55 0 1-.45 1-1s-.45-1-1-1zm5 0h-1v3h1c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1zm-6-2.5h-2v7h2c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm5 0h-2v7h2c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm5.5 0h-3v7h1.5v-2.5h1.5v-1.5h-1.5v-1.5h1.5v-1.5z"/></svg>
+            </div>
             <div class="truncate">
-              <div class="font-bold text-blue-900 group-hover:underline truncate">CV_ATS_Andhika_Putra.doc</div>
-              <div class="text-[10px] text-slate-500 mt-0.5">Curriculum Vitae Standar ATS</div>
-              <div class="text-[10px] text-emerald-700 font-semibold mt-1">Status: Siap Diunduh / Cetak</div>
+              <div class="font-bold text-blue-900 group-hover:underline truncate">CV_ATS_Andhika_Putra_Pratama.pdf</div>
+              <div class="text-[10px] text-slate-500 mt-0.5 i18n" data-en="Curriculum Vitae (ATS Standard PDF)" data-id="Curriculum Vitae Standar ATS (PDF)">Curriculum Vitae Standar ATS (PDF)</div>
+              <div class="text-[10px] text-emerald-700 font-semibold mt-1 i18n" data-en="Status: Ready &bull; Click to open in XP Reader" data-id="Status: Siap &bull; Klik untuk buka di Adobe Reader XP">Status: Siap &bull; Klik untuk buka di Adobe Reader XP</div>
             </div>
           </div>
         </div>
 
         <div class="mt-4 p-3 rounded bg-blue-50 border border-blue-200 flex flex-wrap items-center gap-2">
           <span class="text-[11px] font-bold text-blue-900 i18n" data-en="Need a printable copy?" data-id="Perlu salinan cetak?">Perlu salinan cetak?</span>
-          <a
-            href="#"
+          <button
             onclick="openCvPdf(); return false;"
-            class="px-3 py-1.5 rounded text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm flex items-center gap-1.5"
+            class="xp-btn xp-btn-default font-bold flex items-center gap-1.5 cursor-pointer"
           >
-            <Download class="w-3.5 h-3.5" />
-            <span class="i18n" data-en="Download CV (PDF)" data-id="Unduh CV (PDF)">Unduh CV (PDF)</span>
+            <FileText class="w-3.5 h-3.5 text-red-600" />
+            <span class="i18n" data-en="Open in XP Adobe Reader" data-id="Buka di Adobe Reader XP">Buka di Adobe Reader XP</span>
+          </button>
+          <a
+            href={`${base}/documents/CV_ATS_Andhika_Putra_Pratama.pdf`}
+            download="CV_ATS_Andhika_Putra_Pratama.pdf"
+            class="xp-btn flex items-center gap-1.5"
+          >
+            <Save class="w-3.5 h-3.5 text-blue-700" />
+            <span class="i18n" data-en="Download PDF" data-id="Unduh PDF">Unduh PDF</span>
           </a>
         </div>
       </div>
@@ -730,25 +769,141 @@ const sampleWorkDocs = [
       id="win-doc-viewer"
       class="xp-window absolute top-10 left-32 w-[94vw] sm:w-[680px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-30 flex flex-col overflow-hidden hidden"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <FileText class="w-3.5 h-3.5 text-blue-200 shrink-0" />
           <span id="doc-viewer-title">Document Viewer</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize" title="Maximize"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
       <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700">
-        <span class="hover:underline cursor-pointer" onclick="openWindow('win-docs-folder')">&larr; Kembali ke Folder</span>
-        <span class="hover:underline cursor-pointer" onclick="window.print()">Print Document</span>
+        <span class="hover:underline cursor-pointer i18n" data-en="&larr; Back to Folder" data-id="&larr; Kembali ke Folder" onclick="openWindow('win-docs-folder')">&larr; Kembali ke Folder</span>
+        <span class="hover:underline cursor-pointer i18n" data-en="Print Document" data-id="Cetak Dokumen" onclick="window.print()">Cetak Dokumen</span>
       </div>
 
       <div class="flex-1 p-6 bg-white overflow-y-auto max-h-[64vh] text-slate-900 font-mono text-xs leading-relaxed">
         <pre id="doc-viewer-content" class="whitespace-pre-wrap font-mono text-xs text-slate-800"></pre>
+      </div>
+
+      <div class="win-resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-se-resize flex items-end justify-end p-0.5 z-30">
+        <svg class="w-3 h-3 text-slate-400" viewBox="0 0 12 12" fill="currentColor">
+          <circle cx="10" cy="10" r="1.2" /><circle cx="6" cy="10" r="1.2" /><circle cx="10" cy="6" r="1.2" /><circle cx="2" cy="10" r="1.2" /><circle cx="6" cy="6" r="1.2" /><circle cx="10" cy="2" r="1.2" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- WINDOW 4b: Adobe Reader 6.0 (In-Desktop PDF Viewer for CV) -->
+    <div
+      id="win-pdf-viewer"
+      class="xp-window absolute top-8 left-20 w-[95vw] sm:w-[820px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-30 flex flex-col overflow-hidden hidden"
+    >
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+          <svg class="w-3.5 h-3.5 fill-red-400 shrink-0" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9.5 8.5h-1v2h1c.55 0 1-.45 1-1s-.45-1-1-1zm5 0h-1v3h1c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1zm-6-2.5h-2v7h2c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm5 0h-2v7h2c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm5.5 0h-3v7h1.5v-2.5h1.5v-1.5h-1.5v-1.5h1.5v-1.5z"/></svg>
+          <span id="pdf-viewer-title" class="i18n" data-en="Adobe Reader 6.0 - [CV_ATS_Andhika_Putra_Pratama.pdf]" data-id="Adobe Reader 6.0 - [CV_ATS_Andhika_Putra_Pratama.pdf]">Adobe Reader 6.0 - [CV_ATS_Andhika_Putra_Pratama.pdf]</span>
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize" title="Maximize"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
+        </div>
+      </div>
+
+      <!-- Adobe Menu Bar -->
+      <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-800 select-none">
+        <span class="hover:bg-blue-600 hover:text-white px-1.5 py-0.5 rounded-sm cursor-pointer">File</span>
+        <span class="hover:bg-blue-600 hover:text-white px-1.5 py-0.5 rounded-sm cursor-pointer">Edit</span>
+        <span class="hover:bg-blue-600 hover:text-white px-1.5 py-0.5 rounded-sm cursor-pointer">Document</span>
+        <span class="hover:bg-blue-600 hover:text-white px-1.5 py-0.5 rounded-sm cursor-pointer">Tools</span>
+        <span class="hover:bg-blue-600 hover:text-white px-1.5 py-0.5 rounded-sm cursor-pointer">View</span>
+        <span class="hover:bg-blue-600 hover:text-white px-1.5 py-0.5 rounded-sm cursor-pointer">Window</span>
+        <span class="hover:bg-blue-600 hover:text-white px-1.5 py-0.5 rounded-sm cursor-pointer">Help</span>
+      </div>
+
+      <!-- Adobe Toolbar -->
+      <div class="h-9 px-2 flex items-center justify-between bg-[#ece9d8] border-b border-[#7f9db9] text-xs">
+        <div class="flex items-center gap-1.5">
+          <a
+            id="pdf-download-link"
+            href={`${base}/documents/CV_ATS_Andhika_Putra_Pratama.pdf`}
+            download="CV_ATS_Andhika_Putra_Pratama.pdf"
+            class="xp-btn font-semibold"
+            title="Save a Copy"
+          >
+            <Save class="w-3.5 h-3.5 text-blue-700" />
+            <span class="i18n" data-en="Save PDF" data-id="Simpan PDF">Simpan PDF</span>
+          </a>
+          <button
+            class="xp-btn font-semibold"
+            onclick="window.print()"
+            title="Print"
+          >
+            <Printer class="w-3.5 h-3.5 text-slate-700" />
+            <span class="i18n" data-en="Print" data-id="Cetak">Cetak</span>
+          </button>
+          <div class="h-5 w-[1px] bg-slate-400 mx-1"></div>
+          <!-- Zoom Controls -->
+          <button
+            id="pdf-zoom-out"
+            class="xp-btn !px-2"
+            title="Zoom Out"
+          >
+            <ZoomOut class="w-3.5 h-3.5 text-slate-700" />
+          </button>
+          <button
+            id="pdf-zoom-in"
+            class="xp-btn !px-2"
+            title="Zoom In"
+          >
+            <ZoomIn class="w-3.5 h-3.5 text-slate-700" />
+          </button>
+          <button
+            id="pdf-zoom-reset"
+            class="xp-btn font-mono text-[10px] font-bold"
+            title="Reset Zoom"
+          >
+            100%
+          </button>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="text-[11px] text-slate-600 font-mono hidden sm:inline">CV_ATS_Andhika_Putra_Pratama.pdf</span>
+          <a
+            id="pdf-tab-fallback"
+            href={`${base}/documents/CV_ATS_Andhika_Putra_Pratama.pdf`}
+            target="_blank"
+            class="xp-btn text-[10px] font-semibold"
+            title="Buka File PDF Asli di Tab Baru"
+          >
+            <ExternalLink class="w-3 h-3 text-slate-600" />
+            <span class="i18n" data-en="Raw PDF" data-id="File PDF">File PDF</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- PDF Canvas / Viewer Workspace (Authentic Document Sheet with Drop Shadow) -->
+      <div id="pdf-viewport" class="flex-1 bg-[#525659] p-4 overflow-y-auto flex flex-col items-center justify-start min-h-[62vh] max-h-[68vh] relative">
+        <div 
+          id="pdf-doc-sheet" 
+          class="bg-white shadow-[0_8px_24px_rgba(0,0,0,0.6)] border border-slate-700 max-w-[650px] w-full transition-transform origin-top"
+          style="transform: scale(1);"
+        >
+          <img
+            src={`${base}/documents/cv_ats_page_1.png`}
+            alt="CV ATS Andhika Putra Pratama"
+            class="w-full h-auto block"
+          />
+        </div>
+      </div>
+
+      <!-- Adobe Status Bar -->
+      <div class="h-5 px-2 bg-[#ece9d8] border-t border-[#d8d4c2] flex items-center justify-between text-[10px] text-slate-600 font-mono">
+        <span class="i18n" data-en="1 of 1 Page &bull; 100%" data-id="Halaman 1 dari 1 &bull; 100%">Halaman 1 dari 1 &bull; 100%</span>
+        <span>Acrobat 6.0 Compatible</span>
       </div>
 
       <div class="win-resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-se-resize flex items-end justify-end p-0.5 z-30">
@@ -763,15 +918,15 @@ const sampleWorkDocs = [
       id="win-gallery"
       class="xp-window absolute top-10 left-32 w-[95vw] sm:w-[740px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-20 flex flex-col overflow-hidden hidden"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Award class="w-3.5 h-3.5 text-teal-200 shrink-0" />
-          <span id="gallery-titlebar">Windows Picture and Fax Viewer - Sertifikat</span>
+          <span id="gallery-titlebar" class="i18n" data-en="Windows Picture and Fax Viewer - Certificates" data-id="Windows Picture and Fax Viewer - Sertifikat">Windows Picture and Fax Viewer - Sertifikat</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize" title="Maximize"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
@@ -789,21 +944,21 @@ const sampleWorkDocs = [
       <div class="absolute top-10 right-3 flex items-center gap-1 z-20">
         <button 
           id="gallery-zoom-out" 
-          class="w-7 h-7 rounded bg-[#ece9d8] border border-[#7f9db9] hover:bg-white flex items-center justify-center shadow-sm cursor-pointer"
+          class="xp-btn w-7 h-7 !p-0"
           title="Zoom Out"
         >
           <ZoomOut class="w-3.5 h-3.5" />
         </button>
         <button 
           id="gallery-zoom-in" 
-          class="w-7 h-7 rounded bg-[#ece9d8] border border-[#7f9db9] hover:bg-white flex items-center justify-center shadow-sm cursor-pointer"
+          class="xp-btn w-7 h-7 !p-0"
           title="Zoom In"
         >
           <ZoomIn class="w-3.5 h-3.5" />
         </button>
         <button 
           id="gallery-zoom-reset" 
-          class="px-2 h-7 rounded bg-[#ece9d8] border border-[#7f9db9] hover:bg-white flex items-center justify-center shadow-sm cursor-pointer text-[10px] font-bold"
+          class="xp-btn font-bold text-[10px]"
           title="Reset Zoom"
         >
           Reset
@@ -824,10 +979,10 @@ const sampleWorkDocs = [
             id="gallery-cert-dl"
             href={certificates[0].img}
             download
-            class="px-2.5 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] hover:bg-white text-slate-900 font-sans font-semibold flex items-center gap-1 shadow-xs"
+            class="xp-btn font-semibold"
           >
             <Download class="w-3 h-3" />
-            <span>Unduh</span>
+            <span class="i18n" data-en="Download" data-id="Unduh">Unduh</span>
           </a>
         </div>
       </div>
@@ -836,13 +991,13 @@ const sampleWorkDocs = [
       <div class="p-2 bg-[#ece9d8] border-t border-[#d8d4c2] flex flex-col gap-2">
         <!-- Controls -->
         <div class="flex items-center justify-center gap-3">
-          <button id="gallery-btn-prev" class="px-3 py-1 rounded bg-white border border-[#7f9db9] font-bold text-xs hover:bg-blue-50 flex items-center gap-1 cursor-pointer">
+          <button id="gallery-btn-prev" class="xp-btn font-bold">
             <ArrowLeft class="w-3.5 h-3.5 text-blue-600" />
-            <span>Sebelumnya</span>
+            <span class="i18n" data-en="Previous" data-id="Sebelumnya">Sebelumnya</span>
           </button>
           <span id="gallery-counter" class="text-xs font-mono font-bold text-slate-700">1 / 8</span>
-          <button id="gallery-btn-next" class="px-3 py-1 rounded bg-white border border-[#7f9db9] font-bold text-xs hover:bg-blue-50 flex items-center gap-1 cursor-pointer">
-            <span>Berikutnya</span>
+          <button id="gallery-btn-next" class="xp-btn font-bold">
+            <span class="i18n" data-en="Next" data-id="Berikutnya">Berikutnya</span>
             <ArrowRight class="w-3.5 h-3.5 text-blue-600" />
           </button>
         </div>
@@ -872,15 +1027,15 @@ const sampleWorkDocs = [
       id="win-explorer"
       class="xp-window absolute top-10 left-36 w-[94vw] sm:w-[680px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Laptop class="w-3.5 h-3.5 text-blue-200 shrink-0" />
           <span class="i18n" data-en="My Computer" data-id="Komputer Saya">My Computer</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize" title="Maximize"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
@@ -894,61 +1049,61 @@ const sampleWorkDocs = [
       <div class="flex flex-1 overflow-hidden bg-white max-h-[60vh] text-xs">
         <div class="w-44 border-r border-[#d8d4c2] bg-[#f0f4fc] p-2 overflow-y-auto space-y-3 shrink-0">
           <div class="rounded border border-[#b8c9e5] bg-white overflow-hidden shadow-xs">
-            <div class="h-5 px-2 bg-gradient-to-r from-[#215dc6] to-[#3a8bf5] text-white font-bold text-[10px] flex items-center">
-              System Tasks
+            <div class="h-5 px-2 bg-gradient-to-r from-[#215dc6] to-[#3a8bf5] text-white font-bold text-[10px] flex items-center i18n" data-en="System Tasks" data-id="Tugas Sistem">
+              Tugas Sistem
             </div>
             <div class="p-1.5 space-y-1 text-[10.5px] text-blue-900">
-              <div class="hover:underline cursor-pointer" onclick="openWindow('win-resume')">View Resume / CV</div>
-              <div class="hover:underline cursor-pointer" onclick="openWindow('win-gallery')">Galeri Sertifikat</div>
+              <div class="hover:underline cursor-pointer i18n" data-en="View Resume / CV" data-id="Lihat Resume / CV" onclick="openWindow('win-resume')">Lihat Resume / CV</div>
+              <div class="hover:underline cursor-pointer i18n" data-en="Certificate Gallery" data-id="Galeri Sertifikat" onclick="openWindow('win-gallery')">Galeri Sertifikat</div>
             </div>
           </div>
 
           <div class="rounded border border-[#b8c9e5] bg-white overflow-hidden shadow-xs">
-            <div class="h-5 px-2 bg-gradient-to-r from-[#215dc6] to-[#3a8bf5] text-white font-bold text-[10px] flex items-center">
-              Other Places
+            <div class="h-5 px-2 bg-gradient-to-r from-[#215dc6] to-[#3a8bf5] text-white font-bold text-[10px] flex items-center i18n" data-en="Other Places" data-id="Tempat Lain">
+              Tempat Lain
             </div>
             <div class="p-1.5 space-y-1 text-[10.5px] text-blue-900">
-              <div class="hover:underline cursor-pointer" onclick="openWindow('win-projects')">Case Studies (E:)</div>
-              <div class="hover:underline cursor-pointer" onclick="openWindow('win-docs-folder')">Dokumen Kerja</div>
-              <div class="hover:underline cursor-pointer" onclick="openWindow('win-contact')">Contact Andhika</div>
+              <div class="hover:underline cursor-pointer i18n" data-en="Case Studies (E:)" data-id="Studi Kasus (E:)" onclick="openWindow('win-projects')">Studi Kasus (E:)</div>
+              <div class="hover:underline cursor-pointer i18n" data-en="Work Docs" data-id="Dokumen Kerja" onclick="openWindow('win-docs-folder')">Dokumen Kerja</div>
+              <div class="hover:underline cursor-pointer i18n" data-en="Contact Andhika" data-id="Kontak Andhika" onclick="openWindow('win-contact')">Kontak Andhika</div>
             </div>
           </div>
         </div>
 
         <div class="flex-1 p-3 overflow-y-auto space-y-4">
           <div>
-            <div class="text-[11px] font-bold text-slate-700 border-b border-slate-200 pb-1 mb-2">
-              Files Stored on This Computer
+            <div class="text-[11px] font-bold text-slate-700 border-b border-slate-200 pb-1 mb-2 i18n" data-en="Files Stored on This Computer" data-id="Berkas Tersimpan di Komputer Ini">
+              Berkas Tersimpan di Komputer Ini
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <div class="flex items-center gap-2 p-1.5 rounded hover:bg-blue-50 cursor-pointer group" onclick="openWindow('win-docs-folder')">
                 <Folder class="w-7 h-7 text-amber-500 fill-amber-400 shrink-0" />
                 <div class="truncate">
-                  <div class="font-bold text-slate-900 group-hover:underline truncate">Shared Documents</div>
-                  <div class="text-[10px] text-slate-500">Berkas Publik</div>
+                  <div class="font-bold text-slate-900 group-hover:underline truncate i18n" data-en="Shared Documents" data-id="Dokumen Bersama">Dokumen Bersama</div>
+                  <div class="text-[10px] text-slate-500 i18n" data-en="Public Files" data-id="Berkas Publik">Berkas Publik</div>
                 </div>
               </div>
 
               <div class="flex items-center gap-2 p-1.5 rounded hover:bg-blue-50 cursor-pointer group" onclick="openWindow('win-resume')">
                 <Folder class="w-7 h-7 text-amber-500 fill-amber-400 shrink-0" />
                 <div class="truncate">
-                  <div class="font-bold text-slate-900 group-hover:underline truncate">Andhika's Docs</div>
-                  <div class="text-[10px] text-slate-500">Berkas Pribadi</div>
+                  <div class="font-bold text-slate-900 group-hover:underline truncate i18n" data-en="Andhika's Docs" data-id="Dokumen Andhika">Dokumen Andhika</div>
+                  <div class="text-[10px] text-slate-500 i18n" data-en="Personal Files" data-id="Berkas Pribadi">Berkas Pribadi</div>
                 </div>
               </div>
             </div>
           </div>
 
           <div>
-            <div class="text-[11px] font-bold text-slate-700 border-b border-slate-200 pb-1 mb-2">
-              Hard Disk Drives
+            <div class="text-[11px] font-bold text-slate-700 border-b border-slate-200 pb-1 mb-2 i18n" data-en="Hard Disk Drives" data-id="Drive Hard Disk">
+              Drive Hard Disk
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <div class="flex items-center gap-2 p-1.5 rounded hover:bg-blue-50 cursor-pointer group">
                 <HardDrive class="w-7 h-7 text-slate-700 shrink-0" />
                 <div class="truncate">
                   <div class="font-bold text-slate-900 group-hover:underline">Local Disk (C:)</div>
-                  <div class="text-[10px] text-slate-500">System Drive (OS)</div>
+                  <div class="text-[10px] text-slate-500 i18n" data-en="System Drive (OS)" data-id="Drive Sistem (OS)">Drive Sistem (OS)</div>
                 </div>
               </div>
 
@@ -959,15 +1114,15 @@ const sampleWorkDocs = [
                 <HardDrive class="w-7 h-7 text-blue-700 shrink-0" />
                 <div class="truncate">
                   <div class="font-bold text-blue-950 group-hover:underline">Data Disk (E:)</div>
-                  <div class="text-[10px] text-blue-700 font-semibold">&bull; KERJA\PROJECTS (Projects)</div>
+                  <div class="text-[10px] text-blue-700 font-semibold i18n" data-en="&bull; PROJECTS (Case Studies)" data-id="&bull; KERJA\\PROJECTS (Studi Kasus)">&bull; KERJA\PROJECTS (Studi Kasus)</div>
                 </div>
               </div>
             </div>
           </div>
 
           <div>
-            <div class="text-[11px] font-bold text-slate-700 border-b border-slate-200 pb-1 mb-2">
-              Devices with Removable Storage
+            <div class="text-[11px] font-bold text-slate-700 border-b border-slate-200 pb-1 mb-2 i18n" data-en="Devices with Removable Storage" data-id="Perangkat Penyimpanan Lepas-Pasang">
+              Perangkat Penyimpanan Lepas-Pasang
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <div class="flex items-center gap-2 p-1.5 rounded hover:bg-blue-50 cursor-pointer group">
@@ -1002,20 +1157,20 @@ const sampleWorkDocs = [
       id="win-projects"
       class="xp-window absolute top-14 left-44 w-[92vw] sm:w-[660px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Folder class="w-3.5 h-3.5 text-amber-300 fill-amber-300 shrink-0" />
-          <span>E:\KERJA\PROJECTS\ - Daftar Proyek &amp; Studi Kasus</span>
+          <span class="i18n" data-en="E:\PROJECTS\ - Case Studies &amp; Projects" data-id="E:\KERJA\PROJECTS\ - Daftar Proyek &amp; Studi Kasus">E:\KERJA\PROJECTS\ - Daftar Proyek &amp; Studi Kasus</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize" title="Maximize"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
       <div class="h-7 px-2 flex items-center gap-2 text-xs bg-[#ece9d8] border-b border-[#d8d4c2]">
-        <span class="text-slate-600 font-medium">Address:</span>
+        <span class="text-slate-600 font-medium i18n" data-en="Address:" data-id="Alamat:">Alamat:</span>
         <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-xs font-mono text-slate-800 flex items-center">
           E:\KERJA\PROJECTS\KODING\
         </div>
@@ -1025,11 +1180,11 @@ const sampleWorkDocs = [
         <table class="w-full text-left text-xs border-collapse font-sans">
           <thead>
             <tr class="border-b border-slate-200 text-slate-700 bg-[#f7f7f7]">
-              <th class="py-1.5 px-2 font-bold">Project Name</th>
-              <th class="py-1.5 px-2 font-bold">Domain / Klien</th>
-              <th class="py-1.5 px-2 font-bold">Role Andhika</th>
-              <th class="py-1.5 px-2 font-bold">Hasil Kuantitatif</th>
-              <th class="py-1.5 px-2 font-bold text-right">Action</th>
+              <th class="py-1.5 px-2 font-bold i18n" data-en="Project Name" data-id="Nama Proyek">Nama Proyek</th>
+              <th class="py-1.5 px-2 font-bold i18n" data-en="Domain / Client" data-id="Domain / Klien">Domain / Klien</th>
+              <th class="py-1.5 px-2 font-bold i18n" data-en="Role" data-id="Peran Andhika">Peran Andhika</th>
+              <th class="py-1.5 px-2 font-bold i18n" data-en="Quantitative Result" data-id="Hasil Kuantitatif">Hasil Kuantitatif</th>
+              <th class="py-1.5 px-2 font-bold text-right i18n" data-en="Action" data-id="Aksi">Aksi</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100">
@@ -1049,9 +1204,9 @@ const sampleWorkDocs = [
                 </td>
                 <td class="py-2.5 px-2 text-right">
                   <button
-                    class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] text-[11px] font-semibold text-slate-800 hover:bg-white active:scale-95 cursor-pointer shadow-sm"
+                    class="xp-btn text-[11px] font-semibold"
                   >
-                    <span>Buka di IE</span>
+                    <span class="i18n" data-en="Open in IE" data-id="Buka di IE">Buka di IE</span>
                     <Globe class="w-3 h-3 text-blue-600" />
                   </button>
                 </td>
@@ -1073,15 +1228,15 @@ const sampleWorkDocs = [
       id="win-ie-reader"
       class="xp-window absolute top-8 left-28 w-[95vw] sm:w-[780px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-20 flex flex-col overflow-hidden hidden"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Globe class="w-3.5 h-3.5 text-blue-200 shrink-0" />
-          <span id="ie-titlebar-text">Microsoft Internet Explorer - Case Study Document</span>
+          <span id="ie-titlebar-text" class="i18n" data-en="Microsoft Internet Explorer - Case Study Document" data-id="Microsoft Internet Explorer - Dokumen Studi Kasus">Microsoft Internet Explorer - Case Study Document</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize" title="Maximize"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
@@ -1157,14 +1312,14 @@ const sampleWorkDocs = [
       id="win-media-player"
       class="xp-window absolute top-12 left-44 w-[92vw] sm:w-[460px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#d6dff7] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Play class="w-3.5 h-3.5 text-orange-400 fill-orange-400 shrink-0" />
-          <span>Windows Media Player - Lo-Fi Chill Beats</span>
+          <span class="i18n" data-en="Windows Media Player - Lo-Fi Chill Beats" data-id="Windows Media Player - Lo-Fi Chill Beats">Windows Media Player - Lo-Fi Chill Beats</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
@@ -1283,36 +1438,36 @@ const sampleWorkDocs = [
       id="win-sdlc"
       class="xp-window absolute top-14 left-36 w-[94vw] sm:w-[780px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Layers class="w-3.5 h-3.5 text-cyan-300 shrink-0" />
-          <span>SDLC_Lens.exe - Project Analysis Dashboard</span>
+          <span class="i18n" data-en="SDLC_Lens.exe - Project Analysis Dashboard" data-id="SDLC_Lens.exe - Dashboard Analisis Proyek">SDLC_Lens.exe - Project Analysis Dashboard</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize" title="Maximize"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
       <div class="p-2 bg-[#ece9d8] border-b border-[#d8d4c2] flex flex-wrap items-center justify-between gap-2 text-xs">
         <div class="flex items-center gap-1.5">
           <span class="font-bold text-slate-700 i18n" data-en="Project:" data-id="Proyek:">Proyek:</span>
-          <select id="sdlc-feature-select" class="px-2 py-0.5 bg-white border border-[#7f9db9] rounded text-xs text-slate-800 font-semibold cursor-pointer min-w-[240px]">
+          <select id="sdlc-feature-select" class="xp-input font-semibold min-w-[240px]">
             <option value="pumk">1. PUMK - Mitra Unique ID &amp; Concurrency Control</option>
             <option value="push">2. Push Request - GitHub Audit &amp; Deployment Tracking</option>
           </select>
         </div>
 
-        <div class="flex items-center gap-1 bg-[#d4d0c8] p-0.5 rounded border border-[#b8b4a8]">
-          <button class="xp-lens-tab active px-3 py-0.5 rounded text-xs font-bold bg-white border border-[#7f9db9] text-blue-900 shadow-sm cursor-pointer" data-view="analyst">
-            Analyst
+        <div class="flex items-center gap-1 pt-1">
+          <button class="xp-lens-tab active" data-view="analyst">
+            <span class="i18n" data-en="Analyst" data-id="Analis">Analis</span>
           </button>
-          <button class="xp-lens-tab px-3 py-0.5 rounded text-xs font-bold bg-[#ece9d8] border border-transparent text-slate-700 hover:bg-white/70 cursor-pointer" data-view="dev">
-            Developer
+          <button class="xp-lens-tab" data-view="dev">
+            <span class="i18n" data-en="Developer" data-id="Pengembang">Pengembang</span>
           </button>
-          <button class="xp-lens-tab px-3 py-0.5 rounded text-xs font-bold bg-[#ece9d8] border border-transparent text-slate-700 hover:bg-white/70 cursor-pointer" data-view="qa">
-            QA Rigor
+          <button class="xp-lens-tab" data-view="qa">
+            <span class="i18n" data-en="QA Rigor" data-id="Pengujian QA">Pengujian QA</span>
           </button>
         </div>
       </div>
@@ -1335,14 +1490,14 @@ const sampleWorkDocs = [
       id="win-cmd"
       class="xp-window absolute top-24 left-20 w-[92vw] sm:w-[560px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-black text-white z-10 flex flex-col overflow-hidden hidden"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Terminal class="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-          <span>Command Prompt - cmd.exe</span>
+          <span class="i18n" data-en="Command Prompt - cmd.exe" data-id="Command Prompt - cmd.exe">Command Prompt - cmd.exe</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
@@ -1374,71 +1529,71 @@ const sampleWorkDocs = [
       id="win-contact"
       class="xp-window absolute top-28 left-32 w-[92vw] sm:w-[540px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Mail class="w-3.5 h-3.5 text-sky-300 shrink-0" />
-          <span>New Message - Outlook Express</span>
+          <span class="i18n" data-en="New Message - Outlook Express" data-id="Pesan Baru - Outlook Express">New Message - Outlook Express</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
       <div class="h-8 px-3 flex items-center gap-2 bg-[#ece9d8] border-b border-[#d8d4c2] text-xs">
         <a
           href="mailto:andhikapp28@gmail.com"
-          class="px-3 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] font-bold text-slate-800 hover:bg-white flex items-center gap-1.5 shadow-sm"
+          class="xp-toolbar-btn font-bold"
         >
           <Mail class="w-3.5 h-3.5 text-blue-600" />
-          <span>Send Mail</span>
+          <span class="i18n" data-en="Send Mail" data-id="Kirim Email">Kirim Email</span>
         </a>
         <button
           id="xp-copy-email-btn"
-          class="px-3 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] font-bold text-slate-800 hover:bg-white flex items-center gap-1.5 shadow-sm cursor-pointer"
+          class="xp-toolbar-btn font-bold cursor-pointer"
         >
           <Copy class="w-3.5 h-3.5" id="xp-copy-icon" />
           <Check class="w-3.5 h-3.5 text-emerald-600 hidden" id="xp-copied-icon" />
-          <span id="xp-copy-text">Salin Email</span>
+          <span id="xp-copy-text" class="i18n" data-en="Copy Email" data-id="Salin Email">Salin Email</span>
         </button>
         <a
           href="https://github.com/andhikapp28"
           target="_blank"
-          class="px-3 py-1 rounded bg-slate-800 hover:bg-slate-900 text-white font-bold text-[10px] flex items-center gap-1.5 shadow-sm"
+          class="xp-toolbar-btn font-semibold"
         >
-          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.286-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.42-1.305.763-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.468-2.382 1.235-3.22-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.3 1.23A11.51 11.51 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.838 1.233 1.91 1.233 3.22 0 4.61-2.807 5.625-5.48 5.92.43.372.815 1.103.815 2.222 0 1.606-.015 2.898-.015 3.293 0 .32.218.694.825.577C20.565 21.795 24 17.298 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          <svg class="w-3.5 h-3.5 fill-current text-slate-800" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.373 0 12c0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.286-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.42-1.305.763-1.605-2.665-.305-5.467-1.334-5.467-5.93 0-1.31.468-2.382 1.235-3.22-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.3 1.23A11.51 11.51 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.838 1.233 1.91 1.233 3.22 0 4.61-2.807 5.625-5.48 5.92.43.372.815 1.103.815 2.222 0 1.606-.015 2.898-.015 3.293 0 .32.218.694.825.577C20.565 21.795 24 17.298 24 12c0-6.627-5.373-12-12-12z"/></svg>
           GitHub
         </a>
         <a
           href="https://linkedin.com/in/andhikaputrapratama"
           target="_blank"
-          class="px-3 py-1 rounded bg-[#0077b5] hover:bg-[#005582] text-white font-bold text-[10px] flex items-center gap-1.5 shadow-sm"
+          class="xp-toolbar-btn font-semibold"
         >
-          <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.5c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zm15.5 11.5h-3v-5.5c0-1.38-1.12-2.5-2.5-2.5s-2.5 1.12-2.5 2.5v5.5h-3v-10h3v1.5c.88-1.32 2.36-2.12 3.94-2.12 2.62 0 4.56 2.03 4.56 4.75v6.37z"/></svg>
+          <svg class="w-3.5 h-3.5 fill-[#0077b5]" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.5c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zm15.5 11.5h-3v-5.5c0-1.38-1.12-2.5-2.5-2.5s-2.5 1.12-2.5 2.5v5.5h-3v-10h3v1.5c.88-1.32 2.36-2.12 3.94-2.12 2.62 0 4.56 2.03 4.56 4.75v6.37z"/></svg>
           LinkedIn
         </a>
       </div>
 
       <div class="p-4 bg-white space-y-3 text-xs font-sans">
         <div class="flex items-center gap-2">
-          <label class="w-16 text-slate-600 font-semibold">To:</label>
+          <label class="w-16 text-slate-600 font-semibold i18n" data-en="To:" data-id="Kepada:">Kepada:</label>
           <div class="flex-1 px-2 py-1 bg-slate-100 border border-slate-300 rounded text-slate-900 font-mono font-bold">
             andhikapp28@gmail.com
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <label class="w-16 text-slate-600 font-semibold">Subject:</label>
+          <label class="w-16 text-slate-600 font-semibold i18n" data-en="Subject:" data-id="Subjek:">Subjek:</label>
           <input
             type="text"
             value="Konsultasi Arsitektur Sistem / Peluang Karir - Andhika Putra Pratama"
-            class="flex-1 px-2 py-1 border border-[#7f9db9] rounded text-slate-900 outline-none focus:border-blue-500"
+            class="xp-input flex-1"
           />
         </div>
         <div>
-          <label class="block text-slate-600 font-semibold mb-1">Message:</label>
+          <label class="block text-slate-600 font-semibold mb-1 i18n" data-en="Message:" data-id="Pesan:">Pesan:</label>
           <textarea
             rows="5"
-            class="w-full p-2 border border-[#7f9db9] rounded text-slate-900 outline-none focus:border-blue-500 resize-none"
+            class="xp-input w-full resize-none"
             placeholder="Halo Andhika, saya melihat portofolio System Analyst Anda..."
           ></textarea>
         </div>
@@ -1458,14 +1613,14 @@ const sampleWorkDocs = [
       id="win-search"
       class="xp-window absolute top-12 left-32 w-[92vw] sm:w-[560px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Dog class="w-3.5 h-3.5 text-yellow-200 shrink-0" />
-          <span>Search Companion</span>
+          <span class="i18n" data-en="Search Companion" data-id="Asisten Pencarian">Search Companion</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
@@ -1507,12 +1662,12 @@ const sampleWorkDocs = [
               <input
                 id="rover-search-input"
                 type="text"
-                class="flex-1 px-2 py-1 border border-[#7f9db9] rounded text-xs outline-none focus:border-blue-500"
+                class="xp-input flex-1"
                 placeholder="contoh: resume, PUMK, Python, NIK, lockForUpdate..."
               />
               <button
                 id="rover-search-btn"
-                class="px-3 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] hover:bg-white font-bold text-xs flex items-center gap-1 cursor-pointer"
+                class="xp-btn xp-btn-default font-bold flex items-center gap-1 cursor-pointer"
               >
                 <Search class="w-3.5 h-3.5" />
                 <span class="i18n" data-en="Search" data-id="Cari">Cari</span>
@@ -1541,15 +1696,15 @@ const sampleWorkDocs = [
       id="win-notepad"
       class="xp-window absolute top-16 left-28 w-[92vw] sm:w-[520px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <StickyNote class="w-3.5 h-3.5 text-yellow-200 shrink-0" />
           <span class="i18n" data-en="Notepad - Notes.txt" data-id="Notepad - Catatan.txt">Notepad - Catatan.txt</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-maximize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Square class="w-2 h-2" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize" title="Maximize"><Square class="w-2 h-2" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
@@ -1583,13 +1738,13 @@ const sampleWorkDocs = [
       id="win-run"
       class="xp-window absolute top-20 left-36 w-[92vw] sm:w-[400px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-[11000] flex flex-col overflow-hidden hidden"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Command class="w-3.5 h-3.5 text-slate-200 shrink-0" />
           <span class="i18n" data-en="Run" data-id="Jalankan">Jalankan</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
@@ -1606,7 +1761,7 @@ const sampleWorkDocs = [
             <input
               id="run-input"
               type="text"
-              class="flex-1 px-2 py-1 border border-[#7f9db9] rounded text-xs outline-none focus:border-blue-500"
+              class="xp-input flex-1"
             />
           </div>
         </div>
@@ -1615,13 +1770,13 @@ const sampleWorkDocs = [
       <div class="px-4 pb-4 flex items-center justify-end gap-2 bg-[#ece9d8]">
         <button
           id="run-ok-btn"
-          class="w-20 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] hover:bg-white text-xs font-bold cursor-pointer"
+          class="xp-btn xp-btn-default w-20 py-1 font-bold cursor-pointer"
         >
           OK
         </button>
         <button
           id="run-cancel-btn"
-          class="w-20 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] hover:bg-white text-xs font-bold cursor-pointer i18n"
+          class="xp-btn w-20 py-1 font-bold cursor-pointer i18n"
           data-en="Cancel"
           data-id="Batal"
         >
@@ -1635,27 +1790,27 @@ const sampleWorkDocs = [
       id="win-recycle-bin"
       class="xp-window absolute top-12 left-44 w-[92vw] sm:w-[480px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-10 flex flex-col overflow-hidden hidden"
     >
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Trash2 class="w-3.5 h-3.5 text-slate-200 shrink-0" />
           <span class="i18n" data-en="Recycle Bin" data-id="Tempat Sampah">Tempat Sampah</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-close w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold"><X class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
         </div>
       </div>
 
       <div class="h-7 px-2 flex items-center gap-2 text-xs bg-[#ece9d8] border-b border-[#d8d4c2]">
-        <span class="text-slate-600 font-medium">Address:</span>
+        <span class="text-slate-600 font-medium i18n" data-en="Address:" data-id="Alamat:">Alamat:</span>
         <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-xs font-mono text-slate-800 truncate">
           C:\RECYCLER\Andhika
         </div>
       </div>
 
       <div class="flex-1 p-4 bg-white overflow-y-auto max-h-[60vh] text-xs">
-        <div class="text-[11px] text-slate-500 mb-3 i18n" data-en="Recently closed windows are listed here. Select an item and click Restore to reopen it (cosmetic)." data-id="Jendela yang baru ditutup ditampilkan di sini. Pilih item dan klik Pulihkan untuk membukanya kembali (hiasan).">
-          Jendela yang baru ditutup ditampilkan di sini. Pilih item dan klik Pulihkan untuk membukanya kembali (hiasan).
+        <div class="text-[11px] text-slate-500 mb-3 i18n" data-en="Recently closed windows are listed here. Select an item and click Restore to reopen it." data-id="Jendela yang baru ditutup ditampilkan di sini. Pilih item dan klik Pulihkan untuk membukanya kembali.">
+          Jendela yang baru ditutup ditampilkan di sini. Pilih item dan klik Pulihkan untuk membukanya kembali.
         </div>
         <div id="recycle-items-list" class="space-y-1">
           <!-- Injected by JS -->
@@ -1692,7 +1847,7 @@ const sampleWorkDocs = [
           <div class="w-11 h-11 rounded-full bg-yellow-500 border-2 border-yellow-300 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
             <HelpCircle class="w-6 h-6 text-black" />
           </div>
-          <span class="text-[11px] text-white font-bold">Stand By</span>
+          <span class="text-[11px] text-white font-bold i18n" data-en="Stand By" data-id="Siaga">Stand By</span>
         </button>
 
         <button id="modal-btn-turn-off" class="flex flex-col items-center gap-1.5 group cursor-pointer">
@@ -1706,16 +1861,18 @@ const sampleWorkDocs = [
           <div class="w-11 h-11 rounded-full bg-emerald-500 border-2 border-emerald-300 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
             <RotateCw class="w-6 h-6 text-white" />
           </div>
-          <span class="text-[11px] text-white font-bold">Restart</span>
+          <span class="text-[11px] text-white font-bold i18n" data-en="Restart" data-id="Nyalakan Ulang">Restart</span>
         </button>
       </div>
 
       <div class="p-2.5 bg-[#ece9d8] border-t border-[#d8d4c2] flex justify-end">
         <button 
-          class="px-4 py-1 rounded bg-[#ece9d8] border border-[#7f9db9] text-xs font-bold text-slate-800 hover:bg-white cursor-pointer"
+          class="xp-btn w-20 py-1 font-bold cursor-pointer i18n"
+          data-en="Cancel"
+          data-id="Batal"
           onclick="document.getElementById('xp-shutdown-modal').classList.add('hidden'); document.getElementById('xp-shutdown-modal').classList.remove('flex');"
         >
-          Cancel
+          Batal
         </button>
       </div>
     </div>
@@ -1759,11 +1916,15 @@ const sampleWorkDocs = [
       <div class="w-1/2 bg-white p-2 space-y-1 border-r border-[#95bdee]">
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-welcome'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <FileText class="w-4 h-4 text-blue-600" />
-          <span class="font-bold text-slate-800">Welcome Doc</span>
+          <span class="font-bold text-slate-800 i18n" data-en="Welcome Doc" data-id="Welcome Doc">Welcome Doc</span>
         </div>
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-resume'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Briefcase class="w-4 h-4 text-indigo-600" />
           <span class="font-bold text-slate-800 i18n" data-en="Curriculum Vitae" data-id="Resume / CV">Resume / CV</span>
+        </div>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openCvPdf(); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <svg class="w-4 h-4 fill-red-600 shrink-0" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9.5 8.5h-1v2h1c.55 0 1-.45 1-1s-.45-1-1-1zm5 0h-1v3h1c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1zm-6-2.5h-2v7h2c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm5 0h-2v7h2c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm5.5 0h-3v7h1.5v-2.5h1.5v-1.5h-1.5v-1.5h1.5v-1.5z"/></svg>
+          <span class="font-bold text-slate-800 i18n" data-en="CV ATS (PDF)" data-id="CV ATS (PDF)">CV ATS (PDF)</span>
         </div>
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-docs-folder'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Folder class="w-4 h-4 text-amber-500" />
@@ -1775,7 +1936,7 @@ const sampleWorkDocs = [
         </div>
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-media-player'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Play class="w-4 h-4 text-blue-800 fill-blue-800" />
-          <span class="font-bold text-slate-800">Media Player</span>
+          <span class="font-bold text-slate-800 i18n" data-en="Media Player" data-id="Media Player">Media Player</span>
         </div>
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-cmd'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Terminal class="w-4 h-4 text-emerald-600" />
@@ -1792,29 +1953,29 @@ const sampleWorkDocs = [
       </div>
 
       <div class="w-1/2 p-2 space-y-1 text-slate-700">
-        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="openWindow('win-explorer'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          My Computer
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="My Computer" data-id="Komputer Saya" onclick="openWindow('win-explorer'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          Komputer Saya
         </div>
-        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Search Companion" data-id="Pencarian" onclick="openWindow('win-search'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          Search Companion
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Case Studies (E:)" data-id="Studi Kasus (E:)" onclick="openWindow('win-projects'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          Studi Kasus (E:)
         </div>
-        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Notepad" data-id="Catatan" onclick="openWindow('win-notepad'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          Notepad
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="SDLC Lens Dashboard" data-id="Dashboard SDLC Lens" onclick="openWindow('win-sdlc'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          Dashboard SDLC Lens
+        </div>
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Outlook Express (Contact)" data-id="Outlook Express (Kontak)" onclick="openWindow('win-contact'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          Outlook Express (Kontak)
+        </div>
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Search Companion" data-id="Pencarian (Rover)" onclick="openWindow('win-search'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          Pencarian (Rover)
+        </div>
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Notepad Notes" data-id="Catatan Notepad" onclick="openWindow('win-notepad'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          Catatan Notepad
         </div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Run..." data-id="Jalankan..." onclick="openWindow('win-run'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          Run...
-        </div>
-        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="openWindow('win-projects'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          E:\KERJA\PROJECTS
-        </div>
-        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="openWindow('win-sdlc'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          SDLC Lens
-        </div>
-        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer" onclick="openWindow('win-contact'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          Outlook Express
+          Jalankan...
         </div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Recycle Bin" data-id="Tempat Sampah" onclick="openWindow('win-recycle-bin'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          Recycle Bin
+          Tempat Sampah
         </div>
       </div>
     </div>
@@ -1931,6 +2092,7 @@ const sampleWorkDocs = [
 <script>
   // 1. Window Management & Taskbar Sync
   let highestZIndex = 30;
+  let recycleBinItems: Array<{ id: string; title: string; closedAt: string }> = [];
 
   function bringToFront(win: HTMLElement) {
     highestZIndex += 1;
@@ -1981,13 +2143,21 @@ const sampleWorkDocs = [
   function closeWindow(win: HTMLElement) {
     if (!win) return;
     const id = win.id;
-    // Add to recycle bin if it was a real application window (not dialogs)
-    if (id && id.startsWith('win-') && !['win-run', 'win-shutdown-modal', 'xp-shutdown-modal', 'xp-shutdown-screen'].includes(id)) {
-      addToRecycleBin(id);
+    try {
+      // Add to recycle bin if it was a real application window (not dialogs)
+      if (id && id.startsWith('win-') && !['win-run', 'win-shutdown-modal', 'xp-shutdown-modal', 'xp-shutdown-screen'].includes(id)) {
+        if (typeof addToRecycleBin === 'function') {
+          addToRecycleBin(id);
+        }
+      }
+    } catch (err) {
+      console.warn('Recycle tracking error:', err);
     }
     // Stop WMP if closing media player
     if (id === 'win-media-player') {
-      (window as any).stopWmp?.();
+      try {
+        (window as any).stopWmp?.();
+      } catch (e) {}
     }
     win.dataset.state = 'closed';
     win.classList.add('hidden');
@@ -2139,9 +2309,10 @@ const sampleWorkDocs = [
       if (!iconTooltip || !iconTooltipTitle || !iconTooltipDesc) return;
       const title = icon.getAttribute('data-tooltip-title') || icon.getAttribute('title') || '';
       const desc = icon.getAttribute('data-tooltip-desc') || '';
-      const lang = currentLang === 'id' ? 1 : 0;
-      const descLine = desc.split(' | ')[lang] || desc.split(' | ')[0] || desc;
-      iconTooltipTitle.innerText = title;
+      const langIdx = currentLang === 'id' ? 0 : 1;
+      const titleLine = title.split(' | ')[langIdx] || title.split(' | ')[0] || title;
+      const descLine = desc.split(' | ')[langIdx] || desc.split(' | ')[0] || desc;
+      iconTooltipTitle.innerText = titleLine;
       iconTooltipDesc.innerText = descLine;
       iconTooltip.classList.remove('hidden');
     });
@@ -2233,23 +2404,36 @@ const sampleWorkDocs = [
       const text = el.getAttribute(`data-${lang}`);
       if (text) el.innerHTML = text;
     });
-    // Update input placeholders / values with data-en/data-id
-    document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-en][data-id]').forEach((el) => {
-      if ('placeholder' in el && el.getAttribute('placeholder')) {
-        const ph = el.getAttribute(`data-${lang}-placeholder`) || el.getAttribute(`data-${lang}`);
-        if (ph) el.placeholder = ph;
-      }
+    // Update input placeholders
+    document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-en-placeholder],[data-id-placeholder]').forEach((el) => {
+      const ph = el.getAttribute(`data-${lang}-placeholder`);
+      if (ph) el.placeholder = ph;
     });
     if (langBtn) {
       langBtn.innerText = lang.toUpperCase();
     }
-    // Refresh Rover results if any
-    if (roverInput && roverInput.value.trim()) {
-      runRoverSearch();
+    // Update start button text
+    const startSpan = document.querySelector('#xp-start-btn .i18n');
+    if (startSpan) {
+      startSpan.innerHTML = lang === 'id' ? 'mulai' : 'start';
     }
+    // Update taskbar labels
+    updateTaskbar();
+    // Refresh Rover results if any
+    try {
+      if (typeof runRoverSearch === 'function' && roverInput && roverInput.value.trim()) {
+        runRoverSearch();
+      }
+    } catch (e) {}
     // Refresh Recycle Bin labels
-    renderRecycleBin();
+    try {
+      if (typeof renderRecycleBin === 'function') {
+        renderRecycleBin();
+      }
+    } catch (e) {}
   }
+
+  (window as any).applyLanguage = applyLanguage;
 
   langBtn?.addEventListener('click', () => {
     const nextLang = currentLang === 'id' ? 'en' : 'id';
@@ -2412,8 +2596,13 @@ const sampleWorkDocs = [
   };
 
   (window as any).openCvPdf = function() {
-    const baseUrl = document.body.dataset.baseUrl || document.getElementById('xp-desktop-container')?.dataset.baseUrl || '/newporto';
-    window.open(`${baseUrl}/documents/CV_ATS_Andhika_Putra_Pratama.pdf`, '_blank');
+    const container = document.getElementById('xp-desktop-container');
+    const baseUrl = container?.dataset.baseUrl || document.body.dataset.baseUrl || '/newporto';
+    const pdfFrame = document.getElementById('xp-pdf-frame') as HTMLIFrameElement;
+    if (pdfFrame && (!pdfFrame.src || !pdfFrame.src.includes('CV_ATS_Andhika_Putra_Pratama.pdf'))) {
+      pdfFrame.src = `${baseUrl}/documents/CV_ATS_Andhika_Putra_Pratama.pdf`;
+    }
+    (window as any).openWindow('win-pdf-viewer');
   };
 
   (window as any).openSampleDoc = function(docKey: string) {
@@ -2528,6 +2717,22 @@ const sampleWorkDocs = [
   document.getElementById('gallery-zoom-in')?.addEventListener('click', () => setGalleryZoom(galleryZoom + 0.25));
   document.getElementById('gallery-zoom-out')?.addEventListener('click', () => setGalleryZoom(galleryZoom - 0.25));
   document.getElementById('gallery-zoom-reset')?.addEventListener('click', () => setGalleryZoom(1));
+
+  // 7b. Adobe Reader PDF Zoom
+  let pdfZoom = 1;
+  const pdfSheet = document.getElementById('pdf-doc-sheet');
+
+  function setPdfZoom(z: number) {
+    pdfZoom = Math.max(0.5, Math.min(2.5, z));
+    if (pdfSheet) {
+      pdfSheet.style.transform = `scale(${pdfZoom})`;
+      pdfSheet.style.transformOrigin = 'top center';
+    }
+  }
+
+  document.getElementById('pdf-zoom-in')?.addEventListener('click', () => setPdfZoom(pdfZoom + 0.2));
+  document.getElementById('pdf-zoom-out')?.addEventListener('click', () => setPdfZoom(pdfZoom - 0.2));
+  document.getElementById('pdf-zoom-reset')?.addEventListener('click', () => setPdfZoom(1));
 
   document.getElementById('gallery-btn-prev')?.addEventListener('click', () => showCertificate(currentCertIndex - 1));
   document.getElementById('gallery-btn-next')?.addEventListener('click', () => showCertificate(currentCertIndex + 1));
@@ -3486,8 +3691,7 @@ public function handlePush(Request $request)
     }
   });
 
-  // 11. Command Prompt
- (cmd.exe)
+  // 11. Command Prompt (cmd.exe)
   const cmdInput = document.getElementById('cmd-input') as HTMLInputElement;
   const cmdOutput = document.getElementById('cmd-output');
   const cmdScreen = document.getElementById('cmd-screen');
@@ -3585,13 +3789,12 @@ public function handlePush(Request $request)
 
   // 11b. Recycle Bin
   const recycleItemsList = document.getElementById('recycle-items-list');
-  let recycleBinItems: Array<{ id: string; title: string; closedAt: string }> = [];
 
   function addToRecycleBin(winId: string) {
     const win = document.getElementById(winId);
     if (!win) return;
     const title = win.querySelector('.xp-titlebar span')?.textContent || winId;
-    // avoid duplicates at top
+    if (!Array.isArray(recycleBinItems)) recycleBinItems = [];
     recycleBinItems = recycleBinItems.filter(i => i.id !== winId);
     recycleBinItems.unshift({ id: winId, title, closedAt: new Date().toLocaleTimeString() });
     if (recycleBinItems.length > 10) recycleBinItems = recycleBinItems.slice(0, 10);
