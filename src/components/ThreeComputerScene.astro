@@ -454,6 +454,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       const assetBase = document.getElementById('three-computer-stage')?.dataset.baseUrl || '';
       playRealXpSound(`${assetBase}/sounds/xp-shutdown.wav`);
 
+      // Reset camera and rotation to initial state so the workstation is not zoomed in
+      camera.position.set(0, 1.2, 5.0);
+      camera.lookAt(0, 0.1, 0);
+      rotX = 0;
+      rotY = 0;
+      workstation.rotation.set(0, 0, 0);
+
       if (stage) {
         stage.classList.remove('hidden');
         setTimeout(() => {

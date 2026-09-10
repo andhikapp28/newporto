@@ -143,43 +143,16 @@ const certificates = [
   }
 ];
 
-// Sample Work Documents
+// Sample Work Documents (only CV ATS for now; others can be added later by user)
 const sampleWorkDocs = [
   {
-    id: "srs-pumk",
-    title: "SRS_PUMK_Spesifikasi_Kebutuhan.doc",
-    category: "Requirements Engineering",
-    size: "184 KB",
-    date: "Juni 2024",
-    desc: "Dokumen formal Software Requirements Specification (SRS) aplikasi PUMK Perum DAMRI: batasan fungsional, non-fungsional, dan use case.",
-    docSnippet: `DOKUMEN SOFTWARE REQUIREMENTS SPECIFICATION (SRS)\nPROYEK: APLIKASI PUMK - PERUM DAMRI\nNOMOR DOKUMEN: SRS-PUMK-2024-V1.2\n\n1. PENDAHULUAN\nSistem PUMK (Program Usaha Mikro Kecil) dirancang untuk mengelola tata kelola pembiayaan kemitraan BUMN di lingkungan Perum DAMRI.\n\n2. KEBUTUHAN FUNGSIONAL UTAMA\n- FR-01: Verifikasi NIK Pemilik Usaha 16 Digit numerik valid.\n- FR-02: Auto-Generate Kode Mitra format PUMK-{tahun}-{urutan 3 digit} dengan Pessimistic Concurrency Lock (lockForUpdate).\n- FR-03: Otentikasi Shadow User terintegrasi SSO DAMRI tanpa penyimpanan plaintext password.\n- FR-04: Modul monitoring cicilan dan restrukturisasi pinjaman TJSL triwulanan (TW1 - TW4).`
-  },
-  {
-    id: "kamus-data",
-    title: "Kamus_Data_Teknis_Aplikasi_PUMK.doc",
-    category: "Data Modeling & Glosarium",
-    size: "32 KB",
-    date: "Juli 2024",
-    desc: "Kamus data relasional lengkap penyelarasan istilah bisnis Excel Product Owner (MB, Realisasi PK, TW) dengan skema database PostgreSQL.",
-    docSnippet: `KAMUS DATA TEKNIS — SISTEM PUMK DAMRI (32 KB)\nVERSI: 1.0\n\n[TABEL: ref_mitra]\n- id (bigserial, PK)\n- kode_mitra (varchar 20, UNIQUE, Format PUMK-YYYY-XXX)\n- nama_usaha (varchar 150)\n- nama_pemilik (varchar 100)\n- nik_pemilik (char 16, Validasi Dukcapil)\n- id_bu (int, Foreign Key unit bisnis SSO)\n\n[TABEL: tr_tjsl_pembayaran]\n- id (bigserial, PK)\n- id_mitra (bigint, FK ref_mitra.id)\n- nominal_angsuran (decimal 15,2)\n- tanggal_bayar (date)\n- status_verifikasi (enum: DRAFT, APPROVED, REJECTED)`
-  },
-  {
-    id: "audit-push",
-    title: "SOP_Audit_Deployment_PushRequest.doc",
-    category: "DevOps & Audit Governance",
-    size: "95 KB",
-    date: "Agustus 2024",
-    desc: "Standar Operasional Prosedur peninjauan commit GitHub, verifikasi webhook HMAC, dan checklist go-live deployment server production IT DAMRI.",
-    docSnippet: `STANDAR OPERASIONAL PROSEDUR (SOP) AUDIT DEPLOYMENT\nSISTEM INFORMASI IT — PERUM DAMRI\n\n1. TUJUAN\nMenjamin seluruh baris kode yang dirilis ke server production telah melalui tahapan review System Analyst dan Tech Lead.\n\n2. ALUR AUDIT GITHUB PUSH\n- Webhook GitHub mengirimkan payload event push ke endpoint /api/webhook/github-push.\n- Sistem memvalidasi X-Hub-Signature-256 menggunakan secret key rahasia.\n- Commit hash, author, dan diff file tercatat otomatis ke tabel audit_pushes.\n- Go-Live Checklist ditandatangani digital sebelum proses 'git pull' dieksekusi di server live.`
-  },
-  {
-    id: "qa-matrix",
-    title: "Matriks_Skenario_Uji_QA_Boundary.doc",
-    category: "Quality Assurance Testing",
-    size: "64 KB",
-    date: "September 2024",
-    desc: "Matriks skenario pengujian QA untuk kondisi ekstrem: 20 request konkuren bersamaan, payload boundary NIK, dan isolasi kegagalan SSO.",
-    docSnippet: `MATRIKS SKENARIO PENGUJIAN QUALITY ASSURANCE (QA)\n\nTC-01: Concurrency Race Condition Registrasi Mitra\n- Given: 20 request POST registrasi mitra binaan dikirim simultan pada milidetik yang sama.\n- Expected: Seluruh 20 mitra mendapatkan nomor urut berurutan tanpa satu pun duplikasi nomor PUMK-2026-XXX.\n- Result: PASS (PostgreSQL lockForUpdate berhasil mengantrikan transaksi).\n\nTC-02: Boundary NIK Invalid (15 dan 17 digit)\n- Input: NIK string '157107280200006' (15 digit) atau '15710728020000611' (17 digit).\n- Expected: HTTP 422 Unprocessable Entity dengan error message presisi.\n- Result: PASS.`
+    id: "cv-ats",
+    title: "CV_ATS_Andhika_Putra.doc",
+    category: "Curriculum Vitae / ATS",
+    size: "28 KB",
+    date: "September 2025",
+    desc: "Curriculum Vitae (CV) dalam format ATS-friendly untuk melamar posisi System Analyst, IT Business Analyst, Web Developer, atau QA Engineer.",
+    docSnippet: `CURRICULUM VITAE\nANDHIKA PUTRA PRATAMA, S.Kom.\n\nRINGKASAN PROFESIONAL\nSystem Analyst dengan fondasi langsung di Software Development dan Quality Assurance. Mampu menjembatani kebutuhan bisnis kompleks dengan solusi teknis yang teruji, terstruktur, dan mudah diskalakan.\n\nPENDIDIKAN\nSarjana Komputer (S.Kom.) — Teknik Informatika\nInstitut Teknologi Sumatera (ITERA) | 2019 – 2023 | IPK 3.73/4.00 (Sangat Memuaskan)\n\nKEAHLIAN UTAMA\nSystem Analysis: BPMN, BRD/SRS, Use Case, ERD 3NF, Data Dictionary, Flowchart\nDevelopment: PHP Laravel, PostgreSQL, REST API, Git, GitHub API, SSO Integration\nQA Testing: Test Case, Boundary/Negative Testing, Postman, Concurrency Validation\n\nSERTIFIKASI\n• IT Specialist in Python (Pearson/Certiport)\n• Machine Learning Specialization (DeepLearning.AI / Stanford)\n• Crash Course on Python (Google / Coursera)\n• TOEFL ITP Score: 640`
   }
 ];
 ---
@@ -587,65 +560,13 @@ const sampleWorkDocs = [
           <!-- File 1: ATS CV -->
           <div 
             class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
-            onclick="openWindow('win-resume')"
+            onclick="openSampleDoc('cv-ats')"
           >
             <FileText class="w-7 h-7 text-indigo-600 shrink-0 mt-0.5" />
             <div class="truncate">
               <div class="font-bold text-blue-900 group-hover:underline truncate">CV_ATS_Andhika_Putra.doc</div>
               <div class="text-[10px] text-slate-500 mt-0.5">Curriculum Vitae Standar ATS</div>
               <div class="text-[10px] text-emerald-700 font-semibold mt-1">Status: Siap Diunduh / Cetak</div>
-            </div>
-          </div>
-
-          <!-- File 2: SRS PUMK -->
-          <div 
-            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
-            onclick="openSampleDoc('srs-pumk')"
-          >
-            <FileText class="w-7 h-7 text-blue-600 shrink-0 mt-0.5" />
-            <div class="truncate">
-              <div class="font-bold text-blue-900 group-hover:underline truncate">SRS_PUMK_Spesifikasi.doc</div>
-              <div class="text-[10px] text-slate-500 mt-0.5">184 KB &bull; Software Requirements Spec</div>
-              <div class="text-[10px] text-blue-700 font-semibold mt-1">Perum DAMRI TJSL</div>
-            </div>
-          </div>
-
-          <!-- File 3: Kamus Data -->
-          <div 
-            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
-            onclick="openSampleDoc('kamus-data')"
-          >
-            <FileText class="w-7 h-7 text-blue-600 shrink-0 mt-0.5" />
-            <div class="truncate">
-              <div class="font-bold text-blue-900 group-hover:underline truncate">Kamus_Data_Teknis_Aplikasi.doc</div>
-              <div class="text-[10px] text-slate-500 mt-0.5">32 KB &bull; Data Dictionary Formal</div>
-              <div class="text-[10px] text-blue-700 font-semibold mt-1">Penyelarasan PO Excel vs DB</div>
-            </div>
-          </div>
-
-          <!-- File 4: SOP Push Request -->
-          <div 
-            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
-            onclick="openSampleDoc('audit-push')"
-          >
-            <FileText class="w-7 h-7 text-blue-600 shrink-0 mt-0.5" />
-            <div class="truncate">
-              <div class="font-bold text-blue-900 group-hover:underline truncate">SOP_Audit_GitHub_Push.doc</div>
-              <div class="text-[10px] text-slate-500 mt-0.5">95 KB &bull; DevOps Deployment SOP</div>
-              <div class="text-[10px] text-blue-700 font-semibold mt-1">Webhook API &amp; Prod Tracking</div>
-            </div>
-          </div>
-
-          <!-- File 5: QA Matrix -->
-          <div 
-            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
-            onclick="openSampleDoc('qa-matrix')"
-          >
-            <FileText class="w-7 h-7 text-emerald-600 shrink-0 mt-0.5" />
-            <div class="truncate">
-              <div class="font-bold text-blue-900 group-hover:underline truncate">Matriks_Skenario_QA_Testing.doc</div>
-              <div class="text-[10px] text-slate-500 mt-0.5">64 KB &bull; Test Cases &amp; Concurrency</div>
-              <div class="text-[10px] text-emerald-700 font-semibold mt-1">Boundary &amp; Negative Matrix</div>
             </div>
           </div>
         </div>
@@ -1622,6 +1543,7 @@ DB::transaction(function() use ($request) &#123;
     if (!win) return;
     win.classList.remove('hidden');
     win.style.display = 'flex';
+    win.dataset.state = 'open';
     bringToFront(win);
     updateTaskbar();
 
@@ -1714,14 +1636,22 @@ DB::transaction(function() use ($request) &#123;
     const btnClose = win.querySelector('.win-btn-close');
     btnClose?.addEventListener('click', (e) => {
       e.stopPropagation();
+      win.dataset.state = 'closed';
       win.classList.add('hidden');
       win.style.display = 'none';
+
+      // Stop Windows Media Player if this is the media player window
+      if (win.id === 'win-media-player') {
+        (window as any).stopWmp?.();
+      }
+
       updateTaskbar();
     });
 
     const btnMinimize = win.querySelector('.win-btn-minimize');
     btnMinimize?.addEventListener('click', (e) => {
       e.stopPropagation();
+      win.dataset.state = 'minimized';
       win.classList.add('hidden');
       win.style.display = 'none';
       updateTaskbar();
@@ -1761,7 +1691,7 @@ DB::transaction(function() use ($request) &#123;
     });
   });
 
-  // Strict Taskbar Sync: ONLY OPEN WINDOWS APPEAR!
+  // Strict Taskbar Sync: only OPEN or MINIMIZED windows appear. CLOSED windows are removed.
   function updateTaskbar() {
     const taskbarContainer = document.getElementById('xp-taskbar-items');
     if (!taskbarContainer) return;
@@ -1769,22 +1699,39 @@ DB::transaction(function() use ($request) &#123;
 
     windows.forEach((win) => {
       const isVisible = win.style.display === 'flex' || (!win.classList.contains('hidden') && win.style.display !== 'none');
-      if (!isVisible) return;
+
+      // First-run: any window that is hidden and has no state is treated as closed
+      if (!win.dataset.state) {
+        win.dataset.state = isVisible ? 'open' : 'closed';
+      }
+
+      const state = win.dataset.state;
+      // Closed window should never appear in taskbar
+      if (state === 'closed') return;
+
+      // Normalize minimized state
+      const isMinimized = state === 'minimized' || (!isVisible && state !== 'closed');
+      if (!isVisible && state !== 'closed') {
+        win.dataset.state = 'minimized';
+      }
 
       const title = win.querySelector('.xp-titlebar span')?.textContent || 'Window';
 
       const btn = document.createElement('button');
-      btn.className = 'h-6 px-2.5 rounded text-[11px] font-bold flex items-center gap-1.5 cursor-pointer max-w-[140px] truncate shadow-inner bg-[#1b3f94] text-white border border-[#0d2358]';
+      const activeClass = isVisible ? 'bg-[#1b3f94] text-white border border-[#0d2358]' : 'bg-[#3a6edc] text-white/80 border border-[#2b58c0]';
+      btn.className = `h-6 px-2.5 rounded text-[11px] font-bold flex items-center gap-1.5 cursor-pointer max-w-[140px] truncate shadow-inner ${activeClass}`;
       btn.innerText = title.split(' - ')[0];
 
       btn.addEventListener('click', () => {
-        if (win.style.display === 'none' || win.classList.contains('hidden')) {
+        if (win.dataset.state === 'minimized' || win.classList.contains('hidden') || win.style.display === 'none') {
           win.classList.remove('hidden');
           win.style.display = 'flex';
+          win.dataset.state = 'open';
           bringToFront(win);
         } else {
           win.classList.add('hidden');
           win.style.display = 'none';
+          win.dataset.state = 'minimized';
         }
         updateTaskbar();
       });
@@ -2120,6 +2067,20 @@ DB::transaction(function() use ($request) &#123;
     }
   }
 
+  function stopWmp() {
+    isWmpPlaying = false;
+    if (ytPlayerInstance && ytPlayerInstance.stopVideo) {
+      ytPlayerInstance.stopVideo();
+    }
+    if (localAudioFallback) {
+      localAudioFallback.pause();
+      localAudioFallback.currentTime = 0;
+    }
+    clearInterval(wmpScrubInterval);
+    setWmpPlayingState(false);
+  }
+  (window as any).stopWmp = stopWmp;
+
   function playTrack(idx: number) {
     currentTrackIdx = idx;
     const t = lofiPlaylist[idx];
@@ -2289,10 +2250,9 @@ DB::transaction(function() use ($request) &#123;
         resp.innerHTML = `
           Perintah yang tersedia:<br/>
           &bull; <span class="text-yellow-300">andhika</span>  - Profil Andhika Putra Pratama<br/>
-          &bull; <span class="text-yellow-300">pumk</span>     - Detail arsitektur aplikasi PUMK<br/>
-          &bull; <span class="text-yellow-300">push</span>     - Detail aplikasi Push Request Tracker<br/>
           &bull; <span class="text-yellow-300">skills</span>   - Matriks keahlian SA, Dev &amp; QA<br/>
           &bull; <span class="text-yellow-300">contact</span>  - Email &amp; saluran komunikasi<br/>
+          &bull; <span class="text-yellow-300">projects</span> - Daftar studi kasus portofolio<br/>
           &bull; <span class="text-yellow-300">clear</span>    - Bersihkan layar terminal
         `;
       } else if (val === 'andhika') {
@@ -2301,18 +2261,12 @@ DB::transaction(function() use ($request) &#123;
           Lulusan S1 Teknik Informatika ITERA (IPK: 3.73 / TOEFL: 640)<br/>
           Email: andhikapp28@gmail.com | GitHub: github.com/andhikapp28
         `;
-      } else if (val === 'pumk') {
+      } else if (val === 'projects') {
         resp.innerHTML = `
-          [PUMK DAMRI]: Sistem Pembinaan &amp; Pembiayaan UMKM BUMN.<br/>
-          - Validasi NIK 16 digit &amp; penomoran unik via lockForUpdate<br/>
-          - Integrasi Shadow User ke database SSO DAMRI<br/>
-          - Kamus data teknis 32KB
-        `;
-      } else if (val === 'push') {
-        resp.innerHTML = `
-          [PUSH REQUEST DAMRI]: Sistem Audit Commit &amp; Manajemen Proyek IT.<br/>
-          - Webhook GitHub API &amp; diff audit status pull ke production<br/>
-          - Kanban board task &amp; milestone checklist
+          Studi kasus portofolio tersedia di desktop:<br/>
+          &bull; Aplikasi PUMK - TJSL Perum DAMRI<br/>
+          &bull; Push Request Tracker - Audit &amp; Deployment IT DAMRI<br/>
+          Klik ikon Case Studies (E:) atau buka lewat Start Menu.
         `;
       } else if (val === 'skills') {
         resp.innerHTML = `
