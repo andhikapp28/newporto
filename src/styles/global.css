@@ -547,3 +547,32 @@
 }
 
 
+
+
+/* Inactive XP Window Titlebar & Button Styling */
+.xp-window:not(.active-window) .xp-titlebar {
+  background: linear-gradient(to right, #7b9ebd, #a6c1db 40%, #7b9ebd) !important;
+  color: #d8e5f2 !important;
+}
+
+.xp-window:not(.active-window) .win-btn-close {
+  background: #c27b82 !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  opacity: 0.85;
+}
+
+.xp-window:not(.active-window) .win-btn-minimize,
+.xp-window:not(.active-window) .win-btn-maximize {
+  background: #8faec9 !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  opacity: 0.85;
+}
+
+/* Touch callout suppression & Safe Area Inset */
+#xp-taskbar {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.xp-window {
+  -webkit-touch-callout: none;
+}

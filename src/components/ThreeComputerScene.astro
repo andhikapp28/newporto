@@ -11,6 +11,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.85)_100%)] z-10"></div>
 
   <!-- Top Header (No "Retro Workstation" badge as requested) -->
+  <!-- Recruiter Fast-Track Floating Button -->
+  <div class="absolute top-4 right-4 z-50 pointer-events-auto">
+    <button 
+      id="btn-fasttrack-skip" 
+      class="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 hover:from-emerald-500 hover:to-blue-500 text-white font-mono text-[11px] font-bold shadow-xl border border-emerald-300/40 backdrop-blur-md flex items-center gap-1.5 cursor-pointer transition-all hover:scale-105 active:scale-95 group"
+      title="Open 60-second Executive Summary directly"
+    >
+      <span class="w-2 h-2 rounded-full bg-emerald-300 animate-ping shrink-0"></span>
+      <span class="tracking-wide">⚡ Recruiter Fast-Track</span>
+    </button>
+  </div>
+
   <div class="relative z-20 pt-8 px-6 flex flex-col items-center text-center pointer-events-none">
     <h1 class="text-2xl sm:text-4xl font-black font-mono tracking-wider text-emerald-400 drop-shadow-[0_0_20px_rgba(52,211,153,0.5)]">
       SYSTEM ANALYST &bull; WORKSTATION
@@ -140,7 +152,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       // Phosphor Green Terminal Boot Text (Exact wording from Image 2)
       ctx.fillStyle = '#34d399';
       ctx.font = 'bold 22px "Courier New", monospace';
-      ctx.fillText('MICROSOFT (R) WINDOWS XP', 40, 55);
+      ctx.fillText('MICROCOK (R) WINDOWS XD', 40, 55);
 
       ctx.fillStyle = '#10b981';
       ctx.font = '15px "Courier New", monospace';
@@ -532,6 +544,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         }, 50);
       }
     });
+
+    // Recruiter Fast-Track Skip Trigger
+    const fasttrackBtn = document.getElementById('btn-fasttrack-skip');
+    if (fasttrackBtn) {
+      fasttrackBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (stage) {
+          stage.style.opacity = '0';
+          stage.style.pointerEvents = 'none';
+          setTimeout(() => {
+            stage.classList.add('hidden');
+          }, 500);
+        }
+        window.dispatchEvent(new CustomEvent('xp:boot-desktop', { detail: { openFastTrack: true } }));
+      });
+    }
 
     // 10. Backup boot trigger: any click/tap on the visible stage powers on
     // (pointerup logic above handles first boot with raycast; this ensures reboot works on all devices)
