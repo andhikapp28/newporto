@@ -310,3 +310,178 @@
   border-top: 1px solid rgba(255, 255, 255, 0.65);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
+
+/* ==========================================================================
+   AUTHENTIC THEMES: OLIVE GREEN & METALLIC SILVER
+   ========================================================================== */
+[data-xp-theme="olive"] .xp-titlebar {
+  background: linear-gradient(180deg, #9db476 0%, #7e945c 14%, #6e844c 45%, #5d723d 50%, #4c612c 100%) !important;
+}
+[data-xp-theme="olive"] .xp-window {
+  border-color: #6e844c !important;
+}
+[data-xp-theme="olive"] #xp-taskbar {
+  background: linear-gradient(180deg, #8ba168 0%, #768c53 10%, #687e45 30%, #5d733a 60%, #4f652c 100%) !important;
+  border-top-color: #9cb279 !important;
+}
+[data-xp-theme="olive"] #xp-start-btn {
+  background: linear-gradient(180deg, #7b9150 0%, #9cb275 15%, #6a8040 50%, #556b2b 100%) !important;
+  box-shadow: 0 0 8px rgba(123, 145, 80, 0.6) !important;
+}
+[data-xp-theme="olive"] #xp-tray-area {
+  background: linear-gradient(180deg, #596e38 0%, #445628 100%) !important;
+  border-left-color: #72894d !important;
+}
+[data-xp-theme="olive"] .xp-task-btn {
+  background: linear-gradient(180deg, #8ba168 0%, #687e45 100%) !important;
+  border-color: #556837 !important;
+  color: #ffffff !important;
+}
+[data-xp-theme="olive"] .xp-task-btn.active {
+  background: linear-gradient(180deg, #526635 0%, #3e4f25 100%) !important;
+  border-color: #2b3917 !important;
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.6) !important;
+}
+[data-xp-theme="olive"] .win-btn-minimize,
+[data-xp-theme="olive"] .win-btn-maximize {
+  background: linear-gradient(180deg, #9bb074 0%, #73884c 45%, #596e32 50%, #62773b 100%) !important;
+}
+[data-xp-theme="olive"] .xp-lens-tab.active {
+  border-top-color: #7b9150 !important;
+  color: #4c612c !important;
+}
+
+[data-xp-theme="silver"] .xp-titlebar {
+  background: linear-gradient(180deg, #d3d8e5 0%, #b0b6c6 14%, #9da3b3 45%, #8c92a2 50%, #7c8292 100%) !important;
+  color: #1a202c !important;
+}
+[data-xp-theme="silver"] .xp-window {
+  border-color: #8c92a2 !important;
+}
+[data-xp-theme="silver"] #xp-taskbar {
+  background: linear-gradient(180deg, #d6dae6 0%, #bcc2d1 10%, #a6acc0 30%, #959bad 60%, #858b9d 100%) !important;
+  border-top-color: #e5e8f2 !important;
+}
+[data-xp-theme="silver"] #xp-start-btn {
+  background: linear-gradient(180deg, #5c6f8f 0%, #7c91b5 15%, #495c7d 50%, #364969 100%) !important;
+  box-shadow: 0 0 8px rgba(92, 111, 143, 0.6) !important;
+}
+[data-xp-theme="silver"] #xp-tray-area {
+  background: linear-gradient(180deg, #9da3b5 0%, #767c8e 100%) !important;
+  border-left-color: #b8bdcc !important;
+}
+[data-xp-theme="silver"] .xp-task-btn {
+  background: linear-gradient(180deg, #d3d8e5 0%, #b0b6c6 100%) !important;
+  border-color: #8c92a2 !important;
+  color: #1a202c !important;
+}
+[data-xp-theme="silver"] .xp-task-btn.active {
+  background: linear-gradient(180deg, #9da3b5 0%, #858b9d 100%) !important;
+  border-color: #555b6c !important;
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.4) !important;
+  color: #000000 !important;
+}
+[data-xp-theme="silver"] .win-btn-minimize,
+[data-xp-theme="silver"] .win-btn-maximize {
+  background: linear-gradient(180deg, #b8bdcc 0%, #8b91a2 45%, #727889 50%, #7d8394 100%) !important;
+  color: #111111 !important;
+}
+[data-xp-theme="silver"] .xp-lens-tab.active {
+  border-top-color: #5c6f8f !important;
+  color: #364969 !important;
+}
+
+/* ==========================================================================
+   DESKTOP RIGHT-CLICK CONTEXT MENU
+   ========================================================================== */
+.xp-context-menu {
+  font-family: 'Tahoma', 'Segoe UI', system-ui, sans-serif;
+  font-size: 11px;
+  background: #ffffff;
+  border: 1px solid #716f64;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.35);
+  padding: 2px;
+  min-width: 155px;
+  z-index: 999999;
+}
+
+.xp-context-item {
+  padding: 3px 20px 3px 20px;
+  cursor: pointer;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+}
+
+.xp-context-item:hover {
+  background: #316ac5;
+  color: #ffffff;
+}
+
+.xp-context-separator {
+  height: 1px;
+  background: #aca899;
+  margin: 3px 1px;
+}
+
+/* ==========================================================================
+   MINESWEEPER STYLING
+   ========================================================================== */
+.ms-cell {
+  width: 22px;
+  height: 22px;
+  font-family: 'Tahoma', monospace;
+  font-weight: 900;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  cursor: pointer;
+  background: #c0c0c0;
+  box-sizing: border-box;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+}
+
+.ms-cell.revealed {
+  border: 1px solid #7b7b7b;
+  background: #c0c0c0;
+}
+
+.ms-cell.mine-hit {
+  background: #ff0000 !important;
+}
+
+.ms-digit {
+  background: #000000;
+  color: #ff0000;
+  font-family: 'Courier New', monospace;
+  font-weight: 900;
+  font-size: 19px;
+  line-height: 1;
+  letter-spacing: 2px;
+  padding: 2px 4px;
+  border: 1px inset #808080;
+  display: inline-block;
+  user-select: none;
+}
+
+/* ==========================================================================
+   SCREENSAVER 3D FLOATING TEXT ANIMATION
+   ========================================================================== */
+@keyframes float3D {
+  0% { transform: translate(5vw, 10vh) rotateY(-12deg) rotateX(10deg); }
+  25% { transform: translate(45vw, 40vh) rotateY(16deg) rotateX(-12deg); }
+  50% { transform: translate(15vw, 55vh) rotateY(-16deg) rotateX(14deg); }
+  75% { transform: translate(50vw, 15vh) rotateY(12deg) rotateX(-10deg); }
+  100% { transform: translate(5vw, 10vh) rotateY(-12deg) rotateX(10deg); }
+}
+
+.xp-screensaver-text {
+  animation: float3D 24s ease-in-out infinite alternate;
+  text-shadow: 2px 2px 0px #002266, 4px 4px 0px #001144, 6px 6px 12px rgba(0,0,0,0.8);
+}
+

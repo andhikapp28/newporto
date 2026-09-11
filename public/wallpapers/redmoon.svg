@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <linearGradient id="dsky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#080214"/>
+      <stop offset="45%" stop-color="#2e0c2f"/>
+      <stop offset="80%" stop-color="#78182a"/>
+      <stop offset="100%" stop-color="#b93b22"/>
+    </linearGradient>
+    <linearGradient id="dune1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#a83020"/>
+      <stop offset="100%" stop-color="#38090f"/>
+    </linearGradient>
+    <linearGradient id="dune2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d44922"/>
+      <stop offset="100%" stop-color="#420b12"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#dsky)"/>
+  <!-- Red Moon -->
+  <circle cx="1450" cy="280" r="110" fill="#ff5533" opacity="0.9"/>
+  <circle cx="1415" cy="250" r="95" fill="#20081d"/>
+  <!-- Dunes -->
+  <path d="M0,720 Q480,580 1100,750 T1920,700 L1920,1080 L0,1080 Z" fill="url(#dune1)"/>
+  <path d="M0,830 Q700,680 1400,860 T1920,820 L1920,1080 L0,1080 Z" fill="url(#dune2)"/>
+</svg>

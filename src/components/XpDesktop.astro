@@ -42,7 +42,13 @@ import {
   ZoomIn, 
   ZoomOut, 
   Music,
-  Printer 
+  Printer,
+  Activity,
+  Palette,
+  Bomb,
+  Monitor,
+  Info,
+  Smile 
 } from '@lucide/astro';
 
 const allProjects = await getCollection('projects');
@@ -346,6 +352,48 @@ const sampleWorkDocs = [
         </div>
         <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Recycle Bin" data-id="Tempat Sampah">
           Tempat Sampah
+        </span>
+      </div>
+
+      <!-- Icon 12: Task Manager -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+           data-open="win-taskmgr"
+           title="Task Manager"
+           data-tooltip-title="Windows Task Manager"
+           data-tooltip-desc="Monitor performa CPU, load System Analyst, dan status aplikasi. | Monitor CPU performance, System Analyst load, and app statuses.">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-emerald-950 border border-emerald-500 shadow-md group-hover:scale-105 transition-transform">
+          <Activity class="w-6 h-6 text-emerald-400" />
+        </div>
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Taskmgr.exe" data-id="Taskmgr.exe">
+          Taskmgr.exe
+        </span>
+      </div>
+
+      <!-- Icon 13: Paint -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+           data-open="win-paint"
+           title="Paint"
+           data-tooltip-title="Paint"
+           data-tooltip-desc="Kanvas coret-coret interaktif untuk HR & pengunjung. | Interactive doodle canvas for HR & visitors.">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-white border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
+          <Palette class="w-6 h-6 text-amber-500" />
+        </div>
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Paint.exe" data-id="Paint.exe">
+          Paint.exe
+        </span>
+      </div>
+
+      <!-- Icon 14: Minesweeper -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+           data-open="win-minesweeper"
+           title="Minesweeper"
+           data-tooltip-title="Minesweeper"
+           data-tooltip-desc="Game klasik legendaris Windows XP 9x9 kotak. | Legendary classic Windows XP 9x9 grid game.">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-slate-200 border border-slate-400 shadow-md group-hover:scale-105 transition-transform">
+          <Bomb class="w-6 h-6 text-red-600" />
+        </div>
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Minesweeper" data-id="Minesweeper">
+          Minesweeper
         </span>
       </div>
     </div>
@@ -1824,7 +1872,345 @@ const sampleWorkDocs = [
       </div>
     </div>
 
-  <!-- ==================== AUTHENTIC WINDOWS XP SHUTDOWN DIALOG ==================== -->
+    <!-- WINDOW 14: Display Properties (desk.cpl) -->
+      <div
+        id="win-display-props"
+        class="xp-window absolute top-12 left-28 w-[92vw] sm:w-[460px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-30 flex flex-col overflow-hidden hidden"
+      >
+        <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
+          <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+            <Monitor class="w-3.5 h-3.5 text-blue-200 shrink-0" />
+            <span class="i18n" data-en="Display Properties" data-id="Properti Tampilan">Properti Tampilan</span>
+          </div>
+          <div class="flex items-center gap-1 shrink-0">
+            <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="px-2 pt-2 bg-[#ece9d8] border-b border-[#7f9db9] flex items-center gap-1 select-none">
+          <button class="xp-lens-tab active" id="tab-disp-theme">
+            <span class="i18n" data-en="Appearance (Theme)" data-id="Tema Tampilan">Tema Tampilan</span>
+          </button>
+          <button class="xp-lens-tab" id="tab-disp-desktop">
+            <span class="i18n" data-en="Desktop (Wallpaper)" data-id="Wallpaper">Wallpaper</span>
+          </button>
+        </div>
+
+        <div class="p-4 bg-[#ece9d8] flex-1 text-xs">
+          <!-- Tab 1: Theme Content -->
+          <div id="disp-content-theme" class="space-y-4">
+            <div class="flex flex-col items-center">
+              <div class="w-48 h-30 bg-[#001133] p-1.5 rounded-lg border-4 border-[#333333] shadow-inner flex flex-col justify-between" id="disp-preview-monitor">
+                <div class="h-5 px-1.5 rounded-t flex items-center justify-between text-[9px] text-white font-bold" id="disp-preview-titlebar" style="background: linear-gradient(180deg, #0a66f0 0%, #004ddb 100%);">
+                  <span>Active Window</span>
+                  <div class="w-2 h-2 rounded-xs bg-red-500"></div>
+                </div>
+                <div class="flex-1 bg-white p-2 flex flex-col justify-center items-center">
+                  <span class="text-[9px] text-slate-700 font-semibold" id="disp-preview-text">Windows XP Luna</span>
+                </div>
+                <div class="h-3 rounded-b flex items-center px-1" id="disp-preview-taskbar" style="background: #245edb;">
+                  <div class="w-5 h-2 rounded-r-sm bg-green-600"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-1.5 bg-white p-3 rounded border border-[#7f9db9]">
+              <label class="block font-bold text-slate-700 i18n" data-en="Color scheme:" data-id="Skema Warna:">Skema Warna:</label>
+              <select id="disp-theme-select" class="xp-input w-full">
+                <option value="blue">Default (Luna Blue)</option>
+                <option value="olive">Olive Green (Homestead)</option>
+                <option value="silver">Metallic Silver</option>
+              </select>
+              <p class="text-[10px] text-slate-500 mt-1 i18n" data-en="Changes entire OS color palette instantly." data-id="Mengubah seluruh palet warna OS secara instan.">Mengubah seluruh palet warna OS secara instan.</p>
+            </div>
+          </div>
+
+          <!-- Tab 2: Wallpaper Content -->
+          <div id="disp-content-desktop" class="space-y-4 hidden">
+            <div class="flex flex-col items-center">
+              <div class="w-48 h-28 rounded border-2 border-slate-700 shadow bg-cover bg-center" id="disp-wallpaper-preview" style={`background-image: url('${blissImg}');`}></div>
+            </div>
+
+            <div class="space-y-1.5 bg-white p-3 rounded border border-[#7f9db9]">
+              <label class="block font-bold text-slate-700 i18n" data-en="Background:" data-id="Latar Belakang:">Latar Belakang:</label>
+              <select id="disp-wallpaper-select" class="xp-input w-full">
+                <option value="bliss">Bliss (Default)</option>
+                <option value="autumn">Autumn (Golden Woods)</option>
+                <option value="azul">Azul (XP Waves)</option>
+                <option value="redmoon">Red Moon Desert</option>
+                <option value="classic">Classic Windows Blue</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer buttons -->
+        <div class="h-10 px-3 bg-[#ece9d8] border-t border-[#d8d4c2] flex items-center justify-end gap-2">
+          <button class="xp-btn xp-btn-default font-bold" id="disp-btn-ok">OK</button>
+          <button class="xp-btn win-btn-close" id="disp-btn-cancel">Batal</button>
+          <button class="xp-btn font-semibold" id="disp-btn-apply">Terapkan</button>
+        </div>
+      </div>
+
+      <!-- WINDOW 15: Windows Task Manager (taskmgr.exe) -->
+      <div
+        id="win-taskmgr"
+        class="xp-window absolute top-10 left-36 w-[92vw] sm:w-[500px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-30 flex flex-col overflow-hidden hidden"
+      >
+        <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
+          <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+            <Activity class="w-3.5 h-3.5 text-emerald-300 shrink-0" />
+            <span>Windows Task Manager</span>
+          </div>
+          <div class="flex items-center gap-1 shrink-0">
+            <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+            <button class="win-btn-maximize" title="Maximize"><Square class="w-2 h-2" /></button>
+            <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
+          </div>
+        </div>
+
+        <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700 select-none">
+          <span class="hover:underline cursor-pointer">File</span>
+          <span class="hover:underline cursor-pointer">Options</span>
+          <span class="hover:underline cursor-pointer">View</span>
+          <span class="hover:underline cursor-pointer">Help</span>
+        </div>
+
+        <div class="px-2 pt-2 bg-[#ece9d8] border-b border-[#7f9db9] flex items-center gap-1 select-none">
+          <button class="xp-lens-tab active" id="tab-taskmgr-apps">
+            <span class="i18n" data-en="Applications" data-id="Aplikasi">Aplikasi</span>
+          </button>
+          <button class="xp-lens-tab" id="tab-taskmgr-perf">
+            <span class="i18n" data-en="Performance" data-id="Performa">Performa</span>
+          </button>
+        </div>
+
+        <div class="p-3 bg-[#ece9d8] flex-1 text-xs">
+          <!-- Tab 1: Applications -->
+          <div id="taskmgr-content-apps" class="space-y-3">
+            <div class="bg-white border border-[#7f9db9] h-48 overflow-y-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead class="bg-[#ece9d8] text-slate-700 border-b border-[#7f9db9] sticky top-0">
+                  <tr>
+                    <th class="p-1.5 font-normal border-r border-[#7f9db9]">Task</th>
+                    <th class="p-1.5 font-normal w-24">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="taskmgr-app-rows">
+                  <!-- Injected by JS -->
+                </tbody>
+              </table>
+            </div>
+            <div class="flex items-center justify-end gap-2">
+              <button class="xp-btn" id="taskmgr-btn-endtask">End Task</button>
+              <button class="xp-btn" id="taskmgr-btn-switch">Switch To</button>
+              <button class="xp-btn" id="taskmgr-btn-newtask" onclick="openWindow('win-run')">New Task...</button>
+            </div>
+          </div>
+
+          <!-- Tab 2: Performance -->
+          <div id="taskmgr-content-perf" class="space-y-3 hidden">
+            <div class="grid grid-cols-2 gap-2">
+              <div class="border border-[#7f9db9] bg-white p-2 rounded-xs">
+                <div class="text-[10px] font-bold text-slate-700 mb-1">CPU Usage: <span id="taskmgr-cpu-val" class="text-emerald-600 font-mono">34%</span></div>
+                <div class="bg-black p-1 border border-slate-700">
+                  <canvas id="canvas-cpu-gauge" width="60" height="70" class="w-full h-16"></canvas>
+                </div>
+              </div>
+              <div class="border border-[#7f9db9] bg-white p-2 rounded-xs">
+                <div class="text-[10px] font-bold text-slate-700 mb-1">CPU History (SA/Dev Load)</div>
+                <div class="bg-black border border-slate-700 overflow-hidden">
+                  <canvas id="canvas-cpu-graph" width="180" height="70" class="w-full h-16 block"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="border border-[#7f9db9] bg-white p-2 rounded-xs">
+              <div class="text-[10px] font-bold text-slate-700 mb-1">QA Rigor &amp; Test Memory: <span class="text-emerald-600 font-mono">100% Pass</span></div>
+              <div class="bg-black border border-slate-700 overflow-hidden">
+                <canvas id="canvas-mem-graph" width="380" height="50" class="w-full h-12 block"></canvas>
+              </div>
+            </div>
+
+            <div class="border border-[#7f9db9] bg-white p-2 rounded-xs grid grid-cols-2 gap-2 text-[11px] font-mono">
+              <div>
+                <span class="text-slate-500">Candidate:</span> Andhika P. Pratama<br/>
+                <span class="text-slate-500">Uptime:</span> 2023 - Present (Active)
+              </div>
+              <div>
+                <span class="text-slate-500">Architecture:</span> Clean / Enterprise<br/>
+                <span class="text-slate-500">QA Coverage:</span> 100% Rigor
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-5 px-2 bg-[#ece9d8] border-t border-[#d8d4c2] flex items-center justify-between text-[10px] text-slate-600 font-mono">
+          <span>Processes: 28</span>
+          <span>CPU Usage: <span id="taskmgr-sb-cpu">34%</span></span>
+          <span>Commit: 100% Pass</span>
+        </div>
+      </div>
+
+      <!-- WINDOW 16: System Properties (sysdm.cpl) -->
+      <div
+        id="win-sys-props"
+        class="xp-window absolute top-14 left-32 w-[92vw] sm:w-[440px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-30 flex flex-col overflow-hidden hidden"
+      >
+        <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
+          <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+            <Laptop class="w-3.5 h-3.5 text-blue-200 shrink-0" />
+            <span class="i18n" data-en="System Properties" data-id="Properti Sistem">Properti Sistem</span>
+          </div>
+          <div class="flex items-center gap-1 shrink-0">
+            <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
+          </div>
+        </div>
+
+        <div class="px-2 pt-2 bg-[#ece9d8] border-b border-[#7f9db9] flex items-center gap-1 select-none">
+          <button class="xp-lens-tab active"><span class="i18n" data-en="General" data-id="Umum">Umum</span></button>
+        </div>
+
+        <div class="p-4 bg-[#ece9d8] flex-1 text-xs space-y-3">
+          <div class="flex gap-4 items-start">
+            <div class="w-20 shrink-0 flex flex-col items-center">
+              <svg class="w-16 h-16 drop-shadow-md" viewBox="0 0 24 24">
+                <rect x="2" y="2" width="9" height="9" fill="#f44336" rx="1.5" />
+                <rect x="13" y="2" width="9" height="9" fill="#4caf50" rx="1.5" />
+                <rect x="2" y="13" width="9" height="9" fill="#2196f3" rx="1.5" />
+                <rect x="13" y="13" width="9" height="9" fill="#ffeb3b" rx="1.5" />
+              </svg>
+              <span class="font-black italic text-[#003399] text-xs mt-1">Windows<span class="text-[#ff6600]">xp</span></span>
+            </div>
+
+            <div class="space-y-3 text-[11px] leading-snug">
+              <div>
+                <div class="font-bold text-slate-900">System:</div>
+                <div class="text-slate-700">Microsoft Windows XP Professional</div>
+                <div class="text-slate-700">Version 2002 (Service Pack 3)</div>
+                <div class="text-blue-800 font-semibold">Andhika Workstation Edition</div>
+              </div>
+
+              <div>
+                <div class="font-bold text-slate-900">Registered to:</div>
+                <div class="text-slate-700">Valued Recruiter &amp; HR Partner</div>
+                <div class="text-slate-600 font-mono text-[10px]">2809-ITERA-3730-2024</div>
+              </div>
+
+              <div>
+                <div class="font-bold text-slate-900">Computer:</div>
+                <div class="text-slate-700">Intel(R) Core(TM) System Analyst</div>
+                <div class="text-slate-700">Speed: 3.73 GHz (GPA 3.73 / 4.00)</div>
+                <div class="text-slate-700">English Proficiency: 640 TOEFL ITP</div>
+                <div class="text-emerald-700 font-semibold">DAMRI Enterprise Systems Verified</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-10 px-3 bg-[#ece9d8] border-t border-[#d8d4c2] flex items-center justify-end gap-2">
+          <button class="xp-btn xp-btn-default font-bold win-btn-close">OK</button>
+        </div>
+      </div>
+
+      <!-- WINDOW 17: Paint (mspaint.exe) -->
+      <div
+        id="win-paint"
+        class="xp-window absolute top-8 left-20 w-[94vw] sm:w-[620px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-30 flex flex-col overflow-hidden hidden"
+      >
+        <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
+          <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+            <Palette class="w-3.5 h-3.5 text-amber-300 shrink-0" />
+            <span>untitled - Paint</span>
+          </div>
+          <div class="flex items-center gap-1 shrink-0">
+            <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+            <button class="win-btn-maximize" title="Maximize"><Square class="w-2 h-2" /></button>
+            <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
+          </div>
+        </div>
+
+        <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700 select-none">
+          <span class="hover:underline cursor-pointer" id="paint-menu-clear">Bersihkan</span>
+          <span class="hover:underline cursor-pointer" id="paint-menu-save">Unduh Gambar</span>
+        </div>
+
+        <div class="flex flex-1 bg-[#ece9d8] p-1.5 gap-1.5 overflow-hidden">
+          <div class="w-14 bg-[#ece9d8] border border-[#7f9db9] p-1 flex flex-col items-center gap-1 select-none">
+            <button class="xp-btn w-full !px-1 font-bold text-[10px] active" id="tool-pencil" title="Pencil">Pensil</button>
+            <button class="xp-btn w-full !px-1 font-bold text-[10px]" id="tool-brush" title="Brush">Kuas</button>
+            <button class="xp-btn w-full !px-1 font-bold text-[10px]" id="tool-eraser" title="Eraser">Hapus</button>
+            <div class="h-px w-full bg-slate-400 my-1"></div>
+            <button class="xp-btn w-full !px-1 text-[10px]" id="tool-clear" title="Clear">Clear</button>
+            <div class="mt-auto flex flex-col items-center gap-1">
+              <span class="text-[9px] text-slate-600">Ukuran:</span>
+              <select id="paint-size" class="xp-input text-[10px] w-full !p-0.5">
+                <option value="2">Tipis</option>
+                <option value="5" selected>Sedang</option>
+                <option value="12">Tebal</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex-1 bg-[#7b7b7b] p-2 overflow-auto flex items-center justify-center border border-slate-600">
+            <canvas id="paint-canvas" width="480" height="280" class="bg-white shadow-md cursor-crosshair block"></canvas>
+          </div>
+        </div>
+
+        <div class="h-9 px-2 bg-[#ece9d8] border-t border-[#7f9db9] flex items-center justify-between">
+          <div class="flex items-center gap-1">
+            <div class="w-6 h-6 border-2 border-black rounded-xs shadow-inner shrink-0" id="paint-curr-color" style="background: #000000;"></div>
+            <div class="flex flex-wrap w-64 gap-0.5" id="paint-palette">
+              <!-- 16 classic colors injected by JS -->
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button class="xp-btn font-semibold" id="paint-btn-save">
+              <Save class="w-3.5 h-3.5 text-blue-700" />
+              <span>Unduh</span>
+            </button>
+            <span id="paint-coords" class="text-[10px] text-slate-600 font-mono">0, 0 px</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- WINDOW 18: Minesweeper (winmine.exe) -->
+      <div
+        id="win-minesweeper"
+        class="xp-window absolute top-16 left-48 w-auto rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#c0c0c0] text-slate-800 z-30 flex flex-col overflow-hidden hidden"
+      >
+        <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
+          <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+            <Bomb class="w-3.5 h-3.5 text-red-300 shrink-0" />
+            <span>Minesweeper</span>
+          </div>
+          <div class="flex items-center gap-1 shrink-0">
+            <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+            <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
+          </div>
+        </div>
+
+        <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700 select-none">
+          <span class="hover:underline cursor-pointer" id="ms-menu-new">Game Baru</span>
+        </div>
+
+        <div class="p-3 bg-[#c0c0c0] border-t-2 border-l-2 border-white border-b-2 border-r-2 border-[#808080] m-1.5 flex flex-col gap-2">
+          <div class="p-1.5 bg-[#c0c0c0] border-2 border-[#808080] border-b-white border-r-white flex items-center justify-between">
+            <div class="ms-digit" id="ms-counter">010</div>
+            <button id="ms-smiley" class="w-7 h-7 bg-[#c0c0c0] border-2 border-white border-b-[#808080] border-r-[#808080] active:border-[#808080] flex items-center justify-center text-lg select-none cursor-pointer">
+              🙂
+            </button>
+            <div class="ms-digit" id="ms-timer">000</div>
+          </div>
+
+          <div id="ms-board" class="border-2 border-[#808080] border-b-white border-r-white inline-block">
+            <!-- Injected 9x9 grid cells -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== AUTHENTIC WINDOWS XP SHUTDOWN DIALOG ==================== -->
   <div 
     id="xp-shutdown-modal" 
     class="fixed inset-0 z-[20000] hidden items-center justify-center backdrop-grayscale backdrop-brightness-50"
@@ -1896,6 +2282,113 @@ const sampleWorkDocs = [
     </div>
   </div>
 
+  <!-- ==================== TRAY BALLOON NOTIFICATION ==================== -->
+  <div
+    id="xp-tray-balloon"
+    class="fixed bottom-10 right-6 w-80 bg-[#ffffe1] text-black border border-black rounded-md shadow-2xl p-3 z-[99999] hidden select-none"
+  >
+    <div class="absolute -bottom-2 right-8 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-black"></div>
+    <div class="absolute -bottom-[7px] right-[33px] w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-t-[7px] border-t-[#ffffe1]"></div>
+
+    <div class="flex items-start justify-between gap-2">
+      <div class="flex items-center gap-1.5 font-bold text-xs text-[#003399]">
+        <div class="w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px] font-black">i</div>
+        <span class="i18n" data-en="Workstation Ready" data-id="Workstation Siap">Workstation Siap</span>
+      </div>
+      <button id="balloon-close" class="text-slate-500 hover:text-black text-xs font-bold px-1">✕</button>
+    </div>
+    <p class="text-xs text-slate-800 mt-1 leading-snug cursor-pointer" id="balloon-body">
+      <span class="i18n" data-en="Welcome! Inspect enterprise SDLC Lens & system specs in System Properties." data-id="Selamat datang! Lihat dokumentasi SDLC Lens & spek sistem di Properti Sistem.">Selamat datang! Lihat dokumentasi SDLC Lens & spek sistem di Properti Sistem.</span>
+    </p>
+  </div>
+
+  <!-- ==================== DESKTOP CONTEXT MENU (RIGHT CLICK) ==================== -->
+  <div id="xp-desktop-context-menu" class="xp-context-menu fixed hidden">
+    <div class="xp-context-item" id="ctx-disp-props">
+      <Monitor class="w-3.5 h-3.5 text-blue-600 shrink-0" />
+      <span class="i18n" data-en="Properties (Themes)" data-id="Properti (Tema)">Properti (Tema)</span>
+    </div>
+    <div class="xp-context-item" id="ctx-taskmgr">
+      <Activity class="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+      <span class="i18n" data-en="Task Manager" data-id="Task Manager">Task Manager</span>
+    </div>
+    <div class="xp-context-separator"></div>
+    <div class="xp-context-item" id="ctx-paint">
+      <Palette class="w-3.5 h-3.5 text-amber-600 shrink-0" />
+      <span class="i18n" data-en="Paint" data-id="Paint">Paint</span>
+    </div>
+    <div class="xp-context-item" id="ctx-minesweeper">
+      <Bomb class="w-3.5 h-3.5 text-red-600 shrink-0" />
+      <span class="i18n" data-en="Minesweeper" data-id="Minesweeper">Minesweeper</span>
+    </div>
+    <div class="xp-context-item" id="ctx-notepad">
+      <StickyNote class="w-3.5 h-3.5 text-yellow-500 shrink-0" />
+      <span class="i18n" data-en="New Text Document" data-id="Dokumen Teks Baru">Dokumen Teks Baru</span>
+    </div>
+    <div class="xp-context-separator"></div>
+    <div class="xp-context-item" id="ctx-refresh">
+      <RotateCw class="w-3.5 h-3.5 text-blue-600 shrink-0" />
+      <span class="i18n" data-en="Refresh" data-id="Segarkan">Segarkan</span>
+    </div>
+  </div>
+
+  <!-- ==================== SCREENSAVER (3D FLOATING TEXT) ==================== -->
+  <div
+    id="xp-screensaver"
+    class="fixed inset-0 z-[999999] bg-black hidden flex-col items-center justify-center select-none cursor-none overflow-hidden"
+  >
+    <div class="xp-screensaver-text text-center px-4">
+      <h1 class="text-3xl sm:text-6xl font-black italic tracking-wider bg-gradient-to-r from-blue-400 via-sky-200 to-indigo-400 bg-clip-text text-transparent">
+        ANDHIKA PUTRA PRATAMA
+      </h1>
+      <p class="text-base sm:text-2xl font-bold tracking-widest text-sky-300 mt-3 font-mono">
+        SYSTEM ANALYST &bull; DEV &bull; QA
+      </p>
+      <div class="text-xs text-slate-500 mt-6 font-mono">
+        [Gerakkan mouse atau tekan tombol apa saja untuk kembali]
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== BLUE SCREEN OF DEATH (BSOD) ==================== -->
+  <div
+    id="xp-bsod"
+    class="fixed inset-0 z-[1000000] bg-[#0000aa] text-white p-8 sm:p-14 font-mono text-xs sm:text-sm leading-relaxed hidden flex-col justify-between select-none cursor-pointer overflow-y-auto"
+  >
+    <div class="max-w-4xl mx-auto space-y-4">
+      <div class="bg-white text-[#0000aa] px-2 py-0.5 inline-block font-bold">
+        Windows
+      </div>
+      <p class="font-bold">
+        A problem has been detected and Windows has been shut down to prevent damage to your computer.
+      </p>
+      <p class="font-bold text-yellow-300 text-base sm:text-lg">
+        RECRUITER_MUST_HIRE_ANDHIKA
+      </p>
+      <p>
+        If this is the first time you've seen this Stop error screen, restart your computer. If this screen appears again, follow these steps:
+      </p>
+      <p>
+        Check to make sure candidate qualifications (Andhika Putra Pratama, GPA: 3.73, TOEFL: 640, DAMRI System Analyst &amp; Fullstack QA) are properly evaluated. If this is a new opening, contact Andhika immediately at andhikapp28@gmail.com.
+      </p>
+      <p class="font-bold">
+        Technical information:
+      </p>
+      <p class="text-[11px] sm:text-xs text-slate-200 leading-snug">
+        *** STOP: 0x000000D1 (0x00000000, 0x00000002, 0x00000000, 0xF86B5A89)<br/>
+        *** ANDHIKA_CORE.SYS - Candidate qualifications exceed expectations (GPA: 3.73)<br/>
+        *** DAMRI_PUMK.DLL &amp; PUSH_REQUEST_TRACKER.SYS verified 100% stable.
+      </p>
+      <p class="text-[11px] sm:text-xs text-emerald-300">
+        Beginning physical memory dump of candidate achievements...<br/>
+        Physical memory dump complete.
+      </p>
+    </div>
+    <div class="text-center text-xs text-yellow-200 animate-pulse mt-6">
+      [ Klik di mana saja atau tekan tombol apa pun untuk reboot Windows XP ]
+    </div>
+  </div>
+
   <!-- ==================== WINDOWS XP START MENU ==================== -->
   <div
     id="xp-start-menu"
@@ -1950,11 +2443,29 @@ const sampleWorkDocs = [
           <StickyNote class="w-4 h-4 text-yellow-600" />
           <span class="font-bold text-slate-800 i18n" data-en="Notepad" data-id="Catatan">Notepad</span>
         </div>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-taskmgr'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <Activity class="w-4 h-4 text-emerald-600" />
+          <span class="font-bold text-slate-800">Task Manager</span>
+        </div>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-paint'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <Palette class="w-4 h-4 text-amber-600" />
+          <span class="font-bold text-slate-800">Paint</span>
+        </div>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-minesweeper'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <Bomb class="w-4 h-4 text-red-600" />
+          <span class="font-bold text-slate-800">Minesweeper</span>
+        </div>
       </div>
 
       <div class="w-1/2 p-2 space-y-1 text-slate-700">
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="My Computer" data-id="Komputer Saya" onclick="openWindow('win-explorer'); document.getElementById('xp-start-menu').classList.add('hidden');">
           Komputer Saya
+        </div>
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="System Properties" data-id="Properti Sistem" onclick="openWindow('win-sys-props'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          Properti Sistem
+        </div>
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Display & Themes" data-id="Tampilan & Tema" onclick="openWindow('win-display-props'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          Tampilan & Tema
         </div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Case Studies (E:)" data-id="Studi Kasus (E:)" onclick="openWindow('win-projects'); document.getElementById('xp-start-menu').classList.add('hidden');">
           Studi Kasus (E:)
@@ -2024,7 +2535,7 @@ const sampleWorkDocs = [
       </div>
     </div>
 
-    <div class="h-full px-2.5 bg-gradient-to-b from-[#0f388a] via-[#16439e] to-[#0d2f78] border-l border-[#194bb5] shadow-inner flex items-center gap-2.5 text-xs text-white font-mono">
+    <div id="xp-tray-area" class="h-full px-2.5 bg-gradient-to-b from-[#0f388a] via-[#16439e] to-[#0d2f78] border-l border-[#194bb5] shadow-inner flex items-center gap-2.5 text-xs text-white font-mono">
       <button 
         id="lang-toggle-btn"
         class="px-1.5 py-0.5 rounded bg-blue-950/80 border border-blue-400/40 text-[10px] font-bold text-amber-300 hover:bg-blue-900 cursor-pointer"
@@ -2355,8 +2866,8 @@ const sampleWorkDocs = [
       const title = win.querySelector('.xp-titlebar span')?.textContent || 'Window';
 
       const btn = document.createElement('button');
-      const activeClass = isVisible ? 'bg-[#1b3f94] text-white border border-[#0d2358]' : 'bg-[#3a6edc] text-white/80 border border-[#2b58c0]';
-      btn.className = `h-6 px-2.5 rounded text-[11px] font-bold flex items-center gap-1.5 cursor-pointer max-w-[140px] truncate shadow-inner ${activeClass}`;
+      const activeClass = isVisible ? 'active bg-[#1b3f94] text-white border border-[#0d2358]' : 'bg-[#3a6edc] text-white/80 border border-[#2b58c0]';
+      btn.className = `xp-task-btn h-6 px-2.5 rounded text-[11px] font-bold flex items-center gap-1.5 cursor-pointer max-w-[140px] truncate shadow-inner ${activeClass}`;
       btn.innerText = title.split(' - ')[0];
 
       btn.addEventListener('click', () => {
@@ -3658,6 +4169,18 @@ public function handlePush(Request $request)
       docs: () => (window as any).openWindow('win-docs-folder'),
       explorer: () => (window as any).openWindow('win-explorer'),
       ie: () => (window as any).openWindow('win-ie-reader'),
+      taskmgr: () => (window as any).openWindow('win-taskmgr'),
+      paint: () => (window as any).openWindow('win-paint'),
+      mspaint: () => (window as any).openWindow('win-paint'),
+      winmine: () => (window as any).openWindow('win-minesweeper'),
+      minesweeper: () => (window as any).openWindow('win-minesweeper'),
+      display: () => (window as any).openWindow('win-display-props'),
+      'desk.cpl': () => (window as any).openWindow('win-display-props'),
+      sysdm: () => (window as any).openWindow('win-sys-props'),
+      'sysdm.cpl': () => (window as any).openWindow('win-sys-props'),
+      screensaver: () => (window as any).triggerScreensaver?.(),
+      crash: () => (window as any).triggerBsod?.(),
+      bsod: () => (window as any).triggerBsod?.(),
       shutdown: () => {
         const modal = document.getElementById('xp-shutdown-modal');
         if (modal) {
@@ -3722,6 +4245,13 @@ public function handlePush(Request $request)
           &bull; <span class="text-yellow-300">notepad</span>  - Buka Notepad<br/>
           &bull; <span class="text-yellow-300">search</span>   - Buka Search Companion<br/>
           &bull; <span class="text-yellow-300">shutdown</span> - Matikan komputer<br/>
+          &bull; <span class="text-yellow-300">taskmgr</span>  - Windows Task Manager (Performa SA &amp; QA)<br/>
+          &bull; <span class="text-yellow-300">paint</span>    - MS Paint (Kanvas Doodle)<br/>
+          &bull; <span class="text-yellow-300">minesweeper</span> - Game Minesweeper<br/>
+          &bull; <span class="text-yellow-300">theme</span>    - Ganti Tema (Luna Blue, Olive, Silver)<br/>
+          &bull; <span class="text-yellow-300">systeminfo</span> - Spesifikasi Sistem &amp; Profil<br/>
+          &bull; <span class="text-yellow-300">screensaver</span> - Screensaver 3D Teks<br/>
+          &bull; <span class="text-yellow-300">crash / bsod</span> - Blue Screen of Death Easter Egg<br/>
           &bull; <span class="text-yellow-300">clear</span>    - Bersihkan layar terminal
         `;
       } else if (val === 'andhika') {
@@ -3773,6 +4303,27 @@ public function handlePush(Request $request)
           modal.classList.add('flex');
         }
         resp.innerHTML = 'Membuka dialog shutdown...';
+      } else if (val === 'taskmgr') {
+        (window as any).openWindow('win-taskmgr');
+        resp.innerHTML = 'Membuka Windows Task Manager...';
+      } else if (val === 'paint' || val === 'mspaint') {
+        (window as any).openWindow('win-paint');
+        resp.innerHTML = 'Membuka Paint...';
+      } else if (val === 'winmine' || val === 'minesweeper') {
+        (window as any).openWindow('win-minesweeper');
+        resp.innerHTML = 'Membuka Minesweeper...';
+      } else if (val === 'theme' || val === 'display' || val === 'desk.cpl') {
+        (window as any).openWindow('win-display-props');
+        resp.innerHTML = 'Membuka Properti Tampilan (Tema)...';
+      } else if (val === 'sysdm' || val === 'systeminfo' || val === 'sysdm.cpl') {
+        (window as any).openWindow('win-sys-props');
+        resp.innerHTML = 'Membuka Properti Sistem...';
+      } else if (val === 'screensaver') {
+        (window as any).triggerScreensaver?.();
+        resp.innerHTML = 'Mengaktifkan Screensaver 3D...';
+      } else if (val === 'crash' || val === 'bsod' || val.includes('system32')) {
+        (window as any).triggerBsod?.();
+        resp.innerHTML = 'Triggering Kernel Panic...';
       } else if (val === 'clear') {
         if (cmdOutput) cmdOutput.innerHTML = '';
         cmdInput.value = '';
@@ -3889,5 +4440,851 @@ public function handlePush(Request $request)
         if (copyText) copyText.innerText = 'Salin Email';
       }, 2000);
     });
+  });
+
+  // ==========================================================================
+  // 14. AUTHENTIC AUDIO SYNTHESIZER (Web Audio API — Zero Asset Dependencies)
+  // ==========================================================================
+  function playXpSound(type: string) {
+    try {
+      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      const now = ctx.currentTime;
+
+      if (type === 'balloon' || type === 'ding') {
+        const osc1 = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc1.type = 'sine';
+        osc2.type = 'sine';
+        osc1.frequency.setValueAtTime(659.25, now);
+        osc2.frequency.setValueAtTime(880, now + 0.08);
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+        osc1.connect(gain);
+        osc2.connect(gain);
+        gain.connect(ctx.destination);
+        osc1.start(now);
+        osc1.stop(now + 0.1);
+        osc2.start(now + 0.08);
+        osc2.stop(now + 0.4);
+      } else if (type === 'click') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(1000, now);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.04);
+      } else if (type === 'error' || type === 'chord') {
+        const osc1 = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc1.type = 'sawtooth';
+        osc2.type = 'sawtooth';
+        osc1.frequency.setValueAtTime(196, now);
+        osc2.frequency.setValueAtTime(261.63, now);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+        osc1.connect(gain);
+        osc2.connect(gain);
+        gain.connect(ctx.destination);
+        osc1.start(now);
+        osc2.start(now);
+        osc1.stop(now + 0.5);
+        osc2.stop(now + 0.5);
+      } else if (type === 'tada') {
+        [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.09);
+          gain.gain.setValueAtTime(0.18, now + idx * 0.09);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.4);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + idx * 0.09);
+          osc.stop(now + idx * 0.09 + 0.4);
+        });
+      }
+    } catch (e) {}
+  }
+
+  // ==========================================================================
+  // 15. DISPLAY PROPERTIES & THEME ENGINE (desk.cpl)
+  // ==========================================================================
+  const dispTabTheme = document.getElementById('tab-disp-theme');
+  const dispTabDesktop = document.getElementById('tab-disp-desktop');
+  const dispContentTheme = document.getElementById('disp-content-theme');
+  const dispContentDesktop = document.getElementById('disp-content-desktop');
+  const dispThemeSelect = document.getElementById('disp-theme-select') as HTMLSelectElement;
+  const dispWallpaperSelect = document.getElementById('disp-wallpaper-select') as HTMLSelectElement;
+  const dispBtnOk = document.getElementById('disp-btn-ok');
+  const dispBtnApply = document.getElementById('disp-btn-apply');
+  const dispPreviewTitlebar = document.getElementById('disp-preview-titlebar');
+  const dispPreviewTaskbar = document.getElementById('disp-preview-taskbar');
+  const dispPreviewText = document.getElementById('disp-preview-text');
+  const dispWallpaperPreview = document.getElementById('disp-wallpaper-preview');
+  const desktopContainer = document.getElementById('xp-desktop-container');
+  const assetBase = desktopContainer?.dataset.baseUrl || '';
+
+  const wallpaperUrls: Record<string, string> = {
+    bliss: `${assetBase}/images/bliss.jpg`,
+    autumn: `${assetBase}/wallpapers/autumn.svg`,
+    azul: `${assetBase}/wallpapers/azul.svg`,
+    redmoon: `${assetBase}/wallpapers/redmoon.svg`,
+    classic: `${assetBase}/wallpapers/classic.svg`
+  };
+
+  function updateThemePreview(theme: string) {
+    if (!dispPreviewTitlebar || !dispPreviewTaskbar || !dispPreviewText) return;
+    if (theme === 'olive') {
+      dispPreviewTitlebar.style.background = 'linear-gradient(180deg, #9db476 0%, #5d723d 100%)';
+      dispPreviewTaskbar.style.background = '#6c824c';
+      dispPreviewText.innerText = 'Windows XP Olive Green';
+    } else if (theme === 'silver') {
+      dispPreviewTitlebar.style.background = 'linear-gradient(180deg, #d3d8e5 0%, #7c8292 100%)';
+      dispPreviewTaskbar.style.background = '#b8bdcd';
+      dispPreviewText.innerText = 'Windows XP Metallic Silver';
+    } else {
+      dispPreviewTitlebar.style.background = 'linear-gradient(180deg, #0a66f0 0%, #004ddb 100%)';
+      dispPreviewTaskbar.style.background = '#245edb';
+      dispPreviewText.innerText = 'Windows XP Luna Blue';
+    }
+  }
+
+  function applyTheme(theme: string) {
+    if (!desktopContainer) return;
+    desktopContainer.setAttribute('data-xp-theme', theme);
+    localStorage.setItem('xp_porto_theme', theme);
+  }
+
+  function applyWallpaper(wpKey: string) {
+    if (!desktopContainer) return;
+    const url = wallpaperUrls[wpKey] || wallpaperUrls.bliss;
+    desktopContainer.style.backgroundImage = `url('${url}')`;
+    if (dispWallpaperPreview) {
+      dispWallpaperPreview.style.backgroundImage = `url('${url}')`;
+    }
+    localStorage.setItem('xp_porto_wallpaper', wpKey);
+  }
+
+  // Load saved theme & wallpaper
+  const savedTheme = localStorage.getItem('xp_porto_theme') || 'blue';
+  if (savedTheme !== 'blue') {
+    applyTheme(savedTheme);
+    if (dispThemeSelect) dispThemeSelect.value = savedTheme;
+    updateThemePreview(savedTheme);
+  }
+
+  const savedWp = localStorage.getItem('xp_porto_wallpaper') || 'bliss';
+  if (savedWp !== 'bliss' && wallpaperUrls[savedWp]) {
+    applyWallpaper(savedWp);
+    if (dispWallpaperSelect) dispWallpaperSelect.value = savedWp;
+  }
+
+  dispTabTheme?.addEventListener('click', () => {
+    dispTabTheme.classList.add('active');
+    dispTabDesktop?.classList.remove('active');
+    dispContentTheme?.classList.remove('hidden');
+    dispContentDesktop?.classList.add('hidden');
+  });
+
+  dispTabDesktop?.addEventListener('click', () => {
+    dispTabDesktop.classList.add('active');
+    dispTabTheme?.classList.remove('active');
+    dispContentDesktop?.classList.remove('hidden');
+    dispContentTheme?.classList.add('hidden');
+  });
+
+  dispThemeSelect?.addEventListener('change', () => {
+    updateThemePreview(dispThemeSelect.value);
+  });
+
+  dispWallpaperSelect?.addEventListener('change', () => {
+    const url = wallpaperUrls[dispWallpaperSelect.value] || wallpaperUrls.bliss;
+    if (dispWallpaperPreview) dispWallpaperPreview.style.backgroundImage = `url('${url}')`;
+  });
+
+  dispBtnApply?.addEventListener('click', () => {
+    if (dispThemeSelect) applyTheme(dispThemeSelect.value);
+    if (dispWallpaperSelect) applyWallpaper(dispWallpaperSelect.value);
+    playXpSound('click');
+  });
+
+  dispBtnOk?.addEventListener('click', () => {
+    if (dispThemeSelect) applyTheme(dispThemeSelect.value);
+    if (dispWallpaperSelect) applyWallpaper(dispWallpaperSelect.value);
+    playXpSound('click');
+    const win = document.getElementById('win-display-props');
+    if (win) closeWindow(win);
+  });
+
+  // ==========================================================================
+  // 16. WINDOWS TASK MANAGER (taskmgr.exe)
+  // ==========================================================================
+  const tabTaskmgrApps = document.getElementById('tab-taskmgr-apps');
+  const tabTaskmgrPerf = document.getElementById('tab-taskmgr-perf');
+  const taskmgrContentApps = document.getElementById('taskmgr-content-apps');
+  const taskmgrContentPerf = document.getElementById('taskmgr-content-perf');
+  const taskmgrAppRows = document.getElementById('taskmgr-app-rows');
+  const taskmgrBtnEnd = document.getElementById('taskmgr-btn-endtask');
+  const taskmgrBtnSwitch = document.getElementById('taskmgr-btn-switch');
+  const taskmgrBtnNew = document.getElementById('taskmgr-btn-newtask');
+  let selectedTaskmgrWinId = '';
+
+  tabTaskmgrApps?.addEventListener('click', () => {
+    tabTaskmgrApps.classList.add('active');
+    tabTaskmgrPerf?.classList.remove('active');
+    taskmgrContentApps?.classList.remove('hidden');
+    taskmgrContentPerf?.classList.add('hidden');
+    updateTaskmgrApps();
+  });
+
+  tabTaskmgrPerf?.addEventListener('click', () => {
+    tabTaskmgrPerf.classList.add('active');
+    tabTaskmgrApps?.classList.remove('active');
+    taskmgrContentPerf?.classList.remove('hidden');
+    taskmgrContentApps?.classList.add('hidden');
+  });
+
+  function updateTaskmgrApps() {
+    if (!taskmgrAppRows) return;
+    const wins = Array.from(document.querySelectorAll<HTMLElement>('.xp-window'))
+      .filter(w => !w.classList.contains('hidden') && w.id !== 'win-taskmgr');
+
+    if (wins.length === 0) {
+      taskmgrAppRows.innerHTML = `<tr><td colspan="2" class="p-3 text-slate-400 italic">Tidak ada aplikasi lain yang aktif.</td></tr>`;
+      selectedTaskmgrWinId = '';
+      return;
+    }
+
+    taskmgrAppRows.innerHTML = wins.map(w => {
+      const title = w.querySelector('.xp-titlebar span')?.textContent || w.id;
+      const isSel = w.id === selectedTaskmgrWinId;
+      return `
+        <tr class="cursor-pointer hover:bg-blue-100 ${isSel ? 'bg-[#316ac5] text-white hover:bg-[#316ac5]' : 'text-slate-800'}" data-win-id="${w.id}">
+          <td class="p-1.5 flex items-center gap-1.5 border-r border-[#7f9db9] truncate">
+            <span class="w-2.5 h-2.5 rounded-full bg-blue-500 shrink-0 inline-block"></span>
+            <span class="truncate font-semibold">${title}</span>
+          </td>
+          <td class="p-1.5 text-emerald-600 font-bold ${isSel ? 'text-emerald-200' : ''}">Running</td>
+        </tr>
+      `;
+    }).join('');
+
+    taskmgrAppRows.querySelectorAll('tr').forEach(tr => {
+      tr.addEventListener('click', () => {
+        selectedTaskmgrWinId = tr.getAttribute('data-win-id') || '';
+        updateTaskmgrApps();
+      });
+      tr.addEventListener('dblclick', () => {
+        const wid = tr.getAttribute('data-win-id');
+        if (wid) (window as any).openWindow(wid);
+      });
+    });
+  }
+
+  taskmgrBtnEnd?.addEventListener('click', () => {
+    if (!selectedTaskmgrWinId) return;
+    const win = document.getElementById(selectedTaskmgrWinId);
+    if (win) {
+      closeWindow(win);
+      playXpSound('click');
+      selectedTaskmgrWinId = '';
+      updateTaskmgrApps();
+    }
+  });
+
+  taskmgrBtnSwitch?.addEventListener('click', () => {
+    if (!selectedTaskmgrWinId) return;
+    (window as any).openWindow(selectedTaskmgrWinId);
+  });
+
+  taskmgrBtnNew?.addEventListener('click', () => {
+    (window as any).openWindow('win-run');
+  });
+
+  // Real-time Oscilloscope Graphs for Task Manager
+  const canvasCpuGauge = document.getElementById('canvas-cpu-gauge') as HTMLCanvasElement;
+  const canvasCpuGraph = document.getElementById('canvas-cpu-graph') as HTMLCanvasElement;
+  const canvasMemGraph = document.getElementById('canvas-mem-graph') as HTMLCanvasElement;
+  const cpuHistory: number[] = new Array(30).fill(30);
+  const memHistory: number[] = new Array(50).fill(65);
+
+  function renderTaskmgrCanvas() {
+    const taskmgrWin = document.getElementById('win-taskmgr');
+    if (!taskmgrWin || taskmgrWin.classList.contains('hidden')) return;
+
+    const cpuValEl = document.getElementById('taskmgr-cpu-val');
+    const cpuSbEl = document.getElementById('taskmgr-sb-cpu');
+
+    const currentCpu = Math.floor(25 + Math.random() * 35 + (Math.sin(Date.now() / 1500) * 15));
+    cpuHistory.push(currentCpu);
+    if (cpuHistory.length > 30) cpuHistory.shift();
+
+    const currentMem = Math.floor(62 + Math.random() * 8);
+    memHistory.push(currentMem);
+    if (memHistory.length > 50) memHistory.shift();
+
+    if (cpuValEl) cpuValEl.innerText = `${currentCpu}%`;
+    if (cpuSbEl) cpuSbEl.innerText = `${currentCpu}%`;
+
+    // 1. Draw Gauge
+    if (canvasCpuGauge) {
+      const ctx = canvasCpuGauge.getContext('2d');
+      if (ctx) {
+        ctx.fillStyle = '#001100';
+        ctx.fillRect(0, 0, canvasCpuGauge.width, canvasCpuGauge.height);
+        const bars = 14;
+        const activeBars = Math.floor((currentCpu / 100) * bars);
+        const barH = (canvasCpuGauge.height - 4) / bars;
+        for (let i = 0; i < bars; i++) {
+          const y = canvasCpuGauge.height - (i + 1) * barH;
+          ctx.fillStyle = i < activeBars ? '#00ff00' : '#003300';
+          ctx.fillRect(4, y, canvasCpuGauge.width - 8, barH - 1.5);
+        }
+      }
+    }
+
+    // 2. Draw CPU Graph
+    if (canvasCpuGraph) {
+      const ctx = canvasCpuGraph.getContext('2d');
+      if (ctx) {
+        const w = canvasCpuGraph.width;
+        const h = canvasCpuGraph.height;
+        ctx.fillStyle = '#001100';
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.strokeStyle = '#003300';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < w; x += 15) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+        }
+        for (let y = 0; y < h; y += 12) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+        }
+
+        ctx.strokeStyle = '#00ff00';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        const step = w / (cpuHistory.length - 1);
+        cpuHistory.forEach((val, i) => {
+          const x = i * step;
+          const y = h - (val / 100) * (h - 6) - 3;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+      }
+    }
+
+    // 3. Draw Mem Graph
+    if (canvasMemGraph) {
+      const ctx = canvasMemGraph.getContext('2d');
+      if (ctx) {
+        const w = canvasMemGraph.width;
+        const h = canvasMemGraph.height;
+        ctx.fillStyle = '#001100';
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.strokeStyle = '#003300';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < w; x += 20) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+        }
+        for (let y = 0; y < h; y += 12) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+        }
+
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        const step = w / (memHistory.length - 1);
+        memHistory.forEach((val, i) => {
+          const x = i * step;
+          const y = h - (val / 100) * (h - 6) - 3;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+      }
+    }
+  }
+
+  setInterval(renderTaskmgrCanvas, 1000);
+
+  // ==========================================================================
+  // 17. MS PAINT (mspaint.exe)
+  // ==========================================================================
+  const paintCanvas = document.getElementById('paint-canvas') as HTMLCanvasElement;
+  const paintCtx = paintCanvas ? paintCanvas.getContext('2d') : null;
+  const paintPalette = document.getElementById('paint-palette');
+  const paintCurrColor = document.getElementById('paint-curr-color');
+  const paintCoords = document.getElementById('paint-coords');
+  const toolPencil = document.getElementById('tool-pencil');
+  const toolBrush = document.getElementById('tool-brush');
+  const toolEraser = document.getElementById('tool-eraser');
+  const toolClear = document.getElementById('tool-clear');
+  const paintSizeSelect = document.getElementById('paint-size') as HTMLSelectElement;
+  const paintBtnSave = document.getElementById('paint-btn-save');
+  const paintMenuSave = document.getElementById('paint-menu-save');
+  const paintMenuClear = document.getElementById('paint-menu-clear');
+
+  let activePaintTool = 'pencil';
+  let activePaintColor = '#000000';
+  let activePaintSize = 5;
+  let isPainting = false;
+
+  const xp16Colors = [
+    '#000000', '#808080', '#800000', '#808000', '#008000', '#008080', '#000080', '#800080',
+    '#ffffff', '#c0c0c0', '#ff0000', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#ff00ff'
+  ];
+
+  if (paintPalette) {
+    paintPalette.innerHTML = xp16Colors.map(c => `
+      <div class="w-3.5 h-3.5 border border-slate-700 cursor-pointer" style="background: ${c};" data-color="${c}"></div>
+    `).join('');
+    paintPalette.querySelectorAll('div').forEach(swatch => {
+      swatch.addEventListener('click', () => {
+        const c = swatch.getAttribute('data-color') || '#000000';
+        activePaintColor = c;
+        if (paintCurrColor) paintCurrColor.style.background = c;
+        playXpSound('click');
+      });
+    });
+  }
+
+  function initPaintCanvas() {
+    if (!paintCanvas || !paintCtx) return;
+    paintCtx.fillStyle = '#ffffff';
+    paintCtx.fillRect(0, 0, paintCanvas.width, paintCanvas.height);
+  }
+  initPaintCanvas();
+
+  function selectTool(tool: string) {
+    activePaintTool = tool;
+    [toolPencil, toolBrush, toolEraser].forEach(b => b?.classList.remove('active'));
+    if (tool === 'pencil') toolPencil?.classList.add('active');
+    if (tool === 'brush') toolBrush?.classList.add('active');
+    if (tool === 'eraser') toolEraser?.classList.add('active');
+  }
+
+  toolPencil?.addEventListener('click', () => selectTool('pencil'));
+  toolBrush?.addEventListener('click', () => selectTool('brush'));
+  toolEraser?.addEventListener('click', () => selectTool('eraser'));
+  toolClear?.addEventListener('click', initPaintCanvas);
+  paintMenuClear?.addEventListener('click', initPaintCanvas);
+  paintSizeSelect?.addEventListener('change', () => {
+    activePaintSize = parseInt(paintSizeSelect.value, 10) || 5;
+  });
+
+  function getCanvasCoords(e: MouseEvent | TouchEvent): { x: number; y: number } {
+    if (!paintCanvas) return { x: 0, y: 0 };
+    const rect = paintCanvas.getBoundingClientRect();
+    const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : (e as MouseEvent).clientY;
+    return {
+      x: Math.round((clientX - rect.left) * (paintCanvas.width / rect.width)),
+      y: Math.round((clientY - rect.top) * (paintCanvas.height / rect.height))
+    };
+  }
+
+  function startDrawing(e: MouseEvent | TouchEvent) {
+    if (!paintCtx) return;
+    isPainting = true;
+    const { x, y } = getCanvasCoords(e);
+    paintCtx.beginPath();
+    paintCtx.moveTo(x, y);
+    paintCtx.lineCap = 'round';
+    paintCtx.lineJoin = 'round';
+    paintCtx.lineWidth = activePaintTool === 'pencil' ? 2 : activePaintTool === 'eraser' ? activePaintSize * 2.5 : activePaintSize;
+    paintCtx.strokeStyle = activePaintTool === 'eraser' ? '#ffffff' : activePaintColor;
+    drawMove(e);
+  }
+
+  function drawMove(e: MouseEvent | TouchEvent) {
+    const { x, y } = getCanvasCoords(e);
+    if (paintCoords) paintCoords.innerText = `${x}, ${y} px`;
+    if (!isPainting || !paintCtx) return;
+    paintCtx.lineTo(x, y);
+    paintCtx.stroke();
+  }
+
+  function stopDrawing() {
+    isPainting = false;
+  }
+
+  paintCanvas?.addEventListener('mousedown', startDrawing);
+  paintCanvas?.addEventListener('mousemove', drawMove);
+  window.addEventListener('mouseup', stopDrawing);
+  paintCanvas?.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e); });
+  paintCanvas?.addEventListener('touchmove', (e) => { e.preventDefault(); drawMove(e); });
+  window.addEventListener('touchend', stopDrawing);
+
+  function downloadPaint() {
+    if (!paintCanvas) return;
+    const link = document.createElement('a');
+    link.download = 'andhika_xp_doodle.png';
+    link.href = paintCanvas.toDataURL('image/png');
+    link.click();
+    playXpSound('click');
+  }
+
+  paintBtnSave?.addEventListener('click', downloadPaint);
+  paintMenuSave?.addEventListener('click', downloadPaint);
+
+  // ==========================================================================
+  // 18. MINESWEEPER (winmine.exe)
+  // ==========================================================================
+  const msBoard = document.getElementById('ms-board');
+  const msCounter = document.getElementById('ms-counter');
+  const msTimer = document.getElementById('ms-timer');
+  const msSmiley = document.getElementById('ms-smiley');
+  const msMenuNew = document.getElementById('ms-menu-new');
+
+  const MS_ROWS = 9;
+  const MS_COLS = 9;
+  const MS_MINES = 10;
+  let msGrid: Array<Array<{ mine: boolean; revealed: boolean; flagged: boolean; count: number }>> = [];
+  let msGameStarted = false;
+  let msGameOver = false;
+  let msTimerInterval: any = null;
+  let msSeconds = 0;
+  let msFlagsRemaining = MS_MINES;
+
+  function initMinesweeper() {
+    clearInterval(msTimerInterval);
+    msTimerInterval = null;
+    msSeconds = 0;
+    msGameStarted = false;
+    msGameOver = false;
+    msFlagsRemaining = MS_MINES;
+    if (msCounter) msCounter.innerText = '010';
+    if (msTimer) msTimer.innerText = '000';
+    if (msSmiley) msSmiley.innerText = '🙂';
+
+    msGrid = [];
+    for (let r = 0; r < MS_ROWS; r++) {
+      const row = [];
+      for (let c = 0; c < MS_COLS; c++) {
+        row.push({ mine: false, revealed: false, flagged: false, count: 0 });
+      }
+      msGrid.push(row);
+    }
+    renderMsBoard();
+  }
+
+  function renderMsBoard() {
+    if (!msBoard) return;
+    msBoard.innerHTML = '';
+    const table = document.createElement('table');
+    table.className = 'border-collapse';
+    for (let r = 0; r < MS_ROWS; r++) {
+      const tr = document.createElement('tr');
+      for (let c = 0; c < MS_COLS; c++) {
+        const td = document.createElement('td');
+        const cell = msGrid[r][c];
+        const btn = document.createElement('div');
+        btn.className = 'ms-cell';
+        btn.dataset.r = r.toString();
+        btn.dataset.c = c.toString();
+
+        if (cell.revealed) {
+          btn.classList.add('revealed');
+          if (cell.mine) {
+            btn.innerText = '💣';
+          } else if (cell.count > 0) {
+            btn.innerText = cell.count.toString();
+            const colors = ['', 'text-blue-600', 'text-green-600', 'text-red-600', 'text-blue-900', 'text-red-900', 'text-teal-700', 'text-black', 'text-slate-500'];
+            btn.classList.add(colors[cell.count] || 'text-black');
+          }
+        } else if (cell.flagged) {
+          btn.innerText = '🚩';
+        }
+
+        btn.addEventListener('mousedown', (e) => {
+          if (msGameOver) return;
+          if (e.button === 0 && msSmiley) msSmiley.innerText = '😮';
+        });
+
+        btn.addEventListener('mouseup', () => {
+          if (!msGameOver && msSmiley) msSmiley.innerText = '🙂';
+        });
+
+        btn.addEventListener('click', () => handleMsCellClick(r, c));
+        btn.addEventListener('contextmenu', (e) => {
+          e.preventDefault();
+          handleMsCellRightClick(r, c);
+        });
+
+        td.appendChild(btn);
+        tr.appendChild(td);
+      }
+      table.appendChild(tr);
+    }
+    msBoard.appendChild(table);
+  }
+
+  function startMsTimer() {
+    if (msTimerInterval) return;
+    msTimerInterval = setInterval(() => {
+      msSeconds++;
+      if (msSeconds > 999) msSeconds = 999;
+      if (msTimer) msTimer.innerText = msSeconds.toString().padStart(3, '0');
+    }, 1000);
+  }
+
+  function handleMsCellClick(r: number, c: number) {
+    if (msGameOver) return;
+    const cell = msGrid[r][c];
+    if (cell.flagged || cell.revealed) return;
+
+    if (!msGameStarted) {
+      msGameStarted = true;
+      startMsTimer();
+      let placed = 0;
+      while (placed < MS_MINES) {
+        const randR = Math.floor(Math.random() * MS_ROWS);
+        const randC = Math.floor(Math.random() * MS_COLS);
+        if ((randR !== r || randC !== c) && !msGrid[randR][randC].mine) {
+          msGrid[randR][randC].mine = true;
+          placed++;
+        }
+      }
+      for (let i = 0; i < MS_ROWS; i++) {
+        for (let j = 0; j < MS_COLS; j++) {
+          if (msGrid[i][j].mine) continue;
+          let cnt = 0;
+          for (let dr = -1; dr <= 1; dr++) {
+            for (let dc = -1; dc <= 1; dc++) {
+              const nr = i + dr;
+              const nc = j + dc;
+              if (nr >= 0 && nr < MS_ROWS && nc >= 0 && nc < MS_COLS && msGrid[nr][nc].mine) {
+                cnt++;
+              }
+            }
+          }
+          msGrid[i][j].count = cnt;
+        }
+      }
+    }
+
+    if (cell.mine) {
+      msGameOver = true;
+      clearInterval(msTimerInterval);
+      if (msSmiley) msSmiley.innerText = '😵';
+      playXpSound('error');
+      for (let i = 0; i < MS_ROWS; i++) {
+        for (let j = 0; j < MS_COLS; j++) {
+          if (msGrid[i][j].mine) msGrid[i][j].revealed = true;
+        }
+      }
+      renderMsBoard();
+      const hitBtn = msBoard?.querySelector(`[data-r="${r}"][data-c="${c}"]`);
+      hitBtn?.classList.add('mine-hit');
+      return;
+    }
+
+    revealCell(r, c);
+    renderMsBoard();
+    playXpSound('click');
+
+    let unrevealedSafe = 0;
+    for (let i = 0; i < MS_ROWS; i++) {
+      for (let j = 0; j < MS_COLS; j++) {
+        if (!msGrid[i][j].mine && !msGrid[i][j].revealed) unrevealedSafe++;
+      }
+    }
+    if (unrevealedSafe === 0) {
+      msGameOver = true;
+      clearInterval(msTimerInterval);
+      if (msSmiley) msSmiley.innerText = '😎';
+      playXpSound('tada');
+    }
+  }
+
+  function revealCell(r: number, c: number) {
+    if (r < 0 || r >= MS_ROWS || c < 0 || c >= MS_COLS) return;
+    const cell = msGrid[r][c];
+    if (cell.revealed || cell.flagged || cell.mine) return;
+    cell.revealed = true;
+    if (cell.count === 0) {
+      for (let dr = -1; dr <= 1; dr++) {
+        for (let dc = -1; dc <= 1; dc++) {
+          revealCell(r + dr, c + dc);
+        }
+      }
+    }
+  }
+
+  function handleMsCellRightClick(r: number, c: number) {
+    if (msGameOver || !msGameStarted) return;
+    const cell = msGrid[r][c];
+    if (cell.revealed) return;
+    cell.flagged = !cell.flagged;
+    msFlagsRemaining += cell.flagged ? -1 : 1;
+    if (msCounter) msCounter.innerText = Math.max(0, msFlagsRemaining).toString().padStart(3, '0');
+    renderMsBoard();
+    playXpSound('click');
+  }
+
+  msSmiley?.addEventListener('click', initMinesweeper);
+  msMenuNew?.addEventListener('click', initMinesweeper);
+  initMinesweeper();
+
+  // ==========================================================================
+  // 19. TRAY BALLOON NOTIFICATION
+  // ==========================================================================
+  const trayBalloon = document.getElementById('xp-tray-balloon');
+  const balloonClose = document.getElementById('balloon-close');
+  const balloonBody = document.getElementById('balloon-body');
+
+  setTimeout(() => {
+    if (trayBalloon && !desktopContainer?.classList.contains('hidden')) {
+      trayBalloon.classList.remove('hidden');
+      playXpSound('balloon');
+      setTimeout(() => trayBalloon?.classList.add('hidden'), 18000);
+    }
+  }, 4500);
+
+  balloonClose?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    trayBalloon?.classList.add('hidden');
+    playXpSound('click');
+  });
+
+  balloonBody?.addEventListener('click', () => {
+    trayBalloon?.classList.add('hidden');
+    (window as any).openWindow('win-sdlc');
+  });
+
+  // ==========================================================================
+  // 20. DESKTOP RIGHT-CLICK CONTEXT MENU
+  // ==========================================================================
+  const desktopContextMenu = document.getElementById('xp-desktop-context-menu');
+  const desktopSpace = document.getElementById('xp-desktop-space');
+
+  function closeContextMenu() {
+    if (desktopContextMenu) desktopContextMenu.classList.add('hidden');
+  }
+
+  desktopSpace?.addEventListener('contextmenu', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('.xp-window') || target.closest('#xp-start-menu') || target.closest('#xp-taskbar')) {
+      return;
+    }
+    e.preventDefault();
+    if (!desktopContextMenu) return;
+    desktopContextMenu.style.left = `${Math.min(e.clientX, window.innerWidth - 180)}px`;
+    desktopContextMenu.style.top = `${Math.min(e.clientY, window.innerHeight - 200)}px`;
+    desktopContextMenu.classList.remove('hidden');
+    playXpSound('click');
+  });
+
+  window.addEventListener('click', (e) => {
+    if (desktopContextMenu && !desktopContextMenu.contains(e.target as Node)) {
+      closeContextMenu();
+    }
+  });
+
+  document.getElementById('ctx-disp-props')?.addEventListener('click', () => {
+    (window as any).openWindow('win-display-props');
+    closeContextMenu();
+  });
+  document.getElementById('ctx-taskmgr')?.addEventListener('click', () => {
+    (window as any).openWindow('win-taskmgr');
+    closeContextMenu();
+  });
+  document.getElementById('ctx-paint')?.addEventListener('click', () => {
+    (window as any).openWindow('win-paint');
+    closeContextMenu();
+  });
+  document.getElementById('ctx-minesweeper')?.addEventListener('click', () => {
+    (window as any).openWindow('win-minesweeper');
+    closeContextMenu();
+  });
+  document.getElementById('ctx-notepad')?.addEventListener('click', () => {
+    (window as any).openWindow('win-notepad');
+    closeContextMenu();
+  });
+  document.getElementById('ctx-refresh')?.addEventListener('click', () => {
+    closeContextMenu();
+    desktopContainer?.classList.add('xp-shake');
+    playXpSound('click');
+    setTimeout(() => desktopContainer?.classList.remove('xp-shake'), 300);
+  });
+
+  // ==========================================================================
+  // 21. SCREENSAVER (3D FLOATING TEXT) & IDLE DETECTION
+  // ==========================================================================
+  const screensaverEl = document.getElementById('xp-screensaver');
+  let idleTimer = 0;
+
+  function showScreensaver() {
+    if (screensaverEl && !desktopContainer?.classList.contains('hidden')) {
+      screensaverEl.classList.remove('hidden');
+      screensaverEl.classList.add('flex');
+    }
+  }
+
+  function hideScreensaver() {
+    if (screensaverEl) {
+      screensaverEl.classList.add('hidden');
+      screensaverEl.classList.remove('flex');
+    }
+    idleTimer = 0;
+  }
+
+  (window as any).triggerScreensaver = showScreensaver;
+
+  setInterval(() => {
+    idleTimer++;
+    if (idleTimer >= 80) showScreensaver();
+  }, 1000);
+
+  ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll'].forEach(evt => {
+    window.addEventListener(evt, () => {
+      if (screensaverEl && !screensaverEl.classList.contains('hidden')) {
+        hideScreensaver();
+      }
+      idleTimer = 0;
+    });
+  });
+
+  // ==========================================================================
+  // 22. BLUE SCREEN OF DEATH (BSOD) EASTER EGG
+  // ==========================================================================
+  const bsodEl = document.getElementById('xp-bsod');
+
+  function triggerBsod() {
+    if (!bsodEl) return;
+    bsodEl.classList.remove('hidden');
+    bsodEl.classList.add('flex');
+    playXpSound('error');
+  }
+
+  function hideBsod() {
+    if (!bsodEl) return;
+    bsodEl.classList.add('hidden');
+    bsodEl.classList.remove('flex');
+    playXpSound('ding');
+  }
+
+  (window as any).triggerBsod = triggerBsod;
+
+  bsodEl?.addEventListener('click', hideBsod);
+  window.addEventListener('keydown', (e) => {
+    if (bsodEl && !bsodEl.classList.contains('hidden')) {
+      hideBsod();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key === 'Escape') {
+      e.preventDefault();
+      (window as any).openWindow('win-taskmgr');
+    }
   });
 </script>
