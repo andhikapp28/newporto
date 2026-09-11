@@ -365,6 +365,18 @@ const sampleWorkDocs = [
         </div>
         <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Minesweeper" data-id="Minesweeper">Minesweeper</span>
       </div>
+
+      <!-- Icon 15: Turn Off PC / Shutdown -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-red-600/30 active:bg-red-600/50"
+           id="xp-desktop-shutdown-icon"
+           title="Turn Off PC"
+           data-tooltip-title="Turn Off PC"
+           data-tooltip-desc="Matikan Windows XP dan kembali ke workstation 3D. | Turn off Windows XP and return to 3D workstation.">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-red-600 border border-red-400 shadow-md group-hover:scale-105 transition-transform">
+          <Power class="w-6 h-6 text-white" />
+        </div>
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Turn Off PC" data-id="Matikan PC">Turn Off PC</span>
+      </div>
     </div>
 
     <!-- ==================== DRAGGABLE & RESIZABLE WINDOWS ==================== -->
@@ -2431,10 +2443,7 @@ const sampleWorkDocs = [
   </div><!-- /xp-desktop-space -->
 
   <!-- ==================== WINDOWS XP START MENU ==================== -->
-  <div
-    id="xp-start-menu"
-    class="absolute bottom-[30px] left-0 w-80 rounded-t-lg bg-white border-2 border-[#0055ea] shadow-2xl z-[10000] flex-col overflow-hidden hidden"
-  >
+  <div id="xp-start-menu" class="fixed bottom-[30px] left-0 max-w-[calc(100vw-8px)] max-h-[calc(100dvh-35px)] rounded-t-lg bg-white border-2 border-[#0055ea] shadow-2xl z-[10000] flex flex-col overflow-hidden hidden">
     <div class="h-12 px-3 flex items-center gap-3 bg-gradient-to-r from-[#0058ee] to-[#3593ff] text-white shadow-inner">
       <div class="w-8 h-8 rounded bg-white p-0.5 border border-white shadow">
         <div class="w-full h-full bg-blue-700 rounded flex items-center justify-center text-white font-black text-xs">
@@ -2446,7 +2455,7 @@ const sampleWorkDocs = [
       </div>
     </div>
 
-    <div class="flex bg-[#d3e5fa] text-xs">
+    <div class="flex flex-1 overflow-y-auto min-h-0 bg-[#d3e5fa] text-xs">
       <div class="w-1/2 bg-white p-2 space-y-1 border-r border-[#95bdee]">
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-welcome'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <FileText class="w-4 h-4 text-blue-600" />
@@ -2512,7 +2521,7 @@ const sampleWorkDocs = [
       </div>
     </div>
 
-    <div class="h-9 px-3 flex items-center justify-end gap-3 bg-gradient-to-r from-[#0058ee] to-[#3593ff] text-white select-none">
+    <div class="h-9 px-3 flex items-center justify-end gap-3 bg-gradient-to-r from-[#0058ee] to-[#3593ff] text-white select-none shrink-0">
       <button
         class="px-2 py-0.5 rounded text-[10px] font-bold hover:bg-white/20 cursor-pointer flex items-center gap-1"
         onclick="openWindow('win-run'); document.getElementById('xp-start-menu').classList.add('hidden');"
@@ -2583,6 +2592,14 @@ const sampleWorkDocs = [
           <div class="text-[10px] text-right text-slate-600 mt-0.5" id="xp-volume-value">85%</div>
         </div>
       </div>
+
+      <button 
+        id="xp-tray-shutdown-btn" 
+        class="p-0.5 rounded hover:bg-red-600/80 cursor-pointer flex items-center justify-center text-red-200 hover:text-white"
+        title="Turn Off Computer / Matikan Komputer"
+      >
+        <Power class="w-3.5 h-3.5" />
+      </button>
 
       <span id="xp-clock" class="text-[11px]">12:00 PM</span>
     </div>
@@ -4980,13 +4997,18 @@ public function handlePush(Request $request)
   const modalTurnOff = document.getElementById('modal-btn-turn-off');
   const shutdownScreen = document.getElementById('xp-shutdown-screen');
 
-  openShutdownBtn?.addEventListener('click', () => {
+  function triggerShutdownDialog() {
     startMenu?.classList.add('hidden');
     if (shutdownModal) {
       shutdownModal.classList.remove('hidden');
       shutdownModal.classList.add('flex');
     }
-  });
+  }
+  (window as any).triggerShutdownDialog = triggerShutdownDialog;
+
+  openShutdownBtn?.addEventListener('click', triggerShutdownDialog);
+  document.getElementById('xp-desktop-shutdown-icon')?.addEventListener('click', triggerShutdownDialog);
+  document.getElementById('xp-tray-shutdown-btn')?.addEventListener('click', triggerShutdownDialog);
 
   modalTurnOff?.addEventListener('click', () => {
     shutdownModal?.classList.add('hidden');
