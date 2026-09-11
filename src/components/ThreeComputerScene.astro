@@ -10,19 +10,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <!-- CRT Vignette -->
   <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.85)_100%)] z-10"></div>
 
-  <!-- Top Header (No "Retro Workstation" badge as requested) -->
-  <!-- Recruiter Fast-Track Floating Button -->
-  <div class="absolute top-4 right-4 z-50 pointer-events-auto">
-    <button 
-      id="btn-fasttrack-skip" 
-      class="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 hover:from-emerald-500 hover:to-blue-500 text-white font-mono text-[11px] font-bold shadow-xl border border-emerald-300/40 backdrop-blur-md flex items-center gap-1.5 cursor-pointer transition-all hover:scale-105 active:scale-95 group"
-      title="Open 60-second Executive Summary directly"
-    >
-      <span class="w-2 h-2 rounded-full bg-emerald-300 animate-ping shrink-0"></span>
-      <span class="tracking-wide">⚡ Recruiter Fast-Track</span>
-    </button>
-  </div>
-
+  <!-- Top Header (No floating shortcut buttons as requested) -->
   <div class="relative z-20 pt-8 px-6 flex flex-col items-center text-center pointer-events-none">
     <h1 class="text-2xl sm:text-4xl font-black font-mono tracking-wider text-emerald-400 drop-shadow-[0_0_20px_rgba(52,211,153,0.5)]">
       SYSTEM ANALYST &bull; WORKSTATION
@@ -489,6 +477,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
 
     function playRealXpSound(soundPath: string) {
+      if (typeof (window as any).audioManager?.playOneShot === 'function') {
+        const category = soundPath.includes('shutdown') ? 'shutdown' : 'sfx';
+        (window as any).audioManager.playOneShot(soundPath, category);
+        return;
+      }
+      // Fallback if AudioManager is not loaded yet
       try {
         const audio = new Audio(soundPath);
         audio.volume = 0.85;
@@ -526,8 +520,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       isBooting = false;
       isMouseDown = false;
       hasDragged = false;
-      const assetBase = document.getElementById('three-computer-stage')?.dataset.baseUrl || '';
-      playRealXpSound(`${assetBase}/sounds/xp-shutdown.wav`);
+
+      // The shutdown sound is already played by XpDesktop; stop any leftover scene/desktop audio.
+      if (typeof (window as any).audioManager?.stopCategory === 'function') {
+        (window as any).audioManager.stopCategory('sfx', { fade: true });
+        (window as any).audioManager.stopCategory('ambient', { fade: true });
+      }
 
       // Reset camera and rotation to initial state so the workstation is not zoomed in
       updateResponsiveCamera();
@@ -545,7 +543,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       }
     });
 
-    // Recruiter Fast-Track Skip Trigger
+    // Recruiter Fast-Track Skip Trigger (removed from 3D scene per user request)
     const fasttrackBtn = document.getElementById('btn-fasttrack-skip');
     if (fasttrackBtn) {
       fasttrackBtn.addEventListener('click', (e) => {
