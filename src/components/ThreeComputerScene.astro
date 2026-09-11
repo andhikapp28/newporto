@@ -53,6 +53,32 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     renderer.shadowMap.enabled = false;
     container.appendChild(renderer.domElement);
 
+    // Mobile & touch responsiveness
+    container.style.touchAction = 'none';
+    renderer.domElement.style.touchAction = 'none';
+
+    function updateResponsiveCamera() {
+      const isPortrait = window.innerWidth < window.innerHeight;
+      const isMobile = window.innerWidth < 640;
+      if (isMobile && isPortrait) {
+        // Mobile portrait mode: pull back camera so monitor & tower fit completely
+        camera.position.set(0, 1.05, 6.8);
+        camera.fov = 44;
+      } else if (isMobile) {
+        // Mobile landscape mode
+        camera.position.set(0, 1.15, 5.4);
+        camera.fov = 42;
+      } else {
+        // Desktop
+        camera.position.set(0, 1.2, 5.0);
+        camera.fov = 42;
+      }
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+    updateResponsiveCamera();
+
     // 2. Phosphor Green Lighting (Matches Image 2)
     const ambientLight = new THREE.AmbientLight(0x102018, 2.0);
     scene.add(ambientLight);
@@ -297,10 +323,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     mouseMesh.position.set(1.5, -0.91, 1.4);
     workstation.add(mouseMesh);
 
-    // 6. Strict Drag vs Click Logic
+    // 6. Strict Drag vs Click Logic (Full Mobile Touch & Desktop Pointer Support)
     // DRAG = ROTATION ONLY. RELEASING AFTER DRAGGING NEVER POWERS ON!
     let isMouseDown = false;
     let hasDragged = false;
+    let totalDragDist = 0;
     let startMousePos = { x: 0, y: 0 };
     let rotY = 0;
     let rotX = 0;
@@ -310,25 +337,33 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     renderer.domElement.addEventListener('pointerdown', (e: PointerEvent) => {
       isMouseDown = true;
       hasDragged = false;
+      totalDragDist = 0;
       startMousePos = { x: e.clientX, y: e.clientY };
+      try {
+        renderer.domElement.setPointerCapture(e.pointerId);
+      } catch (_) {}
     });
 
     window.addEventListener('pointermove', (e: PointerEvent) => {
       if (isMouseDown) {
         const dx = e.clientX - startMousePos.x;
         const dy = e.clientY - startMousePos.y;
-        const dist = Math.hypot(dx, dy);
+        totalDragDist += Math.hypot(dx, dy);
 
-        if (dist > 6) {
+        // Mobile touch contact jitter: allow up to 12px jitter before marking as drag
+        const dragThreshold = e.pointerType === 'touch' ? 12 : 6;
+        if (totalDragDist > dragThreshold) {
           hasDragged = true; // User is rotating the 3D PC!
         }
 
-        rotY += (e.clientX - startMousePos.x) * 0.005;
-        rotX += (e.clientY - startMousePos.y) * 0.003;
-        rotX = Math.max(-0.25, Math.min(0.25, rotX));
+        const rotMultiplierY = e.pointerType === 'touch' ? 0.007 : 0.005;
+        const rotMultiplierX = e.pointerType === 'touch' ? 0.005 : 0.003;
+        rotY += dx * rotMultiplierY;
+        rotX += dy * rotMultiplierX;
+        rotX = Math.max(-0.35, Math.min(0.35, rotX));
         startMousePos = { x: e.clientX, y: e.clientY };
-      } else {
-        // Idle hover cursor check
+      } else if (e.pointerType !== 'touch') {
+        // Idle hover cursor check (desktop only)
         const nx = (e.clientX / window.innerWidth) * 2 - 1;
         const ny = -(e.clientY / window.innerHeight) * 2 + 1;
         camera.position.x += (nx * 0.25 - camera.position.x) * 0.04;
@@ -350,23 +385,35 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     window.addEventListener('pointerup', (e: PointerEvent) => {
       if (!isMouseDown) return;
       isMouseDown = false;
+      try {
+        renderer.domElement.releasePointerCapture(e.pointerId);
+      } catch (_) {}
 
-      // CRITICAL FIX: If user moved mouse while holding down, it was a DRAG.
-      // Releasing the mouse MUST NOT BOOT!
+      // If user rotated / dragged the 3D model with finger or mouse, don't boot
       if (hasDragged) {
         return;
       }
 
-      // If user performed a clean, short click without dragging:
-      // Verify they clicked on the computer / monitor setup!
-      mouseVector.x = (e.clientX / window.innerWidth) * 2 - 1;
-      mouseVector.y = -(e.clientY / window.innerHeight) * 2 + 1;
-      raycaster.setFromCamera(mouseVector, camera);
-      const hits = raycaster.intersectObjects(workstation.children, true);
-
-      if (hits.length > 0) {
+      // User did a clean tap/click without dragging!
+      // On mobile touch: any clean tap boots! On desktop: raycast hit test
+      if (e.pointerType === 'touch') {
         triggerBoot();
+      } else {
+        mouseVector.x = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseVector.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        raycaster.setFromCamera(mouseVector, camera);
+        const hits = raycaster.intersectObjects(workstation.children, true);
+        if (hits.length > 0) {
+          triggerBoot();
+        }
       }
+    });
+
+    window.addEventListener('pointercancel', (e: PointerEvent) => {
+      isMouseDown = false;
+      try {
+        renderer.domElement.releasePointerCapture(e.pointerId);
+      } catch (_) {}
     });
 
     // 7. Boot Sequence: Zoom into CRT & Play Real Windows XP Audio
@@ -459,9 +506,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     renderLoop();
 
     window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      updateResponsiveCamera();
     });
 
     // 9. Handle shutdown -> return to 3D
@@ -473,7 +518,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       playRealXpSound(`${assetBase}/sounds/xp-shutdown.wav`);
 
       // Reset camera and rotation to initial state so the workstation is not zoomed in
-      camera.position.set(0, 1.2, 5.0);
+      updateResponsiveCamera();
       camera.lookAt(0, 0.1, 0);
       rotX = 0;
       rotY = 0;

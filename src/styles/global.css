@@ -485,3 +485,51 @@
   text-shadow: 2px 2px 0px #002266, 4px 4px 0px #001144, 6px 6px 12px rgba(0,0,0,0.8);
 }
 
+/* ==========================================================================
+   MOBILE & TOUCH SCREEN OPTIMIZATIONS
+   ========================================================================== */
+.xp-titlebar {
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.win-resize-handle {
+  touch-action: none;
+}
+
+@media (max-width: 640px) {
+  .xp-window {
+    max-width: calc(100vw - 8px) !important;
+    max-height: calc(100vh - 38px) !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Keep titlebar compact and clean on small screens */
+  .xp-titlebar {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Prevent Start Menu from exceeding mobile screen width */
+  #xp-start-menu {
+    max-width: calc(100vw - 8px) !important;
+    left: 4px !important;
+  }
+
+  /* Allow desktop workspace to scroll if screen is very short */
+  #xp-desktop-space {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ensure touch target size for window controls is comfortable */
+  .win-btn-minimize,
+  .win-btn-maximize,
+  .win-btn-close {
+    min-width: 22px;
+    min-height: 22px;
+  }
+}
+
+
