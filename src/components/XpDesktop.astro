@@ -240,29 +240,29 @@ const sampleWorkDocs = [
           <Folder class="w-6 h-6 text-amber-500 fill-amber-400" />
         </div>
         <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Work Docs" data-id="Dokumen Kerja">
-          Dokumen Kerja
+          Work Docs
         </span>
       </div>
 
       <!-- Icon 4: Galeri Sertifikat (Windows Picture & Fax Viewer) -->
       <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
            data-open="win-gallery"
-           title="Sertifikat"
-           data-tooltip-title="Sertifikat / Certificates"
+           title="Certificates"
+           data-tooltip-title="Certificates / Sertifikat"
            data-tooltip-desc="Lihat dan unduh sertifikat akademik & kompetensi. | View and download academic & competency certificates.">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-gradient-to-br from-emerald-100 to-teal-200 border border-teal-400 shadow-md group-hover:scale-105 transition-transform">
           <Award class="w-6 h-6 text-teal-700" />
         </div>
         <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Certificates" data-id="Sertifikat">
-          Sertifikat
+          Certificates
         </span>
       </div>
 
       <!-- Icon 5: My Computer -->
       <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
            data-open="win-explorer"
-           title="Komputer Saya"
-           data-tooltip-title="Komputer Saya / My Computer"
+           title="My Computer"
+           data-tooltip-title="My Computer / Komputer Saya"
            data-tooltip-desc="Akses drive, folder, dan perangkat sistem portofolio. | Access drives, folders, and portfolio system devices.">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-slate-100 border border-slate-300 shadow-md group-hover:scale-105 transition-transform">
           <Laptop class="w-6 h-6 text-blue-700" />
@@ -323,7 +323,7 @@ const sampleWorkDocs = [
           <Dog class="w-6 h-6 text-blue-700" />
         </div>
         <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Search" data-id="Pencarian">
-          Pencarian
+          Search
         </span>
       </div>
 
@@ -337,7 +337,7 @@ const sampleWorkDocs = [
           <StickyNote class="w-6 h-6 text-yellow-500" />
         </div>
         <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Notepad" data-id="Catatan">
-          Catatan
+          Notepad
         </span>
       </div>
 
@@ -351,7 +351,7 @@ const sampleWorkDocs = [
           <Trash2 class="w-6 h-6 text-slate-600" />
         </div>
         <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Recycle Bin" data-id="Tempat Sampah">
-          Tempat Sampah
+          Recycle Bin
         </span>
       </div>
 
@@ -1880,7 +1880,7 @@ const sampleWorkDocs = [
         <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
           <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
             <Monitor class="w-3.5 h-3.5 text-blue-200 shrink-0" />
-            <span class="i18n" data-en="Display Properties" data-id="Properti Tampilan">Properti Tampilan</span>
+            <span class="i18n" data-en="Display Properties" data-id="Properti Tampilan">Display Properties</span>
           </div>
           <div class="flex items-center gap-1 shrink-0">
             <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
@@ -1890,10 +1890,10 @@ const sampleWorkDocs = [
         <!-- Tabs -->
         <div class="px-2 pt-2 bg-[#ece9d8] border-b border-[#7f9db9] flex items-center gap-1 select-none">
           <button class="xp-lens-tab active" id="tab-disp-theme">
-            <span class="i18n" data-en="Appearance (Theme)" data-id="Tema Tampilan">Tema Tampilan</span>
+            <span class="i18n" data-en="Appearance (Theme)" data-id="Tema Tampilan">Appearance (Theme)</span>
           </button>
           <button class="xp-lens-tab" id="tab-disp-desktop">
-            <span class="i18n" data-en="Desktop (Wallpaper)" data-id="Wallpaper">Wallpaper</span>
+            <span class="i18n" data-en="Desktop (Wallpaper)" data-id="Wallpaper">Desktop (Wallpaper)</span>
           </button>
         </div>
 
@@ -1916,13 +1916,13 @@ const sampleWorkDocs = [
             </div>
 
             <div class="space-y-1.5 bg-white p-3 rounded border border-[#7f9db9]">
-              <label class="block font-bold text-slate-700 i18n" data-en="Color scheme:" data-id="Skema Warna:">Skema Warna:</label>
+              <label class="block font-bold text-slate-700 i18n" data-en="Color scheme:" data-id="Skema Warna:">Color scheme:</label>
               <select id="disp-theme-select" class="xp-input w-full">
                 <option value="blue">Default (Luna Blue)</option>
                 <option value="olive">Olive Green (Homestead)</option>
                 <option value="silver">Metallic Silver</option>
               </select>
-              <p class="text-[10px] text-slate-500 mt-1 i18n" data-en="Changes entire OS color palette instantly." data-id="Mengubah seluruh palet warna OS secara instan.">Mengubah seluruh palet warna OS secara instan.</p>
+              <p class="text-[10px] text-slate-500 mt-1 i18n" data-en="Changes entire OS color palette instantly." data-id="Mengubah seluruh palet warna OS secara instan.">Changes entire OS color palette instantly.</p>
             </div>
           </div>
 
@@ -1933,7 +1933,7 @@ const sampleWorkDocs = [
             </div>
 
             <div class="space-y-1.5 bg-white p-3 rounded border border-[#7f9db9]">
-              <label class="block font-bold text-slate-700 i18n" data-en="Background:" data-id="Latar Belakang:">Latar Belakang:</label>
+              <label class="block font-bold text-slate-700 i18n" data-en="Background:" data-id="Latar Belakang:">Background:</label>
               <select id="disp-wallpaper-select" class="xp-input w-full">
                 <option value="bliss">Bliss (Default)</option>
                 <option value="autumn">Autumn (Golden Woods)</option>
@@ -1948,8 +1948,8 @@ const sampleWorkDocs = [
         <!-- Footer buttons -->
         <div class="h-10 px-3 bg-[#ece9d8] border-t border-[#d8d4c2] flex items-center justify-end gap-2">
           <button class="xp-btn xp-btn-default font-bold" id="disp-btn-ok">OK</button>
-          <button class="xp-btn win-btn-close" id="disp-btn-cancel">Batal</button>
-          <button class="xp-btn font-semibold" id="disp-btn-apply">Terapkan</button>
+          <button class="xp-btn win-btn-close i18n" data-en="Cancel" data-id="Batal" id="disp-btn-cancel">Cancel</button>
+          <button class="xp-btn font-semibold i18n" data-en="Apply" data-id="Terapkan" id="disp-btn-apply">Apply</button>
         </div>
       </div>
 
@@ -2132,23 +2132,23 @@ const sampleWorkDocs = [
         </div>
 
         <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700 select-none">
-          <span class="hover:underline cursor-pointer" id="paint-menu-clear">Bersihkan</span>
-          <span class="hover:underline cursor-pointer" id="paint-menu-save">Unduh Gambar</span>
+          <span class="hover:underline cursor-pointer i18n" data-en="Clear Canvas" data-id="Bersihkan" id="paint-menu-clear">Clear Canvas</span>
+          <span class="hover:underline cursor-pointer i18n" data-en="Download Image" data-id="Unduh Gambar" id="paint-menu-save">Download Image</span>
         </div>
 
         <div class="flex flex-1 bg-[#ece9d8] p-1.5 gap-1.5 overflow-hidden">
           <div class="w-14 bg-[#ece9d8] border border-[#7f9db9] p-1 flex flex-col items-center gap-1 select-none">
-            <button class="xp-btn w-full !px-1 font-bold text-[10px] active" id="tool-pencil" title="Pencil">Pensil</button>
-            <button class="xp-btn w-full !px-1 font-bold text-[10px]" id="tool-brush" title="Brush">Kuas</button>
-            <button class="xp-btn w-full !px-1 font-bold text-[10px]" id="tool-eraser" title="Eraser">Hapus</button>
+            <button class="xp-btn w-full !px-1 font-bold text-[10px] active i18n" data-en="Pencil" data-id="Pensil" id="tool-pencil" title="Pencil">Pencil</button>
+            <button class="xp-btn w-full !px-1 font-bold text-[10px] i18n" data-en="Brush" data-id="Kuas" id="tool-brush" title="Brush">Brush</button>
+            <button class="xp-btn w-full !px-1 font-bold text-[10px] i18n" data-en="Eraser" data-id="Hapus" id="tool-eraser" title="Eraser">Eraser</button>
             <div class="h-px w-full bg-slate-400 my-1"></div>
-            <button class="xp-btn w-full !px-1 text-[10px]" id="tool-clear" title="Clear">Clear</button>
+            <button class="xp-btn w-full !px-1 text-[10px] i18n" data-en="Clear" data-id="Clear" id="tool-clear" title="Clear">Clear</button>
             <div class="mt-auto flex flex-col items-center gap-1">
-              <span class="text-[9px] text-slate-600">Ukuran:</span>
+              <span class="text-[9px] text-slate-600 i18n" data-en="Size:" data-id="Ukuran:">Size:</span>
               <select id="paint-size" class="xp-input text-[10px] w-full !p-0.5">
-                <option value="2">Tipis</option>
-                <option value="5" selected>Sedang</option>
-                <option value="12">Tebal</option>
+                <option value="2">Thin</option>
+                <option value="5" selected>Medium</option>
+                <option value="12">Thick</option>
               </select>
             </div>
           </div>
@@ -2168,7 +2168,7 @@ const sampleWorkDocs = [
           <div class="flex items-center gap-1.5">
             <button class="xp-btn font-semibold" id="paint-btn-save">
               <Save class="w-3.5 h-3.5 text-blue-700" />
-              <span>Unduh</span>
+              <span class="i18n" data-en="Save" data-id="Unduh">Save</span>
             </button>
             <span id="paint-coords" class="text-[10px] text-slate-600 font-mono">0, 0 px</span>
           </div>
@@ -2192,7 +2192,7 @@ const sampleWorkDocs = [
         </div>
 
         <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700 select-none">
-          <span class="hover:underline cursor-pointer" id="ms-menu-new">Game Baru</span>
+          <span class="hover:underline cursor-pointer i18n" data-en="New Game" data-id="Game Baru" id="ms-menu-new">New Game</span>
         </div>
 
         <div class="p-3 bg-[#c0c0c0] border-t-2 border-l-2 border-white border-b-2 border-r-2 border-[#808080] m-1.5 flex flex-col gap-2">
@@ -2298,7 +2298,7 @@ const sampleWorkDocs = [
       <button id="balloon-close" class="text-slate-500 hover:text-black text-xs font-bold px-1">✕</button>
     </div>
     <p class="text-xs text-slate-800 mt-1 leading-snug cursor-pointer" id="balloon-body">
-      <span class="i18n" data-en="Welcome! Inspect enterprise SDLC Lens & system specs in System Properties." data-id="Selamat datang! Lihat dokumentasi SDLC Lens & spek sistem di Properti Sistem.">Selamat datang! Lihat dokumentasi SDLC Lens & spek sistem di Properti Sistem.</span>
+      <span class="i18n" data-en="Welcome! Inspect enterprise SDLC Lens & system specs in System Properties." data-id="Selamat datang! Lihat dokumentasi SDLC Lens & spek sistem di Properti Sistem.">Welcome! Inspect enterprise SDLC Lens & system specs in System Properties.</span>
     </p>
   </div>
 
@@ -2306,7 +2306,7 @@ const sampleWorkDocs = [
   <div id="xp-desktop-context-menu" class="xp-context-menu fixed hidden">
     <div class="xp-context-item" id="ctx-disp-props">
       <Monitor class="w-3.5 h-3.5 text-blue-600 shrink-0" />
-      <span class="i18n" data-en="Properties (Themes)" data-id="Properti (Tema)">Properti (Tema)</span>
+      <span class="i18n" data-en="Properties (Themes)" data-id="Properti (Tema)">Properties (Themes)</span>
     </div>
     <div class="xp-context-item" id="ctx-taskmgr">
       <Activity class="w-3.5 h-3.5 text-emerald-600 shrink-0" />
@@ -2323,12 +2323,12 @@ const sampleWorkDocs = [
     </div>
     <div class="xp-context-item" id="ctx-notepad">
       <StickyNote class="w-3.5 h-3.5 text-yellow-500 shrink-0" />
-      <span class="i18n" data-en="New Text Document" data-id="Dokumen Teks Baru">Dokumen Teks Baru</span>
+      <span class="i18n" data-en="New Text Document" data-id="Dokumen Teks Baru">New Text Document</span>
     </div>
     <div class="xp-context-separator"></div>
     <div class="xp-context-item" id="ctx-refresh">
       <RotateCw class="w-3.5 h-3.5 text-blue-600 shrink-0" />
-      <span class="i18n" data-en="Refresh" data-id="Segarkan">Segarkan</span>
+      <span class="i18n" data-en="Refresh" data-id="Segarkan">Refresh</span>
     </div>
   </div>
 
@@ -2337,26 +2337,26 @@ const sampleWorkDocs = [
     id="xp-screensaver"
     class="fixed inset-0 z-[999999] bg-black hidden flex-col items-center justify-center select-none cursor-none overflow-hidden"
   >
-    <div class="xp-screensaver-text text-center px-4">
-      <h1 class="text-3xl sm:text-6xl font-black italic tracking-wider bg-gradient-to-r from-blue-400 via-sky-200 to-indigo-400 bg-clip-text text-transparent">
-        ANDHIKA PUTRA PRATAMA
-      </h1>
-      <p class="text-base sm:text-2xl font-bold tracking-widest text-sky-300 mt-3 font-mono">
+    <div class="xp-screensaver-content flex flex-col items-center justify-center text-center p-8">
+      <div class="xp-ss-title text-4xl sm:text-6xl font-black tracking-widest uppercase">
+        Andhika Putra Pratama
+      </div>
+      <div class="xp-ss-subtitle text-xl sm:text-2xl font-bold mt-4 tracking-wider">
         SYSTEM ANALYST &bull; DEV &bull; QA
-      </p>
-      <div class="text-xs text-slate-500 mt-6 font-mono">
-        [Gerakkan mouse atau tekan tombol apa saja untuk kembali]
+      </div>
+      <div class="text-xs text-slate-500 mt-6 font-mono i18n" data-en="[Move mouse or press any key to return]" data-id="[Gerakkan mouse atau tekan tombol apa saja untuk kembali]">
+        [Move mouse or press any key to return]
       </div>
     </div>
   </div>
 
-  <!-- ==================== BLUE SCREEN OF DEATH (BSOD) ==================== -->
+  <!-- ==================== BLUE SCREEN OF DEATH (BSOD EASTER EGG) ==================== -->
   <div
     id="xp-bsod"
-    class="fixed inset-0 z-[1000000] bg-[#0000aa] text-white p-8 sm:p-14 font-mono text-xs sm:text-sm leading-relaxed hidden flex-col justify-between select-none cursor-pointer overflow-y-auto"
+    class="fixed inset-0 z-[9999999] bg-[#0000aa] text-white font-mono p-6 sm:p-12 hidden flex-col justify-between select-none cursor-pointer overflow-auto"
   >
-    <div class="max-w-4xl mx-auto space-y-4">
-      <div class="bg-white text-[#0000aa] px-2 py-0.5 inline-block font-bold">
+    <div class="space-y-4 max-w-3xl">
+      <div class="inline-block bg-[#aa0000] text-white px-2 py-0.5 font-bold text-sm sm:text-base">
         Windows
       </div>
       <p class="font-bold">
@@ -2384,8 +2384,8 @@ const sampleWorkDocs = [
         Physical memory dump complete.
       </p>
     </div>
-    <div class="text-center text-xs text-yellow-200 animate-pulse mt-6">
-      [ Klik di mana saja atau tekan tombol apa pun untuk reboot Windows XP ]
+    <div class="text-center text-xs text-yellow-200 animate-pulse mt-6 i18n" data-en="[ Click anywhere or press any key to reboot Windows XP ]" data-id="[ Klik di mana saja atau tekan tombol apa pun untuk reboot Windows XP ]">
+      [ Click anywhere or press any key to reboot Windows XP ]
     </div>
   </div>
 
@@ -2413,7 +2413,7 @@ const sampleWorkDocs = [
         </div>
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-resume'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Briefcase class="w-4 h-4 text-indigo-600" />
-          <span class="font-bold text-slate-800 i18n" data-en="Curriculum Vitae" data-id="Resume / CV">Resume / CV</span>
+          <span class="font-bold text-slate-800 i18n" data-en="Curriculum Vitae" data-id="Resume / CV">Curriculum Vitae</span>
         </div>
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openCvPdf(); document.getElementById('xp-start-menu').classList.add('hidden');">
           <svg class="w-4 h-4 fill-red-600 shrink-0" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9.5 8.5h-1v2h1c.55 0 1-.45 1-1s-.45-1-1-1zm5 0h-1v3h1c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1zm-6-2.5h-2v7h2c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm5 0h-2v7h2c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm5.5 0h-3v7h1.5v-2.5h1.5v-1.5h-1.5v-1.5h1.5v-1.5z"/></svg>
@@ -2421,11 +2421,11 @@ const sampleWorkDocs = [
         </div>
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-docs-folder'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Folder class="w-4 h-4 text-amber-500" />
-          <span class="font-bold text-slate-800 i18n" data-en="Work Docs" data-id="Dokumen Kerja">Dokumen Kerja</span>
+          <span class="font-bold text-slate-800 i18n" data-en="Work Docs" data-id="Dokumen Kerja">Work Docs</span>
         </div>
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-gallery'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Award class="w-4 h-4 text-teal-600" />
-          <span class="font-bold text-slate-800 i18n" data-en="Certificates" data-id="Sertifikat">Sertifikat</span>
+          <span class="font-bold text-slate-800 i18n" data-en="Certificates" data-id="Sertifikat">Certificates</span>
         </div>
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-media-player'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Play class="w-4 h-4 text-blue-800 fill-blue-800" />
@@ -2459,34 +2459,34 @@ const sampleWorkDocs = [
 
       <div class="w-1/2 p-2 space-y-1 text-slate-700">
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="My Computer" data-id="Komputer Saya" onclick="openWindow('win-explorer'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          Komputer Saya
+          My Computer
         </div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="System Properties" data-id="Properti Sistem" onclick="openWindow('win-sys-props'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          Properti Sistem
+          System Properties
         </div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Display & Themes" data-id="Tampilan & Tema" onclick="openWindow('win-display-props'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          Tampilan & Tema
+          Display & Themes
         </div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Case Studies (E:)" data-id="Studi Kasus (E:)" onclick="openWindow('win-projects'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          Studi Kasus (E:)
+          Case Studies (E:)
         </div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="SDLC Lens Dashboard" data-id="Dashboard SDLC Lens" onclick="openWindow('win-sdlc'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          Dashboard SDLC Lens
+          SDLC Lens Dashboard
         </div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Outlook Express (Contact)" data-id="Outlook Express (Kontak)" onclick="openWindow('win-contact'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          Outlook Express (Kontak)
+          Outlook Express (Contact)
         </div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Search Companion" data-id="Pencarian (Rover)" onclick="openWindow('win-search'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          Pencarian (Rover)
+          Search Companion
         </div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Notepad Notes" data-id="Catatan Notepad" onclick="openWindow('win-notepad'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          Catatan Notepad
+          Notepad Notes
         </div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Run..." data-id="Jalankan..." onclick="openWindow('win-run'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          Jalankan...
+          Run...
         </div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Recycle Bin" data-id="Tempat Sampah" onclick="openWindow('win-recycle-bin'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          Tempat Sampah
+          Recycle Bin
         </div>
       </div>
     </div>
@@ -2497,7 +2497,7 @@ const sampleWorkDocs = [
         onclick="openWindow('win-run'); document.getElementById('xp-start-menu').classList.add('hidden');"
       >
         <Command class="w-3 h-3" />
-        <span class="i18n" data-en="Run..." data-id="Jalankan...">Jalankan...</span>
+        <span class="i18n" data-en="Run..." data-id="Jalankan...">Run...</span>
       </button>
       <div class="w-[1px] h-4 bg-white/40"></div>
       <button
@@ -2539,9 +2539,9 @@ const sampleWorkDocs = [
       <button 
         id="lang-toggle-btn"
         class="px-1.5 py-0.5 rounded bg-blue-950/80 border border-blue-400/40 text-[10px] font-bold text-amber-300 hover:bg-blue-900 cursor-pointer"
-        title="Switch Language (ID / EN)"
+        title="Switch Language (EN / ID)"
       >
-        ID &bull; EN
+        EN &bull; ID
       </button>
 
       <div class="relative flex items-center gap-1">
@@ -2905,11 +2905,15 @@ const sampleWorkDocs = [
   });
 
   // 2. Language Switcher (ID <-> EN)
-  let currentLang = 'id';
+  const savedLang = (typeof localStorage !== 'undefined' && localStorage.getItem('xp_porto_lang')) || 'en';
+  let currentLang = savedLang;
   const langBtn = document.getElementById('lang-toggle-btn');
 
   function applyLanguage(lang: string) {
     currentLang = lang;
+    try {
+      localStorage.setItem('xp_porto_lang', lang);
+    } catch (e) {}
     const elements = document.querySelectorAll<HTMLElement>('.i18n');
     elements.forEach(el => {
       const text = el.getAttribute(`data-${lang}`);
@@ -2921,7 +2925,7 @@ const sampleWorkDocs = [
       if (ph) el.placeholder = ph;
     });
     if (langBtn) {
-      langBtn.innerText = lang.toUpperCase();
+      langBtn.innerHTML = lang.toUpperCase() === 'EN' ? 'EN &bull; ID' : 'ID &bull; EN';
     }
     // Update start button text
     const startSpan = document.querySelector('#xp-start-btn .i18n');
@@ -2950,7 +2954,7 @@ const sampleWorkDocs = [
     const nextLang = currentLang === 'id' ? 'en' : 'id';
     applyLanguage(nextLang);
   });
-  applyLanguage('id');
+  applyLanguage(savedLang);
 
   // 3. Start Menu Toggle
   const startBtn = document.getElementById('xp-start-btn');
