@@ -725,18 +725,129 @@ const sampleWorkDocs = [
         <div class="text-[11px] text-slate-500 mb-3 font-medium i18n" data-en="List of technical portfolio documents and work artifacts by Andhika Putra Pratama:" data-id="Daftar dokumen portofolio teknis dan artefak kerja yang disusun oleh Andhika Putra Pratama:">List of technical portfolio documents and work artifacts by Andhika Putra Pratama:</div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <!-- File 1: ATS CV (PDF Viewer in XP) -->
+          <!-- Item 1: ATS CV (PDF Viewer in XP) -->
           <div 
             class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
             onclick="openCvPdf()"
           >
-            <div class="w-8 h-8 rounded bg-white border border-red-200 flex items-center justify-center shrink-0 mt-0.5">
+            <div class="w-8 h-8 rounded bg-white border border-red-200 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
               <svg class="w-5 h-5 fill-red-600" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9.5 8.5h-1v2h1c.55 0 1-.45 1-1s-.45-1-1-1zm5 0h-1v3h1c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1zm-6-2.5h-2v7h2c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm5 0h-2v7h2c1.1 0 2-.9 2-2v-3c0-1.1-.9-2-2-2zm5.5 0h-3v7h1.5v-2.5h1.5v-1.5h-1.5v-1.5h1.5v-1.5z"/></svg>
             </div>
             <div class="truncate">
-              <div class="font-bold text-blue-900 group-hover:underline truncate">CV_ATS_Andhika_Putra_Pratama.pdf</div>
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="px-1.5 py-0.2 rounded bg-red-100 text-red-800 text-[9px] font-bold uppercase">ATS Resume</span>
+              </div>
+              <div class="font-bold text-blue-900 group-hover:underline truncate text-xs">CV_ATS_Andhika_Putra_Pratama.pdf</div>
               <div class="text-[10px] text-slate-500 mt-0.5 i18n" data-en="Curriculum Vitae (ATS Standard PDF)" data-id="Curriculum Vitae Standar ATS (PDF)">Curriculum Vitae (ATS Standard PDF)</div>
               <div class="text-[10px] text-emerald-700 font-semibold mt-1 i18n" data-en="Status: Ready &bull; Click to open in XP Reader" data-id="Status: Siap &bull; Klik untuk buka di Adobe Reader XP">Status: Ready &bull; Click to open in XP Reader</div>
+            </div>
+          </div>
+
+          <!-- Item 2: SRS PUMK Executive Summary (SA Core) -->
+          <div 
+            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
+            onclick="openSampleDoc('srs-pumk')"
+          >
+            <div class="w-8 h-8 rounded bg-white border border-blue-300 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+              <FileText class="w-5 h-5 text-blue-700" />
+            </div>
+            <div class="truncate">
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="px-1.5 py-0.2 rounded bg-blue-100 text-blue-800 text-[9px] font-bold uppercase">System Analyst</span>
+              </div>
+              <div class="font-bold text-blue-900 group-hover:underline truncate text-xs">SRS_PUMK_Executive_Summary.doc</div>
+              <div class="text-[10px] text-slate-500 mt-0.5 i18n" data-en="16 Modules, Concurrency, RBAC &amp; Data Dictionary" data-id="16 Modul, Concurrency, RBAC &amp; Kamus Data">16 Modules, Concurrency, RBAC &amp; Data Dictionary</div>
+              <div class="text-[10px] text-emerald-700 font-semibold mt-1 i18n" data-en="Status: Approved &bull; Click to read" data-id="Status: Disetujui &bull; Klik untuk baca">Status: Approved &bull; Click to read</div>
+            </div>
+          </div>
+
+          <!-- Item 3: Change Request Governance Log (SA & Governance) -->
+          <div 
+            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
+            onclick="openSampleDoc('cr-governance')"
+          >
+            <div class="w-8 h-8 rounded bg-white border border-blue-300 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+              <Workflow class="w-5 h-5 text-blue-700" />
+            </div>
+            <div class="truncate">
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="px-1.5 py-0.2 rounded bg-blue-100 text-blue-800 text-[9px] font-bold uppercase">ITIL Governance</span>
+              </div>
+              <div class="font-bold text-blue-900 group-hover:underline truncate text-xs">CR_Change_Request_Governance_Log.doc</div>
+              <div class="text-[10px] text-slate-500 mt-0.5 i18n" data-en="Change Requests across SIMA, EOF, Cuti-Absensi" data-id="Log Change Request SIMA, EOF, Cuti-Absensi">Change Requests across SIMA, EOF, Cuti-Absensi</div>
+              <div class="text-[10px] text-blue-700 font-semibold mt-1 i18n" data-en="Audited &bull; Click to read" data-id="Diaudit &bull; Klik untuk baca">Audited &bull; Click to read</div>
+            </div>
+          </div>
+
+          <!-- Item 4: 40+ Enterprise Systems Catalogue (SA Scope) -->
+          <div 
+            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
+            onclick="openSampleDoc('enterprise-systems')"
+          >
+            <div class="w-8 h-8 rounded bg-white border border-blue-300 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+              <Layers class="w-5 h-5 text-blue-700" />
+            </div>
+            <div class="truncate">
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="px-1.5 py-0.2 rounded bg-blue-100 text-blue-800 text-[9px] font-bold uppercase">Enterprise Scope</span>
+              </div>
+              <div class="font-bold text-blue-900 group-hover:underline truncate text-xs">Enterprise_Systems_Catalogue.doc</div>
+              <div class="text-[10px] text-slate-500 mt-0.5 i18n" data-en="Index of 40+ Documented Enterprise Systems" data-id="Katalog 40+ Sistem Enterprise yang Didokumentasikan">Index of 40+ Documented Enterprise Systems</div>
+              <div class="text-[10px] text-blue-700 font-semibold mt-1 i18n" data-en="Verified &bull; Click to read" data-id="Terverifikasi &bull; Klik untuk baca">Verified &bull; Click to read</div>
+            </div>
+          </div>
+
+          <!-- Item 5: SIT and UAT Sign-Off Matrix (QA Rigor) -->
+          <div 
+            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-emerald-50 hover:border-emerald-300 cursor-pointer group flex items-start gap-3 transition-all"
+            onclick="openSampleDoc('sit-uat-matrix')"
+          >
+            <div class="w-8 h-8 rounded bg-white border border-emerald-300 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+              <ShieldCheck class="w-5 h-5 text-emerald-700" />
+            </div>
+            <div class="truncate">
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 text-[9px] font-bold uppercase">QA Rigor</span>
+              </div>
+              <div class="font-bold text-emerald-950 group-hover:underline truncate text-xs">SIT_and_UAT_Signoff_Matrix.doc</div>
+              <div class="text-[10px] text-slate-500 mt-0.5 i18n" data-en="Test Cases, Boundary Testing, User Sign-Offs" data-id="Kasus Uji, Boundary Testing, Sign-Off User">Test Cases, Boundary Testing, User Sign-Offs</div>
+              <div class="text-[10px] text-emerald-700 font-semibold mt-1 i18n" data-en="Pass Rate: &gt;96.8% &bull; Click to read" data-id="Tingkat Kelulusan: &gt;96.8% &bull; Klik untuk baca">Pass Rate: &gt;96.8% &bull; Click to read</div>
+            </div>
+          </div>
+
+          <!-- Item 6: Go-Live QA/QC Release Checklist (QA & Release) -->
+          <div 
+            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-emerald-50 hover:border-emerald-300 cursor-pointer group flex items-start gap-3 transition-all"
+            onclick="openSampleDoc('golive-checklist')"
+          >
+            <div class="w-8 h-8 rounded bg-white border border-emerald-300 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+              <Check class="w-5 h-5 text-emerald-700" />
+            </div>
+            <div class="truncate">
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 text-[9px] font-bold uppercase">Quality Gate</span>
+              </div>
+              <div class="font-bold text-emerald-950 group-hover:underline truncate text-xs">GoLive_QAQC_Release_Checklist.doc</div>
+              <div class="text-[10px] text-slate-500 mt-0.5 i18n" data-en="Pre-Production Checklist, DB Sanity, Rollback" data-id="Checklist Pra-Produksi, Sanitasi DB, Rollback">Pre-Production Checklist, DB Sanity, Rollback</div>
+              <div class="text-[10px] text-emerald-700 font-semibold mt-1 i18n" data-en="Ready for Prod &bull; Click to read" data-id="Siap Produksi &bull; Klik untuk baca">Ready for Prod &bull; Click to read</div>
+            </div>
+          </div>
+
+          <!-- Item 7: TAD Push Request Architecture (Developer) -->
+          <div 
+            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-indigo-50 hover:border-indigo-300 cursor-pointer group flex items-start gap-3 transition-all"
+            onclick="openSampleDoc('tad-pushrequest')"
+          >
+            <div class="w-8 h-8 rounded bg-white border border-indigo-300 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+              <Code2 class="w-5 h-5 text-indigo-700" />
+            </div>
+            <div class="truncate">
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="px-1.5 py-0.2 rounded bg-indigo-100 text-indigo-800 text-[9px] font-bold uppercase">Developer</span>
+              </div>
+              <div class="font-bold text-indigo-950 group-hover:underline truncate text-xs">TAD_PushRequest_Architecture.doc</div>
+              <div class="text-[10px] text-slate-500 mt-0.5 i18n" data-en="GitHub Webhook Engine, File Diff &amp; Deploy Kanban" data-id="Engine Webhook GitHub, Diff Berkas &amp; Kanban Deploy">GitHub Webhook Engine, File Diff &amp; Deploy Kanban</div>
+              <div class="text-[10px] text-indigo-700 font-semibold mt-1 i18n" data-en="Implemented &bull; Click to read" data-id="Terimplementasi &bull; Klik untuk baca">Implemented &bull; Click to read</div>
             </div>
           </div>
         </div>
@@ -1450,6 +1561,7 @@ const sampleWorkDocs = [
           <select id="sdlc-feature-select" class="xp-input font-semibold min-w-[240px]">
             <option value="pumk">1. PUMK - Mitra Unique ID &amp; Concurrency Control</option>
             <option value="push">2. Push Request - GitHub Audit &amp; Deployment Tracking</option>
+            <option value="enterprise-docs">3. Enterprise Portfolio - 40+ Systems Specs &amp; SIT/UAT Governance</option>
           </select>
         </div>
 
@@ -3022,11 +3134,336 @@ const sampleWorkDocs = [
     });
   });
 
-  // 6. Sample Work Documents Viewer
+  // 6. Sample Work Documents Viewer (SA, QA, and DEV Evidence Documents)
   const sampleDocsData: Record<string, { title: string; snippet: string }> = {
     "cv-ats": {
-      title: "CV_ATS_Andhika_Putra.doc",
-      snippet: `CURRICULUM VITAE\nANDHIKA PUTRA PRATAMA, S.Kom.\n\nRINGKASAN PROFESIONAL\nSystem Analyst dengan fondasi langsung di Software Development dan Quality Assurance. Mampu menjembatani kebutuhan bisnis kompleks dengan solusi teknis yang teruji, terstruktur, dan mudah diskalakan.\n\nPENDIDIKAN\nSarjana Komputer (S.Kom.) — Teknik Informatika\nInstitut Teknologi Sumatera (ITERA) | 2019 – 2023 | IPK 3.73/4.00 (Sangat Memuaskan)\n\nKEAHLIAN UTAMA\nSystem Analysis: BPMN, BRD/SRS, Use Case, ERD 3NF, Data Dictionary, Flowchart\nDevelopment: PHP Laravel, PostgreSQL, REST API, Git, GitHub API, SSO Integration\nQA Testing: Test Case, Boundary/Negative Testing, Postman, Concurrency Validation\n\nSERTIFIKASI\n• IT Specialist in Python (Pearson/Certiport)\n• Machine Learning Specialization (DeepLearning.AI / Stanford)\n• Crash Course on Python (Google / Coursera)\n• TOEFL ITP Score: 640`
+      title: "CV_ATS_Andhika_Putra_Pratama.doc",
+      snippet: `================================================================================
+CURRICULUM VITAE — ATS STANDARD SPECIFICATION
+ANDHIKA PUTRA PRATAMA, S.Kom.
+System Analyst (with hands-on Software Development & QA Testing Depth)
+Email: andhikapp28@gmail.com | GitHub: github.com/andhikapp28 | Location: Indonesia
+================================================================================
+
+[PROFESSIONAL PROFILE]
+System Analyst with direct end-to-end engineering lifecycle experience across 
+40+ enterprise platforms. Bridges ambiguous business logic into razor-sharp,
+auditable technical specifications (SRS/BRD/TAD). Experienced in implementing 
+database concurrency control, API integrations, and leading rigorous 
+System Integration Testing (SIT) and User Acceptance Testing (UAT).
+
+[EDUCATION]
+Bachelor of Computer Science (S.Kom.) — Informatics Engineering
+Institut Teknologi Sumatera (ITERA) | 2019 – 2023
+GPA: 3.73 / 4.00 (Sangat Memuaskan / High Distinction)
+
+[CORE TECHNICAL COMPETENCIES]
+• System Analysis: SRS/BRD, BPMN 2.0, Use Case, ERD 3NF, Data Dictionary, WBS, MoM
+• Software Development: PHP 8.2+, Laravel 12, PostgreSQL, REST APIs, GitHub API, SSO
+• QA & Testing: SIT/UAT Test Suites, Boundary Value Analysis, Concurrency Stress Test
+• Change Management: ITIL-aligned Change Requests (CR), Rollback Protocols, GL QA/QC
+
+[CERTIFICATIONS]
+• IT Specialist in Python — Pearson / Certiport (Score: 890 / 1000)
+• Machine Learning Specialization — DeepLearning.AI / Stanford Online
+• Crash Course on Python — Google / Coursera
+• TOEFL ITP Official Score: 640 (C1 Advanced English Proficiency)`
+    },
+    "srs-pumk": {
+      title: "SRS_PUMK_Executive_Summary.doc",
+      snippet: `================================================================================
+SOFTWARE REQUIREMENTS SPECIFICATION (SRS) — EXECUTIVE SUMMARY
+Aplikasi Program Pendanaan Usaha Mikro dan Kecil (PUMK) — Perum DAMRI
+Doc Ref: SRS-PUMK-08062026-15 | Version: 1.2 | Status: APPROVED FOR PRODUCTION
+Author / Lead System Analyst: Andhika Putra Pratama, S.Kom.
+Target Units: TJSL / PKBL, Divisi Keuangan, 40+ Cabang Operasional
+================================================================================
+
+1. EXECUTIVE BUSINESS PROBLEM & STATEMENT OF NEED
+   Unit Tanggung Jawab Sosial dan Lingkungan (TJSL) Perum DAMRI membutuhkan sentralisasi
+   tata kelola penyaluran dana pinjaman modal kerja bagi Usaha Mikro & Kecil (Mitra Binaan).
+   Sistem terdahulu yang berbasis spreadsheet manual memiliki celah:
+   a. Desinkronisasi data angsuran, bunga pinjaman, dan rekonsiliasi mutasi perbankan.
+   b. Risiko registrasi ganda penerima pembiayaan lintas BUMN akibat belum validnya NIK.
+   c. Benturan kode mitra saat cabang di seluruh Indonesia menginput secara bersamaan.
+
+2. SYSTEM SCOPE & FUNCTIONAL BREAKDOWN (16 Core Modules)
+   [MOD-01] Validasi NIK 16 Digit & Integrasi Kependudukan
+   [MOD-02] Scoring & Evaluasi Kelayakan Karakter Usaha Mikro
+   [MOD-03] Penetapan Plafon Pembiayaan & Skema Angsuran (Jasa Admin & Pokok)
+   [MOD-04] Penerbitan Digital Akad Perjanjian & Surat Penyerahan Pinjaman
+   [MOD-05] Manajemen Kas Masuk & Pencatatan Kwitansi Rekonsiliasi Bank BUMN
+   [MOD-06] Pemantauan Kolektibilitas Pinjaman (Lancar, DPK, Kurang Lancar, Macet)
+   [MOD-07] Restrukturisasi Termin Pinjaman & Penjadwalan Ulang Angsuran
+   [MOD-08] Ekspor Laporan Triwulanan (TW1 - TW4) Standar Mandatori Kementerian BUMN & OJK
+
+3. CRITICAL BUSINESS RULES & TECHNICAL GOVERNANCE
+   BR-01 [Validasi Identitas]: NIK wajib tepat 16 digit angka terverifikasi unik dalam
+         basis data sistem untuk mencegah duplikasi bantuan.
+   BR-02 [Penerbitan Kode Unik Mitra]: Format standar PUMK-{YYYY}-{NNN}. Wajib dieksekusi
+         dalam isolasi transaksi tingkat database menggunakan pessimistic locking 
+         (lockForUpdate) untuk mencegah race condition / nomor ganda saat jam sibuk.
+   BR-03 [Matriks Akses Berjenjang (RBAC)]:
+         - Staff Cabang       : Input profil mitra & upload proposal (Draft).
+         - Kepala Cabang      : Verifikasi kelayakan lapangan & rekomendasi awal.
+         - Tim TJSL Kantor Pusat: Approval limit pembiayaan & penerbitan SPK.
+         - Divisi Keuangan    : Pencatatan mutasi kas masuk & rekonsiliasi bank.
+         - Auditor BPK / SPI  : Akses peninjauan menyeluruh (Read-Only Audit Trail).
+
+4. DATA DICTIONARY & NON-FUNCTIONAL STANDARDS
+   - Kamus Data Teknis: Mendefinisikan 24 tabel relasional (32KB data dictionary formal).
+   - SSO Terpusat: Otentikasi pegawai via LDAP/SSO DAMRI (Shadow User Pattern).
+   - Audit Trail: Setiap perubahan plafon, status, dan transaksi mencatat ID user,
+     timestamp presisi milidetik, alamat IP, serta delta data before/after.`
+    },
+    "cr-governance": {
+      title: "CR_Change_Request_Governance_Log.doc",
+      snippet: `================================================================================
+CHANGE REQUEST (CR) GOVERNANCE & AUDIT LOG SUMMARY
+Framework: ITIL Change Management Lifecycle & Software Quality Gate
+Lead System Analyst & Release Gatekeeper: Andhika Putra Pratama, S.Kom.
+================================================================================
+
+1. PRINSIP TATA KELOLA PERUBAHAN SISTEM
+   Menjamin setiap modifikasi alur proses bisnis, penyesuaian formula kalkulasi,
+   dan penambahan modul pada sistem produksi berjalan terprediksi, terdokumentasi,
+   memiliki analisis dampak (impact analysis) komprehensif, dan disetujui stakeholder.
+
+2. STANDAR PROSEDUR OPERASIONAL (SOP) CHANGE REQUEST
+   [Inisiasi CR] -> [Analisis Dampak & Risiko] -> [Tinjauan Teknis & Estimasi Mandays]
+   -> [Persetujuan CAB / Unit Owner] -> [Development Staging] -> [Verifikasi SIT & UAT]
+   -> [Sign-Off Go-Live (GL-QAQC)] -> [Deployment Produksi & Evaluasi 72 Jam]
+
+3. DAFTAR SAMPEL CHANGE REQUEST YANG TELAH SELESAI DIEKSEKUSI:
+
+   -----------------------------------------------------------------------------
+   [CR-01] CR-SO-26062026-02 | Sistem: SIMA OPERASI (Penjadwalan & Armada)
+   - Deskripsi      : Penambahan Modul Rekapan Anggaran Operasional Cabang
+   - Latar Belakang : Kebutuhan konsolidasi real-time biaya BBM dan tol armada bus.
+   - Analisis Dampak: 
+     * Basis Data: Penambahan tabel tr_anggaran_operasi (FK: id_trayek, id_bus).
+     * Backend   : Optimasi aggregation query dengan composite indexing.
+     * Frontend  : Form validasi limit plafon anggaran per armada.
+   - Status & Hasil : APPROVED & DEPLOYED | UAT Pass Rate: 100%
+   -----------------------------------------------------------------------------
+   [CR-02] CR-EOF-27082026-12 | Sistem: E-OFFICE (Tata Naskah Dinas Elektronik)
+   - Deskripsi      : Penyesuaian Format Naskah Dinas & Alur Disposisi Bertingkat
+   - Latar Belakang : Kepatuhan terhadap Peraturan Direksi Tata Naskah Dinas terbaru.
+   - Analisis Dampak: Refactoring state machine disposisi, penambahan validasi digital signature.
+   - Status & Hasil : APPROVED & DEPLOYED | UAT Pass Rate: 100%
+   -----------------------------------------------------------------------------
+   [CR-03] CR-SIMAT-07072026-03 | Sistem: SIMA TEKNIK (Perawatan Armada Bus)
+   - Deskripsi      : Penyesuaian Formula Estimasi Biaya Pemeliharaan & Suku Cadang
+   - Latar Belakang : Pembaruan katalog harga sparepart vendor rekanan tahun anggaran baru.
+   - Analisis Dampak: Update service layer kalkulasi biaya estimasi vs realisasi faktur.
+   - Status & Hasil : APPROVED & DEPLOYED | UAT Pass Rate: 98.5%
+   -----------------------------------------------------------------------------
+
+4. METRIK KEBERHASILAN GOVERNANCE
+   - 100% Perubahan skema basis data produksi memiliki tiket CR formal.
+   - Zero undocumented schema changes di seluruh lingkungan server operasional.
+   - Waktu rata-rata penyelesaian analisis dampak: < 24 jam kerja.`
+    },
+    "enterprise-systems": {
+      title: "Enterprise_Systems_Documentation_Catalogue.doc",
+      snippet: `================================================================================
+ENTERPRISE SYSTEMS DOCUMENTATION CATALOGUE (40+ SYSTEMS)
+Role: System Analyst & Technical Specification Lead — Andhika Putra Pratama, S.Kom.
+Organisasi: Perum DAMRI (Transportasi, Logistik & Ekosistem Bisnis BUMN)
+================================================================================
+
+PORTFOLIO OVERVIEW:
+Telah memetakan proses bisnis, menyusun spesifikasi kebutuhan teknis (SRS/BRD),
+merancang arsitektur data (TAD/ERD), menyusun panduan pengguna (Manual Guide),
+serta memandu pengujian integrasi (SIT/UAT) untuk lebih dari 40 sistem enterprise:
+
+[A] SISTEM OPERASIONAL, LOGISTIK & MANAJEMEN ARMADA
+01. SIMA UMUM               : Sistem Informasi Manajemen Administrasi Umum
+02. SIMA OPERASI            : Manajemen Penjadwalan Bus, Trayek, & Alokasi Awak
+03. SIMA TEKNIK             : Perawatan Armada Bus, Bengkel, & Manajemen Suku Cadang
+04. SIMA PROPERTY           : Manajemen Aset Gedung, Pool, Depo & Properti Komersial
+05. DILS                    : DAMRI Integrated Logistics System
+06. DILS AGEN               : Portal Keagenan Kargo & Ekspedisi Logistik
+07. LMB ONLINE              : Laporan Muatan Bus & Kapasitas Bagasi Real-Time
+08. AUTOMATIC SCALE SYSTEM  : Integrasi Sensor Jembatan Timbang Truk Kargo
+
+[B] SISTEM TIKET, TRANSAKSI PENUMPANG & GATE PAYMENT
+09. NEW TIKET (LOKET)       : Point-of-Sale (POS) Kasir Loket Tiket Terminal
+10. NEW ETIKETING API       : Gateway Integrasi Tiket dengan OTA & Mitra Eksternal
+11. AUTOMATIC FARE COLLECTION (AFC) : Integrasi Gate Pembayaran Non-Tunai / Kartu
+12. TICKET BOX              : Kios Penjualan Tiket Mandiri Penumpang
+13. MY DAMRI                : Aplikasi Mobile Penumpang (Pemesanan & Jadwal Bus)
+14. DAMRI BUS ASIA          : Sistem Reservasi & Operasional Rute Antarnegara
+15. MITRA DAMRI             : Dashboard Mitra Penjualan & Agen Perjalanan
+
+[C] SISTEM KEUANGAN, PENGADAAN & INVESTASI
+16. PUMK                    : Program Pendanaan Usaha Mikro & Kecil (TJSL BUMN)
+17. E-PROPOSAL              : Pengajuan Anggaran Inisiatif & Bisnis Divisi
+18. E-PROCUREMENT           : Pengadaan Barang & Jasa serta Evaluasi Vendor
+19. E-CASH RECEIPT          : Penerimaan Kas Operasional & Penyetoran Bank
+20. WEB REKON               : Rekonsiliasi Transaksi Tiket vs Mutasi Rekening Bank
+21. CENTRAL KEU             : Sentralisasi Pelaporan & Pembukuan Keuangan
+22. DOKUMEN KONTRAK         : Manajemen Kontrak Kerjasama Legal & Finansial
+
+[D] SISTEM SDM, TATA KELOLA NASKAH, RISK & CRM
+23. HCMS                    : Human Capital Management System (Data Pegawai)
+24. E-OFFICE (NASKAH DINAS) : Tata Naskah Dinas Elektronik & Alur Disposisi
+25. CUTI & ABSENSI          : Presensi Geotagging & Pengajuan Cuti Karyawan
+26. PAYROLL                 : Perhitungan Gaji Pokok, Tunjangan, & Insentif
+27. EVALKIN                 : Sistem Evaluasi Kinerja & Penilaian KPI Tahunan
+28. DAMRI LEARNING          : Learning Management System (LMS) Pelatihan Pegawai
+29. SERVICE DESK (CRM)      : Helpdesk Pelayanan Keluhan Penumpang & Layanan
+30. AUDIT MANAGEMENT (AMS)  : Pelacakan Temuan Audit Internal & Eksternal
+31. RISK REGISTER           : Manajemen Profil & Mitigasi Risiko Korporat
+32. QUALITY CHECK           : Standardisasi Inspeksi Kelaikan Armada (Ramp Check)
+33-40. VMS, SMAPS, API ENHANCEMENT, MIDDLEWARE, DAN MODUL INTEGRASI LAINNYA.
+
+STANDAR ARTEFAK YANG DIHASILKAN:
+- Software Requirements Specification (SRS) & Business Requirement Document (BRD)
+- Technical Architecture Document (TAD) & Entity Relationship Diagram (ERD 3NF)
+- Diagram Alur Proses Bisnis (BPMN 2.0 / Activity Diagram)
+- Matriks System Integration Testing (SIT) & User Acceptance Testing (UAT)
+- Buku Panduan Pengguna (Manual Guide) & Notulensi Rapat Teknis (MoM)`
+    },
+    "sit-uat-matrix": {
+      title: "SIT_and_UAT_Signoff_Matrix.doc",
+      snippet: `================================================================================
+SYSTEM INTEGRATION TESTING (SIT) & USER ACCEPTANCE TESTING (UAT) MATRIX
+QA Specialist & Test Architect: Andhika Putra Pratama, S.Kom.
+Standar Ref: SIT-VMS / SIT-EOF / UAT-SIMA / GL-QAQC
+Tujuan Kualitas: Zero Critical Defect Escaped to Production Environment
+================================================================================
+
+1. METODOLOGI PENGUJIAN DUA FASE (DUAL-PHASE TESTING)
+   a. System Integration Testing (SIT) — Verifikasi Internal Engineering:
+      - Validasi kontrak REST API dan error handling antarmodul.
+      - Integritas relasional foreign key & constraint basis data.
+      - Concurrency & race condition handling di bawah traffic simulasi.
+   b. User Acceptance Testing (UAT) — Validasi Kebutuhan Bisnis Pengguna:
+      - Skenario pengujian berbasis alur kerja nyata (End-to-End User Journey).
+      - Dilaksanakan bersama Product Owner, perwakilan cabang, & unit bisnis.
+
+2. SAMPEL LEMBAR PENGUJIAN UAT (Aplikasi PUMK & SIMA Operasi)
+   -----------------------------------------------------------------------------
+   [TC-ID] UAT-PUMK-01 | Fitur: Pendaftaran Mitra Binaan Baru
+   - Aktor        : Petugas Cabang (Role: CABANG_OPERATOR)
+   - Prasyarat    : Pengguna login via SSO DAMRI dengan hak akses cabang aktif.
+   - Langkah Uji  : 1. Akses menu Pendaftaran Mitra Binaan.
+                    2. Input NIK 16 digit valid: '3201012345670001'.
+                    3. Upload dokumen proposal kelayakan (PDF < 5MB).
+                    4. Klik tombol 'Simpan Pengajuan'.
+   - Hasil Harapan: Data tersimpan, kode mitra PUMK-{YYYY}-{NNN} terbit otomatis,
+                    NIK terverifikasi unik, status 'DRAFT_PROPOSAL'.
+   - Hasil Aktual : LULUS (PASS) — Kode unik PUMK-2026-042 terbit tanpa anomali.
+   -----------------------------------------------------------------------------
+   [TC-ID] UAT-PUMK-02 | Fitur: Negative & Boundary Test Validasi NIK
+   - Langkah Uji  : Input NIK 15 digit dan input NIK yang telah terdaftar sebelumnya.
+   - Hasil Harapan: Form menampilkan error interaktif: 'NIK harus tepat 16 digit'
+                    atau 'NIK telah terdaftar dalam sistem'. Tombol simpan terkunci.
+   - Hasil Aktual : LULUS (PASS) — Validasi client & server berjalan sinkron.
+   -----------------------------------------------------------------------------
+   [TC-ID] UAT-PUMK-03 | Fitur: Concurrency Stress Test Multi-Cabang
+   - Langkah Uji  : 20 submit pengajuan serentak dalam jendela waktu 2 detik.
+   - Hasil Harapan: 20 nomor urut terbit berurutan, 0 duplicate key error.
+   - Hasil Aktual : LULUS (PASS) — Pessimistic locking (lockForUpdate) berhasil.
+   -----------------------------------------------------------------------------
+
+3. KLASIFIKASI DEFECT & SEVERITY SLA
+   - P1 (Blocker)  : Crash sistem, korupsi data, kegagalan perhitungan uang. (SLA: < 2 Jam)
+   - P2 (Critical) : Fungsi inti gagal beroperasi, tidak ada workaround. (SLA: < 8 Jam)
+   - P3 (Major)    : Fungsi parsial terganggu, ada alternatif operasional. (SLA: < 24 Jam)
+   - P4 (Minor)    : Kesalahan tipografi, glitch tata letak visual. (SLA: Next Release)
+
+4. PENCAPAIAN MUTU PENGUJIAN
+   - Tingkat kelulusan UAT siklus pertama: > 96.8%.
+   - Defect Leakage ke Lingkungan Produksi: 0 Critical Bugs.`
+    },
+    "golive-checklist": {
+      title: "GoLive_QAQC_Release_Checklist.doc",
+      snippet: `================================================================================
+GO-LIVE QA/QC QUALITY GATE & DEPLOYMENT CHECKLIST
+Quality Assurance & Release Governance — Andhika Putra Pratama, S.Kom.
+Referensi Standar: GL-QAQC-06072026-05 / GL-HCMS-10072026-08
+Status: PRODUCTION GATING PROTOCOL
+================================================================================
+
+1. PRINSIP QUALITY GATE SEBELUM PRODUKSI
+   Sebuah sistem atau modul baru DILARANG KERAS di-deploy ke server produksi
+   sebelum seluruh poin verifikasi berikut dinyatakan PASSED dan ditandatangani.
+
+2. DAFTAR PERIKSA KESIAPAN RILIS (PRE-RELEASE CHECKLIST):
+
+   [A] KUALITAS KODE & INTEGRASI (DEVELOPER & QA)
+   [x] 1. Seluruh branch fitur telah di-merge ke branch release via approved PR.
+   [x] 2. Unit testing & static analysis pass (0 error, 0 security vulnerability).
+   [x] 3. Skenario System Integration Testing (SIT) 100% lulus tanpa defect blocker.
+   [x] 4. Berita Acara UAT telah ditandatangani resmi oleh Product Owner / User.
+
+   [B] BASIS DATA & SKEMA (DATABASE SANITY)
+   [x] 5. Migration script telah diuji di staging environment dengan data riil tersanitasi.
+   [x] 6. Backup snapshot basis data produksi diambil sebelum eksekusi migrasi.
+   [x] 7. Script rollback migrasi siap pakai jika terjadi anomali runtime.
+   [x] 8. Foreign key constraints dan indexing tabel telah tervalidasi.
+
+   [C] KONFIGURASI KEAMANAN & ENVIRONMENT
+   [x] 9. Parameter debug dinonaktifkan (APP_DEBUG=false / NODE_ENV=production).
+   [x] 10. Kredensial, API key, dan webhook secret tersimpan di Environment Vault aman.
+   [x] 11. Endpoint otentikasi SSO terhubung ke production identity realm.
+   [x] 12. Sertifikat SSL/TLS valid dan HTTPS enforced pada seluruh route.
+
+   [D] RENCANA MITIGASI & ROLLBACK
+   [x] 13. Dokumen SOP Rollback 5 Menit tersedia di meja Tech Lead.
+   [x] 14. Tim siaga (Standby Support) ditetapkan untuk masa pemantauan pasca-rilis (72 jam).
+
+3. SIGN-OFF KELAYAKAN RILIS
+   Status Verifikasi : SIAP PRODUKSI (READY FOR PRODUCTION)
+   Quality Gatekeeper: Andhika Putra Pratama, S.Kom. (QA & System Analyst)`
+    },
+    "tad-pushrequest": {
+      title: "TAD_PushRequest_Architecture.doc",
+      snippet: `================================================================================
+TECHNICAL ARCHITECTURE DOCUMENT (TAD) — PUSH REQUEST TRACKER
+Internal DevOps & Deployment Governance Tool — Perum DAMRI
+Lead Developer & System Analyst: Andhika Putra Pratama, S.Kom.
+Status: IMPLEMENTED & IN PRODUCTION
+================================================================================
+
+1. ARSITEKTUR TINGKAT TINGGI (HIGH LEVEL ARCHITECTURE)
+   Push Request Tracker dibangun untuk menyatukan audit commit repository GitHub,
+   pelacakan status deployment ke server live produksi, dan kanban workflow.
+   
+   Alur Data:
+   [GitHub Enterprise Repo] 
+         | (Webhook POST on Push / Release Event)
+         v
+   [Webhook Controller] (HMAC-SHA256 Signature Verification)
+         |
+         v
+   [Ingestion Queue & Background Worker]
+         |
+         +--> [GitHub REST API] (Fetch Commit Diff, File Additions / Deletions)
+         |
+         +--> [PostgreSQL Database] (Audit Trail Storage)
+         |
+         v
+   [Real-Time Kanban UI] (Datatables, Diff Modal, Deploy Approval Gate)
+
+2. DESAIN BASIS DATA UTAMA (DATA ARCHITECTURE)
+   - push_notes       : Header event push, repository, branch, author, commit hash.
+   - change_logs      : Rincian commit message, author, dan ringkasan fungsional.
+   - change_log_files : Rincian nama file, status (added/modified/deleted), lines (+/-).
+   - prod_pulls       : Rekam status penarikan kode ke server produksi live.
+   - users & roles    : RBAC (Admin TI, Tech Lead, Developer, QA Auditor).
+
+3. FITUR KEAMANAN & KEANDALAN SISTEM
+   - HMAC-SHA256 Verification: Memvalidasi header X-Hub-Signature-256 pada setiap event.
+   - Idempotency Handling: Menghindari duplikasi log audit saat terjadi webhook retry.
+   - Rate Limiting: Melindungi server dari lonjakan traffic push mendadak.
+
+4. HASIL KUANTITATIF & NILAI BISNIS
+   - 100% Visibilitas Deployment: Menghilangkan insiden file tertinggal saat rilis.
+   - Efisiensi Approval: Tech Lead dapat menginspeksi file diff langsung dari browser XP
+     sebelum menyetujui penarikan kode ke server live.`
     }
   };
 
@@ -3453,6 +3890,12 @@ const sampleWorkDocs = [
     { id: 'win-resume', title: 'Resume.doc', titleId: 'Resume.doc', desc: 'Full CV, education, and experience', descId: 'CV lengkap, pendidikan, dan pengalaman', type: 'window', keywords: 'resume cv curriculum vitae pendidikan experience education', action: () => (window as any).openWindow('win-resume') },
     { id: 'win-pdf-viewer', title: 'CV_ATS.pdf (Adobe Reader)', titleId: 'CV_ATS.pdf (Adobe Reader)', desc: 'ATS standard CV in PDF format', descId: 'CV standar ATS format PDF', type: 'document', keywords: 'cv ats pdf adobe reader curriculum vitae resume', action: () => (window as any).openCvPdf() },
     { id: 'win-docs-folder', title: 'Work Docs', titleId: 'Dokumen Kerja', desc: 'Folder of documents and ATS CV', descId: 'Folder dokumen dan CV ATS', type: 'window', keywords: 'dokumen kerja cv ats document work docs', action: () => (window as any).openWindow('win-docs-folder') },
+    { id: 'doc-srs-pumk', title: 'SRS_PUMK_Executive_Summary.doc', titleId: 'SRS_PUMK_Executive_Summary.doc', desc: 'System Requirements Specification - PUMK', descId: 'Spesifikasi Kebutuhan Sistem PUMK', type: 'document', keywords: 'srs brd pumk spesifikasi requirements concurrency rbac business rules data dictionary', action: () => (window as any).openSampleDoc('srs-pumk') },
+    { id: 'doc-cr-governance', title: 'CR_Change_Request_Governance_Log.doc', titleId: 'CR_Change_Request_Governance_Log.doc', desc: 'ITIL Change Request Management Logs', descId: 'Log Tata Kelola Change Request ITIL', type: 'document', keywords: 'cr change request governance sima eof cuti absensi itil impact analysis rollback', action: () => (window as any).openSampleDoc('cr-governance') },
+    { id: 'doc-enterprise-systems', title: 'Enterprise_Systems_Catalogue.doc', titleId: 'Enterprise_Systems_Catalogue.doc', desc: 'Master Index of 40+ Documented Systems', descId: 'Katalog 40+ Sistem Enterprise Andhika', type: 'document', keywords: 'enterprise systems 40 sistem catalogue katalog sima hcms dils eproposal pumk', action: () => (window as any).openSampleDoc('enterprise-systems') },
+    { id: 'doc-sit-uat', title: 'SIT_and_UAT_Signoff_Matrix.doc', titleId: 'SIT_and_UAT_Signoff_Matrix.doc', desc: 'SIT and UAT Test Matrices & User Sign-Offs', descId: 'Matriks Uji SIT & UAT serta Sign-Off User', type: 'document', keywords: 'sit uat testing qa matrix test cases boundary defect sign off', action: () => (window as any).openSampleDoc('sit-uat-matrix') },
+    { id: 'doc-golive', title: 'GoLive_QAQC_Release_Checklist.doc', titleId: 'GoLive_QAQC_Release_Checklist.doc', desc: 'Pre-Production Quality Gate Checklist', descId: 'Checklist Quality Gate Pra-Produksi', type: 'document', keywords: 'go live golive qaqc checklist quality gate production release rollback', action: () => (window as any).openSampleDoc('golive-checklist') },
+    { id: 'doc-tad-push', title: 'TAD_PushRequest_Architecture.doc', titleId: 'TAD_PushRequest_Architecture.doc', desc: 'Technical Architecture - Push Request', descId: 'Arsitektur Teknis Push Request Tracker', type: 'document', keywords: 'tad technical architecture push request github webhook diff deploy kanban', action: () => (window as any).openSampleDoc('tad-pushrequest') },
     { id: 'win-gallery', title: 'Certificates', titleId: 'Sertifikat', desc: 'Certificates gallery', descId: 'Galeri sertifikat', type: 'window', keywords: 'sertifikat certificate toefl python machine learning awards', action: () => (window as any).openWindow('win-gallery') },
     { id: 'win-explorer', title: 'My Computer', titleId: 'Komputer Saya', desc: 'Access drives and system folders', descId: 'Akses drive dan folder', type: 'window', keywords: 'komputer saya my computer drive explorer c e', action: () => (window as any).openWindow('win-explorer') },
     { id: 'win-sdlc', title: 'SDLC Lens', titleId: 'SDLC Lens', desc: 'Case studies from Analyst, Dev, QA perspectives', descId: 'Studi kasus PUMK & Push Request', type: 'window', keywords: 'sdlc pumk push analyst dev qa damri lens architecture', action: () => (window as any).openWindow('win-sdlc') },
@@ -4017,6 +4460,167 @@ public function handlePush(Request $request)
               <div class="p-2 rounded bg-white border border-slate-300">
                 <strong>Diff Viewer Accuracy:</strong> perbandingan commit menghasilkan statistik lines added/removed sama dengan GitHub.
               </div>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    'enterprise-docs': {
+      analyst: `
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg bg-blue-50 border border-blue-200">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded bg-blue-700 text-white text-[10px] font-bold uppercase">Lead Analyst Lens</span>
+              <span class="font-bold text-blue-900 text-sm">40+ Enterprise Systems Lifecycle &amp; Governance</span>
+            </div>
+            <p class="text-slate-800 text-xs leading-relaxed">
+              Memimpin perancangan kebutuhan teknis, standarisasi dokumen rekayasa perangkat lunak, dan pemetaan proses bisnis (BPMN 2.0) lintas lebih dari 40 sistem operasional, keuangan, SDM, dan logistik berskala nasional.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+            <div class="p-2 rounded bg-white border border-blue-200"><div class="text-lg font-black text-blue-700">40+</div><div class="text-[10px] text-slate-600">Systems Analyzed</div></div>
+            <div class="p-2 rounded bg-white border border-blue-200"><div class="text-lg font-black text-blue-700">100%</div><div class="text-[10px] text-slate-600">Standardized SRS/BRD</div></div>
+            <div class="p-2 rounded bg-white border border-blue-200"><div class="text-lg font-black text-blue-700">ITIL</div><div class="text-[10px] text-slate-600">CR Governance</div></div>
+            <div class="p-2 rounded bg-white border border-blue-200"><div class="text-lg font-black text-blue-700">&lt;24h</div><div class="text-[10px] text-slate-600">Impact Analysis SLA</div></div>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-2">Domain Ecosystem Coverage</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-slate-700">
+              <div class="p-2 rounded bg-slate-50 border border-slate-200">
+                <span class="font-bold text-blue-800">Operasional &amp; Armada:</span>
+                <div>SIMA Umum, SIMA Operasi, SIMA Teknik, SIMA Property, DILS Kargo, LMB Online, Automatic Scale.</div>
+              </div>
+              <div class="p-2 rounded bg-slate-50 border border-slate-200">
+                <span class="font-bold text-blue-800">Tiket &amp; Penumpang:</span>
+                <div>New Tiket Loket POS, New Etiketing API, AFC Payment Gate, Ticket Box Kiosk, My DAMRI Apps.</div>
+              </div>
+              <div class="p-2 rounded bg-slate-50 border border-slate-200">
+                <span class="font-bold text-blue-800">Keuangan &amp; TJSL:</span>
+                <div>Aplikasi PUMK, E-Proposal, E-Procurement, E-Cash Receipt, Web Rekon Bank, Dokumen Kontrak.</div>
+              </div>
+              <div class="p-2 rounded bg-slate-50 border border-slate-200">
+                <span class="font-bold text-blue-800">SDM &amp; Tata Kelola:</span>
+                <div>HCMS Pegawai, E-Office Naskah Dinas, Cuti &amp; Presensi, Payroll, Evalkin KPI, AMS Audit, Risk Register.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-2">Standardized Engineering Deliverables</div>
+            <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+              <li><strong>SRS / BRD:</strong> Struktur formal mencakup aktor, use case, business rules, dan kamus data terperinci.</li>
+              <li><strong>BPMN 2.0:</strong> Diagram alur proses bisnis swimlane yang menghubungkan end-user dengan backend service.</li>
+              <li><strong>Change Request (CR):</strong> Analisis dampak teknis, estimasi mandays, dan mitigasi rollback terukur.</li>
+              <li><strong>Manual Guide &amp; MoM:</strong> Panduan pengoperasian modul bagi cabang serta notulensi kesepakatan teknis.</li>
+            </ul>
+          </div>
+        </div>
+      `,
+      dev: `
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded bg-indigo-700 text-white text-[10px] font-bold uppercase">Dev Feasibility</span>
+              <span class="font-bold text-indigo-900 text-sm">Enterprise Data Architecture &amp; Integration Standards</span>
+            </div>
+            <p class="text-slate-800 text-xs leading-relaxed">
+              Memastikan seluruh spesifikasi yang dirancang oleh System Analyst layak diimplementasikan (feasible), mematuhi normalisasi 3NF, memiliki isolasi multi-tenant yang aman, dan terintegrasi dengan Single Sign-On (SSO) terpusat.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div class="p-3 rounded bg-white border border-indigo-200 text-center">
+              <div class="text-base font-bold text-indigo-900">SSO Shadow User</div>
+              <div class="text-[10px] text-slate-600 mt-1">Otentikasi pegawai aman via SSO terpusat tanpa menyimpan kredensial lokal.</div>
+            </div>
+            <div class="p-3 rounded bg-white border border-indigo-200 text-center">
+              <div class="text-base font-bold text-indigo-900">Data Isolation</div>
+              <div class="text-[10px] text-slate-600 mt-1">Isolasi data cabang via kolom id_bu dan row-level security di database.</div>
+            </div>
+            <div class="p-3 rounded bg-white border border-indigo-200 text-center">
+              <div class="text-base font-bold text-indigo-900">Pessimistic Locking</div>
+              <div class="text-[10px] text-slate-600 mt-1">Proteksi race condition pada nomor urut dan transaksi anggaran sensitif.</div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-indigo-200 font-mono text-[11px]">
+            <div class="font-bold text-indigo-900 mb-1">Standardized Integration Pattern:</div>
+            <div class="bg-slate-900 text-slate-200 p-2.5 rounded overflow-x-auto">
+              <div>// Client / Web Hook Ingestion Pattern</div>
+              <div>POST /api/v1/ingest -> HMAC-SHA256 Validation -> Queue Job</div>
+              <div>// DB Transaction &amp; Lock</div>
+              <div>DB::transaction(function() &#123; Model::lockForUpdate()->increment(...); &#125;);</div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-2">Technical Feasibility Checklist</div>
+            <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+              <li>Penyusunan kamus data formal setebal puluhan kilobyte sebelum koding dimulai.</li>
+              <li>Validasi tipe data, foreign keys, indeks komposit, dan cascade constraints.</li>
+              <li>Pencegahan SQL injection melalui parameterized query dan query builder resmi.</li>
+              <li>Penanganan idempotensi pada setiap webhook dan transaksi pembayaran.</li>
+            </ul>
+          </div>
+        </div>
+      `,
+      qa: `
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-200">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded bg-emerald-700 text-white text-[10px] font-bold uppercase">QA Rigor</span>
+              <span class="font-bold text-emerald-900 text-sm">Dual-Phase Testing &amp; Production Quality Gate</span>
+            </div>
+            <p class="text-slate-800 text-xs leading-relaxed">
+              Menjaga mutu perangkat lunak melalui pengujian integrasi antarmodul (SIT), pengujian akseptasi pengguna bisnis (UAT), dan checklist kesiapan rilis (Go-Live QA/QC) untuk menjamin zero defect kritis di lingkungan produksi.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+            <div class="p-2 rounded bg-white border border-emerald-200"><div class="text-lg font-black text-emerald-700">&gt;96.8%</div><div class="text-[10px] text-slate-600">First-Cycle UAT Pass</div></div>
+            <div class="p-2 rounded bg-white border border-emerald-200"><div class="text-lg font-black text-emerald-700">0</div><div class="text-[10px] text-slate-600">Critical Defect Leaks</div></div>
+            <div class="p-2 rounded bg-white border border-emerald-200"><div class="text-lg font-black text-emerald-700">100%</div><div class="text-[10px] text-slate-600">User Sign-Off Signed</div></div>
+            <div class="p-2 rounded bg-white border border-emerald-200"><div class="text-lg font-black text-emerald-700">&lt;2h</div><div class="text-[10px] text-slate-600">P1 Blocker SLA</div></div>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-emerald-200 overflow-x-auto">
+            <div class="font-bold text-emerald-900 text-xs mb-2">Testing Protocols Across Enterprise Systems</div>
+            <table class="w-full text-[10px] border-collapse">
+              <thead>
+                <tr class="bg-emerald-100 text-emerald-900">
+                  <th class="border border-emerald-200 p-1.5 text-left">Test Phase</th>
+                  <th class="border border-emerald-200 p-1.5 text-left">Focus Area</th>
+                  <th class="border border-emerald-200 p-1.5 text-left">Quality Gate / Acceptance Standard</th>
+                </tr>
+              </thead>
+              <tbody class="text-slate-700">
+                <tr><td class="border border-emerald-200 p-1.5 font-bold">SIT (Internal)</td><td class="border border-emerald-200 p-1.5">API contracts, DB constraints, concurrency</td><td class="border border-emerald-200 p-1.5">100% test cases pass, no data corruption</td></tr>
+                <tr><td class="border border-emerald-200 p-1.5 font-bold">UAT (Business)</td><td class="border border-emerald-200 p-1.5">End-to-end user journeys with PO &amp; branches</td><td class="border border-emerald-200 p-1.5">Signed Berita Acara UAT, acceptance rate &gt;95%</td></tr>
+                <tr><td class="border border-emerald-200 p-1.5 font-bold">Go-Live QA/QC</td><td class="border border-emerald-200 p-1.5">Migration dry-run, DB snapshot, rollback SOP</td><td class="border border-emerald-200 p-1.5">Zero blocker bugs, approved production sign-off</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-3 rounded bg-emerald-50 border border-emerald-200">
+              <div class="font-bold text-emerald-900 text-xs mb-2">Defect Triage Standard</div>
+              <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+                <li><strong>P1 Blocker:</strong> crash / hitungan salah (SLA &lt; 2 jam).</li>
+                <li><strong>P2 Critical:</strong> fitur utama terhenti (SLA &lt; 8 jam).</li>
+                <li><strong>P3 Major:</strong> fitur parsial terkendala (SLA &lt; 24 jam).</li>
+                <li><strong>P4 Minor:</strong> tipografi / tata letak (next minor patch).</li>
+              </ul>
+            </div>
+            <div class="p-3 rounded bg-emerald-50 border border-emerald-200">
+              <div class="font-bold text-emerald-900 text-xs mb-2">Production Quality Assurance</div>
+              <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+                <li>Checklist rilis produksi formal (GL-QAQC / GL-HCMS).</li>
+                <li>Verifikasi integritas migrasi data &amp; foreign key index.</li>
+                <li>Monitoring intensif pasca-deployment selama 72 jam.</li>
+                <li>SOP Rollback 5 menit siap eksekusi jika terjadi anomali.</li>
+              </ul>
             </div>
           </div>
         </div>
