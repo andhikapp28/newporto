@@ -488,6 +488,20 @@
 /* ==========================================================================
    MOBILE & TOUCH SCREEN OPTIMIZATIONS
    ========================================================================== */
+#xp-taskbar {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100vw !important;
+  height: 30px !important;
+  z-index: 9999 !important;
+}
+
+#xp-desktop-space {
+  padding-bottom: 30px;
+}
+
 .xp-titlebar {
   touch-action: none;
   -webkit-user-select: none;

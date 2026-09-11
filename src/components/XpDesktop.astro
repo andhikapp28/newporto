@@ -169,16 +169,15 @@ const sampleWorkDocs = [
 ---
 
 <div 
-  id="xp-desktop-container" 
-  class="fixed inset-0 z-30 w-screen h-screen hidden flex-col select-none overflow-hidden font-sans"
+  id="xp-desktop-container" class="fixed inset-0 z-30 w-full h-full h-screen h-[100dvh] hidden flex-col select-none overflow-hidden font-sans"
   style={`background-image: url('${blissImg}'); background-size: cover; background-position: center; background-repeat: no-repeat;`}
   data-base-url={base}
 >
   <!-- Desktop Workspace Area -->
-  <div id="xp-desktop-space" class="relative flex-1 w-full h-[calc(100vh-30px)] overflow-hidden">
+  <div id="xp-desktop-space" class="relative flex-1 w-full h-[calc(100vh-30px)] h-[calc(100dvh-30px)] overflow-hidden">
 
     <!-- Desktop Icons Grid (Left column) -->
-    <div id="xp-desktop-icons-grid" class="relative z-10 p-3 grid grid-flow-col grid-rows-8 gap-y-2.5 gap-x-5 w-max pointer-events-auto">
+    <div id="xp-desktop-icons-grid" class="relative z-10 p-2.5 sm:p-3 grid grid-flow-col grid-rows-6 sm:grid-rows-8 gap-y-2 sm:gap-y-2.5 gap-x-4 sm:gap-x-5 w-max pointer-events-auto">
       <!-- Custom desktop icon tooltip -->
       <div id="xp-icon-tooltip" class="fixed z-[10001] hidden pointer-events-none max-w-[220px]">
         <div class="px-2 py-1.5 rounded border border-[#0a246a] bg-[#ffffe1] text-slate-900 shadow-lg text-[11px]">
@@ -1711,8 +1710,6 @@ const sampleWorkDocs = [
         </svg>
       </div>
     </div>
-  </div>
-
 
     <!-- WINDOW 13: Search Companion (Rover) -->
     <div
@@ -2431,6 +2428,8 @@ const sampleWorkDocs = [
     <div class="text-center text-xs text-yellow-200 animate-pulse mt-6 i18n" data-en="[ Click anywhere or press any key to reboot Windows XP ]" data-id="[ Klik di mana saja atau tekan tombol apa pun untuk reboot Windows XP ]">[ Click anywhere or press any key to reboot Windows XP ]</div>
   </div>
 
+  </div><!-- /xp-desktop-space -->
+
   <!-- ==================== WINDOWS XP START MENU ==================== -->
   <div
     id="xp-start-menu"
@@ -2535,7 +2534,7 @@ const sampleWorkDocs = [
   <!-- ==================== TASKBAR ==================== -->
   <div 
     id="xp-taskbar" 
-    class="relative z-[9999] h-[30px] w-full bg-gradient-to-b from-[#245edb] via-[#3f8cf3] to-[#1941a5] border-t border-[#468df2] flex items-center justify-between select-none shadow-lg shrink-0"
+    class="fixed bottom-0 left-0 right-0 z-[9999] h-[30px] w-full bg-gradient-to-b from-[#245edb] via-[#3f8cf3] to-[#1941a5] border-t border-[#468df2] flex items-center justify-between select-none shadow-lg shrink-0"
   >
     <div class="flex items-center h-full">
       <button
