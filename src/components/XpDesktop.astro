@@ -612,10 +612,23 @@ const sampleWorkDocs = [
               </div>
             </div>
 
+            <div class="p-2.5 rounded border border-blue-200 bg-blue-50/50 flex items-center justify-between gap-3 hover:bg-blue-100/60 transition-colors">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-blue-950 text-xs">5. Enterprise Fleet Telematics &amp; Fuel Anomaly Engine</span>
+                  <span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-900 text-[9px] font-bold uppercase">IoT &amp; Logistics</span>
+                </div>
+                <p class="text-[11px] text-slate-600 mt-0.5">
+                  1,500+ Bus CAN-bus J1939 Telematics, Kalman Filter Sloshing Mitigation, &lt;45s Fuel Siphoning Alerts, and Rp 4.2 Miliar/year Opex Savings.
+                </p>
+              </div>
+              <button onclick="openWindow('win-projects')" class="xp-btn text-[10px] font-bold shrink-0">Open Spec &rarr;</button>
+            </div>
+
             <div class="p-2.5 rounded border border-slate-200 bg-slate-50 flex items-center justify-between gap-3 hover:bg-slate-100 transition-colors">
               <div>
                 <div class="flex items-center gap-2">
-                  <span class="font-bold text-slate-900 text-xs">5. GitHub Push Request Audit &amp; Deploy Tracker</span>
+                  <span class="font-bold text-slate-900 text-xs">6. GitHub Push Request Audit &amp; Deploy Tracker</span>
                   <span class="px-1.5 py-0.2 rounded bg-indigo-100 text-indigo-900 text-[9px] font-bold uppercase">DevOps Audit</span>
                 </div>
                 <p class="text-[11px] text-slate-600 mt-0.5">
@@ -1194,6 +1207,42 @@ const sampleWorkDocs = [
               </div>
               <div class="font-bold text-emerald-950 group-hover:underline truncate text-xs">SIT_UAT_Payment_Recon_Matrix.doc</div>
               <div class="text-[10px] text-slate-500 mt-0.5 i18n" data-en="35 Scenarios, Webhook Drops, Cutoffs &amp; MDR Fees" data-id="35 Skenario, Webhook Drop, Cutoff &amp; Biaya MDR">35 Scenarios, Webhook Drops, Cutoffs &amp; MDR Fees</div>
+              <div class="text-[10px] text-emerald-700 font-semibold mt-1 i18n" data-en="Sign-Off Ready &bull; Click to read" data-id="Siap Sign-Off &bull; Klik untuk baca">Sign-Off Ready &bull; Click to read</div>
+            </div>
+          </div>
+
+          <!-- Item 13: SRS Fleet Telematics & Fuel Anomaly Engine -->
+          <div 
+            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300 cursor-pointer group flex items-start gap-3 transition-all"
+            onclick="openSampleDoc('srs-telematics')"
+          >
+            <div class="w-8 h-8 rounded bg-white border border-blue-300 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+              <FileText class="w-5 h-5 text-blue-600" />
+            </div>
+            <div class="truncate">
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="px-1.5 py-0.2 rounded bg-blue-100 text-blue-800 text-[9px] font-bold uppercase">IoT / Logistics</span>
+              </div>
+              <div class="font-bold text-blue-950 group-hover:underline truncate text-xs">SRS_Fleet_Telematics_Fuel_Anomaly.doc</div>
+              <div class="text-[10px] text-slate-500 mt-0.5 i18n" data-en="CAN-bus J1939, Kalman Filter &amp; Siphoning Detection" data-id="CAN-bus J1939, Filter Kalman &amp; Deteksi Pencurian BBM">CAN-bus J1939, Kalman Filter &amp; Siphoning Detection</div>
+              <div class="text-[10px] text-blue-700 font-semibold mt-1 i18n" data-en="Verified &bull; Click to read" data-id="Terverifikasi &bull; Klik untuk baca">Verified &bull; Click to read</div>
+            </div>
+          </div>
+
+          <!-- Item 14: SIT/UAT Telematics Matrix -->
+          <div 
+            class="p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-emerald-50 hover:border-emerald-300 cursor-pointer group flex items-start gap-3 transition-all"
+            onclick="openSampleDoc('sit-telematics')"
+          >
+            <div class="w-8 h-8 rounded bg-white border border-emerald-300 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+              <FileCheck class="w-5 h-5 text-emerald-600" />
+            </div>
+            <div class="truncate">
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 text-[9px] font-bold uppercase">QA IoT</span>
+              </div>
+              <div class="font-bold text-emerald-950 group-hover:underline truncate text-xs">SIT_UAT_Telematics_Matrix.doc</div>
+              <div class="text-[10px] text-slate-500 mt-0.5 i18n" data-en="35 Scenarios, Geofence Corridors &amp; SPBU Triangulation" data-id="35 Skenario, Koridor Geofence &amp; Triangulasi SPBU">35 Scenarios, Geofence Corridors &amp; SPBU Triangulation</div>
               <div class="text-[10px] text-emerald-700 font-semibold mt-1 i18n" data-en="Sign-Off Ready &bull; Click to read" data-id="Siap Sign-Off &bull; Klik untuk baca">Sign-Off Ready &bull; Click to read</div>
             </div>
           </div>
@@ -1966,6 +2015,7 @@ const sampleWorkDocs = [
             <option value="approval-engine">4. Multi-Tier Approval &amp; Delegation Engine (Core ERP Architecture)</option>
             <option value="seatlock">5. Seat Lock Engine - High-Concurrency Reservation &amp; Race Condition Mitigation</option>
             <option value="payment-recon">6. Multi-Bank Payment Reconciliation &amp; Settlement Engine (SNAP BI)</option>
+            <option value="telematics">7. Fleet Telematics &amp; Fuel Anomaly Engine (CAN-bus &amp; IoT)</option>
           </select>
         </div>
 
@@ -4138,6 +4188,66 @@ Coverage: 35 Enterprise Test Scenarios (SNAP, Cutoff Shift, Fee Deduplication, R
    [TC-REC-25] QRIS 0.7% MDR Cent-Rounding Consistency -> PASS
    [TC-REC-35] 5-Minute Financial Rollback SOP -> PASS (State reverted cleanly)`
     },
+    "srs-telematics": {
+      title: "SRS_Fleet_Telematics_Fuel_Anomaly.doc",
+      snippet: `================================================================================
+SOFTWARE REQUIREMENTS SPECIFICATION (SRS) — ENTERPRISE FLEET TELEMATICS
+PT Trans Nusantara Logistics & BPH Migas Pengawasan Subsidi BBM
+Doc Ref: SRS-2026-IOT-FLEET-004 | Status: APPROVED FOR PRODUCTION
+Lead System Analyst & IoT Solutions Architect: Andhika Putra Pratama, S.Kom.
+Coverage: 1,500+ Unit Armada, CAN-bus SAE J1939, Protokol MQTT, Kepmenhub KM 158/2021
+================================================================================
+
+1. EXECUTIVE BUSINESS PROBLEM & STATEMENT OF NEED
+   Biaya BBM Solar menyerap 38%-45% Opex armada bus dan truk kargo nasional.
+   Sistem pemantauan manual terdahulu menimbulkan kebocoran Rp 400+ Juta per bulan:
+   a. Pencurian Solar Ilegal (Fuel Siphoning): Pengemudi menyedot 30-50 liter saat berhenti
+      di rest area liar atau parkir malam tanpa izin. Baru terdeteksi setelah 7 hari.
+   b. False Alarm Sloshing: Guncangan armada di jalanan berlubang memicu fluktuasi cairan
+      tangki hingga +/- 15L, memicu ribuan alarm palsu tanpa filter sinyal.
+   c. Deviasi Rute Resmi: Armada keluar koridor izin Ditjen Hubdat demi muatan tidak berizin.
+
+2. ARCHITECTURAL & ALGORITHMIC SPECIFICATION
+   - High-Throughput Ingestion: Kafka / Redis Streams menampung 5.000 ping/detik dari 1.500 bus.
+   - 1D Continuous Kalman Filter: Mengeliminasi noise guncangan jalanan (<0.12% false alarm).
+   - Fuel Siphoning Rule Engine: Penurunan volume >8 Liter dalam <180 detik saat mesin OFF
+     memicu push alert Critical P1 ke Manajer Depo dalam tempo <45 detik.
+   - Dynamic Geofence Corridor: Buffer 250 meter di sepanjang rute resmi Ditjen Hubdat.
+   - SPBU 3-Way Triangulation: Mencocokkan nota Pertamina vs kenaikan sensor tangki (+/- 15 min).
+
+3. MEASURED BUSINESS IMPACT
+   - Penurunan Pencurian BBM : Turun 88.5% (Penghematan Opex Rp 4.2 Miliar/Tahun)
+   - Waktu Deteksi Anomali  : Dari 7 Hari Audit Manual menjadi < 45 Detik Real-Time Alert
+   - Kepatuhan Trayek Resmi : 99.8% Kepatuhan Koridor Geofence
+   - Payback Period IoT      : 2.2 Bulan (Target Awal: 12 Bulan)`
+    },
+    "sit-telematics": {
+      title: "SIT_UAT_Telematics_Matrix.doc",
+      snippet: `================================================================================
+SIT/UAT TEST EXECUTION MATRIX — ENTERPRISE FLEET TELEMATICS & IOT
+Project: Fleet Telematics, Geofencing & Fuel Anomaly Detection Engine
+Doc Ref: QA-IOT-2026-005 | Status: 100% PASSED & SIGNED OFF
+Lead QA Specialist: Andhika Putra Pratama, S.Kom.
+Coverage: 35 Enterprise Test Scenarios (CAN-bus, Kalman Filter, Theft Alert, Geofence)
+================================================================================
+
+1. TEST EXECUTION SUMMARY
+   Total Scenarios Executed : 35 Scenarios
+   Passed                   : 35 (100%)
+   Blocker / Critical Open  : 0 (Zero Tolerance)
+   Detection Alert Latency  : P95 = 34 seconds (Target: < 45s)
+   False Alarm Rate         : 0.08% under severe simulated road vibration
+
+2. CORE SCENARIOS HIGHLIGHTS
+   [IOT-TC-01] J1939 CAN-bus Frame Decode (Fuel, Speed, RPM) -> PASS
+   [IOT-TC-02] Kalman Filter Liquid Sloshing Vibration Suppression -> PASS (<0.1% False Alarm)
+   [IOT-TC-03] Fuel Siphoning Rapid Drop (>8L in <180s, Engine OFF) -> PASS (Alert in 32s)
+   [IOT-TC-04] Geofence Corridor Breach (250m buffer, >5 min deviation) -> PASS
+   [IOT-TC-05] SPBU Struk Reconciliation vs Inflow Sensor Delta -> PASS (1.5% delta matched)
+   [IOT-TC-06] Ghost SPBU Receipt Fraud Detection (0.0L delta flag) -> PASS
+   [IOT-TC-07] GPS Tunnel Blackout Flash Memory Offline Buffer Recovery -> PASS
+   [IOT-TC-08] MQTT Telemetry Packet Replay Attack Defense -> PASS (401 Unauthorized)`
+    },
     "catalog-artefak": {
       title: "00_MASTER_INDEX_PORTFOLIO_EVIDENCE.doc",
       snippet: `================================================================================
@@ -5746,8 +5856,104 @@ if (bankEntry.status === 'CREDITED' && !order.paid_at) {
           </div>
         </div>
       `
+    },
+    telematics: {
+      analyst: `
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg bg-blue-50 border border-blue-200">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded bg-blue-700 text-white text-[10px] font-bold uppercase">Analyst Lens</span>
+              <span class="font-bold text-blue-900 text-sm">IoT Telematics &amp; Real-Time Fuel Siphoning Detection</span>
+            </div>
+            <p class="text-slate-800 text-xs leading-relaxed">
+              Armada 1.500+ bus dan truk logistik nasional menyerap 38%-45% Opex pada konsumsi BBM Solar. Peran System Analyst merancang aturan deteksi pencurian bahan bakar seketika, pemfilteran noise guncangan jalanan (sloshing), koridor geofence izin trayek resmi Ditjen Hubdat, dan rekonsiliasi struk SPBU Pertamina.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-3 rounded bg-white border border-blue-200">
+              <div class="font-bold text-blue-900 text-xs mb-2">Regulasi &amp; Ground Truth</div>
+              <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+                <li><strong>Kepmenhub KM 158/2021:</strong> Standarisasi GPS pelacakan angkutan umum.</li>
+                <li><strong>Peraturan BPH Migas 04/2020:</strong> Pengawasan BBM solar subsidi PSO.</li>
+                <li><strong>SAE J1939 / CAN-bus:</strong> Ekstraksi data ECU analog &amp; digital.</li>
+                <li><strong>Struk SPBU API:</strong> Triangulasi nota pembelian vs kenaikan tangki.</li>
+              </ul>
+            </div>
+            <div class="p-3 rounded bg-white border border-blue-200">
+              <div class="font-bold text-blue-900 text-xs mb-2">Rule Engine Kunci</div>
+              <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+                <li><strong>Fuel Theft Rule:</strong> Drop &gt;8L dalam &lt;180s saat mesin OFF &rarr; Alert P1 (&lt;45s).</li>
+                <li><strong>Kalman Filter:</strong> Mereduksi false alarm sloshing hingga &lt;0.12%.</li>
+                <li><strong>Geofence Corridor:</strong> Buffer 250m sepanjang izin trayek resmi.</li>
+                <li><strong>SPBU Voucher Check:</strong> Deteksi struk fiktif tanpa kenaikan delta tangki.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      `,
+      dev: `
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded bg-indigo-700 text-white text-[10px] font-bold uppercase">Developer Lens</span>
+              <span class="font-bold text-indigo-900 text-sm">MQTT Telemetry Pipeline &amp; 1D Kalman Filter</span>
+            </div>
+            <p class="text-slate-800 text-xs leading-relaxed">
+              Pipeline streaming menerima 5.000 ping/detik dari 1.500 unit armada via broker MQTT/Kafka dengan latensi P95 &lt;45ms. Algoritma 1D Kalman Filter diimplementasikan secara kontinu untuk membersihkan sinyal analog sensor bahan bakar.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+            <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">Rp 4.2 M</div><div class="text-[10px] text-slate-600">Annual Fuel Saved</div></div>
+            <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">&lt;45s</div><div class="text-[10px] text-slate-600">Theft Alert Latency</div></div>
+            <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">&lt;0.12%</div><div class="text-[10px] text-slate-600">False Positive Rate</div></div>
+            <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">2.2 Bulan</div><div class="text-[10px] text-slate-600">Payback Period</div></div>
+          </div>
+
+          <pre class="font-mono text-[11px] bg-slate-950 text-indigo-300 p-3 rounded overflow-x-auto">// Fuel Siphoning Alert Detection Logic
+if (engineStatus === "OFF" &amp;&amp; speed === 0) {
+  const deltaFuel = lastKalmanLevel - currentKalmanLevel;
+  const elapsedSeconds = (currentTimestamp - lastTimestamp) / 1000;
+  if (deltaFuel &gt; 8.0 &amp;&amp; elapsedSeconds &lt;= 180) {
+    await dispatchCriticalAlert("FUEL_SIPHONING", { busId, deltaFuel, location });
+  }
+}</pre>
+        </div>
+      `,
+      qa: `
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-200">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded bg-emerald-700 text-white text-[10px] font-bold uppercase">QA Rigor</span>
+              <span class="font-bold text-emerald-900 text-sm">35 SIT/UAT Scenarios &amp; Vibration Stress Testing</span>
+            </div>
+            <p class="text-slate-800 text-xs leading-relaxed">
+              Pengujian mencakup 35 skenario: pemulihan blackout terowongan (flash memory sync), simulasi guncangan ekstrem jalan berlubang, validasi deteksi pencurian solar, dan pencegahan serangan replay MQTT.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="p-3 rounded bg-white border border-emerald-200">
+              <div class="font-bold text-emerald-900 text-xs mb-2">Key Quality Gates</div>
+              <ul class="text-[11px] text-slate-700 space-y-1 list-disc pl-4">
+                <li>100% Pass Rate pada 35 skenario telematika.</li>
+                <li>P95 Alert Delivery Time: 34 detik (target: &lt;45s).</li>
+                <li>False Alarm Sloshing: 0.08% pada simulasi getaran ekstrem.</li>
+                <li>0 data hilang saat pemulihan blackout terowongan jalan.</li>
+              </ul>
+            </div>
+            <div class="p-3 rounded bg-white border border-emerald-200">
+              <div class="font-bold text-emerald-900 text-xs mb-2">SPBU Fraud Defense Sign-off</div>
+              <p class="text-[11px] text-slate-700 leading-relaxed">
+                Pengujian injeksi nota struk fiktif tanpa kenaikan fisik sensor bahan bakar berhasil mengidentifikasi 100% klaim palsu dengan status FRAUDULENT_RECEIPT.
+              </p>
+            </div>
+          </div>
+        </div>
+      `
     }
-};
+  };
 
 
   let currentSdlcProject = 'pumk';
