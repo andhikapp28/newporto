@@ -154,67 +154,6 @@ const certificates = [
     desc: "Sertifikat penghargaan sebagai Asisten Praktikum mata kuliah Sistem Tertanam (Embedded Systems) Semester Ganjil T.A 2022/2023."
   },
 
-  // Evidence documents from Daftar Porto (local confidential dossier)
-  {
-    id: 9,
-    title: "SRS Multi-Tier Approval Workflow Engine",
-    category: "Enterprise SA Evidence",
-    issuer: "PT Nusantara Transindo (Persero)",
-    date: "September 2025",
-    certNo: "DOC-APPROVAL-001",
-    img: `${base}/screenshots/01_SRS_Approval_Workflow_Engine.docx.png`,
-    desc: "Formal SRS for a dynamic multi-tier approval workflow & delegation engine used as a core ERP/SaaS foundation."
-  },
-  {
-    id: 10,
-    title: "Financial Threshold Matrix & SLA Model",
-    category: "Enterprise SA Evidence",
-    issuer: "PT Nusantara Transindo (Persero)",
-    date: "September 2025",
-    certNo: "DOC-APPROVAL-002",
-    img: `${base}/screenshots/02_Financial_Threshold_Matrix_and_SLA_Model.xlsx.png`,
-    desc: "Approval authority matrix, financial thresholds, SLA targets, and escalation rules."
-  },
-  {
-    id: 11,
-    title: "SRS Payment Reconciliation & Settlement Engine",
-    category: "Enterprise SA Evidence",
-    issuer: "PT Nusantara Transindo (Persero)",
-    date: "September 2025",
-    certNo: "DOC-PAYMENT-001",
-    img: `${base}/screenshots/01_SRS_Payment_Reconciliation_Engine.docx.png`,
-    desc: "BI SNAP-compliant multi-bank payment reconciliation & settlement engine."
-  },
-  {
-    id: 12,
-    title: "SRS Seat Lock & Concurrency Engine",
-    category: "Enterprise SA Evidence",
-    issuer: "PT Nusantara Transindo (Persero)",
-    date: "September 2025",
-    certNo: "DOC-SEAT-001",
-    img: `${base}/screenshots/01_SRS_Seat_Lock_Concurrency_Engine.docx.png`,
-    desc: "High-concurrency seat lock & distributed reservation engine with OCC and idempotency."
-  },
-  {
-    id: 13,
-    title: "SRS Fleet Telematics & Fuel Anomaly Engine",
-    category: "Enterprise SA Evidence",
-    issuer: "PT Nusantara Transindo (Persero)",
-    date: "September 2025",
-    certNo: "DOC-TELEMATICS-001",
-    img: `${base}/screenshots/01_SRS_Fleet_Telematics_Fuel_Anomaly_Engine.docx.png`,
-    desc: "Fleet telematics, fuel anomaly detection, and route optimization engine."
-  },
-  {
-    id: 14,
-    title: "Master Portfolio Evidence Index",
-    category: "Enterprise SA Evidence",
-    issuer: "PT Nusantara Transindo (Persero)",
-    date: "September 2025",
-    certNo: "DOC-INDEX-000",
-    img: `${base}/screenshots/00_MASTER_INDEX_PORTFOLIO_EVIDENCE.docx.png`,
-    desc: "Master index cataloguing all confidential business evidence dossiers."
-  }
 
 ];
 
@@ -456,28 +395,34 @@ const sampleWorkDocs = [
             <div class="p-2.5 rounded bg-white border border-blue-200">
               <div class="font-bold text-blue-900 text-xs flex items-center gap-1.5 mb-1">
                 <Workflow class="w-3.5 h-3.5 text-blue-600 shrink-0" />
-                <span>1. System Analyst (50%)</span>
+                <span class="i18n" data-en="1. System Analyst (50%)" data-id="1. System Analyst (50%)">1. System Analyst (50%)</span>
               </div>
-              <p class="text-[11px] text-slate-700 leading-tight">
-                Merancang BRD/SRS, diagram BPMN 2.0 formal, normalisasi basis data ERD 3NF, dan kamus data komprehensif. Menjamin kebutuhan bisnis selaras dengan regulasi GCG BUMN.
+              <p class="text-[11px] text-slate-700 leading-tight i18n"
+                data-en="Authors formal BRD/SRS, BPMN 2.0 swimlanes, 3NF database normalization, and enterprise data dictionaries. Aligns business requirements strictly with SOE (BUMN) GCG regulations."
+                data-id="Merancang BRD/SRS, diagram BPMN 2.0 formal, normalisasi basis data ERD 3NF, dan kamus data komprehensif. Menjamin kebutuhan bisnis selaras dengan regulasi GCG BUMN.">
+                Authors formal BRD/SRS, BPMN 2.0 swimlanes, 3NF database normalization, and enterprise data dictionaries. Aligns business requirements strictly with SOE (BUMN) GCG regulations.
               </p>
             </div>
             <div class="p-2.5 rounded bg-white border border-indigo-200">
               <div class="font-bold text-indigo-900 text-xs flex items-center gap-1.5 mb-1">
                 <Code2 class="w-3.5 h-3.5 text-indigo-600 shrink-0" />
-                <span>2. Developer Feasibility (25%)</span>
+                <span class="i18n" data-en="2. Developer Feasibility (25%)" data-id="2. Kelayakan Pengembang (25%)">2. Developer Feasibility (25%)</span>
               </div>
-              <p class="text-[11px] text-slate-700 leading-tight">
-                Memahami kendala fisik kode: Optimistic Locking (<code class="font-mono text-[10px] text-indigo-800">version</code>), PostgreSQL <code class="font-mono text-[10px] text-indigo-800">lockForUpdate()</code>, Redis distributed lock, dan kontrak REST OpenAPI 3.1.
+              <p class="text-[11px] text-slate-700 leading-tight i18n"
+                data-en="Understands physical code constraints: Optimistic Locking (version columns), PostgreSQL lockForUpdate(), Redis distributed locks, and OpenAPI 3.1 REST contracts."
+                data-id="Memahami kendala fisik kode: Optimistic Locking (kolom version), PostgreSQL lockForUpdate(), Redis distributed lock, dan kontrak REST OpenAPI 3.1.">
+                Understands physical code constraints: Optimistic Locking (version columns), PostgreSQL lockForUpdate(), Redis distributed locks, and OpenAPI 3.1 REST contracts.
               </p>
             </div>
             <div class="p-2.5 rounded bg-white border border-emerald-200">
               <div class="font-bold text-emerald-900 text-xs flex items-center gap-1.5 mb-1">
                 <ShieldCheck class="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                <span>3. QA Rigor &amp; Defense (25%)</span>
+                <span class="i18n" data-en="3. QA Rigor &amp; Defense (25%)" data-id="3. Rigor Pengujian QA (25%)">3. QA Rigor &amp; Defense (25%)</span>
               </div>
-              <p class="text-[11px] text-slate-700 leading-tight">
-                Menyusun 42 skenario SIT/UAT, pengujian stres konkurensi (simultaneous dual-approval), boundary edge cases, dan SOP Rollback 5-menit siap darurat.
+              <p class="text-[11px] text-slate-700 leading-tight i18n"
+                data-en="Builds 42 SIT/UAT test scenarios, concurrency stress tests (simultaneous dual-approval), boundary edge cases, and emergency 5-minute rollback protocols."
+                data-id="Menyusun 42 skenario SIT/UAT, pengujian stres konkurensi (simultaneous dual-approval), boundary edge cases, dan SOP Rollback 5-menit siap darurat.">
+                Builds 42 SIT/UAT test scenarios, concurrency stress tests (simultaneous dual-approval), boundary edge cases, and emergency 5-minute rollback protocols.
               </p>
             </div>
           </div>
@@ -496,8 +441,10 @@ const sampleWorkDocs = [
                   <span class="font-bold text-slate-900 text-xs">1. Dynamic Multi-Tier Approval Workflow Engine</span>
                   <span class="px-1.5 py-0.2 rounded bg-blue-200 text-blue-900 text-[9px] font-bold uppercase">Core ERP</span>
                 </div>
-                <p class="text-[11px] text-slate-600 mt-0.5">
-                  Dynamic Threshold Routing (<5M s/d >10B), Pjs Delegation, 24h SLA Auto-Escalation, and SHA-256 Merkle Ledger.
+                <p class="text-[11px] text-slate-600 mt-0.5 i18n"
+                  data-en="Dynamic Threshold Routing (<Rp 5M up to >Rp 10B), Acting Officer Delegation, 24h SLA Auto-Escalation, and SHA-256 Merkle Ledger."
+                  data-id="Dynamic Threshold Routing (<Rp 5M s/d >Rp 10B), Delegasi Pjs, Auto-Eskalasi SLA 24 Jam, dan Ledger Merkle SHA-256.">
+                  Dynamic Threshold Routing (&lt;Rp 5M up to &gt;Rp 10B), Acting Officer Delegation, 24h SLA Auto-Escalation, and SHA-256 Merkle Ledger.
                 </p>
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
@@ -513,8 +460,10 @@ const sampleWorkDocs = [
                   <span class="font-bold text-slate-900 text-xs">2. Aplikasi PUMK Financial Core</span>
                   <span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-900 text-[9px] font-bold uppercase">BUMN TJSL</span>
                 </div>
-                <p class="text-[11px] text-slate-600 mt-0.5">
-                  Digitalisasi pembiayaan UMKM nasional, lockForUpdate race-condition mitigation, dan SSO Shadow User terintegrasi.
+                <p class="text-[11px] text-slate-600 mt-0.5 i18n"
+                  data-en="National state-owned MSME loan digitization, lockForUpdate race-condition mitigation, and integrated SSO Shadow Users."
+                  data-id="Digitalisasi pembiayaan UMKM nasional, mitigasi race-condition dengan lockForUpdate, dan SSO Shadow User terintegrasi.">
+                  National state-owned MSME loan digitization, lockForUpdate race-condition mitigation, and integrated SSO Shadow Users.
                 </p>
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
@@ -530,7 +479,9 @@ const sampleWorkDocs = [
                   <span class="font-bold text-slate-900 text-xs">3. Multi-Bank Payment Reconciliation &amp; Settlement Engine</span>
                   <span class="px-1.5 py-0.2 rounded bg-cyan-100 text-cyan-900 text-[9px] font-bold uppercase">FinTech / SNAP</span>
                 </div>
-                <p class="text-[11px] text-slate-600 mt-0.5">
+                <p class="text-[11px] text-slate-600 mt-0.5 i18n"
+                  data-en="Automated 3-Way Matching (SNAP BI), Webhook Drop Auto-Healing (&lt;90s), and Cutoff D+1 Rollforward. Slashed recon from 40h to 12 mins."
+                  data-id="Rekonsiliasi 3-Arah Otomatis (BI SNAP), Auto-Healing Webhook Gagal (&lt;90 detik), dan Cutoff D+1 Rollforward. Memangkas rekon dari 40 jam ke 12 menit.">
                   Automated 3-Way Matching (SNAP BI), Webhook Drop Auto-Healing (&lt;90s), and Cutoff D+1 Rollforward. Slashed recon from 40h to 12 mins.
                 </p>
               </div>
@@ -547,7 +498,9 @@ const sampleWorkDocs = [
                   <span class="font-bold text-slate-900 text-xs">4. High-Concurrency Seat Lock &amp; Distributed Reservation Engine</span>
                   <span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-900 text-[9px] font-bold uppercase">Concurrency</span>
                 </div>
-                <p class="text-[11px] text-slate-600 mt-0.5">
+                <p class="text-[11px] text-slate-600 mt-0.5 i18n"
+                  data-en="10,000 req/s Redis SETNX Mutex Lock, 600s Deterministic TTL Watchdogs, and 0% Double Booking Guarantee."
+                  data-id="10.000 req/s Redis SETNX Mutex Lock, Watchdog TTL Deterministik 600 detik, dan Garansi 0% Double Booking.">
                   10,000 req/s Redis SETNX Mutex Lock, 600s Deterministic TTL Watchdogs, and 0% Double Booking Guarantee.
                 </p>
               </div>
@@ -564,8 +517,10 @@ const sampleWorkDocs = [
                   <span class="font-bold text-slate-900 text-xs">5. Enterprise Fleet Telematics &amp; Fuel Anomaly Engine</span>
                   <span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-900 text-[9px] font-bold uppercase">IoT &amp; Logistics</span>
                 </div>
-                <p class="text-[11px] text-slate-600 mt-0.5">
-                  1,500+ Bus CAN-bus J1939 Telematics, Kalman Filter Sloshing Mitigation, &lt;45s Fuel Siphoning Alerts, and Rp 4.2 Miliar/year Opex Savings.
+                <p class="text-[11px] text-slate-600 mt-0.5 i18n"
+                  data-en="1,500+ Bus CAN-bus J1939 Telematics, Kalman Filter Sloshing Mitigation, &lt;45s Fuel Siphoning Alerts, and Rp 4.2B/year Opex Savings."
+                  data-id="Telematika CAN-bus J1939 untuk 1.500+ Bus, Mitigasi Sloshing Kalman Filter, Alert Pencurian Solar &lt;45 detik, dan Penghematan Rp 4,2 Miliar/tahun.">
+                  1,500+ Bus CAN-bus J1939 Telematics, Kalman Filter Sloshing Mitigation, &lt;45s Fuel Siphoning Alerts, and Rp 4.2B/year Opex Savings.
                 </p>
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
@@ -581,8 +536,10 @@ const sampleWorkDocs = [
                   <span class="font-bold text-slate-900 text-xs">6. GitHub Push Request Audit &amp; Deploy Tracker</span>
                   <span class="px-1.5 py-0.2 rounded bg-indigo-100 text-indigo-900 text-[9px] font-bold uppercase">DevOps Audit</span>
                 </div>
-                <p class="text-[11px] text-slate-600 mt-0.5">
-                  Otomasi webhook GitHub, visualisasi file diff live, dan audit trail deployment 100% transparan.
+                <p class="text-[11px] text-slate-600 mt-0.5 i18n"
+                  data-en="Automated GitHub webhooks, live file diff visualization, and 100% auditable deployment trail."
+                  data-id="Otomasi webhook GitHub, visualisasi file diff live, dan audit trail deployment 100% transparan.">
+                  Automated GitHub webhooks, live file diff visualization, and 100% auditable deployment trail.
                 </p>
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
@@ -610,21 +567,23 @@ const sampleWorkDocs = [
 
         <!-- Fast-Track Action Bar -->
         <div class="p-3 rounded-lg bg-[#f0f4fc] border border-blue-200 flex flex-wrap items-center justify-between gap-2">
-          <div class="text-[11px] text-slate-700">
+          <div class="text-[11px] text-slate-700 i18n"
+            data-en="<strong>Ready to proceed?</strong> Explore detailed views or schedule an interview."
+            data-id="<strong>Siap melangkah ke tahap berikutnya?</strong> Eksplorasi detail atau jadwalkan sesi wawancara.">
             <strong>Ready to proceed?</strong> Explore detailed views or schedule an interview.
           </div>
           <div class="flex flex-wrap items-center gap-1.5">
             <button onclick="openCvPdf()" class="xp-btn xp-btn-default font-bold flex items-center gap-1">
               <FileText class="w-3.5 h-3.5 text-red-600" />
-              <span>Read ATS CV</span>
+              <span class="i18n" data-en="Read ATS CV" data-id="Buka CV ATS">Read ATS CV</span>
             </button>
             <button onclick="openWindow('win-sdlc')" class="xp-btn font-semibold flex items-center gap-1">
               <Workflow class="w-3.5 h-3.5 text-blue-600" />
-              <span>Launch SDLC Lens</span>
+              <span class="i18n" data-en="Launch SDLC Lens" data-id="Buka SDLC Lens">Launch SDLC Lens</span>
             </button>
             <button onclick="openWindow('win-contact')" class="xp-btn font-semibold flex items-center gap-1">
               <Mail class="w-3.5 h-3.5 text-slate-700" />
-              <span>Contact</span>
+              <span class="i18n" data-en="Contact" data-id="Kontak">Contact</span>
             </button>
           </div>
         </div>
@@ -689,8 +648,8 @@ const sampleWorkDocs = [
               <span class="text-base">🧭</span>
               <span class="i18n" data-en="Portfolio Navigation Guide &amp; Workflow" data-id="Panduan Alur &amp; Navigasi Portofolio">Portfolio Navigation Guide &amp; Workflow</span>
             </div>
-            <span class="px-2 py-0.5 rounded bg-amber-200 text-amber-900 font-mono text-[9px] font-extrabold uppercase">
-              Petunjuk Alur
+            <span class="px-2 py-0.5 rounded bg-amber-200 text-amber-900 font-mono text-[9px] font-extrabold uppercase i18n" data-en="Workflow Guide" data-id="Petunjuk Alur">
+              Workflow Guide
             </span>
           </div>
 
@@ -704,8 +663,8 @@ const sampleWorkDocs = [
             <!-- Jalur 1: HR & Recruiter -->
             <div class="p-2 rounded bg-white border border-amber-200 hover:border-amber-400 cursor-pointer transition-colors" onclick="openWindow('win-fasttrack')">
               <div class="flex items-center gap-1.5 font-bold text-amber-900 text-[11px] mb-0.5">
-                <span>⚡ Jalur HR / Recruiter</span>
-                <span class="text-[9px] px-1 rounded bg-amber-100 text-amber-800 font-mono font-bold">60 Detik</span>
+                <span class="i18n" data-en="⚡ HR / Recruiter Path" data-id="⚡ Jalur HR / Recruiter">⚡ HR / Recruiter Path</span>
+                <span class="text-[9px] px-1 rounded bg-amber-100 text-amber-800 font-mono font-bold i18n" data-en="60 Seconds" data-id="60 Detik">60 Seconds</span>
               </div>
               <p class="text-[10px] text-slate-600 leading-tight i18n"
                 data-en="Open <strong>⚡ Fast-Track</strong> for leadership scorecard, 3-in-1 capability, and 6 case summaries."
@@ -717,8 +676,8 @@ const sampleWorkDocs = [
             <!-- Jalur 2: Tech Lead & Solution Architect -->
             <div class="p-2 rounded bg-white border border-blue-200 hover:border-blue-400 cursor-pointer transition-colors" onclick="openWindow('win-sdlc')">
               <div class="flex items-center gap-1.5 font-bold text-blue-900 text-[11px] mb-0.5">
-                <span>🔍 Jalur Tech Lead &amp; SA</span>
-                <span class="text-[9px] px-1 rounded bg-blue-100 text-blue-800 font-mono font-bold">3-5 Menit</span>
+                <span class="i18n" data-en="🔍 Tech Lead &amp; SA Path" data-id="🔍 Jalur Tech Lead &amp; SA">🔍 Tech Lead &amp; SA Path</span>
+                <span class="text-[9px] px-1 rounded bg-blue-100 text-blue-800 font-mono font-bold i18n" data-en="3-5 Mins" data-id="3-5 Menit">3-5 Mins</span>
               </div>
               <p class="text-[10px] text-slate-600 leading-tight i18n"
                 data-en="Open <strong>SDLC Lens</strong> &amp; <strong>Case Studies (E:)</strong> for SRS, 3NF ERD, OCC concurrency &amp; APIs."
@@ -730,8 +689,8 @@ const sampleWorkDocs = [
             <!-- Jalur 3: QA Lead & Engineering Manager -->
             <div class="p-2 rounded bg-white border border-emerald-200 hover:border-emerald-400 cursor-pointer transition-colors" onclick="openWindow('win-docs-folder')">
               <div class="flex items-center gap-1.5 font-bold text-emerald-900 text-[11px] mb-0.5">
-                <span>📋 Jalur QA &amp; Dokumentasi</span>
-                <span class="text-[9px] px-1 rounded bg-emerald-100 text-emerald-800 font-mono font-bold">2-3 Menit</span>
+                <span class="i18n" data-en="📋 QA &amp; Specs Path" data-id="📋 Jalur QA &amp; Dokumentasi">📋 QA &amp; Specs Path</span>
+                <span class="text-[9px] px-1 rounded bg-emerald-100 text-emerald-800 font-mono font-bold i18n" data-en="2-3 Mins" data-id="2-3 Menit">2-3 Mins</span>
               </div>
               <p class="text-[10px] text-slate-600 leading-tight i18n"
                 data-en="Open <strong>Work Docs</strong> for 15 real technical specs, SIT/UAT test matrices &amp; ITIL change logs."
@@ -743,8 +702,8 @@ const sampleWorkDocs = [
             <!-- Jalur 4: Kredensial & Hiburan -->
             <div class="p-2 rounded bg-white border border-purple-200 hover:border-purple-400 cursor-pointer transition-colors" onclick="openWindow('win-games-folder')">
               <div class="flex items-center gap-1.5 font-bold text-purple-900 text-[11px] mb-0.5">
-                <span>🎮 Games &amp; 📜 Sertifikat</span>
-                <span class="text-[9px] px-1 rounded bg-purple-100 text-purple-800 font-mono font-bold">Fleksibel</span>
+                <span class="i18n" data-en="🎮 Games &amp; 📜 Certificates" data-id="🎮 Games &amp; 📜 Sertifikat">🎮 Games &amp; 📜 Certificates</span>
+                <span class="text-[9px] px-1 rounded bg-purple-100 text-purple-800 font-mono font-bold i18n" data-en="Flexible" data-id="Fleksibel">Flexible</span>
               </div>
               <p class="text-[10px] text-slate-600 leading-tight i18n"
                 data-en="Play <strong>Minesweeper</strong> in Games folder or verify <strong>Certificates</strong> (ITERA S.Kom, TOEFL 640)!"
@@ -1543,7 +1502,7 @@ const sampleWorkDocs = [
       <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
           <Award class="w-3.5 h-3.5 text-teal-200 shrink-0" />
-          <span id="gallery-titlebar" class="i18n" data-en="Windows Picture and Fax Viewer - Certificates & Evidence" data-id="Windows Picture and Fax Viewer - Sertifikat & Bukti Dokumen">Windows Picture and Fax Viewer - Certificates & Evidence</span>
+          <span id="gallery-titlebar" class="i18n" data-en="Windows Picture and Fax Viewer - Certificates" data-id="Windows Picture and Fax Viewer - Sertifikat">Windows Picture and Fax Viewer - Certificates</span>
         </div>
         <div class="flex items-center gap-1 shrink-0">
           <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
@@ -2790,39 +2749,39 @@ const sampleWorkDocs = [
             </div>
           </div>
 
-          <!-- Game 2: 3D Pinball Space Cadet (Nostalgic Easter Egg) -->
+          <!-- Game 2: 3D Pinball Space Cadet (Not Ready) -->
           <div
             class="p-3.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-indigo-50 hover:border-indigo-300 cursor-pointer group flex items-start gap-3.5 transition-all shadow-xs"
-            onclick="alert('3D Pinball Space Cadet sedang di-remaster ke 60 FPS! Untuk saat ini, nikmati Minesweeper klasik ya! 🚀');"
+            onclick="alert('3D Pinball: Space Cadet belum tersedia (Not Ready). Silakan mainkan Minesweeper terlebih dahulu! 🚀');"
           >
             <div class="w-10 h-10 rounded bg-white border border-indigo-200 flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
               <Disc class="w-6 h-6 text-indigo-600" />
             </div>
             <div>
               <div class="flex items-center gap-1.5 mb-0.5">
-                <span class="px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 font-mono text-[9px] font-bold uppercase">Nostalgia</span>
+                <span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 border border-amber-300 font-mono text-[9px] font-bold uppercase">Not Ready</span>
               </div>
               <div class="font-bold text-slate-900 group-hover:underline text-sm">3D Pinball (PINBALL.EXE)</div>
               <div class="text-[11px] text-slate-600 mt-0.5 i18n" data-en="Space Cadet Pinball table." data-id="Meja pinball legendaris Space Cadet.">Space Cadet Pinball table.</div>
-              <div class="text-[10px] text-slate-500 mt-2 font-mono">Memori Windows XP 2001</div>
+              <div class="text-[10px] text-slate-500 mt-2 font-mono">Status: Not Ready</div>
             </div>
           </div>
 
-          <!-- Game 3: Solitaire (Nostalgic Easter Egg) -->
+          <!-- Game 3: Solitaire (Not Ready) -->
           <div
             class="p-3.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-emerald-50 hover:border-emerald-300 cursor-pointer group flex items-start gap-3.5 transition-all shadow-xs"
-            onclick="alert('Solitaire (sol.exe): Kartu sedang dikocok! Silakan mainkan Minesweeper terlebih dahulu.');"
+            onclick="alert('Solitaire (sol.exe) belum tersedia (Not Ready). Silakan mainkan Minesweeper terlebih dahulu!');"
           >
             <div class="w-10 h-10 rounded bg-white border border-emerald-200 flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
               <Layers class="w-6 h-6 text-emerald-600" />
             </div>
             <div>
               <div class="flex items-center gap-1.5 mb-0.5">
-                <span class="px-1.5 py-0.2 rounded bg-slate-200 text-slate-700 font-mono text-[9px] font-bold uppercase">Nostalgia</span>
+                <span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 border border-amber-300 font-mono text-[9px] font-bold uppercase">Not Ready</span>
               </div>
               <div class="font-bold text-slate-900 group-hover:underline text-sm">Solitaire (sol.exe)</div>
               <div class="text-[11px] text-slate-600 mt-0.5 i18n" data-en="Classic Klondike card game." data-id="Game kartu klasik Klondike.">Classic Klondike card game.</div>
-              <div class="text-[10px] text-slate-500 mt-2 font-mono">Memori Windows XP 2001</div>
+              <div class="text-[10px] text-slate-500 mt-2 font-mono">Status: Not Ready</div>
             </div>
           </div>
         </div>
@@ -4640,48 +4599,6 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
       date: "21 Desember 2022",
       certNo: "B/3707/IT9.E5/TA.00.00/2022",
       img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/certificates/certificate_8.jpg`
-    },
-    {
-      title: "SRS Multi-Tier Approval Workflow Engine",
-      issuer: "PT Nusantara Transindo (Persero)",
-      date: "September 2025",
-      certNo: "DOC-APPROVAL-001",
-      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/screenshots/01_SRS_Approval_Workflow_Engine.docx.png`
-    },
-    {
-      title: "Financial Threshold Matrix & SLA Model",
-      issuer: "PT Nusantara Transindo (Persero)",
-      date: "September 2025",
-      certNo: "DOC-APPROVAL-002",
-      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/screenshots/02_Financial_Threshold_Matrix_and_SLA_Model.xlsx.png`
-    },
-    {
-      title: "SRS Payment Reconciliation & Settlement Engine",
-      issuer: "PT Nusantara Transindo (Persero)",
-      date: "September 2025",
-      certNo: "DOC-PAYMENT-001",
-      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/screenshots/01_SRS_Payment_Reconciliation_Engine.docx.png`
-    },
-    {
-      title: "SRS Seat Lock & Concurrency Engine",
-      issuer: "PT Nusantara Transindo (Persero)",
-      date: "September 2025",
-      certNo: "DOC-SEAT-001",
-      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/screenshots/01_SRS_Seat_Lock_Concurrency_Engine.docx.png`
-    },
-    {
-      title: "SRS Fleet Telematics & Fuel Anomaly Engine",
-      issuer: "PT Nusantara Transindo (Persero)",
-      date: "September 2025",
-      certNo: "DOC-TELEMATICS-001",
-      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/screenshots/01_SRS_Fleet_Telematics_Fuel_Anomaly_Engine.docx.png`
-    },
-    {
-      title: "Master Portfolio Evidence Index",
-      issuer: "PT Nusantara Transindo (Persero)",
-      date: "September 2025",
-      certNo: "DOC-INDEX-000",
-      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/screenshots/00_MASTER_INDEX_PORTFOLIO_EVIDENCE.docx.png`
     }
   ];
 
