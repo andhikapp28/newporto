@@ -20,23 +20,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </p>
   </div>
 
-  <!-- Bottom Interactive Guide & Boot Prompt (Clean phosphor green prompt) -->
-  <div class="relative z-20 pb-5 px-4 flex flex-col items-center text-center pointer-events-none">
-    <div 
-      id="btn-stage-boot"
-      class="pointer-events-auto inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500/60 text-emerald-300 font-mono text-xs sm:text-sm shadow-[0_0_20px_rgba(16,185,129,0.35)] cursor-pointer transition-all active:scale-95 group"
-    >
-      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 group-hover:bg-emerald-300 animate-ping"></span>
-      <span class="font-bold tracking-wide text-emerald-300 group-hover:text-emerald-100">
-        🖱️ KLIK MONITOR / TEKAN DI SINI UNTUK NYALAKAN WINDOWS XD
-      </span>
-      <span class="text-[11px] text-emerald-500 font-mono hidden sm:inline">&bull; CLICK TO POWER ON</span>
-    </div>
-    <div class="mt-2.5 px-3 py-1 rounded bg-black/60 border border-emerald-900/60 text-[10px] sm:text-[11px] font-mono text-emerald-400/80 tracking-wide max-w-xl">
-      <span class="text-emerald-300 font-bold">🧭 ALUR PORTOFOLIO:</span>
-      1. Nyalakan PC &rarr; 2. ⚡ Fast-Track (HR 60s) &rarr; 3. Case Studies &amp; SDLC Lens (Tech Lead) &rarr; 4. Dokumen Kerja
-    </div>
-  </div>
+  <!-- Bottom Empty Space -->
+  <div class="relative z-20 pb-4 px-6"></div>
 </div>
 
 <script>
@@ -573,13 +558,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         window.dispatchEvent(new CustomEvent('xp:boot-desktop', { detail: { openFastTrack: true } }));
       });
     }
-
-    // Stage boot button click listener
-    const stageBootBtn = document.getElementById('btn-stage-boot');
-    stageBootBtn?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      triggerBoot();
-    });
 
     // 10. Backup boot trigger: any click/tap on the visible stage powers on
     // (pointerup logic above handles first boot with raycast; this ensures reboot works on all devices)
