@@ -1475,7 +1475,7 @@ const sampleWorkDocs = [
     <!-- WINDOW 5: Galeri Sertifikat (Windows Picture and Fax Viewer) -->
     <div
       id="win-gallery"
-      class="xp-window absolute top-2 sm:top-10 left-1 sm:left-32 w-[95vw] sm:w-[740px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-20 flex flex-col overflow-hidden hidden"
+      class="xp-window absolute top-1 sm:top-4 left-1 sm:left-24 w-[95vw] sm:w-[740px] h-[86vh] sm:h-[560px] max-h-[calc(100vh-48px)] max-h-[calc(100dvh-48px)] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-20 flex flex-col overflow-hidden hidden"
     >
       <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner">
         <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
@@ -1490,7 +1490,7 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Main Viewer Area -->
-      <div id="gallery-viewport" class="flex-1 p-4 bg-[#4a5568] flex flex-col items-center justify-center overflow-hidden relative">
+      <div id="gallery-viewport" class="flex-1 min-h-0 p-3 bg-[#4a5568] flex flex-col items-center justify-center overflow-hidden relative">
         <img
           id="gallery-main-img"
           src={certificates[0].img}
@@ -1554,7 +1554,7 @@ const sampleWorkDocs = [
             <ArrowLeft class="w-3.5 h-3.5 text-blue-600" />
             <span class="i18n" data-en="Previous" data-id="Sebelumnya">Previous</span>
           </button>
-          <span id="gallery-counter" class="text-xs font-mono font-bold text-slate-700">1 / 8</span>
+          <span id="gallery-counter" class="text-xs font-mono font-bold text-slate-700">1 / {certificates.length}</span>
           <button id="gallery-btn-next" class="xp-btn font-bold">
             <span class="i18n" data-en="Next" data-id="Berikutnya">Next</span>
             <ArrowRight class="w-3.5 h-3.5 text-blue-600" />
@@ -3695,6 +3695,17 @@ const sampleWorkDocs = [
         renderSdlc();
       }
     } catch (e) {}
+    // Update gallery issuer/date labels
+    try {
+      const issuerEl = document.getElementById('gallery-cert-issuer');
+      if (issuerEl && certsList && certsList[currentCertIndex]) {
+        const cert = certsList[currentCertIndex];
+        const isId = lang === 'id';
+        const issuerLabel = isId ? 'Penerbit:' : 'Issuer:';
+        const dateLabel = isId ? 'Tanggal:' : 'Date:';
+        issuerEl.innerHTML = `<span class="i18n" data-en="Issuer:" data-id="Penerbit:">${issuerLabel}</span> ${cert.issuer} &bull; <span class="i18n" data-en="Date:" data-id="Tanggal:">${dateLabel}</span> ${cert.date}`;
+      }
+    } catch (e) {}
   }
 
   (window as any).applyLanguage = applyLanguage;
@@ -4644,6 +4655,8 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
   ];
 
   let currentCertIndex = 0;
+  (window as any).currentCertIndex = currentCertIndex;
+  (window as any).certsList = certsList;
 
   function showCertificate(idx: number) {
     if (idx < 0) idx = certsList.length - 1;
@@ -4660,7 +4673,12 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
 
     if (imgEl) imgEl.src = cert.img;
     if (titleEl) titleEl.innerText = cert.title;
-    if (issuerEl) issuerEl.innerText = `<span class="i18n" data-en="Issuer:" data-id="Penerbit:">Issuer:</span> ${cert.issuer} • <span class="i18n" data-en="Date:" data-id="Tanggal:">Date:</span> ${cert.date}`;
+    if (issuerEl) {
+      const isId = currentLang === 'id';
+      const issuerLabel = isId ? 'Penerbit:' : 'Issuer:';
+      const dateLabel = isId ? 'Tanggal:' : 'Date:';
+      issuerEl.innerHTML = `<span class="i18n" data-en="Issuer:" data-id="Penerbit:">${issuerLabel}</span> ${cert.issuer} &bull; <span class="i18n" data-en="Date:" data-id="Tanggal:">${dateLabel}</span> ${cert.date}`;
+    }
     if (noEl) noEl.innerText = `No: ${cert.certNo}`;
     if (counterEl) counterEl.innerText = `${idx + 1} / ${certsList.length}`;
     if (dlLink) dlLink.href = cert.img;
