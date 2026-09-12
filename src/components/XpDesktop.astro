@@ -72,26 +72,6 @@ const blissImg = `${base}/images/bliss.jpg`;
 const certificates = [
   {
     id: 1,
-    title: "Ijazah Sarjana Komputer (S.Kom.)",
-    category: "Gelar Akademik",
-    issuer: "Institut Teknologi Sumatera (ITERA)",
-    date: "15 Juli 2023",
-    certNo: "552022023000891",
-    img: `${base}/certificates/certificate_1.jpg`,
-    desc: "Ijazah Sarjana Strata-1 (S1) Program Studi Teknik Informatika, Institut Teknologi Sumatera dengan predikat Sangat Memuaskan."
-  },
-  {
-    id: 2,
-    title: "Official Academic Transcript (GPA: 3.73)",
-    category: "Transkrip Nilai",
-    issuer: "Institut Teknologi Sumatera (ITERA)",
-    date: "15 Juli 2023",
-    certNo: "TR/327/IT9.F3/IF.14/S-1/2023",
-    img: `${base}/certificates/certificate_2.jpg`,
-    desc: '<span class="i18n" data-en="Official academic transcript of 147 credits completed, cumulative GPA 3.73 (4.00 scale) with High Distinction honours." data-id="Transkrip akademik dengan total 147 SKS diselesaikan, IPK kumulatif 3.73 (Skala 4.00) dengan predikat kelulusan Sangat Memuaskan.">Official academic transcript of 147 credits completed, cumulative GPA 3.73 (4.00 scale) with High Distinction honours.</span>'
-  },
-  {
-    id: 3,
     title: "ITP TOEFL® Test Score: 640",
     category: "Sertifikasi Bahasa",
     issuer: "Centre of Language Improvement (CLIent)",
@@ -101,7 +81,7 @@ const certificates = [
     desc: "Skor Uji Kemahiran Bahasa Inggris: Listening 67, Structure 58, Reading 67. Total Overall Score: 640."
   },
   {
-    id: 4,
+    id: 2,
     title: "IT Specialist in Python",
     category: "Sertifikasi Internasional",
     issuer: "Pearson VUE & Certiport",
@@ -112,7 +92,7 @@ const certificates = [
     desc: "Sertifikasi kompetensi rekayasa perangkat lunak internasional untuk bahasa pemrograman Python."
   },
   {
-    id: 5,
+    id: 3,
     title: "Machine Learning Specialization",
     category: "Sertifikasi Internasional",
     issuer: "DeepLearning.AI & Stanford University",
@@ -123,7 +103,7 @@ const certificates = [
     desc: "Spesialisasi 3 rangkaian kursus Machine Learning (Supervised Learning, Neural Networks, Unsupervised & Recommender Systems) oleh Andrew Ng."
   },
   {
-    id: 6,
+    id: 4,
     title: "Crash Course on Python",
     category: "Sertifikasi Profesional",
     issuer: "Google / Coursera",
@@ -134,7 +114,7 @@ const certificates = [
     desc: "Sertifikasi resmi Google Professional untuk pemecahan masalah algoritma dan otomatisasi sistem dengan Python."
   },
   {
-    id: 7,
+    id: 5,
     title: "Asisten Praktikum: Pemrograman Berorientasi Objek",
     category: "Sertifikat Pengajaran",
     issuer: "Laboratorium Multimedia & UPT ITERA",
@@ -144,7 +124,7 @@ const certificates = [
     desc: "Sertifikat penghargaan sebagai Asisten Praktikum mata kuliah Pemrograman Berorientasi Objek (PBO) Semester Genap T.A 2021/2022."
   },
   {
-    id: 8,
+    id: 6,
     title: "Asisten Praktikum: Sistem Tertanam (Embedded Systems)",
     category: "Sertifikat Pengajaran",
     issuer: "Laboratorium Multimedia & UPT ITERA",
@@ -152,9 +132,7 @@ const certificates = [
     certNo: "B/3707/IT9.E5/TA.00.00/2022",
     img: `${base}/certificates/certificate_8.jpg`,
     desc: "Sertifikat penghargaan sebagai Asisten Praktikum mata kuliah Sistem Tertanam (Embedded Systems) Semester Ganjil T.A 2022/2023."
-  },
-
-
+  }
 ];
 
 // Sample Work Documents (only CV ATS for now; others can be added later by user)
@@ -4621,20 +4599,6 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
 
   // 7. Galeri Sertifikat (Windows Picture and Fax Viewer)
   const certsList = [
-    {
-      title: "Ijazah Sarjana Komputer (S.Kom.)",
-      issuer: "Institut Teknologi Sumatera (ITERA)",
-      date: "15 Juli 2023",
-      certNo: "552022023000891",
-      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/certificates/certificate_1.jpg`
-    },
-    {
-      title: "Transkrip Akademik Resmi (IPK: 3.73)",
-      issuer: "Institut Teknologi Sumatera (ITERA)",
-      date: "15 Juli 2023",
-      certNo: "TR/327/IT9.F3/IF.14/S-1/2023",
-      img: `${document.getElementById('xp-desktop-container')?.dataset.baseUrl || ''}/certificates/certificate_2.jpg`
-    },
     {
       title: "ITP TOEFL® Test Score: 640",
       issuer: "Centre of Language Improvement (CLIent)",
