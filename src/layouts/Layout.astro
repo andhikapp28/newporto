@@ -4,29 +4,107 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  ogType?: 'website' | 'article';
 }
 
+const defaultTitle = "Andhika Putra Pratama | Senior System Analyst & Solution Architect";
+const defaultDescription = "Portofolio teknis Andhika Putra Pratama, S.Kom. Spesialis Senior System Analyst & Solution Architect, arsitektur enterprise BUMN/Fintech, spesifikasi SRS/BRD, dan sistem konkurensi terdistribusi.";
+
 const {
-  title = "System Analyst Workstation | Windows XD Experience",
-  description = "Interactive System Analyst portfolio featuring a retro 3D workstation, SDLC specifications, and an authentic Windows XD desktop."
+  title = defaultTitle,
+  description = defaultDescription,
+  image,
+  ogType = "website"
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const favicon = `${base}/favicon.svg`;
+
+const siteOrigin = Astro.site ?? 'https://andhikapp28.github.io/newporto/';
+const canonicalURL = new URL(Astro.url.pathname, siteOrigin);
+
+const defaultImage = `${base}/images/og-preview.png`;
+const socialImageURL = new URL(image || defaultImage, siteOrigin);
+
+// Schema.org Person Structured Data
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Andhika Putra Pratama",
+  "alternateName": ["Andhika", "Dipa"],
+  "honorificSuffix": "S.Kom.",
+  "jobTitle": "System Analyst & Enterprise Solution Architect",
+  "url": canonicalURL.href,
+  "image": socialImageURL.href,
+  "description": description,
+  "email": "mailto:andhikapp28@gmail.com",
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "Institut Teknologi Sumatera",
+    "alternateName": "ITERA",
+    "url": "https://www.itera.ac.id"
+  },
+  "sameAs": [
+    "https://linkedin.com/in/andhikaputrapratama",
+    "https://github.com/andhikapp28"
+  ],
+  "knowsAbout": [
+    "System Analysis",
+    "Enterprise Solution Architecture",
+    "Software Requirements Specification (SRS)",
+    "Business Requirements Document (BRD)",
+    "Technical Architecture Document (TAD)",
+    "BPMN 2.0 Business Process Modeling",
+    "Distributed Concurrency & Seat Locking",
+    "Automated Financial Reconciliation & Settlement",
+    "Quality Assurance & UAT Governance",
+    "Full-Stack Web Development"
+  ]
+};
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href={favicon} />
     <meta name="generator" content={Astro.generator} />
 
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL.href} />
+
     <!-- SEO Meta Tags -->
     <title>{title}</title>
+    <meta name="title" content={title} />
     <meta name="description" content={description} />
+    <meta name="author" content="Andhika Putra Pratama, S.Kom." />
     <meta name="theme-color" content="#0055ea" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImageURL.href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:site_name" content="Andhika Putra Pratama Portfolio" />
+    <meta property="og:locale" content="id_ID" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL.href} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageURL.href} />
+    <meta name="twitter:image:alt" content={title} />
+
+    <!-- Structured Data: Schema.org Person JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 
     <!-- Google Fonts for XP: Tahoma, Trebuchet MS, Segoe UI, JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

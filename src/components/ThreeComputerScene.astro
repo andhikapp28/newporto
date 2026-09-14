@@ -10,7 +10,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <!-- CRT Vignette -->
   <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.85)_100%)] z-10"></div>
 
-  <!-- Top Header (No floating shortcut buttons as requested) -->
+  <!-- Top Header -->
   <div class="relative z-20 pt-8 px-6 flex flex-col items-center text-center pointer-events-none">
     <h1 class="text-2xl sm:text-4xl font-black font-mono tracking-wider text-emerald-400 drop-shadow-[0_0_20px_rgba(52,211,153,0.5)]">
       SYSTEM ANALYST &bull; WORKSTATION
@@ -18,6 +18,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <p class="text-[11px] sm:text-xs font-mono tracking-[0.25em] text-emerald-500/80 mt-1 uppercase font-semibold">
       BRD &bull; ARCHITECTURE &bull; DEV FEASIBILITY &bull; QA RIGOR
     </p>
+  </div>
+
+  <!-- Retro HUD Tooltip (Floating near cursor) -->
+  <div
+    id="retro-hud-tooltip"
+    class="pointer-events-none fixed z-50 opacity-0 scale-95 transition-all duration-100 -translate-x-1/2 -translate-y-full px-3 py-1.5 rounded bg-[#03140c]/90 border border-emerald-400 text-emerald-300 font-mono text-xs sm:text-sm tracking-wide shadow-[0_0_15px_rgba(16,185,129,0.5)] backdrop-blur-sm whitespace-nowrap select-none"
+    style="left: 0px; top: 0px;"
+  >
+    <div class="flex items-center space-x-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span id="retro-hud-text">[ 🖥️ Nyalakan Windows XD Workstation ]</span>
+    </div>
   </div>
 
   <!-- Bottom Empty Space -->
@@ -29,6 +41,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   const container = document.getElementById('webgl-container');
   const stage = document.getElementById('three-computer-stage');
+  const hudTooltip = document.getElementById('retro-hud-tooltip');
+  const hudText = document.getElementById('retro-hud-text');
 
   if (container) {
     // 1. Scene, Camera & Optimized Renderer (Silky 60 FPS)
@@ -41,7 +55,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       0.1,
       60
     );
-    camera.position.set(0, 1.2, 5.0);
+    camera.position.set(0, 1.25, 5.3);
+    camera.lookAt(0, -0.12, 0);
 
     const renderer = new THREE.WebGLRenderer({ 
       antialias: true, 
@@ -61,17 +76,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       const isPortrait = window.innerWidth < window.innerHeight;
       const isMobile = window.innerWidth < 640;
       if (isMobile && isPortrait) {
-        // Mobile portrait mode: pull back camera so monitor & tower fit completely
-        camera.position.set(0, 1.05, 6.8);
-        camera.fov = 44;
+        // Mobile portrait mode: pull back camera so monitor, tower & desk objects fit completely
+        camera.position.set(0, 1.15, 6.4);
+        camera.fov = 46;
+        camera.lookAt(0, -0.15, 0);
       } else if (isMobile) {
         // Mobile landscape mode
-        camera.position.set(0, 1.15, 5.4);
+        camera.position.set(0, 1.25, 5.4);
         camera.fov = 42;
+        camera.lookAt(0, -0.15, 0);
       } else {
         // Desktop
-        camera.position.set(0, 1.2, 5.0);
+        camera.position.set(0, 1.25, 5.3);
         camera.fov = 42;
+        camera.lookAt(0, -0.12, 0);
       }
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
@@ -79,7 +97,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
     updateResponsiveCamera();
 
-    // 2. Phosphor Green Lighting (Matches Image 2)
+    // 2. Phosphor Green Lighting
     const ambientLight = new THREE.AmbientLight(0x102018, 2.0);
     scene.add(ambientLight);
 
@@ -92,7 +110,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     crtGlow.position.set(0, 0.5, 1.2);
     scene.add(crtGlow);
 
-    // 3. Background Animated Scrolling Perspective Grid (Motion in Background!)
+    // 3. Background Animated Scrolling Perspective Grid
     const gridHelper = new THREE.GridHelper(40, 40, 0x10b981, 0x064e3b);
     gridHelper.position.y = -1.1;
     scene.add(gridHelper);
@@ -118,7 +136,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const dustParticles = new THREE.Points(particleGeometry, particleMaterial);
     scene.add(dustParticles);
 
-    // 4. CRT Screen Canvas Texture (Image 2 Green Phosphor Boot Screen)
+    // 4. CRT Screen Canvas Texture
     const screenCanvas = document.createElement('canvas');
     screenCanvas.width = 512;
     screenCanvas.height = 384;
@@ -137,7 +155,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         ctx.fillRect(0, y, screenCanvas.width, 2);
       }
 
-      // Phosphor Green Terminal Boot Text (Exact wording from Image 2)
+      // Phosphor Green Terminal Boot Text
       ctx.fillStyle = '#34d399';
       ctx.font = 'bold 22px "Courier New", monospace';
       ctx.fillText('MICROCOK (R) WINDOWS XD', 40, 55);
@@ -163,8 +181,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       ctx.fillText('> CLICK MONITOR TO POWER ON <', 70, 287);
     }
     const screenTexture = new THREE.CanvasTexture(screenCanvas);
+    screenTexture.minFilter = THREE.LinearFilter;
 
-    // 5. Workstation 3D Models (Kept identical to Image 2)
+    // 5. Workstation 3D Models
     const workstation = new THREE.Group();
     scene.add(workstation);
 
@@ -177,6 +196,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const greenLed = new THREE.MeshBasicMaterial({ color: 0x10b981 });
     const badgeGold = new THREE.MeshLambertMaterial({ color: 0xc49b38 });
 
+    // Helper to recursively tag interactive objects
+    function tagInteractive(obj: THREE.Object3D, type: string) {
+      obj.userData = obj.userData || {};
+      obj.userData.interactiveType = type;
+      obj.traverse((child) => {
+        child.userData = child.userData || {};
+        child.userData.interactiveType = type;
+      });
+    }
+
+    // Helper to inspect interactive target from raycast hit
+    function getInteractiveType(object: THREE.Object3D | null): string | null {
+      let curr: THREE.Object3D | null = object;
+      while (curr && curr !== workstation && curr !== scene) {
+        if (curr.userData && curr.userData.interactiveType) {
+          return curr.userData.interactiveType;
+        }
+        curr = curr.parent;
+      }
+      return null;
+    }
+
     // Desktop
     const desk = new THREE.Mesh(
       new THREE.BoxGeometry(7.0, 0.15, 3.5),
@@ -187,7 +228,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     // Monitor Group (Centered)
     const monitorGroup = new THREE.Group();
-    monitorGroup.position.set(0, 0.25, 0);
+    const monitorBaseY = 0.25;
+    let targetMonitorY = monitorBaseY;
+    monitorGroup.position.set(0, monitorBaseY, 0);
     workstation.add(monitorGroup);
 
     // Monitor Body
@@ -258,6 +301,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     standBase.position.set(0, -1.18, 0.1);
     monitorGroup.add(standBase);
 
+    tagInteractive(monitorGroup, 'monitor');
+
     // PC Tower
     const towerGroup = new THREE.Group();
     towerGroup.position.set(1.9, -0.15, 0.2);
@@ -290,9 +335,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     floppyLed.position.set(-0.3, 0.45, 1.14);
     towerGroup.add(floppyLed);
 
+    tagInteractive(towerGroup, 'monitor');
+
     // Keyboard & Mouse
     const kbGroup = new THREE.Group();
-    kbGroup.position.set(0, -0.92, 1.4);
+    kbGroup.position.set(0, -0.92, 1.28);
     kbGroup.rotation.x = 0.1;
     workstation.add(kbGroup);
 
@@ -310,27 +357,473 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     kbGroup.add(kbKeys);
 
     const mousePad = new THREE.Mesh(
-      new THREE.BoxGeometry(0.9, 0.02, 1.1),
+      new THREE.BoxGeometry(0.85, 0.02, 1.05),
       new THREE.MeshLambertMaterial({ color: 0x1e3a8a })
     );
-    mousePad.position.set(1.5, -0.96, 1.4);
+    mousePad.position.set(1.15, -0.96, 1.35);
     workstation.add(mousePad);
 
     const mouseMesh = new THREE.Mesh(
       new THREE.BoxGeometry(0.32, 0.12, 0.5),
       retroPlastic
     );
-    mouseMesh.position.set(1.5, -0.91, 1.4);
+    mouseMesh.position.set(1.15, -0.91, 1.35);
     workstation.add(mouseMesh);
 
-    // 6. Strict Drag vs Click Logic (Full Mobile Touch & Desktop Pointer Support)
-    // DRAG = ROTATION ONLY. RELEASING AFTER DRAGGING NEVER POWERS ON!
+    // ==========================================
+    // 5.A. OBJECT 1: Physical 3D CV ATS Document Folder (cvDocGroup)
+    // Left side of desk: x: -1.6, y: -0.95, z: 1.2
+    // ==========================================
+    // Helper: 3D Floating billboard badge
+    function create3dFloatingBadge(text: string, bgColor: string, textColor: string = '#ffffff') {
+      const bCanvas = document.createElement('canvas');
+      bCanvas.width = 256;
+      bCanvas.height = 64;
+      const bCtx = bCanvas.getContext('2d');
+      if (bCtx) {
+        bCtx.fillStyle = bgColor;
+        bCtx.beginPath();
+        bCtx.roundRect(4, 4, 248, 56, 12);
+        bCtx.fill();
+        bCtx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+        bCtx.lineWidth = 3;
+        bCtx.stroke();
+
+        bCtx.fillStyle = textColor;
+        bCtx.font = 'bold 22px monospace';
+        bCtx.textAlign = 'center';
+        bCtx.textBaseline = 'middle';
+        bCtx.fillText(text, 128, 32);
+      }
+      const bTex = new THREE.CanvasTexture(bCanvas);
+      bTex.minFilter = THREE.LinearFilter;
+      const bMat = new THREE.SpriteMaterial({ map: bTex, transparent: true, depthTest: false });
+      const sprite = new THREE.Sprite(bMat);
+      sprite.scale.set(0.68, 0.17, 1);
+      return sprite;
+    }
+
+    const cvDocGroup = new THREE.Group();
+    const cvBaseY = -0.95;
+    let targetCvY = cvBaseY;
+    cvDocGroup.position.set(-1.58, cvBaseY, 1.35);
+    cvDocGroup.rotation.y = 0.22;
+    workstation.add(cvDocGroup);
+
+    // Manila/cardboard folder base
+    const folderMat = new THREE.MeshLambertMaterial({ color: 0xd4a76a });
+    const folderBase = new THREE.Mesh(
+      new THREE.BoxGeometry(0.78, 0.026, 1.02),
+      folderMat
+    );
+    cvDocGroup.add(folderBase);
+
+    // Folder Tab on top edge
+    const folderTab = new THREE.Mesh(
+      new THREE.BoxGeometry(0.26, 0.02, 0.09),
+      folderMat
+    );
+    folderTab.position.set(-0.2, 0, -0.54);
+    cvDocGroup.add(folderTab);
+
+    // Stack of white resume papers
+    const paperStackMat = new THREE.MeshLambertMaterial({ color: 0xf5f5f5 });
+    const paperStack = new THREE.Mesh(
+      new THREE.BoxGeometry(0.70, 0.022, 0.92),
+      paperStackMat
+    );
+    paperStack.position.set(0.01, 0.015, 0.02);
+    cvDocGroup.add(paperStack);
+
+    // Printed ATS CV Page Canvas Texture
+    const cvCanvas = document.createElement('canvas');
+    cvCanvas.width = 512;
+    cvCanvas.height = 680;
+    const cvCtx = cvCanvas.getContext('2d');
+    if (cvCtx) {
+      cvCtx.fillStyle = '#ffffff';
+      cvCtx.fillRect(0, 0, 512, 680);
+
+      // Top dark accent stripe
+      cvCtx.fillStyle = '#0f172a';
+      cvCtx.fillRect(30, 35, 452, 6);
+
+      // Candidate Name & Title
+      cvCtx.fillStyle = '#0f172a';
+      cvCtx.font = 'bold 28px sans-serif';
+      cvCtx.fillText('ANDHIKA PUTRA PRATAMA', 30, 75);
+
+      cvCtx.fillStyle = '#059669';
+      cvCtx.font = 'bold 15px monospace';
+      cvCtx.fillText('SYSTEM ANALYST • QA RIGOR • TECH ARCHITECT', 30, 100);
+
+      cvCtx.fillStyle = '#64748b';
+      cvCtx.font = '12px monospace';
+      cvCtx.fillText('ATS RESUME SCORE: 98% | VERIFIED SYSTEM SPECS', 30, 120);
+
+      // Divider
+      cvCtx.fillStyle = '#e2e8f0';
+      cvCtx.fillRect(30, 134, 452, 2);
+
+      // Section 1: EXECUTIVE SUMMARY
+      cvCtx.fillStyle = '#1e293b';
+      cvCtx.font = 'bold 14px sans-serif';
+      cvCtx.fillText('EXECUTIVE SUMMARY & CORE ARCHITECTURE', 30, 160);
+
+      // Simulated formatted text lines
+      cvCtx.fillStyle = '#cbd5e1';
+      const lines = [
+        [30, 178, 450, 5], [30, 190, 430, 5], [30, 202, 410, 5], [30, 214, 380, 5],
+        // Section 2: 40+ SYSTEMS
+        [30, 268, 450, 5], [30, 280, 440, 5], [30, 292, 390, 5], [30, 304, 420, 5],
+        // Section 3: QA RIGOR & SDLC
+        [30, 358, 450, 5], [30, 370, 410, 5], [30, 382, 430, 5], [30, 394, 390, 5],
+        // Section 4: TECH STACK
+        [30, 448, 450, 5], [30, 460, 420, 5], [30, 472, 440, 5]
+      ];
+      lines.forEach(([x, y, w, h]) => cvCtx.fillRect(x, y, w, h));
+
+      cvCtx.fillStyle = '#1e293b';
+      cvCtx.font = 'bold 14px sans-serif';
+      cvCtx.fillText('40+ ENTERPRISE SYSTEMS • SRS, TAD, BPMN 2.0', 30, 250);
+      cvCtx.fillText('SYSTEM INTEGRATION TESTING (SIT) & UAT GATES', 30, 340);
+      cvCtx.fillText('DISTRIBUTED SYSTEMS, DATABASE SCHEMAS & APIs', 30, 430);
+
+      // PDF Stamp at bottom right
+      cvCtx.fillStyle = '#dc2626';
+      cvCtx.strokeStyle = '#dc2626';
+      cvCtx.lineWidth = 2;
+      cvCtx.strokeRect(300, 550, 180, 60);
+      cvCtx.font = 'bold 15px monospace';
+      cvCtx.fillText('ATS RESUME PDF', 320, 576);
+      cvCtx.font = 'bold 11px monospace';
+      cvCtx.fillText('CLICK TO DOWNLOAD', 325, 595);
+    }
+    const cvTexture = new THREE.CanvasTexture(cvCanvas);
+    cvTexture.minFilter = THREE.LinearFilter;
+    const cvTopSheet = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.68, 0.90),
+      new THREE.MeshBasicMaterial({ map: cvTexture })
+    );
+    cvTopSheet.rotation.x = -Math.PI / 2;
+    cvTopSheet.position.set(0.01, 0.028, 0.02);
+    cvDocGroup.add(cvTopSheet);
+
+    // Gold metal clamp / binder clip
+    const clipMat = new THREE.MeshLambertMaterial({ color: 0xd4af37 });
+    const clipBar = new THREE.Mesh(
+      new THREE.BoxGeometry(0.20, 0.038, 0.07),
+      clipMat
+    );
+    clipBar.position.set(-0.25, 0.038, -0.40);
+    cvDocGroup.add(clipBar);
+
+    const clipWire = new THREE.Mesh(
+      new THREE.TorusGeometry(0.04, 0.009, 8, 16),
+      clipMat
+    );
+    clipWire.rotation.x = Math.PI / 2;
+    clipWire.position.set(-0.25, 0.048, -0.40);
+    cvDocGroup.add(clipWire);
+
+    const cvBadge = create3dFloatingBadge('📄 CV ATS (PDF)', '#b91c1c');
+    cvBadge.position.set(0, 0.16, 0);
+    cvDocGroup.add(cvBadge);
+
+    tagInteractive(cvDocGroup, 'cv');
+
+    // ==========================================
+    // 5.B. OBJECT 2: Retro Smartphone 3D "WhatsApp Direct" (phoneGroup)
+    // Right side of desk beside mouse pad: x: 2.1, y: -0.95, z: 1.35
+    // ==========================================
+    const phoneGroup = new THREE.Group();
+    const phoneBaseY = -0.95;
+    let targetPhoneY = phoneBaseY;
+    phoneGroup.position.set(1.72, phoneBaseY, 1.42);
+    phoneGroup.rotation.y = -0.15;
+    workstation.add(phoneGroup);
+
+    // Dark sleek retro phone body
+    const phoneBodyMat = new THREE.MeshLambertMaterial({ color: 0x1a2320 });
+    const phoneBody = new THREE.Mesh(
+      new THREE.BoxGeometry(0.44, 0.035, 0.80),
+      phoneBodyMat
+    );
+    phoneGroup.add(phoneBody);
+
+    // WhatsApp Screen UI Canvas Texture
+    const phoneCanvas = document.createElement('canvas');
+    phoneCanvas.width = 256;
+    phoneCanvas.height = 460;
+    const pCtx = phoneCanvas.getContext('2d');
+    if (pCtx) {
+      // Dark WhatsApp chat background
+      pCtx.fillStyle = '#0b141a';
+      pCtx.fillRect(0, 0, 256, 460);
+
+      // Top green header
+      pCtx.fillStyle = '#1f2c34';
+      pCtx.fillRect(0, 0, 256, 75);
+      pCtx.fillStyle = '#00a884';
+      pCtx.fillRect(0, 0, 256, 6);
+
+      // Contact Avatar
+      pCtx.beginPath();
+      pCtx.arc(36, 42, 20, 0, Math.PI * 2);
+      pCtx.fillStyle = '#00a884';
+      pCtx.fill();
+      pCtx.fillStyle = '#ffffff';
+      pCtx.font = 'bold 16px sans-serif';
+      pCtx.fillText('A', 30, 48);
+
+      // Contact Header Text
+      pCtx.fillStyle = '#e9edef';
+      pCtx.font = 'bold 15px sans-serif';
+      pCtx.fillText('Andhika Pratama', 66, 38);
+      pCtx.fillStyle = '#00a884';
+      pCtx.font = '11px sans-serif';
+      pCtx.fillText('Online • 0812-7255-5407', 66, 55);
+
+      // Chat Bubble 1 (Incoming from Recruiter)
+      pCtx.fillStyle = '#202c33';
+      pCtx.beginPath();
+      pCtx.roundRect(14, 95, 190, 68, 10);
+      pCtx.fill();
+      pCtx.fillStyle = '#e9edef';
+      pCtx.font = '12px sans-serif';
+      pCtx.fillText('Halo Andhika, kami tertarik', 24, 120);
+      pCtx.fillText('dengan profil System Analyst', 24, 138);
+      pCtx.fillStyle = '#8696a0';
+      pCtx.font = '10px monospace';
+      pCtx.fillText('10:42', 165, 155);
+
+      // Chat Bubble 2 (Outgoing from Andhika)
+      pCtx.fillStyle = '#005c4b';
+      pCtx.beginPath();
+      pCtx.roundRect(50, 180, 192, 75, 10);
+      pCtx.fill();
+      pCtx.fillStyle = '#e9edef';
+      pCtx.font = '12px sans-serif';
+      pCtx.fillText('Siap berdiskusi untuk', 60, 205);
+      pCtx.fillText('arsitektur & SDLC specs.', 60, 223);
+      pCtx.fillStyle = '#8696a0';
+      pCtx.font = '10px monospace';
+      pCtx.fillText('10:43 ✓✓', 190, 245);
+
+      // Action Button
+      pCtx.fillStyle = '#25d366';
+      pCtx.beginPath();
+      pCtx.roundRect(22, 335, 212, 55, 12);
+      pCtx.fill();
+      pCtx.fillStyle = '#ffffff';
+      pCtx.font = 'bold 15px sans-serif';
+      pCtx.fillText('💬 CHAT WHATSAPP', 42, 369);
+
+      // Bottom bar
+      pCtx.fillStyle = '#1f2c34';
+      pCtx.fillRect(0, 420, 256, 40);
+    }
+    const phoneTexture = new THREE.CanvasTexture(phoneCanvas);
+    phoneTexture.minFilter = THREE.LinearFilter;
+    const phoneScreen = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.39, 0.72),
+      new THREE.MeshBasicMaterial({ map: phoneTexture })
+    );
+    phoneScreen.rotation.x = -Math.PI / 2;
+    phoneScreen.position.set(0, 0.02, 0);
+    phoneGroup.add(phoneScreen);
+
+    // Phone ambient green glow
+    const phoneGlow = new THREE.PointLight(0x25d366, 0.5, 0.8);
+    phoneGlow.position.set(0, 0.08, 0);
+    phoneGroup.add(phoneGlow);
+
+    const phoneBadge = create3dFloatingBadge('💬 WhatsApp', '#059669');
+    phoneBadge.position.set(0, 0.16, 0);
+    phoneGroup.add(phoneBadge);
+
+    tagInteractive(phoneGroup, 'phone');
+
+    // ==========================================
+    // 5.C. OBJECT 3: Floppy Disk 3.5" "⚡ FAST-TRACK 60s" (floppyDiskGroup)
+    // In front of keyboard: x: -0.75, y: -0.96, z: 1.72
+    // ==========================================
+    const floppyDiskGroup = new THREE.Group();
+    const floppyBaseY = -0.96;
+    let targetFloppyY = floppyBaseY;
+    floppyDiskGroup.position.set(-0.78, floppyBaseY, 1.62);
+    floppyDiskGroup.rotation.y = -0.14;
+    workstation.add(floppyDiskGroup);
+
+    // Classic 3.5" dark navy / charcoal case
+    const floppyCaseMat = new THREE.MeshLambertMaterial({ color: 0x16202c });
+    const floppyBody = new THREE.Mesh(
+      new THREE.BoxGeometry(0.52, 0.028, 0.54),
+      floppyCaseMat
+    );
+    floppyDiskGroup.add(floppyBody);
+
+    // Top metal sliding shutter
+    const metalShutterMat = new THREE.MeshLambertMaterial({ color: 0xc0c6cf });
+    const metalShutter = new THREE.Mesh(
+      new THREE.BoxGeometry(0.32, 0.032, 0.17),
+      metalShutterMat
+    );
+    metalShutter.position.set(0, 0.001, -0.17);
+    floppyDiskGroup.add(metalShutter);
+
+    // Retro Floppy Label Sticker Canvas Texture
+    const floppyCanvas = document.createElement('canvas');
+    floppyCanvas.width = 256;
+    floppyCanvas.height = 200;
+    const fCtx = floppyCanvas.getContext('2d');
+    if (fCtx) {
+      // White/off-white sticker background
+      fCtx.fillStyle = '#f8fafc';
+      fCtx.fillRect(0, 0, 256, 200);
+
+      // Amber/gold header stripe
+      fCtx.fillStyle = '#f59e0b';
+      fCtx.fillRect(0, 0, 256, 34);
+
+      fCtx.fillStyle = '#0f172a';
+      fCtx.fillRect(0, 34, 256, 4);
+
+      fCtx.fillStyle = '#000000';
+      fCtx.font = 'bold 15px "Courier New", monospace';
+      fCtx.fillText('⚡ FAST-TRACK 60s', 42, 23);
+
+      // Disk title & specs
+      fCtx.fillStyle = '#1e293b';
+      fCtx.font = 'bold 15px "Courier New", monospace';
+      fCtx.fillText('BYPASS TO DESKTOP', 25, 68);
+
+      fCtx.fillStyle = '#2563eb';
+      fCtx.font = '12px "Courier New", monospace';
+      fCtx.fillText('Format: 2HD • 1.44 MB', 25, 95);
+
+      fCtx.fillStyle = '#059669';
+      fCtx.font = 'bold 12px "Courier New", monospace';
+      fCtx.fillText('STATUS: EXEC READY', 25, 120);
+
+      // Gold action badge
+      fCtx.fillStyle = '#fef3c7';
+      fCtx.fillRect(15, 140, 226, 44);
+      fCtx.strokeStyle = '#d97706';
+      fCtx.lineWidth = 1.5;
+      fCtx.strokeRect(15, 140, 226, 44);
+
+      fCtx.fillStyle = '#b45309';
+      fCtx.font = 'bold 13px "Courier New", monospace';
+      fCtx.fillText('> CLICK TO INSERT <', 38, 168);
+    }
+    const floppyTexture = new THREE.CanvasTexture(floppyCanvas);
+    floppyTexture.minFilter = THREE.LinearFilter;
+    const floppyLabel = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.44, 0.31),
+      new THREE.MeshBasicMaterial({ map: floppyTexture })
+    );
+    floppyLabel.rotation.x = -Math.PI / 2;
+    floppyLabel.position.set(0, 0.016, 0.08);
+    floppyDiskGroup.add(floppyLabel);
+
+    // Write-protect notch slider
+    const wpTab = new THREE.Mesh(
+      new THREE.BoxGeometry(0.05, 0.03, 0.05),
+      keybDark
+    );
+    wpTab.position.set(-0.21, 0, 0.21);
+    floppyDiskGroup.add(wpTab);
+
+    // Floppy amber accent glow
+    const floppyGlow = new THREE.PointLight(0xf59e0b, 0.4, 0.7);
+    floppyGlow.position.set(0, 0.08, 0);
+    floppyDiskGroup.add(floppyGlow);
+
+    const floppyBadge = create3dFloatingBadge('⚡ Fast-Track', '#d97706');
+    floppyBadge.position.set(0, 0.14, 0);
+    floppyDiskGroup.add(floppyBadge);
+
+    tagInteractive(floppyDiskGroup, 'floppy');
+
+    // ==========================================
+    // 6. Tooltip & Bilingual Text Helper
+    // ==========================================
+    function getTooltipText(type: string): string {
+      const isId = (typeof localStorage !== 'undefined' && localStorage.getItem('xp_porto_lang') === 'id');
+      switch (type) {
+        case 'cv':
+          return isId 
+            ? '[ 📄 Ambil CV ATS (PDF) • Quick Download ]'
+            : '[ 📄 Get ATS Resume (PDF) • Quick Download ]';
+        case 'phone':
+          return isId
+            ? '[ 💬 Chat WhatsApp Direct • 0812-7255-5407 ]'
+            : '[ 💬 Direct WhatsApp Chat • 0812-7255-5407 ]';
+        case 'floppy':
+          return isId
+            ? '[ ⚡ Jalur Cepat Recruiter (Fast-Track 60s) ]'
+            : '[ ⚡ Recruiter Fast-Track (60s Bypass) ]';
+        case 'monitor':
+          return isId
+            ? '[ 🖥️ Nyalakan Windows XD Workstation ]'
+            : '[ 🖥️ Power On Windows XD Workstation ]';
+        default:
+          return '';
+      }
+    }
+
+    function updateHudTooltip(type: string | null, clientX?: number, clientY?: number) {
+      if (!hudTooltip || !hudText) return;
+      if (!type || isBooting) {
+        hudTooltip.classList.remove('opacity-100', 'scale-100');
+        hudTooltip.classList.add('opacity-0', 'scale-95');
+        return;
+      }
+
+      hudText.textContent = getTooltipText(type);
+      if (clientX !== undefined && clientY !== undefined) {
+        const clampedX = Math.min(Math.max(clientX, 150), window.innerWidth - 150);
+        const clampedY = Math.max(clientY - 16, 40);
+        hudTooltip.style.left = `${clampedX}px`;
+        hudTooltip.style.top = `${clampedY}px`;
+      }
+      hudTooltip.classList.remove('opacity-0', 'scale-95');
+      hudTooltip.classList.add('opacity-100', 'scale-100');
+    }
+
+    // ==========================================
+    // 7. Click Actions Execution
+    // ==========================================
+    function handleCvClick() {
+      const assetBase = document.getElementById('three-computer-stage')?.dataset.baseUrl || '';
+      const cvUrl = `${assetBase}/documents/CV_ATS_Andhika_Putra_Pratama.pdf`;
+      const link = document.createElement('a');
+      link.href = cvUrl;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.download = 'CV_ATS_Andhika_Putra_Pratama.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function handlePhoneClick() {
+      const waUrl = 'https://wa.me/6281272555407?text=Halo%20Andhika,%20saya%20tertarik%20dengan%20profil%20System%20Analyst%20Anda';
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+    }
+
+    // ==========================================
+    // 8. Strict Drag vs Click Logic & Raycasting
+    // ==========================================
     let isMouseDown = false;
     let hasDragged = false;
     let totalDragDist = 0;
     let startMousePos = { x: 0, y: 0 };
     let rotY = 0;
     let rotX = 0;
+    let hoveredType: string | null = null;
+    let lastHandledClickTime = 0;
     const raycaster = new THREE.Raycaster();
     const mouseVector = new THREE.Vector2();
 
@@ -350,10 +843,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         const dy = e.clientY - startMousePos.y;
         totalDragDist += Math.hypot(dx, dy);
 
-        // Mobile touch contact jitter: allow up to 12px jitter before marking as drag
+        // Mobile touch contact jitter threshold
         const dragThreshold = e.pointerType === 'touch' ? 12 : 6;
         if (totalDragDist > dragThreshold) {
           hasDragged = true; // User is rotating the 3D PC!
+          hoveredType = null;
+          updateHudTooltip(null);
         }
 
         const rotMultiplierY = e.pointerType === 'touch' ? 0.007 : 0.005;
@@ -362,22 +857,36 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         rotX += dy * rotMultiplierX;
         rotX = Math.max(-0.35, Math.min(0.35, rotX));
         startMousePos = { x: e.clientX, y: e.clientY };
-      } else if (e.pointerType !== 'touch') {
+      } else if (e.pointerType !== 'touch' && !isBooting) {
         // Idle hover cursor check (desktop only)
         const nx = (e.clientX / window.innerWidth) * 2 - 1;
         const ny = -(e.clientY / window.innerHeight) * 2 + 1;
         camera.position.x += (nx * 0.25 - camera.position.x) * 0.04;
-        camera.position.y += (1.2 + ny * 0.15 - camera.position.y) * 0.04;
-        camera.lookAt(0, 0.1, 0);
+        camera.position.y += (1.25 + ny * 0.15 - camera.position.y) * 0.04;
+        camera.lookAt(0, -0.12, 0);
 
         mouseVector.x = nx;
         mouseVector.y = ny;
         raycaster.setFromCamera(mouseVector, camera);
         const hits = raycaster.intersectObjects(workstation.children, true);
-        if (hits.length > 0) {
+
+        let foundType: string | null = null;
+        for (const hit of hits) {
+          const type = getInteractiveType(hit.object);
+          if (type) {
+            foundType = type;
+            break;
+          }
+        }
+
+        if (foundType) {
           renderer.domElement.style.cursor = 'pointer';
+          hoveredType = foundType;
+          updateHudTooltip(foundType, e.clientX, e.clientY);
         } else {
           renderer.domElement.style.cursor = 'grab';
+          hoveredType = null;
+          updateHudTooltip(null);
         }
       }
     });
@@ -389,22 +898,43 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         renderer.domElement.releasePointerCapture(e.pointerId);
       } catch (_) {}
 
-      // If user rotated / dragged the 3D model with finger or mouse, don't boot
+      // If user rotated / dragged the 3D model with finger or mouse, do not trigger click
       if (hasDragged) {
         return;
       }
 
-      // User did a clean tap/click without dragging!
-      // On mobile touch: any clean tap boots! On desktop: raycast hit test
-      if (e.pointerType === 'touch') {
-        triggerBoot();
-      } else {
-        mouseVector.x = (e.clientX / window.innerWidth) * 2 - 1;
-        mouseVector.y = -(e.clientY / window.innerHeight) * 2 + 1;
-        raycaster.setFromCamera(mouseVector, camera);
-        const hits = raycaster.intersectObjects(workstation.children, true);
-        if (hits.length > 0) {
-          triggerBoot();
+      // User did a clean tap/click without dragging
+      mouseVector.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseVector.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(mouseVector, camera);
+      const hits = raycaster.intersectObjects(workstation.children, true);
+
+      let targetType: string | null = null;
+      for (const hit of hits) {
+        const type = getInteractiveType(hit.object);
+        if (type) {
+          targetType = type;
+          break;
+        }
+      }
+
+      // On mobile touch fallback to standard boot if user tapped anywhere on workstation
+      if (!targetType && e.pointerType === 'touch' && hits.length > 0) {
+        targetType = 'monitor';
+      }
+
+      if (targetType) {
+        lastHandledClickTime = performance.now();
+        updateHudTooltip(null);
+
+        if (targetType === 'cv') {
+          handleCvClick();
+        } else if (targetType === 'phone') {
+          handlePhoneClick();
+        } else if (targetType === 'floppy') {
+          triggerBoot(true);
+        } else if (targetType === 'monitor') {
+          triggerBoot(false);
         }
       }
     });
@@ -416,21 +946,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       } catch (_) {}
     });
 
-    // 7. Boot Sequence: Zoom into CRT & Play Real Windows XP Audio
+    stage?.addEventListener('mouseleave', () => {
+      hoveredType = null;
+      updateHudTooltip(null);
+    });
+
+    // ==========================================
+    // 9. Boot Sequence: Zoom into CRT & Play Real Windows XP Audio
+    // ==========================================
     let isBooting = false;
     let animFrameId: number;
     let bootAnimationCompleted = false;
 
-    function triggerBoot() {
+    function triggerBoot(isFastTrack = false) {
       if (isBooting) return;
       isBooting = true;
+      hoveredType = null;
+      updateHudTooltip(null);
 
       const assetBase = document.getElementById('three-computer-stage')?.dataset.baseUrl || '';
       playRealXpSound(`${assetBase}/sounds/xp-startup.wav`);
 
       // If returning from shutdown, just fade stage and show desktop again
       if (bootAnimationCompleted) {
-        window.dispatchEvent(new CustomEvent('xp:boot-desktop'));
+        window.dispatchEvent(new CustomEvent('xp:boot-desktop', { detail: { openFastTrack: isFastTrack } }));
         if (stage) {
           stage.classList.add('opacity-0', 'pointer-events-none');
           setTimeout(() => {
@@ -442,8 +981,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       }
 
       const startPos = { ...camera.position };
-      const targetPos = { x: 0, y: 0.37, z: 1.15 };
-      const duration = 1200;
+      // Camera zoom target: if fast track, quick dive towards diskette/desk; otherwise CRT monitor face
+      const targetPos = isFastTrack 
+        ? { x: -0.65, y: -0.25, z: 2.2 }
+        : { x: 0, y: 0.37, z: 1.15 };
+      const duration = isFastTrack ? 550 : 1200;
       const startTime = performance.now();
 
       function animateZoom(now: number) {
@@ -456,19 +998,25 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         camera.position.x = startPos.x + (targetPos.x - startPos.x) * ease;
         camera.position.y = startPos.y + (targetPos.y - startPos.y) * ease;
         camera.position.z = startPos.z + (targetPos.z - startPos.z) * ease;
-        camera.lookAt(0, 0.37, 0.91);
+
+        if (isFastTrack) {
+          camera.lookAt(-0.8, -0.85, 1.88);
+        } else {
+          camera.lookAt(0, 0.37, 0.91);
+        }
 
         if (progress < 1) {
           requestAnimationFrame(animateZoom);
         } else {
           bootAnimationCompleted = true;
-          window.dispatchEvent(new CustomEvent('xp:boot-desktop'));
+          window.dispatchEvent(new CustomEvent('xp:boot-desktop', { detail: { openFastTrack: isFastTrack } }));
           cancelAnimationFrame(animFrameId);
 
           if (stage) {
             stage.classList.add('opacity-0', 'pointer-events-none');
             setTimeout(() => {
               stage.classList.add('hidden');
+              isBooting = false;
             }, 700);
           }
         }
@@ -492,7 +1040,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       }
     }
 
-    // 8. 60 FPS Render Loop (Grid glides continuously forward!)
+    // ==========================================
+    // 10. 60 FPS Render Loop & Hover Animations
+    // ==========================================
     function renderLoop() {
       animFrameId = requestAnimationFrame(renderLoop);
 
@@ -500,11 +1050,65 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         workstation.rotation.y += (rotY - workstation.rotation.y) * 0.08;
         workstation.rotation.x += (rotX - workstation.rotation.x) * 0.08;
 
-        // Background Animation: Grid moves forward infinitely!
+        // Background Animation: Grid moves forward infinitely
         gridHelper.position.z = (gridHelper.position.z + 0.015) % 1;
 
         // Floating particles drift
         dustParticles.rotation.y += 0.0008;
+
+        // Visual hover feedback: Smooth levitation & emissive glow
+        if (hoveredType === 'cv') {
+          targetCvY = cvBaseY + 0.045;
+          targetPhoneY = phoneBaseY;
+          targetFloppyY = floppyBaseY;
+          targetMonitorY = monitorBaseY;
+          folderMat.emissive.setHex(0x332211);
+          phoneGlow.intensity = 0.4;
+          floppyGlow.intensity = 0.3;
+          crtGlow.intensity = 3.2;
+        } else if (hoveredType === 'phone') {
+          targetCvY = cvBaseY;
+          targetPhoneY = phoneBaseY + 0.045;
+          targetFloppyY = floppyBaseY;
+          targetMonitorY = monitorBaseY;
+          folderMat.emissive.setHex(0x000000);
+          phoneGlow.intensity = 1.4;
+          floppyGlow.intensity = 0.3;
+          crtGlow.intensity = 3.2;
+        } else if (hoveredType === 'floppy') {
+          targetCvY = cvBaseY;
+          targetPhoneY = phoneBaseY;
+          targetFloppyY = floppyBaseY + 0.045;
+          targetMonitorY = monitorBaseY;
+          folderMat.emissive.setHex(0x000000);
+          phoneGlow.intensity = 0.4;
+          floppyGlow.intensity = 1.2;
+          crtGlow.intensity = 3.2;
+        } else if (hoveredType === 'monitor') {
+          targetCvY = cvBaseY;
+          targetPhoneY = phoneBaseY;
+          targetFloppyY = floppyBaseY;
+          targetMonitorY = monitorBaseY + 0.02;
+          folderMat.emissive.setHex(0x000000);
+          phoneGlow.intensity = 0.4;
+          floppyGlow.intensity = 0.3;
+          crtGlow.intensity = 4.2;
+        } else {
+          targetCvY = cvBaseY;
+          targetPhoneY = phoneBaseY;
+          targetFloppyY = floppyBaseY;
+          targetMonitorY = monitorBaseY;
+          folderMat.emissive.setHex(0x000000);
+          phoneGlow.intensity = 0.5;
+          floppyGlow.intensity = 0.4;
+          crtGlow.intensity = 3.2;
+        }
+
+        const lerpFactor = 0.14;
+        cvDocGroup.position.y += (targetCvY - cvDocGroup.position.y) * lerpFactor;
+        phoneGroup.position.y += (targetPhoneY - phoneGroup.position.y) * lerpFactor;
+        floppyDiskGroup.position.y += (targetFloppyY - floppyDiskGroup.position.y) * lerpFactor;
+        monitorGroup.position.y += (targetMonitorY - monitorGroup.position.y) * lerpFactor;
       }
 
       renderer.render(scene, camera);
@@ -515,24 +1119,34 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       updateResponsiveCamera();
     });
 
-    // 9. Handle shutdown -> return to 3D
+    // ==========================================
+    // 11. Handle shutdown -> return to 3D
+    // ==========================================
     window.addEventListener('xp:shutdown-to-3d', () => {
       isBooting = false;
       isMouseDown = false;
       hasDragged = false;
+      hoveredType = null;
+      updateHudTooltip(null);
 
-      // The shutdown sound is already played by XpDesktop; stop any leftover scene/desktop audio.
+      // Stop any leftover scene/desktop audio
       if (typeof (window as any).audioManager?.stopCategory === 'function') {
         (window as any).audioManager.stopCategory('sfx', { fade: true });
         (window as any).audioManager.stopCategory('ambient', { fade: true });
       }
 
-      // Reset camera and rotation to initial state so the workstation is not zoomed in
+      // Reset camera and rotation to initial state
       updateResponsiveCamera();
       camera.lookAt(0, 0.1, 0);
       rotX = 0;
       rotY = 0;
       workstation.rotation.set(0, 0, 0);
+
+      // Reset object positions
+      cvDocGroup.position.set(-1.6, cvBaseY, 1.2);
+      phoneGroup.position.set(2.1, phoneBaseY, 1.35);
+      floppyDiskGroup.position.set(-0.75, floppyBaseY, 1.72);
+      monitorGroup.position.set(0, monitorBaseY, 0);
 
       if (stage) {
         stage.classList.remove('hidden');
@@ -543,32 +1157,27 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       }
     });
 
-    // Recruiter Fast-Track Skip Trigger (removed from 3D scene per user request)
+    // Recruiter Fast-Track Skip Trigger (button fallback)
     const fasttrackBtn = document.getElementById('btn-fasttrack-skip');
     if (fasttrackBtn) {
       fasttrackBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (stage) {
-          stage.style.opacity = '0';
-          stage.style.pointerEvents = 'none';
-          setTimeout(() => {
-            stage.classList.add('hidden');
-          }, 500);
-        }
-        window.dispatchEvent(new CustomEvent('xp:boot-desktop', { detail: { openFastTrack: true } }));
+        triggerBoot(true);
       });
     }
 
-    // 10. Backup boot trigger: any click/tap on the visible stage powers on
-    // (pointerup logic above handles first boot with raycast; this ensures reboot works on all devices)
+    // ==========================================
+    // 12. Backup Boot Listener
+    // Guarded to ensure raycast clicks on 3D objects are NEVER overwritten
+    // ==========================================
     stage?.addEventListener('click', (e) => {
+      // If click was already handled by an interactive 3D object or was a drag rotation, ignore
+      if (performance.now() - lastHandledClickTime < 600 || hasDragged) {
+        hasDragged = false;
+        return;
+      }
       if (stage && !stage.classList.contains('hidden') && !stage.classList.contains('opacity-0') && !isBooting) {
-        // Don't trigger if user was dragging the 3D model
-        if (hasDragged) {
-          hasDragged = false;
-          return;
-        }
-        triggerBoot();
+        triggerBoot(false);
       }
     });
   }

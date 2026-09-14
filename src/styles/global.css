@@ -576,3 +576,56 @@
 .xp-window {
   -webkit-touch-callout: none;
 }
+
+/* ==========================================================================
+   TEXT SELECTION RULES FOR CONTENT & OS CHROME
+   ========================================================================== */
+.xp-window .overflow-y-auto,
+.xp-window .overflow-y-auto *:not(button):not(button *):not(.xp-btn):not(.xp-btn *),
+.xp-window p,
+.xp-window p *,
+.xp-window span:not(.xp-titlebar *):not(button *):not(.xp-btn *),
+.xp-window li,
+.xp-window li *,
+.xp-window pre,
+.xp-window pre *,
+.xp-window code,
+.xp-window code *,
+.xp-window table,
+.xp-window table *:not(button):not(button *):not(.xp-btn):not(.xp-btn *),
+.xp-window td,
+.xp-window th,
+.xp-window h1,
+.xp-window h2,
+.xp-window h3,
+.xp-window h4,
+#cmd-output,
+#cmd-output *,
+.markdown-spec,
+.markdown-spec * {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+
+/* Keep OS Chrome, Titlebars, Buttons, Taskbar, and Start Menu strictly unselectable */
+button,
+button *,
+.xp-btn,
+.xp-btn *,
+.xp-toolbar-btn,
+.xp-toolbar-btn *,
+.xp-titlebar,
+.xp-titlebar *,
+.xp-desktop-icon,
+.xp-desktop-icon *,
+#xp-taskbar,
+#xp-taskbar *,
+#xp-start-menu,
+#xp-start-menu *,
+.win-resize-handle,
+.win-btn-minimize,
+.win-btn-maximize,
+.win-btn-close {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
