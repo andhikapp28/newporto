@@ -516,6 +516,7 @@
   .xp-window {
     max-width: calc(100vw - 8px) !important;
     max-height: calc(100vh - 38px) !important;
+    max-height: calc(100dvh - 38px) !important;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
   }
 
@@ -537,12 +538,26 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Ensure touch target size for window controls is comfortable */
+  /* Ensure touch target size for window controls is comfortable (WCAG 44x44px target area) */
   .win-btn-minimize,
   .win-btn-maximize,
   .win-btn-close {
     min-width: 22px;
     min-height: 22px;
+    position: relative;
+  }
+
+  .win-btn-minimize::after,
+  .win-btn-maximize::after,
+  .win-btn-close::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
   }
 }
 
@@ -575,6 +590,7 @@
 }
 
 .xp-window {
+  contain: layout style;
   -webkit-touch-callout: none;
 }
 

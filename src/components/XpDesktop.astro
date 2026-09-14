@@ -36,20 +36,16 @@ import {
   Dog, 
   StickyNote, 
   Command, 
-  Image as ImageIcon, 
   Award, 
   HelpCircle, 
   Download, 
   ZoomIn, 
   ZoomOut, 
-  Music,
-  Printer,
-  Activity,
-  Palette,
-  Bomb,
-  Monitor,
-  Info,
-  Smile,
+  Printer, 
+  Activity, 
+  Palette, 
+  Bomb, 
+  Monitor 
 } from '@lucide/astro';
 
 const allProjects = await getCollection('projects');
@@ -3519,6 +3515,14 @@ const sampleWorkDocs = [
         (window as any).stopWmp?.();
       } catch (e) {}
     }
+    // Stop Minesweeper timer if closing Minesweeper
+    if (id === 'win-minesweeper') {
+      try {
+        if (typeof (window as any).stopMinesweeperTimer === 'function') {
+          (window as any).stopMinesweeperTimer();
+        }
+      } catch (e) {}
+    }
     win.dataset.state = 'closed';
     win.classList.add('hidden');
     win.style.display = 'none';
@@ -3546,6 +3550,8 @@ const sampleWorkDocs = [
       let startY = 0;
       let initialLeft = 0;
       let initialTop = 0;
+      let cachedWinWidth = 0;
+      let dragRafId = 0;
 
       const onDragStart = (e: PointerEvent) => {
         if (e.button !== 0 && e.pointerType === 'mouse') return;
@@ -3558,6 +3564,8 @@ const sampleWorkDocs = [
         startY = e.clientY;
         initialLeft = win.offsetLeft;
         initialTop = win.offsetTop;
+        cachedWinWidth = win.offsetWidth;
+        win.style.willChange = 'left, top';
 
         try {
           titlebar.setPointerCapture(e.pointerId);
@@ -3568,19 +3576,24 @@ const sampleWorkDocs = [
           const dx = moveEvent.clientX - startX;
           const dy = moveEvent.clientY - startY;
 
-          // Bounds clamping: ensure window titlebar remains visible and reachable
-          const maxLeft = Math.max(0, window.innerWidth - 60);
-          const maxTop = Math.max(0, window.innerHeight - 50);
-          const newLeft = Math.max(-win.offsetWidth + 80, Math.min(maxLeft, initialLeft + dx));
-          const newTop = Math.max(0, Math.min(maxTop, initialTop + dy));
+          if (dragRafId) cancelAnimationFrame(dragRafId);
+          dragRafId = requestAnimationFrame(() => {
+            // Bounds clamping: ensure window titlebar remains visible and reachable
+            const maxLeft = Math.max(0, window.innerWidth - 60);
+            const maxTop = Math.max(0, window.innerHeight - 50);
+            const newLeft = Math.max(-cachedWinWidth + 80, Math.min(maxLeft, initialLeft + dx));
+            const newTop = Math.max(0, Math.min(maxTop, initialTop + dy));
 
-          win.style.left = `${newLeft}px`;
-          win.style.top = `${newTop}px`;
+            win.style.left = `${newLeft}px`;
+            win.style.top = `${newTop}px`;
+          });
         };
 
         const onPointerUp = (upEvent: PointerEvent) => {
           if (!isDragging) return;
           isDragging = false;
+          if (dragRafId) cancelAnimationFrame(dragRafId);
+          win.style.willChange = 'auto';
           try {
             titlebar.releasePointerCapture(upEvent.pointerId);
           } catch (_) {}
@@ -3614,6 +3627,9 @@ const sampleWorkDocs = [
       let startH = 0;
       let startX = 0;
       let startY = 0;
+      let cachedLeft = 0;
+      let cachedTop = 0;
+      let resizeRafId = 0;
 
       const onResizeStart = (e: PointerEvent) => {
         if (e.button !== 0 && e.pointerType === 'mouse') return;
@@ -3624,6 +3640,9 @@ const sampleWorkDocs = [
         startY = e.clientY;
         startW = win.offsetWidth;
         startH = win.offsetHeight;
+        cachedLeft = win.offsetLeft;
+        cachedTop = win.offsetTop;
+        win.style.willChange = 'width, height';
 
         try {
           resizeHandle.setPointerCapture(e.pointerId);
@@ -3633,16 +3652,22 @@ const sampleWorkDocs = [
           if (!isResizing) return;
           const dw = moveEvent.clientX - startX;
           const dh = moveEvent.clientY - startY;
-          const maxW = window.innerWidth - win.offsetLeft - 4;
-          const maxH = window.innerHeight - 34 - win.offsetTop - 4;
 
-          win.style.width = `${Math.max(240, Math.min(maxW, startW + dw))}px`;
-          win.style.height = `${Math.max(140, Math.min(maxH, startH + dh))}px`;
+          if (resizeRafId) cancelAnimationFrame(resizeRafId);
+          resizeRafId = requestAnimationFrame(() => {
+            const maxW = window.innerWidth - cachedLeft - 4;
+            const maxH = window.innerHeight - 34 - cachedTop - 4;
+
+            win.style.width = `${Math.max(240, Math.min(maxW, startW + dw))}px`;
+            win.style.height = `${Math.max(140, Math.min(maxH, startH + dh))}px`;
+          });
         };
 
         const onResizeUp = (upEvent: PointerEvent) => {
           if (!isResizing) return;
           isResizing = false;
+          if (resizeRafId) cancelAnimationFrame(resizeRafId);
+          win.style.willChange = 'auto';
           try {
             resizeHandle.releasePointerCapture(upEvent.pointerId);
           } catch (_) {}
@@ -5253,7 +5278,6 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
     { id: 'win-minesweeper', title: 'Minesweeper', titleId: 'Minesweeper', desc: 'Classic 9x9 grid retro puzzle game', descId: 'Game klasik retro 9x9 kotak', type: 'game', keywords: 'minesweeper winmine game ranjau bom flag sweep', action: () => (window as any).openWindow('win-minesweeper') },
     { id: 'win-display-props', title: 'Display Properties', titleId: 'Properti Tampilan', desc: 'Change XP themes (Luna, Olive, Silver) & wallpaper', descId: 'Ganti tema & wallpaper Windows XD', type: 'window', keywords: 'display properties desk.cpl tema theme wallpaper luna olive silver bliss', action: () => (window as any).openWindow('win-display-props') },
     { id: 'win-sys-props', title: 'System Properties', titleId: 'Properti Sistem', desc: 'System Analyst hardware & academic specs', descId: 'Spesifikasi sistem & akademik kandidat', type: 'window', keywords: 'system properties sysdm.cpl spesifikasi specs gpa toefl itera', action: () => (window as any).openWindow('win-sys-props') },
-    { id: 'win-projects', title: 'Case Studies (E:)', titleId: 'Studi Kasus (E:)', desc: 'List of DAMRI projects (PUMK & Push Request)', descId: 'Daftar proyek PUMK & Push', type: 'project', keywords: 'case studies project proyek pumk push damri', action: () => (window as any).openWindow('win-projects') },
     { id: 'skill-system-analysis', title: 'Skill: System Analysis', titleId: 'Keahlian: Analisis Sistem', desc: 'BRD/SRS, BPMN, ERD, Data Dictionary', descId: 'BRD/SRS, BPMN, ERD, Kamus Data', type: 'skill', keywords: 'system analysis brd srs bpmn erd data dictionary kamus data', action: () => (window as any).openWindow('win-resume') },
     { id: 'skill-development', title: 'Skill: Development', titleId: 'Keahlian: Development', desc: 'Laravel, PostgreSQL, REST, GitHub API', descId: 'Laravel, PostgreSQL, REST, GitHub API', type: 'skill', keywords: 'development laravel postgresql rest github api sso', action: () => (window as any).openWindow('win-resume') },
     { id: 'skill-qa', title: 'Skill: QA Testing', titleId: 'Keahlian: QA Testing', desc: 'Test Case, Boundary, Postman', descId: 'Test Case, Boundary, Postman', type: 'skill', keywords: 'qa testing test case boundary postman concurrency', action: () => (window as any).openWindow('win-resume') },
@@ -5375,16 +5399,33 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
 
   // SDLC Lens data
   // ==========================================
+  // Shared Web Audio API Context (Singleton — Zero Leaks & Resilient to Hardware Limit)
+  // ==========================================
+  let sharedAudioCtx: AudioContext | null = null;
+  function getSharedAudioContext(): AudioContext | null {
+    try {
+      if (!sharedAudioCtx) {
+        const AudioCtxClass = window.AudioContext || (window as any).webkitAudioContext;
+        if (AudioCtxClass) {
+          sharedAudioCtx = new AudioCtxClass();
+        }
+      }
+      if (sharedAudioCtx && sharedAudioCtx.state === 'suspended') {
+        sharedAudioCtx.resume().catch(() => {});
+      }
+      return sharedAudioCtx;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  // ==========================================
   // Authentic Windows XP Error Dialog Engine
   // ==========================================
   function playXpErrorSound() {
     try {
-      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
-      if (ctx.state === 'suspended') {
-        ctx.resume();
-      }
+      const ctx = getSharedAudioContext();
+      if (!ctx) return;
       const now = ctx.currentTime;
       const osc1 = ctx.createOscillator();
       const osc2 = ctx.createOscillator();
@@ -5557,7 +5598,6 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
       fasttrack: () => (window as any).openWindow('win-fasttrack'),
       summary: () => (window as any).openWindow('win-fasttrack'),
       metrics: () => (window as any).openWindow('win-fasttrack'),
-      projects: () => (window as any).openWindow('win-projects'),
       approval: () => (window as any).openWindow('win-sdlc'),
       seatlock: () => (window as any).openWindow('win-sdlc'),
       contact: () => (window as any).openWindow('win-contact'),
@@ -5618,13 +5658,23 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
   const cmdOutput = document.getElementById('cmd-output');
   const cmdScreen = document.getElementById('cmd-screen');
 
+  function escapeHtml(str: string): string {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   cmdInput?.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      const val = cmdInput.value.trim().toLowerCase();
+      const rawVal = cmdInput.value.trim();
+      const val = rawVal.toLowerCase();
       if (!val) return;
 
       const line = document.createElement('div');
-      line.innerHTML = `<span class="text-slate-400">C:\\Users\\Andhika&gt;</span> <span class="text-white">${cmdInput.value}</span>`;
+      line.innerHTML = `<span class="text-slate-400">C:\\Users\\Andhika&gt;</span> <span class="text-white">${escapeHtml(rawVal)}</span>`;
       cmdOutput?.appendChild(line);
 
       const resp = document.createElement('div');
@@ -5769,7 +5819,7 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
         cmdInput.value = '';
         return;
       } else {
-        resp.innerHTML = `'${val}' tidak dikenali. Ketik 'help' untuk panduan.`;
+        resp.innerHTML = `'${escapeHtml(rawVal)}' tidak dikenali. Ketik 'help' untuk panduan.`;
       }
 
       cmdOutput?.appendChild(resp);
@@ -5839,6 +5889,13 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
   document.getElementById('xp-tray-shutdown-btn')?.addEventListener('click', triggerShutdownDialog);
 
   modalTurnOff?.addEventListener('click', () => {
+    try {
+      (window as any).stopWmp?.();
+      if (typeof (window as any).stopMinesweeperTimer === 'function') {
+        (window as any).stopMinesweeperTimer();
+      }
+    } catch (_) {}
+
     shutdownModal?.classList.add('hidden');
     shutdownModal?.classList.remove('flex');
 
@@ -5894,9 +5951,8 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
   // ==========================================================================
   function playXpSound(type: string) {
     try {
-      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
+      const ctx = getSharedAudioContext();
+      if (!ctx) return;
       const now = ctx.currentTime;
 
       if (type === 'balloon' || type === 'ding') {
@@ -6004,10 +6060,24 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
     }
   }
 
+  function safeStorageGet(key: string, fallback = ''): string {
+    try {
+      return (typeof localStorage !== 'undefined' && localStorage.getItem(key)) || fallback;
+    } catch (_) {
+      return fallback;
+    }
+  }
+
+  function safeStorageSet(key: string, value: string): void {
+    try {
+      if (typeof localStorage !== 'undefined') localStorage.setItem(key, value);
+    } catch (_) {}
+  }
+
   function applyTheme(theme: string) {
     if (!desktopContainer) return;
     desktopContainer.setAttribute('data-xp-theme', theme);
-    localStorage.setItem('xp_porto_theme', theme);
+    safeStorageSet('xp_porto_theme', theme);
   }
 
   function applyWallpaper(wpKey: string) {
@@ -6017,18 +6087,18 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
     if (dispWallpaperPreview) {
       dispWallpaperPreview.style.backgroundImage = `url('${url}')`;
     }
-    localStorage.setItem('xp_porto_wallpaper', wpKey);
+    safeStorageSet('xp_porto_wallpaper', wpKey);
   }
 
   // Load saved theme & wallpaper
-  const savedTheme = localStorage.getItem('xp_porto_theme') || 'blue';
+  const savedTheme = safeStorageGet('xp_porto_theme', 'blue');
   if (savedTheme !== 'blue') {
     applyTheme(savedTheme);
     if (dispThemeSelect) dispThemeSelect.value = savedTheme;
     updateThemePreview(savedTheme);
   }
 
-  const savedWp = localStorage.getItem('xp_porto_wallpaper') || 'bliss';
+  const savedWp = safeStorageGet('xp_porto_wallpaper', 'bliss');
   if (savedWp !== 'bliss' && wallpaperUrls[savedWp]) {
     applyWallpaper(savedWp);
     if (dispWallpaperSelect) dispWallpaperSelect.value = savedWp;
@@ -6421,6 +6491,11 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
     });
   }
 
+  (window as any).stopMinesweeperTimer = () => {
+    clearInterval(msTimerInterval);
+    msTimerInterval = null;
+  };
+
   function initMinesweeper() {
     clearInterval(msTimerInterval);
     msTimerInterval = null;
@@ -6717,6 +6792,7 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
   }, 1000);
 
   ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll'].forEach(evt => {
+    const isPassive = evt === 'touchstart' || evt === 'scroll' || evt === 'mousemove';
     window.addEventListener(evt, (e) => {
       if (evt === 'keydown' && ((e.target as HTMLElement)?.tagName === 'INPUT' || (e.target as HTMLElement)?.tagName === 'TEXTAREA')) {
         return;
@@ -6725,7 +6801,7 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
         hideScreensaver();
       }
       idleTimer = 0;
-    });
+    }, isPassive ? { passive: true } : false);
   });
 
   // ==========================================================================

@@ -1,5 +1,4 @@
 ---
-import { Monitor } from '@lucide/astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
@@ -1068,6 +1067,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const mouseVector = new THREE.Vector2();
 
     renderer.domElement.addEventListener('pointerdown', (e: PointerEvent) => {
+      if (stage?.classList.contains('hidden') || stage?.classList.contains('opacity-0')) return;
       isMouseDown = true;
       hasDragged = false;
       totalDragDist = 0;
@@ -1078,6 +1078,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     });
 
     window.addEventListener('pointermove', (e: PointerEvent) => {
+      if (stage?.classList.contains('hidden') || stage?.classList.contains('opacity-0')) return;
       if (isMouseDown) {
         const dx = e.clientX - startMousePos.x;
         const dy = e.clientY - startMousePos.y;
@@ -1209,6 +1210,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       // If returning from shutdown, just fade stage and show desktop again
       if (bootAnimationCompleted) {
+        stopRenderLoop();
         window.dispatchEvent(new CustomEvent('xp:boot-desktop', { detail: { openFastTrack: isFastTrack } }));
         if (stage) {
           stage.classList.add('opacity-0', 'pointer-events-none');
@@ -1249,8 +1251,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           requestAnimationFrame(animateZoom);
         } else {
           bootAnimationCompleted = true;
+          stopRenderLoop();
           window.dispatchEvent(new CustomEvent('xp:boot-desktop', { detail: { openFastTrack: isFastTrack } }));
-          cancelAnimationFrame(animFrameId);
 
           if (stage) {
             stage.classList.add('opacity-0', 'pointer-events-none');
@@ -1281,9 +1283,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     }
 
     // ==========================================
-    // 10. 60 FPS Render Loop & Hover Animations
+    // 10. 60 FPS Render Loop & Lifecycle Guard (Zero Background CPU)
     // ==========================================
+    let isLoopRunning = false;
+
+    function stopRenderLoop() {
+      if (animFrameId) {
+        cancelAnimationFrame(animFrameId);
+        animFrameId = 0;
+      }
+      isLoopRunning = false;
+    }
+
+    function startRenderLoop() {
+      if (isLoopRunning) return;
+      if (document.hidden || stage?.classList.contains('hidden') || stage?.classList.contains('opacity-0')) {
+        return;
+      }
+      stopRenderLoop();
+      isLoopRunning = true;
+      renderLoop();
+    }
+
     function renderLoop() {
+      if (!isLoopRunning) return;
       animFrameId = requestAnimationFrame(renderLoop);
 
       if (!isBooting) {
@@ -1353,7 +1376,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       renderer.render(scene, camera);
     }
-    renderLoop();
+    startRenderLoop();
+
+    // Tab visibility handling: pause render loop when browser tab is inactive
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stopRenderLoop();
+      } else if (stage && !stage.classList.contains('hidden') && !stage.classList.contains('opacity-0')) {
+        startRenderLoop();
+      }
+    });
+
+    // WebGL Context Loss Guards
+    renderer.domElement.addEventListener('webglcontextlost', (e) => {
+      e.preventDefault();
+      stopRenderLoop();
+      console.warn('[WebGL] Context lost; 3D loop safely paused.');
+    }, false);
+
+    renderer.domElement.addEventListener('webglcontextrestored', () => {
+      console.info('[WebGL] Context restored; 3D loop resuming.');
+      startRenderLoop();
+    }, false);
 
     window.addEventListener('resize', () => {
       updateResponsiveCamera();
@@ -1392,7 +1436,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         stage.classList.remove('hidden');
         setTimeout(() => {
           stage.classList.remove('opacity-0', 'pointer-events-none');
-          renderLoop();
+          startRenderLoop();
         }, 50);
       }
     });
