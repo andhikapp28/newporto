@@ -49,7 +49,8 @@ import {
   Bomb,
   Monitor,
   Info,
-  Smile 
+  Smile,
+  Crosshair
 } from '@lucide/astro';
 
 const allProjects = await getCollection('projects');
@@ -245,7 +246,7 @@ const sampleWorkDocs = [
            data-open="win-games-folder"
            title="Games"
            data-tooltip-title="Games (Folder)"
-           data-tooltip-desc="Folder game klasik Windows XP: Minesweeper (winmine.exe), 3D Pinball, dan Solitaire. | Classic Windows XP games: Minesweeper (winmine.exe), 3D Pinball, and Solitaire.">
+           data-tooltip-desc="Folder game klasik Windows XP: Minesweeper (winmine.exe), DOOM (DOOM.EXE), 3D Pinball, dan Solitaire. | Classic Windows XP games: Minesweeper (winmine.exe), DOOM (DOOM.EXE), 3D Pinball, and Solitaire.">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-gradient-to-br from-amber-100 to-yellow-200 border border-amber-400 shadow-md group-hover:scale-105 transition-transform relative">
           <Folder class="w-6 h-6 text-amber-500 fill-amber-400" />
           <Bomb class="w-3.5 h-3.5 text-red-600 absolute bottom-1 right-1 drop-shadow" />
@@ -2931,6 +2932,26 @@ const sampleWorkDocs = [
               <div class="text-[10px] text-slate-500 mt-2 font-mono">Status: Not Ready</div>
             </div>
           </div>
+
+          <!-- Game 4: DOOM (DOOM.EXE - Playable 3D Retro Raycaster) -->
+          <div
+            class="p-3.5 rounded-lg border-2 border-orange-400 bg-orange-50/70 hover:bg-orange-100 hover:border-orange-600 cursor-pointer group flex items-start gap-3.5 transition-all shadow-xs"
+            onclick="openWindow('win-doom')"
+          >
+            <div class="w-10 h-10 rounded bg-stone-900 border border-orange-500 flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform text-orange-500">
+              <Crosshair class="w-6 h-6 text-orange-500" />
+            </div>
+            <div>
+              <div class="flex items-center gap-1.5 mb-0.5">
+                <span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 font-mono text-[9px] font-bold uppercase">Ready to Play</span>
+              </div>
+              <div class="font-bold text-orange-950 group-hover:underline text-sm">DOOM (DOOM.EXE)</div>
+              <div class="text-[11px] text-slate-600 mt-0.5 i18n" data-en="Legendary 1993 3D FPS raycaster by id Software. Rip and tear!" data-id="Game FPS 3D retro legendaris 1993 id Software. Basmi semua monster!">Legendary 1993 3D FPS raycaster by id Software. Rip and tear!</div>
+              <div class="text-[10.5px] text-orange-700 font-bold mt-2 flex items-center gap-1">
+                <span>▶ Mainkan Sekarang</span> &rarr;
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2974,6 +2995,110 @@ const sampleWorkDocs = [
           </div>
         </div>
       </div>
+
+    <!-- WINDOW 19: DOOM (DOOM.EXE - 3D Retro Raycaster) -->
+    <div
+      id="win-doom"
+      class="xp-window absolute top-2 sm:top-8 left-1 sm:left-28 w-[580px] max-w-[calc(100vw-8px)] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#1c1c1c] text-slate-100 z-30 flex flex-col overflow-hidden hidden"
+    >
+      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner bg-gradient-to-r from-[#0055ea] via-[#2a77f0] to-[#0055ea]">
+        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+          <Crosshair class="w-3.5 h-3.5 text-orange-400 shrink-0" />
+          <span>DOOM.EXE (Microcok DOS Extension v1.9)</span>
+        </div>
+        <div class="flex items-center gap-1 shrink-0">
+          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-maximize" title="Maximize"><Square class="w-2.5 h-2.5" /></button>
+          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
+        </div>
+      </div>
+
+      <div class="h-6 px-2 flex items-center justify-between text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-800 select-none">
+        <div class="flex items-center gap-3">
+          <span class="hover:underline cursor-pointer font-bold text-red-700" id="doom-btn-restart">New Mission</span>
+          <span class="text-slate-400">|</span>
+          <button id="doom-btn-sound" class="hover:underline cursor-pointer flex items-center gap-1 text-[11px] text-slate-700 font-bold" title="Toggle Sound">
+            <span id="doom-sound-icon">🔊</span>
+            <span id="doom-sound-label">Sound: ON</span>
+          </button>
+          <span class="text-slate-400">|</span>
+          <span class="text-slate-600 font-mono text-[10px]">E1M1: Hangar</span>
+        </div>
+        <div class="text-slate-500 font-mono text-[10px] hidden sm:block">
+          WASD / Arrows = Move • Space / Click = Fire
+        </div>
+      </div>
+
+      <div class="relative bg-black flex items-center justify-center overflow-hidden border-b-2 border-[#333]">
+        <canvas
+          id="doom-canvas"
+          width="480"
+          height="270"
+          class="w-full h-auto block cursor-crosshair select-none aspect-[16/9]"
+          style="image-rendering: pixelated;"
+        ></canvas>
+
+        <!-- On-screen mobile touch controls -->
+        <div class="absolute bottom-2 left-2 flex flex-col items-center gap-1 select-none pointer-events-auto sm:hidden opacity-80 z-10">
+          <button id="doom-touch-up" class="w-9 h-9 rounded bg-black/70 border border-amber-500 text-amber-400 font-bold active:bg-amber-600 active:text-white flex items-center justify-center text-sm shadow">▲</button>
+          <div class="flex gap-2">
+            <button id="doom-touch-left" class="w-9 h-9 rounded bg-black/70 border border-amber-500 text-amber-400 font-bold active:bg-amber-600 active:text-white flex items-center justify-center text-sm shadow">◄</button>
+            <button id="doom-touch-down" class="w-9 h-9 rounded bg-black/70 border border-amber-500 text-amber-400 font-bold active:bg-amber-600 active:text-white flex items-center justify-center text-sm shadow">▼</button>
+            <button id="doom-touch-right" class="w-9 h-9 rounded bg-black/70 border border-amber-500 text-amber-400 font-bold active:bg-amber-600 active:text-white flex items-center justify-center text-sm shadow">►</button>
+          </div>
+        </div>
+        <div class="absolute bottom-2 right-2 select-none pointer-events-auto sm:hidden opacity-90 z-10">
+          <button id="doom-touch-fire" class="w-14 h-14 rounded-full bg-red-600/90 border-2 border-yellow-400 text-yellow-200 font-black active:scale-95 shadow-xl flex items-center justify-center text-xs tracking-wider">FIRE</button>
+        </div>
+
+        <!-- DOOM Overlay Banner (Death / Victory) -->
+        <div id="doom-overlay" class="absolute inset-0 bg-black/85 flex flex-col items-center justify-center text-center p-4 hidden z-20">
+          <div id="doom-overlay-title" class="text-2xl sm:text-3xl font-black text-red-600 tracking-widest mb-1.5 font-mono drop-shadow-[0_2px_8px_rgba(255,0,0,0.9)]">YOU DIED</div>
+          <p id="doom-overlay-desc" class="text-xs sm:text-sm text-stone-300 font-mono mb-4 max-w-xs leading-relaxed">The demonic horde of Phobos has eliminated you.</p>
+          <button id="doom-overlay-btn" class="px-5 py-2 bg-red-700 hover:bg-red-600 active:bg-red-800 text-white font-bold font-mono text-xs rounded border border-red-400 shadow-lg uppercase tracking-wider cursor-pointer">
+            Restart Mission (Space)
+          </button>
+        </div>
+      </div>
+
+      <!-- AUTHENTIC RETRO DOOM HUD (Status Bar) -->
+      <div class="bg-[#242424] border-t border-[#444] p-1.5 flex items-center justify-between text-white select-none font-mono text-xs shadow-inner">
+        <!-- Main Ammo -->
+        <div class="bg-black/80 px-2.5 py-1 border border-[#555] rounded text-center shrink-0 min-w-[58px]">
+          <div class="text-[8.5px] text-[#888] uppercase tracking-wider font-bold">Ammo</div>
+          <div id="doom-hud-ammo" class="text-red-500 font-black text-sm sm:text-base tracking-widest leading-none mt-0.5">050</div>
+        </div>
+
+        <!-- Health -->
+        <div class="bg-black/80 px-2.5 py-1 border border-[#555] rounded text-center shrink-0 min-w-[62px]">
+          <div class="text-[8.5px] text-[#888] uppercase tracking-wider font-bold">Health</div>
+          <div id="doom-hud-health" class="text-red-500 font-black text-sm sm:text-base tracking-widest leading-none mt-0.5">100%</div>
+        </div>
+
+        <!-- Arms -->
+        <div class="hidden sm:flex flex-col items-center justify-center bg-black/80 px-2 py-0.5 border border-[#555] rounded text-center shrink-0 min-w-[48px]">
+          <div class="text-[8px] text-[#888] uppercase tracking-wider font-bold">Arms</div>
+          <div class="text-[10px] text-amber-400 font-bold tracking-widest leading-none mt-0.5">2 <span class="text-yellow-200 underline">3</span></div>
+        </div>
+
+        <!-- DOOMGUY Face Avatar -->
+        <div class="w-10 h-10 bg-black/90 border-2 border-stone-600 rounded flex items-center justify-center shrink-0 overflow-hidden shadow-inner cursor-pointer" id="doom-hud-face-container" title="Doomguy (Click to roar!)">
+          <canvas id="doom-face-canvas" width="40" height="40" class="block"></canvas>
+        </div>
+
+        <!-- Armor -->
+        <div class="bg-black/80 px-2.5 py-1 border border-[#555] rounded text-center shrink-0 min-w-[62px]">
+          <div class="text-[8.5px] text-[#888] uppercase tracking-wider font-bold">Armor</div>
+          <div id="doom-hud-armor" class="text-red-500 font-black text-sm sm:text-base tracking-widest leading-none mt-0.5">100%</div>
+        </div>
+
+        <!-- Frags / Kills -->
+        <div class="bg-black/80 px-2.5 py-1 border border-[#555] rounded text-center shrink-0 min-w-[58px]">
+          <div class="text-[8.5px] text-[#888] uppercase tracking-wider font-bold">Kills</div>
+          <div id="doom-hud-kills" class="text-amber-400 font-black text-sm sm:text-base tracking-widest leading-none mt-0.5">0/6</div>
+        </div>
+      </div>
+    </div>
 
       <!-- ==================== AUTHENTIC WINDOWS XP SHUTDOWN DIALOG ==================== -->
   <div 
@@ -3214,6 +3339,10 @@ const sampleWorkDocs = [
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-minesweeper'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Bomb class="w-4 h-4 text-red-600" />
           <span class="font-bold text-slate-800">Minesweeper</span>
+        </div>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-doom'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <Crosshair class="w-4 h-4 text-orange-600" />
+          <span class="font-bold text-slate-800">DOOM.EXE</span>
         </div>
       </div>
 
@@ -3493,6 +3622,15 @@ const sampleWorkDocs = [
         }
       } catch (e) {}
     }
+
+    // If opening DOOM, start game engine
+    if (winId === 'win-doom') {
+      try {
+        if (typeof (window as any).startDoom === 'function') {
+          (window as any).startDoom();
+        }
+      } catch (e) {}
+    }
   };
   (window as any).closeWindow = closeWindow;
 
@@ -3515,6 +3653,12 @@ const sampleWorkDocs = [
     if (id === 'win-media-player') {
       try {
         (window as any).stopWmp?.();
+      } catch (e) {}
+    }
+    // Stop DOOM if closing DOOM
+    if (id === 'win-doom') {
+      try {
+        (window as any).stopDoom?.();
       } catch (e) {}
     }
     win.dataset.state = 'closed';
@@ -3670,6 +3814,9 @@ const sampleWorkDocs = [
       win.dataset.state = 'minimized';
       win.classList.add('hidden');
       win.style.display = 'none';
+      if (win.id === 'win-doom') {
+        try { (window as any).stopDoom?.(); } catch (e) {}
+      }
       updateTaskbar();
     });
 
@@ -5247,8 +5394,9 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
     { id: 'win-search', title: 'Search Companion', titleId: 'Pencarian', desc: 'Search with Rover', descId: 'Cari dengan Rover', type: 'window', keywords: 'search pencarian rover find', action: () => (window as any).openWindow('win-search') },
     { id: 'win-taskmgr', title: 'Task Manager', titleId: 'Task Manager', desc: 'Monitor CPU & memory load, End Task', descId: 'Monitor beban CPU & memori, End Task', type: 'window', keywords: 'taskmgr task manager cpu memory performance proses', action: () => (window as any).openWindow('win-taskmgr') },
     { id: 'win-paint', title: 'Paint', titleId: 'Paint', desc: 'Interactive doodle canvas with colors', descId: 'Kanvas gambar coret-coret interaktif', type: 'window', keywords: 'paint mspaint drawing doodle canvas gambar lukis kuas', action: () => (window as any).openWindow('win-paint') },
-    { id: 'win-games-folder', title: 'Games', titleId: 'Games', desc: 'Classic Windows XP games folder (Minesweeper, Pinball)', descId: 'Folder game retro klasik (Minesweeper, Pinball)', type: 'window', keywords: 'games game minesweeper winmine bom ranjau pinball solitaire', action: () => (window as any).openWindow('win-games-folder') },
+    { id: 'win-games-folder', title: 'Games', titleId: 'Games', desc: 'Classic Windows XP games folder (Minesweeper, Pinball)', descId: 'Folder game retro klasik (Minesweeper, Pinball)', type: 'window', keywords: 'games game minesweeper winmine bom ranjau pinball solitaire doom', action: () => (window as any).openWindow('win-games-folder') },
     { id: 'win-minesweeper', title: 'Minesweeper', titleId: 'Minesweeper', desc: 'Classic 9x9 grid retro puzzle game', descId: 'Game klasik retro 9x9 kotak', type: 'game', keywords: 'minesweeper winmine game ranjau bom flag sweep', action: () => (window as any).openWindow('win-minesweeper') },
+    { id: 'win-doom', title: 'DOOM (DOOM.EXE)', titleId: 'DOOM (DOOM.EXE)', desc: 'Classic 1993 3D FPS raycaster engine', descId: 'Game FPS 3D retro klasik 1993 id Software', type: 'game', keywords: 'doom doom.exe fps 3d raycaster game tembak monster id software', action: () => (window as any).openWindow('win-doom') },
     { id: 'win-display-props', title: 'Display Properties', titleId: 'Properti Tampilan', desc: 'Change XP themes (Luna, Olive, Silver) & wallpaper', descId: 'Ganti tema & wallpaper Windows XD', type: 'window', keywords: 'display properties desk.cpl tema theme wallpaper luna olive silver bliss', action: () => (window as any).openWindow('win-display-props') },
     { id: 'win-sys-props', title: 'System Properties', titleId: 'Properti Sistem', desc: 'System Analyst hardware & academic specs', descId: 'Spesifikasi sistem & akademik kandidat', type: 'window', keywords: 'system properties sysdm.cpl spesifikasi specs gpa toefl itera', action: () => (window as any).openWindow('win-sys-props') },
     { id: 'win-projects', title: 'Case Studies (E:)', titleId: 'Studi Kasus (E:)', desc: 'List of DAMRI projects (PUMK & Push Request)', descId: 'Daftar proyek PUMK & Push', type: 'project', keywords: 'case studies project proyek pumk push damri', action: () => (window as any).openWindow('win-projects') },
@@ -5571,6 +5719,8 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
       games: () => (window as any).openWindow('win-games-folder'),
       winmine: () => (window as any).openWindow('win-minesweeper'),
       minesweeper: () => (window as any).openWindow('win-minesweeper'),
+      doom: () => (window as any).openWindow('win-doom'),
+      'doom.exe': () => (window as any).openWindow('win-doom'),
       display: () => (window as any).openWindow('win-display-props'),
       'desk.cpl': () => (window as any).openWindow('win-display-props'),
       sysdm: () => (window as any).openWindow('win-sys-props'),
@@ -5750,6 +5900,9 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
       } else if (val === 'winmine' || val === 'minesweeper') {
         (window as any).openWindow('win-minesweeper');
         resp.innerHTML = 'Membuka Minesweeper...';
+      } else if (val === 'doom' || val === 'doom.exe') {
+        (window as any).openWindow('win-doom');
+        resp.innerHTML = 'Starting DOOM.EXE (Microcok DOS Extension v1.9)...<br>E1M1: Hangar initialized. Rip and tear!';
       } else if (val === 'theme' || val === 'display' || val === 'desk.cpl') {
         (window as any).openWindow('win-display-props');
         resp.innerHTML = 'Membuka Properti Tampilan (Tema)...';
@@ -6602,6 +6755,1173 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
   msSmiley?.addEventListener('click', initMinesweeper);
   msMenuNew?.addEventListener('click', initMinesweeper);
   initMinesweeper();
+
+  
+  // ==========================================================================
+  // 18B. DOOM.EXE (Microcok DOS Extension v1.9 - 3D Raycaster Engine)
+  // ==========================================================================
+  const doomCanvas = document.getElementById('doom-canvas') as HTMLCanvasElement | null;
+  const doomCtx = doomCanvas ? doomCanvas.getContext('2d') : null;
+  const doomFaceCanvas = document.getElementById('doom-face-canvas') as HTMLCanvasElement | null;
+  const doomFaceCtx = doomFaceCanvas ? doomFaceCanvas.getContext('2d') : null;
+
+  const doomHudAmmo = document.getElementById('doom-hud-ammo');
+  const doomHudHealth = document.getElementById('doom-hud-health');
+  const doomHudArmor = document.getElementById('doom-hud-armor');
+  const doomHudKills = document.getElementById('doom-hud-kills');
+  const doomOverlay = document.getElementById('doom-overlay');
+  const doomOverlayTitle = document.getElementById('doom-overlay-title');
+  const doomOverlayDesc = document.getElementById('doom-overlay-desc');
+  const doomOverlayBtn = document.getElementById('doom-overlay-btn');
+  const doomBtnRestart = document.getElementById('doom-btn-restart');
+  const doomBtnSound = document.getElementById('doom-btn-sound');
+  const doomSoundIcon = document.getElementById('doom-sound-icon');
+  const doomSoundLabel = document.getElementById('doom-sound-label');
+
+  let doomSoundEnabled = true;
+  let doomAudioCtx: AudioContext | null = null;
+
+  function initDoomAudio() {
+    if (!doomAudioCtx) {
+      try {
+        const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+        if (AudioCtx) {
+          doomAudioCtx = new AudioCtx();
+        }
+      } catch (e) {
+        console.warn('Doom AudioContext init failed:', e);
+      }
+    }
+    if (doomAudioCtx && doomAudioCtx.state === 'suspended') {
+      doomAudioCtx.resume().catch(() => {});
+    }
+  }
+
+  function playDoomSound(type: 'shotgun' | 'monster_hit' | 'monster_die' | 'pickup' | 'hurt' | 'victory') {
+    if (!doomSoundEnabled) return;
+    initDoomAudio();
+    if (!doomAudioCtx) return;
+
+    try {
+      const now = doomAudioCtx.currentTime;
+      if (type === 'shotgun') {
+        // Punchy shotgun blast: noise buffer + low-pass filter decay
+        const bufferSize = Math.floor(doomAudioCtx.sampleRate * 0.28);
+        const noiseBuffer = doomAudioCtx.createBuffer(1, bufferSize, doomAudioCtx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.25));
+        }
+        const whiteNoise = doomAudioCtx.createBufferSource();
+        whiteNoise.buffer = noiseBuffer;
+
+        const filter = doomAudioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(800, now);
+        filter.frequency.exponentialRampToValueAtTime(80, now + 0.25);
+
+        const gain = doomAudioCtx.createGain();
+        gain.gain.setValueAtTime(0.65, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.28);
+
+        whiteNoise.connect(filter);
+        filter.connect(gain);
+        gain.connect(doomAudioCtx.destination);
+        whiteNoise.start(now);
+
+        // Low kick thump
+        const kick = doomAudioCtx.createOscillator();
+        const kickGain = doomAudioCtx.createGain();
+        kick.type = 'triangle';
+        kick.frequency.setValueAtTime(140, now);
+        kick.frequency.exponentialRampToValueAtTime(35, now + 0.2);
+        kickGain.gain.setValueAtTime(0.5, now);
+        kickGain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+        kick.connect(kickGain);
+        kickGain.connect(doomAudioCtx.destination);
+        kick.start(now);
+        kick.stop(now + 0.22);
+      } else if (type === 'monster_hit') {
+        const osc = doomAudioCtx.createOscillator();
+        const gain = doomAudioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(150, now);
+        osc.frequency.exponentialRampToValueAtTime(60, now + 0.15);
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+        osc.connect(gain);
+        gain.connect(doomAudioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.16);
+      } else if (type === 'monster_die') {
+        const osc = doomAudioCtx.createOscillator();
+        const gain = doomAudioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(180, now);
+        osc.frequency.exponentialRampToValueAtTime(40, now + 0.45);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
+        osc.connect(gain);
+        gain.connect(doomAudioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.46);
+      } else if (type === 'pickup') {
+        const osc = doomAudioCtx.createOscillator();
+        const gain = doomAudioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, now);
+        osc.frequency.setValueAtTime(1320, now + 0.08);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.22);
+        osc.connect(gain);
+        gain.connect(doomAudioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.24);
+      } else if (type === 'hurt') {
+        const osc = doomAudioCtx.createOscillator();
+        const gain = doomAudioCtx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(90, now);
+        osc.frequency.exponentialRampToValueAtTime(40, now + 0.18);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+        osc.connect(gain);
+        gain.connect(doomAudioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.2);
+      } else if (type === 'victory') {
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          if (!doomAudioCtx) return;
+          const osc = doomAudioCtx.createOscillator();
+          const gain = doomAudioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.1);
+          gain.gain.setValueAtTime(0.3, now + idx * 0.1);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.1 + 0.22);
+          osc.connect(gain);
+          gain.connect(doomAudioCtx.destination);
+          osc.start(now + idx * 0.1);
+          osc.stop(now + idx * 0.1 + 0.25);
+        });
+      }
+    } catch (e) {
+      console.warn('Doom SFX error:', e);
+    }
+  }
+
+  // Toggle Sound button
+  if (doomBtnSound) {
+    doomBtnSound.addEventListener('click', () => {
+      doomSoundEnabled = !doomSoundEnabled;
+      if (doomSoundIcon) doomSoundIcon.innerText = doomSoundEnabled ? '🔊' : '🔇';
+      if (doomSoundLabel) doomSoundLabel.innerText = doomSoundEnabled ? 'Sound: ON' : 'Sound: OFF';
+      if (doomSoundEnabled) {
+        initDoomAudio();
+        playDoomSound('pickup');
+      }
+    });
+  }
+
+  // 16x16 E1M1 Hangar Map
+  const DOOM_MAP_W = 16;
+  const DOOM_MAP_H = 16;
+  const DOOM_MAP = [
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,
+    1,0,2,2,0,0,1,0,3,3,3,0,0,2,0,1,
+    1,0,2,2,0,0,0,0,3,0,3,0,0,2,0,1,
+    1,0,0,0,0,0,1,0,3,3,3,0,0,0,0,1,
+    1,1,0,1,1,1,1,0,0,0,0,0,1,1,0,1,
+    1,0,0,0,0,0,1,1,0,1,1,0,1,0,0,1,
+    1,0,3,3,0,0,0,0,0,0,0,0,1,0,0,1,
+    1,0,3,3,0,0,1,1,0,1,1,0,1,0,0,1,
+    1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,
+    1,1,1,0,1,1,1,0,4,0,1,1,1,0,1,1,
+    1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+    1,0,2,0,0,2,0,0,0,0,0,2,0,0,2,1,
+    1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+    1,0,0,0,0,0,0,0,0,0,0,0,0,0,5,1,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+  ];
+
+  interface DoomEnemy {
+    x: number;
+    y: number;
+    hp: number;
+    maxHp: number;
+    dead: boolean;
+    hitTimer: number;
+    attackTimer: number;
+    walkTimer: number;
+    type: 'imp' | 'baron';
+  }
+
+  interface DoomPickup {
+    x: number;
+    y: number;
+    type: 'medkit' | 'ammo' | 'armor';
+    collected: boolean;
+  }
+
+  let doomPlayer = {
+    x: 2.5,
+    y: 2.5,
+    dirX: 1,
+    dirY: 0,
+    planeX: 0,
+    planeY: 0.66,
+    health: 100,
+    armor: 100,
+    ammo: 50,
+    kills: 0,
+    totalEnemies: 6,
+    isFiring: false,
+    fireTimer: 0,
+    walkCycle: 0,
+    painFlash: 0,
+    faceMood: 'normal' as 'normal' | 'firing' | 'hurt' | 'dead' | 'look_left' | 'look_right',
+    faceLookTimer: 0
+  };
+
+  let doomEnemies: DoomEnemy[] = [];
+  let doomPickups: DoomPickup[] = [];
+  let doomKeys: Record<string, boolean> = {};
+  let doomRunning = false;
+  let doomAnimId: number | null = null;
+  let doomLastTime = performance.now();
+  let doomGameOver = false;
+  let doomLevelWon = false;
+
+  function resetDoomGame() {
+    doomPlayer = {
+      x: 2.5,
+      y: 2.5,
+      dirX: 1,
+      dirY: 0,
+      planeX: 0,
+      planeY: 0.66,
+      health: 100,
+      armor: 100,
+      ammo: 50,
+      kills: 0,
+      totalEnemies: 6,
+      isFiring: false,
+      fireTimer: 0,
+      walkCycle: 0,
+      painFlash: 0,
+      faceMood: 'normal',
+      faceLookTimer: 0
+    };
+
+    doomEnemies = [
+      { x: 4.5, y: 3.5, hp: 30, maxHp: 30, dead: false, hitTimer: 0, attackTimer: 0, walkTimer: 0, type: 'imp' },
+      { x: 10.5, y: 3.5, hp: 30, maxHp: 30, dead: false, hitTimer: 0, attackTimer: 0, walkTimer: 0, type: 'imp' },
+      { x: 3.5, y: 7.5, hp: 30, maxHp: 30, dead: false, hitTimer: 0, attackTimer: 0, walkTimer: 0, type: 'imp' },
+      { x: 8.5, y: 8.5, hp: 30, maxHp: 30, dead: false, hitTimer: 0, attackTimer: 0, walkTimer: 0, type: 'imp' },
+      { x: 13.5, y: 8.5, hp: 30, maxHp: 30, dead: false, hitTimer: 0, attackTimer: 0, walkTimer: 0, type: 'imp' },
+      { x: 7.5, y: 13.5, hp: 60, maxHp: 60, dead: false, hitTimer: 0, attackTimer: 0, walkTimer: 0, type: 'baron' }
+    ];
+
+    doomPickups = [
+      { x: 1.5, y: 4.5, type: 'medkit', collected: false },
+      { x: 10.5, y: 1.5, type: 'ammo', collected: false },
+      { x: 1.5, y: 13.5, type: 'armor', collected: false },
+      { x: 13.5, y: 13.5, type: 'medkit', collected: false }
+    ];
+
+    doomGameOver = false;
+    doomLevelWon = false;
+    if (doomOverlay) doomOverlay.classList.add('hidden');
+    updateDoomHud();
+    renderDoomFace();
+  }
+
+  function updateDoomHud() {
+    if (doomHudAmmo) doomHudAmmo.innerText = doomPlayer.ammo.toString().padStart(3, '0');
+    if (doomHudHealth) {
+      doomHudHealth.innerText = `${Math.max(0, doomPlayer.health)}%`;
+      doomHudHealth.className = doomPlayer.health > 50 ? 'text-red-500 font-black text-sm sm:text-base tracking-widest' : 'text-yellow-400 font-black text-sm sm:text-base tracking-widest';
+    }
+    if (doomHudArmor) doomHudArmor.innerText = `${Math.max(0, doomPlayer.armor)}%`;
+    if (doomHudKills) doomHudKills.innerText = `${doomPlayer.kills}/${doomPlayer.totalEnemies}`;
+  }
+
+  // Draw Animated Retro Doomguy Face Avatar
+  function renderDoomFace() {
+    if (!doomFaceCtx) return;
+    const ctx = doomFaceCtx;
+    const w = 40;
+    const h = 40;
+    ctx.clearRect(0, 0, w, h);
+
+    // Background skin tone
+    const dead = doomPlayer.health <= 0;
+    const skinTone = dead ? '#757575' : '#e0a97a';
+    const shadeSkin = dead ? '#555555' : '#b87c50';
+    const hairTone = '#4a2c18';
+
+    // Head base
+    ctx.fillStyle = skinTone;
+    ctx.fillRect(8, 8, 24, 26);
+    ctx.fillStyle = shadeSkin;
+    ctx.fillRect(6, 12, 4, 18);
+    ctx.fillRect(30, 12, 4, 18);
+    ctx.fillRect(10, 32, 20, 4);
+
+    // Buzzcut hair
+    ctx.fillStyle = hairTone;
+    ctx.fillRect(8, 4, 24, 8);
+    ctx.fillRect(6, 6, 4, 6);
+    ctx.fillRect(30, 6, 4, 6);
+
+    // Eyes
+    if (dead) {
+      // Dead X eyes
+      ctx.strokeStyle = '#ff2020';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(11, 15); ctx.lineTo(17, 21);
+      ctx.moveTo(17, 15); ctx.lineTo(11, 21);
+      ctx.moveTo(23, 15); ctx.lineTo(29, 21);
+      ctx.moveTo(29, 15); ctx.lineTo(23, 21);
+      ctx.stroke();
+    } else {
+      // White eye sclera
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(11, 16, 6, 5);
+      ctx.fillRect(23, 16, 6, 5);
+
+      // Pupils looking direction
+      ctx.fillStyle = '#2b1d0c';
+      let pupilOffset = 0;
+      if (doomPlayer.faceMood === 'look_left') pupilOffset = -1.5;
+      else if (doomPlayer.faceMood === 'look_right') pupilOffset = 1.5;
+
+      ctx.fillRect(13 + pupilOffset, 17, 3, 3);
+      ctx.fillRect(25 + pupilOffset, 17, 3, 3);
+
+      // Eyebrows
+      ctx.fillStyle = '#2b1d0c';
+      if (doomPlayer.faceMood === 'firing') {
+        // Angry furrowed eyebrows
+        ctx.beginPath();
+        ctx.moveTo(10, 14); ctx.lineTo(18, 16); ctx.lineTo(18, 14); ctx.lineTo(10, 12);
+        ctx.moveTo(30, 14); ctx.lineTo(22, 16); ctx.lineTo(22, 14); ctx.lineTo(30, 12);
+        ctx.fill();
+      } else {
+        ctx.fillRect(10, 14, 8, 2);
+        ctx.fillRect(22, 14, 8, 2);
+      }
+    }
+
+    // Mouth
+    if (dead) {
+      ctx.fillStyle = '#111111';
+      ctx.fillRect(14, 27, 12, 3);
+    } else if (doomPlayer.faceMood === 'firing') {
+      // Grinning with teeth bared
+      ctx.fillStyle = '#111111';
+      ctx.fillRect(13, 26, 14, 5);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(14, 27, 12, 2);
+    } else if (doomPlayer.faceMood === 'hurt') {
+      // Grimace
+      ctx.fillStyle = '#111111';
+      ctx.fillRect(14, 27, 12, 4);
+    } else {
+      // Neutral firm mouth
+      ctx.fillStyle = '#7a3e26';
+      ctx.fillRect(14, 28, 12, 2);
+    }
+
+    // Blood splatters if wounded
+    if (doomPlayer.health < 60 && !dead) {
+      ctx.fillStyle = '#b00000';
+      ctx.fillRect(10, 10, 3, 4);
+      ctx.fillRect(18, 23, 2, 4);
+    }
+    if (doomPlayer.health < 30 && !dead) {
+      ctx.fillStyle = '#d00000';
+      ctx.fillRect(27, 11, 4, 3);
+      ctx.fillRect(13, 30, 3, 3);
+      ctx.fillRect(24, 26, 3, 4);
+    }
+  }
+
+  // Shotgun firing action
+  function fireDoomShotgun() {
+    if (doomPlayer.isFiring || doomGameOver || doomLevelWon) return;
+    if (doomPlayer.ammo <= 0) {
+      playDoomSound('hurt');
+      return;
+    }
+
+    doomPlayer.ammo--;
+    doomPlayer.isFiring = true;
+    doomPlayer.fireTimer = 0.28;
+    doomPlayer.faceMood = 'firing';
+    doomPlayer.faceLookTimer = 0.4;
+    updateDoomHud();
+    renderDoomFace();
+    playDoomSound('shotgun');
+
+    // Hitscan check: center ray
+    const rayDirX = doomPlayer.dirX;
+    const rayDirY = doomPlayer.dirY;
+    let closestEnemy: DoomEnemy | null = null;
+    let closestDist = 999;
+
+    for (const enemy of doomEnemies) {
+      if (enemy.dead) continue;
+      const dx = enemy.x - doomPlayer.x;
+      const dy = enemy.y - doomPlayer.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      // Angle check (is enemy roughly in front of player crosshair?)
+      const normDx = dx / dist;
+      const normDy = dy / dist;
+      const dot = normDx * rayDirX + normDy * rayDirY;
+
+      if (dot > 0.88 && dist < closestDist) {
+        // Line of sight check (is there a wall between player and enemy?)
+        let wallBlocked = false;
+        const steps = Math.floor(dist * 2);
+        for (let s = 1; s < steps; s++) {
+          const testX = Math.floor(doomPlayer.x + normDx * (s * 0.5));
+          const testY = Math.floor(doomPlayer.y + normDy * (s * 0.5));
+          if (DOOM_MAP[testY * DOOM_MAP_W + testX] > 0) {
+            wallBlocked = true;
+            break;
+          }
+        }
+        if (!wallBlocked) {
+          closestDist = dist;
+          closestEnemy = enemy;
+        }
+      }
+    }
+
+    if (closestEnemy) {
+      const dmg = closestDist < 3.5 ? 35 : 20;
+      closestEnemy.hp -= dmg;
+      closestEnemy.hitTimer = 0.2;
+      playDoomSound('monster_hit');
+
+      if (closestEnemy.hp <= 0) {
+        closestEnemy.dead = true;
+        doomPlayer.kills++;
+        updateDoomHud();
+        playDoomSound('monster_die');
+        if (doomPlayer.kills >= doomPlayer.totalEnemies) {
+          triggerDoomVictory();
+        }
+      }
+    }
+  }
+
+  function triggerDoomVictory() {
+    doomLevelWon = true;
+    playDoomSound('victory');
+    if (doomOverlay && doomOverlayTitle && doomOverlayDesc && doomOverlayBtn) {
+      doomOverlayTitle.innerText = 'MISSION ACCOMPLISHED!';
+      doomOverlayTitle.className = 'text-2xl sm:text-3xl font-black text-emerald-400 tracking-widest mb-1.5 font-mono drop-shadow-[0_2px_8px_rgba(16,185,129,0.9)]';
+      doomOverlayDesc.innerText = 'Phobos Base secured! 100% Kills • 100% Items • System Analyst Verified.';
+      doomOverlayBtn.innerText = 'Play Again (Space)';
+      doomOverlay.classList.remove('hidden');
+    }
+  }
+
+  function triggerDoomDeath() {
+    doomGameOver = true;
+    doomPlayer.health = 0;
+    doomPlayer.faceMood = 'dead';
+    updateDoomHud();
+    renderDoomFace();
+    playDoomSound('hurt');
+    if (doomOverlay && doomOverlayTitle && doomOverlayDesc && doomOverlayBtn) {
+      doomOverlayTitle.innerText = 'YOU DIED';
+      doomOverlayTitle.className = 'text-2xl sm:text-3xl font-black text-red-600 tracking-widest mb-1.5 font-mono drop-shadow-[0_2px_8px_rgba(255,0,0,0.9)]';
+      doomOverlayDesc.innerText = 'The demonic horde of Phobos has eliminated you.';
+      doomOverlayBtn.innerText = 'Restart Mission (Space)';
+      doomOverlay.classList.remove('hidden');
+    }
+  }
+
+  // Pre-rendered Procedural Wall Textures (64x64)
+  const WALL_TEX_SIZE = 64;
+  const wallTextures: HTMLCanvasElement[] = [];
+
+  function generateDoomTextures() {
+    if (wallTextures.length > 0) return;
+    const types = ['tech', 'comp', 'brick', 'hazard', 'exit'];
+
+    types.forEach((type, idx) => {
+      const c = document.createElement('canvas');
+      c.width = WALL_TEX_SIZE;
+      c.height = WALL_TEX_SIZE;
+      const ctx = c.getContext('2d');
+      if (!ctx) return;
+
+      if (type === 'tech') {
+        // Gray Techbase Panel
+        ctx.fillStyle = '#4a4d54';
+        ctx.fillRect(0, 0, 64, 64);
+        ctx.strokeStyle = '#2d3036';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(1, 1, 62, 62);
+        // Rivets
+        ctx.fillStyle = '#838891';
+        [4, 60].forEach(rx => {
+          [4, 20, 44, 60].forEach(ry => {
+            ctx.fillRect(rx - 1, ry - 1, 3, 3);
+          });
+        });
+        // Center vent
+        ctx.fillStyle = '#222428';
+        ctx.fillRect(16, 20, 32, 24);
+        ctx.strokeStyle = '#636873';
+        for (let y = 24; y < 44; y += 4) {
+          ctx.beginPath();
+          ctx.moveTo(18, y); ctx.lineTo(46, y);
+          ctx.stroke();
+        }
+      } else if (type === 'comp') {
+        // Computer Terminals with Glowing CRTs
+        ctx.fillStyle = '#282a30';
+        ctx.fillRect(0, 0, 64, 64);
+        // CRT 1
+        ctx.fillStyle = '#0a3818';
+        ctx.fillRect(8, 8, 22, 18);
+        ctx.fillStyle = '#00ff66';
+        ctx.fillRect(11, 12, 14, 2);
+        ctx.fillRect(11, 16, 10, 2);
+        ctx.fillRect(11, 20, 16, 2);
+        // CRT 2
+        ctx.fillStyle = '#3a200a';
+        ctx.fillRect(34, 8, 22, 18);
+        ctx.fillStyle = '#ffaa00';
+        ctx.fillRect(37, 12, 16, 2);
+        ctx.fillRect(37, 16, 12, 2);
+        // Pulsing LEDs
+        const leds = ['#ff0000', '#00ff00', '#0099ff', '#ffff00'];
+        leds.forEach((col, li) => {
+          ctx.fillStyle = col;
+          ctx.fillRect(10 + li * 12, 36, 6, 6);
+        });
+        // Keyboard panel
+        ctx.fillStyle = '#1c1c20';
+        ctx.fillRect(8, 48, 48, 10);
+      } else if (type === 'brick') {
+        // Brown Tech Brick with blue conduit
+        ctx.fillStyle = '#5c3826';
+        ctx.fillRect(0, 0, 64, 64);
+        ctx.strokeStyle = '#382014';
+        ctx.lineWidth = 1.5;
+        for (let y = 0; y < 64; y += 16) {
+          ctx.beginPath();
+          ctx.moveTo(0, y); ctx.lineTo(64, y);
+          ctx.stroke();
+          const offset = (y % 32 === 0) ? 0 : 16;
+          for (let x = offset; x < 64; x += 32) {
+            ctx.beginPath();
+            ctx.moveTo(x, y); ctx.lineTo(x, y + 16);
+            ctx.stroke();
+          }
+        }
+        // Glowing Blue Conduit
+        ctx.fillStyle = '#0099ff';
+        ctx.fillRect(30, 0, 4, 64);
+        ctx.fillStyle = '#80d4ff';
+        ctx.fillRect(31, 0, 2, 64);
+      } else if (type === 'hazard') {
+        // Hazard Yellow/Black Stripes
+        ctx.fillStyle = '#e6b800';
+        ctx.fillRect(0, 0, 64, 64);
+        ctx.fillStyle = '#1a1a1a';
+        for (let i = -64; i < 128; i += 24) {
+          ctx.beginPath();
+          ctx.moveTo(i, 0);
+          ctx.lineTo(i + 12, 0);
+          ctx.lineTo(i + 12 + 64, 64);
+          ctx.lineTo(i + 64, 64);
+          ctx.closePath();
+          ctx.fill();
+        }
+      } else if (type === 'exit') {
+        // Red Exit Gate
+        ctx.fillStyle = '#1a0505';
+        ctx.fillRect(0, 0, 64, 64);
+        ctx.strokeStyle = '#b31515';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(4, 4, 56, 56);
+        ctx.fillStyle = '#ff2222';
+        ctx.font = 'bold 12px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('EXIT', 32, 28);
+        // Teleport Star
+        ctx.fillStyle = '#ff6666';
+        ctx.beginPath();
+        ctx.arc(32, 44, 10, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      wallTextures.push(c);
+    });
+  }
+
+  // Game Loop: 3D Raycasting & Sprite Rendering
+  function doomLoop(timestamp: number) {
+    if (!doomRunning) return;
+    const dt = Math.min(0.08, (timestamp - doomLastTime) / 1000);
+    doomLastTime = timestamp;
+
+    updateDoom(dt);
+    renderDoom();
+
+    doomAnimId = requestAnimationFrame(doomLoop);
+  }
+
+  function updateDoom(dt: number) {
+    if (doomGameOver || doomLevelWon) return;
+
+    // Movement & Turning
+    const moveSpeed = 3.2 * dt;
+    const rotSpeed = 2.4 * dt;
+    let isMoving = false;
+
+    // Turn left/right
+    let rot = 0;
+    if (doomKeys['KeyA'] || doomKeys['ArrowLeft']) rot -= 1;
+    if (doomKeys['KeyD'] || doomKeys['ArrowRight']) rot += 1;
+
+    if (rot !== 0) {
+      const r = rot * rotSpeed;
+      const oldDirX = doomPlayer.dirX;
+      doomPlayer.dirX = doomPlayer.dirX * Math.cos(r) - doomPlayer.dirY * Math.sin(r);
+      doomPlayer.dirY = oldDirX * Math.sin(r) + doomPlayer.dirY * Math.cos(r);
+      const oldPlaneX = doomPlayer.planeX;
+      doomPlayer.planeX = doomPlayer.planeX * Math.cos(r) - doomPlayer.planeY * Math.sin(r);
+      doomPlayer.planeY = oldPlaneX * Math.sin(r) + doomPlayer.planeY * Math.cos(r);
+    }
+
+    // Walk forward/backward
+    let moveDir = 0;
+    if (doomKeys['KeyW'] || doomKeys['ArrowUp']) moveDir += 1;
+    if (doomKeys['KeyS'] || doomKeys['ArrowDown']) moveDir -= 1;
+
+    if (moveDir !== 0) {
+      isMoving = true;
+      const newX = doomPlayer.x + doomPlayer.dirX * moveDir * moveSpeed;
+      const newY = doomPlayer.y + doomPlayer.dirY * moveDir * moveSpeed;
+
+      // Collision check with map
+      const mapX = Math.floor(newX);
+      const mapY = Math.floor(newY);
+      if (DOOM_MAP[Math.floor(doomPlayer.y) * DOOM_MAP_W + mapX] === 0) {
+        doomPlayer.x = newX;
+      }
+      if (DOOM_MAP[mapY * DOOM_MAP_W + Math.floor(doomPlayer.x)] === 0) {
+        doomPlayer.y = newY;
+      }
+
+      // Exit tile check
+      const currentTile = DOOM_MAP[Math.floor(doomPlayer.y) * DOOM_MAP_W + Math.floor(doomPlayer.x)];
+      if (currentTile === 5) {
+        triggerDoomVictory();
+        return;
+      }
+    }
+
+    // Weapon bobbing
+    if (isMoving) {
+      doomPlayer.walkCycle += dt * 10;
+    } else {
+      doomPlayer.walkCycle = 0;
+    }
+
+    // Shotgun fire timer
+    if (doomPlayer.isFiring) {
+      doomPlayer.fireTimer -= dt;
+      if (doomPlayer.fireTimer <= 0) {
+        doomPlayer.isFiring = false;
+      }
+    }
+
+    // Pain flash decay
+    if (doomPlayer.painFlash > 0) {
+      doomPlayer.painFlash -= dt * 2.5;
+      if (doomPlayer.painFlash < 0) doomPlayer.painFlash = 0;
+    }
+
+    // Face look timer & mood
+    doomPlayer.faceLookTimer -= dt;
+    if (doomPlayer.faceLookTimer <= 0) {
+      doomPlayer.faceLookTimer = 1.5 + Math.random() * 2.5;
+      const moods: Array<'normal' | 'look_left' | 'look_right'> = ['normal', 'look_left', 'look_right'];
+      doomPlayer.faceMood = moods[Math.floor(Math.random() * moods.length)];
+      renderDoomFace();
+    }
+
+    // Pickups collection
+    for (const p of doomPickups) {
+      if (p.collected) continue;
+      const dx = p.x - doomPlayer.x;
+      const dy = p.y - doomPlayer.y;
+      if (dx * dx + dy * dy < 0.6) {
+        p.collected = true;
+        playDoomSound('pickup');
+        if (p.type === 'medkit') {
+          doomPlayer.health = Math.min(100, doomPlayer.health + 25);
+        } else if (p.type === 'ammo') {
+          doomPlayer.ammo = Math.min(200, doomPlayer.ammo + 20);
+        } else if (p.type === 'armor') {
+          doomPlayer.armor = Math.min(100, doomPlayer.armor + 50);
+        }
+        updateDoomHud();
+        renderDoomFace();
+      }
+    }
+
+    // Enemy AI & attacks
+    for (const enemy of doomEnemies) {
+      if (enemy.dead) continue;
+
+      if (enemy.hitTimer > 0) enemy.hitTimer -= dt;
+
+      const dx = doomPlayer.x - enemy.x;
+      const dy = doomPlayer.y - enemy.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      // Line of sight / proximity
+      if (dist < 8.0) {
+        // Move towards player slowly
+        const spd = (enemy.type === 'baron' ? 1.0 : 1.4) * dt;
+        const ex = enemy.x + (dx / dist) * spd;
+        const ey = enemy.y + (dy / dist) * spd;
+        if (DOOM_MAP[Math.floor(ey) * DOOM_MAP_W + Math.floor(ex)] === 0) {
+          enemy.x = ex;
+          enemy.y = ey;
+        }
+
+        // Attack if in close range
+        if (dist < 1.6) {
+          enemy.attackTimer += dt;
+          if (enemy.attackTimer > 1.2) {
+            enemy.attackTimer = 0;
+            // Deal damage to player
+            const rawDmg = enemy.type === 'baron' ? 22 : 12;
+            if (doomPlayer.armor > 0) {
+              doomPlayer.armor = Math.max(0, doomPlayer.armor - rawDmg * 0.6);
+              doomPlayer.health -= rawDmg * 0.4;
+            } else {
+              doomPlayer.health -= rawDmg;
+            }
+            doomPlayer.painFlash = 1.0;
+            doomPlayer.faceMood = 'hurt';
+            doomPlayer.faceLookTimer = 0.5;
+            playDoomSound('hurt');
+            updateDoomHud();
+            renderDoomFace();
+
+            if (doomPlayer.health <= 0) {
+              triggerDoomDeath();
+              return;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function renderDoom() {
+    if (!doomCtx || !doomCanvas) return;
+    const w = doomCanvas.width;
+    const h = doomCanvas.height;
+
+    // 1. Ceiling & Floor Gradient
+    const halfH = h / 2;
+    // Dark Space Ceiling
+    const ceilGrad = doomCtx.createLinearGradient(0, 0, 0, halfH);
+    ceilGrad.addColorStop(0, '#101015');
+    ceilGrad.addColorStop(1, '#252530');
+    doomCtx.fillStyle = ceilGrad;
+    doomCtx.fillRect(0, 0, w, halfH);
+
+    // Floor
+    const floorGrad = doomCtx.createLinearGradient(0, halfH, 0, h);
+    floorGrad.addColorStop(0, '#2b231d');
+    floorGrad.addColorStop(1, '#15110d');
+    doomCtx.fillStyle = floorGrad;
+    doomCtx.fillRect(0, halfH, w, halfH);
+
+    // 2. Raycast Walls (DDA)
+    const zBuffer = new Float32Array(w);
+
+    for (let x = 0; x < w; x++) {
+      const cameraX = (2 * x) / w - 1;
+      const rayDirX = doomPlayer.dirX + doomPlayer.planeX * cameraX;
+      const rayDirY = doomPlayer.dirY + doomPlayer.planeY * cameraX;
+
+      let mapX = Math.floor(doomPlayer.x);
+      let mapY = Math.floor(doomPlayer.y);
+
+      let sideDistX = 0;
+      let sideDistY = 0;
+
+      const deltaDistX = Math.abs(1 / rayDirX);
+      const deltaDistY = Math.abs(1 / rayDirY);
+      let perpWallDist = 0;
+
+      let stepX = 0;
+      let stepY = 0;
+      let hit = 0;
+      let side = 0; // 0 for X wall, 1 for Y wall
+
+      if (rayDirX < 0) {
+        stepX = -1;
+        sideDistX = (doomPlayer.x - mapX) * deltaDistX;
+      } else {
+        stepX = 1;
+        sideDistX = (mapX + 1.0 - doomPlayer.x) * deltaDistX;
+      }
+
+      if (rayDirY < 0) {
+        stepY = -1;
+        sideDistY = (doomPlayer.y - mapY) * deltaDistY;
+      } else {
+        stepY = 1;
+        sideDistY = (mapY + 1.0 - doomPlayer.y) * deltaDistY;
+      }
+
+      // DDA trace
+      while (hit === 0) {
+        if (sideDistX < sideDistY) {
+          sideDistX += deltaDistX;
+          mapX += stepX;
+          side = 0;
+        } else {
+          sideDistY += deltaDistY;
+          mapY += stepY;
+          side = 1;
+        }
+        if (mapX < 0 || mapX >= DOOM_MAP_W || mapY < 0 || mapY >= DOOM_MAP_H) break;
+        if (DOOM_MAP[mapY * DOOM_MAP_W + mapX] > 0) {
+          hit = DOOM_MAP[mapY * DOOM_MAP_W + mapX];
+        }
+      }
+
+      if (side === 0) {
+        perpWallDist = (mapX - doomPlayer.x + (1 - stepX) / 2) / rayDirX;
+      } else {
+        perpWallDist = (mapY - doomPlayer.y + (1 - stepY) / 2) / rayDirY;
+      }
+
+      zBuffer[x] = perpWallDist;
+
+      // Wall slice height
+      const lineHeight = Math.floor(h / perpWallDist);
+      let drawStart = Math.floor(-lineHeight / 2 + halfH);
+      if (drawStart < 0) drawStart = 0;
+      let drawEnd = Math.floor(lineHeight / 2 + halfH);
+      if (drawEnd >= h) drawEnd = h - 1;
+
+      // Texture coordinate calculation
+      let wallX = 0;
+      if (side === 0) wallX = doomPlayer.y + perpWallDist * rayDirY;
+      else wallX = doomPlayer.x + perpWallDist * rayDirX;
+      wallX -= Math.floor(wallX);
+
+      let texX = Math.floor(wallX * WALL_TEX_SIZE);
+      if (side === 0 && rayDirX > 0) texX = WALL_TEX_SIZE - texX - 1;
+      if (side === 1 && rayDirY < 0) texX = WALL_TEX_SIZE - texX - 1;
+
+      // Draw Wall Slice from Texture
+      const texIdx = Math.max(0, Math.min(wallTextures.length - 1, hit - 1));
+      const texCanvas = wallTextures[texIdx];
+      if (texCanvas) {
+        doomCtx.drawImage(
+          texCanvas,
+          texX, 0, 1, WALL_TEX_SIZE,
+          x, drawStart, 1, drawEnd - drawStart
+        );
+      }
+
+      // Distance Shading & Corner Shadow
+      const lightFactor = Math.max(0.12, Math.min(1.0, 1.0 - (perpWallDist / 13.0)));
+      const sideDarken = side === 1 ? 0.75 : 1.0;
+      const finalAlpha = 1.0 - (lightFactor * sideDarken);
+      if (finalAlpha > 0) {
+        doomCtx.fillStyle = `rgba(0, 0, 5, ${finalAlpha})`;
+        doomCtx.fillRect(x, drawStart, 1, drawEnd - drawStart);
+      }
+    }
+
+    // 3. Sprites (Pickups & Enemies) - Painter's Algorithm
+    const sprites: Array<{ x: number; y: number; type: string; obj: any; dist: number }> = [];
+
+    doomPickups.forEach(p => {
+      if (!p.collected) {
+        const dx = p.x - doomPlayer.x;
+        const dy = p.y - doomPlayer.y;
+        sprites.push({ x: p.x, y: p.y, type: 'pickup', obj: p, dist: dx * dx + dy * dy });
+      }
+    });
+
+    doomEnemies.forEach(e => {
+      const dx = e.x - doomPlayer.x;
+      const dy = e.y - doomPlayer.y;
+      sprites.push({ x: e.x, y: e.y, type: 'enemy', obj: e, dist: dx * dx + dy * dy });
+    });
+
+    sprites.sort((a, b) => b.dist - a.dist);
+
+    for (const sp of sprites) {
+      const spriteX = sp.x - doomPlayer.x;
+      const spriteY = sp.y - doomPlayer.y;
+
+      const invDet = 1.0 / (doomPlayer.planeX * doomPlayer.dirY - doomPlayer.dirX * doomPlayer.planeY);
+      const transformX = invDet * (doomPlayer.dirY * spriteX - doomPlayer.dirX * spriteY);
+      const transformY = invDet * (-doomPlayer.planeY * spriteX + doomPlayer.planeX * spriteY);
+
+      if (transformY <= 0.2) continue; // Behind player
+
+      const spriteScreenX = Math.floor((w / 2) * (1 + transformX / transformY));
+      const spriteHeight = Math.abs(Math.floor(h / transformY));
+      const spriteWidth = Math.abs(Math.floor(h / transformY));
+
+      let drawStartY = Math.floor(-spriteHeight / 2 + halfH);
+      let drawEndY = Math.floor(spriteHeight / 2 + halfH);
+      let drawStartX = Math.floor(-spriteWidth / 2 + spriteScreenX);
+      let drawEndX = Math.floor(spriteWidth / 2 + spriteScreenX);
+
+      // Render Enemy / Pickup
+      if (sp.type === 'enemy') {
+        const enemy = sp.obj as DoomEnemy;
+        for (let stripe = drawStartX; stripe < drawEndX; stripe++) {
+          if (stripe >= 0 && stripe < w && transformY < zBuffer[stripe]) {
+            const relX = (stripe - drawStartX) / spriteWidth;
+
+            // Monster body
+            const bodyY1 = drawStartY + spriteHeight * 0.15;
+            const bodyY2 = drawEndY;
+            const bodyH = bodyY2 - bodyY1;
+
+            if (enemy.dead) {
+              // Dead gore puddle
+              const goreY = drawEndY - spriteHeight * 0.18;
+              doomCtx.fillStyle = '#6b0000';
+              doomCtx.fillRect(stripe, goreY, 1, drawEndY - goreY);
+              if (relX > 0.4 && relX < 0.6) {
+                doomCtx.fillStyle = '#ff3333';
+                doomCtx.fillRect(stripe, goreY + 2, 1, 3);
+              }
+            } else {
+              // Imp or Baron sprite
+              const isBaron = enemy.type === 'baron';
+              const baseColor = isBaron ? (enemy.hitTimer > 0 ? '#ffffff' : '#a82222') : (enemy.hitTimer > 0 ? '#ffffff' : '#6e4b2d');
+              const eyeColor = '#ff1111';
+
+              // Imp Torso
+              if (relX > 0.25 && relX < 0.75) {
+                doomCtx.fillStyle = baseColor;
+                doomCtx.fillRect(stripe, bodyY1, 1, bodyH);
+
+                // Horns/Head
+                if (relX > 0.35 && relX < 0.65) {
+                  doomCtx.fillRect(stripe, drawStartY, 1, spriteHeight * 0.25);
+                  // Red glowing eyes
+                  if (relX > 0.42 && relX < 0.48 || relX > 0.52 && relX < 0.58) {
+                    doomCtx.fillStyle = eyeColor;
+                    doomCtx.fillRect(stripe, drawStartY + spriteHeight * 0.1, 1, Math.max(2, spriteHeight * 0.05));
+                  }
+                }
+              }
+            }
+          }
+        }
+      } else if (sp.type === 'pickup') {
+        const pickup = sp.obj as DoomPickup;
+        for (let stripe = drawStartX; stripe < drawEndX; stripe++) {
+          if (stripe >= 0 && stripe < w && transformY < zBuffer[stripe]) {
+            const relX = (stripe - drawStartX) / spriteWidth;
+            const pHeight = spriteHeight * 0.5;
+            const pStartY = drawEndY - pHeight;
+
+            if (relX > 0.3 && relX < 0.7) {
+              if (pickup.type === 'medkit') {
+                doomCtx.fillStyle = '#f0f0f0';
+                doomCtx.fillRect(stripe, pStartY, 1, pHeight);
+                // Red cross
+                if (relX > 0.45 && relX < 0.55) {
+                  doomCtx.fillStyle = '#dd0000';
+                  doomCtx.fillRect(stripe, pStartY + pHeight * 0.2, 1, pHeight * 0.6);
+                }
+              } else if (pickup.type === 'ammo') {
+                doomCtx.fillStyle = '#4a5d23'; // Ammo box olive
+                doomCtx.fillRect(stripe, pStartY, 1, pHeight);
+                if (relX > 0.42 && relX < 0.58) {
+                  doomCtx.fillStyle = '#e6b800'; // Shells
+                  doomCtx.fillRect(stripe, pStartY + pHeight * 0.3, 1, pHeight * 0.4);
+                }
+              } else if (pickup.type === 'armor') {
+                doomCtx.fillStyle = '#0055dd'; // Blue armor
+                doomCtx.fillRect(stripe, pStartY, 1, pHeight);
+                if (relX > 0.4 && relX < 0.6) {
+                  doomCtx.fillStyle = '#ffffff';
+                  doomCtx.fillRect(stripe, pStartY + pHeight * 0.25, 1, pHeight * 0.5);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // 4. First-Person Shotgun Weapon
+    const gunW = Math.floor(w * 0.38);
+    const gunH = Math.floor(h * 0.42);
+    const bobX = Math.cos(doomPlayer.walkCycle) * 6;
+    const bobY = Math.abs(Math.sin(doomPlayer.walkCycle)) * 6;
+    const kickY = doomPlayer.isFiring ? 14 : 0;
+    const gunX = Math.floor(w / 2 - gunW / 2 + bobX);
+    const gunY = Math.floor(h - gunH + bobY + kickY);
+
+    // Muzzle Flash
+    if (doomPlayer.isFiring && doomPlayer.fireTimer > 0.12) {
+      doomCtx.fillStyle = 'rgba(255, 235, 120, 0.95)';
+      doomCtx.beginPath();
+      doomCtx.arc(w / 2 + bobX, gunY - 14, 26, 0, Math.PI * 2);
+      doomCtx.fill();
+      doomCtx.fillStyle = 'rgba(255, 100, 20, 0.8)';
+      doomCtx.beginPath();
+      doomCtx.arc(w / 2 + bobX, gunY - 14, 16, 0, Math.PI * 2);
+      doomCtx.fill();
+    }
+
+    // Shotgun Barrels (Double-Barreled)
+    doomCtx.fillStyle = '#2c2f36'; // Gunmetal
+    doomCtx.fillRect(gunX + gunW * 0.32, gunY, gunW * 0.36, gunH * 0.7);
+    doomCtx.fillStyle = '#4a4e58'; // Top highlight
+    doomCtx.fillRect(gunX + gunW * 0.35, gunY, gunW * 0.12, gunH * 0.7);
+    doomCtx.fillRect(gunX + gunW * 0.53, gunY, gunW * 0.12, gunH * 0.7);
+
+    // Wooden Stock
+    doomCtx.fillStyle = '#4a2c16';
+    doomCtx.fillRect(gunX + gunW * 0.38, gunY + gunH * 0.45, gunW * 0.24, gunH * 0.55);
+
+    // Marine Tactical Hands
+    doomCtx.fillStyle = '#3a4422'; // Olive gloves
+    doomCtx.fillRect(gunX + gunW * 0.2, gunY + gunH * 0.6, gunW * 0.2, gunH * 0.4);
+    doomCtx.fillRect(gunX + gunW * 0.6, gunY + gunH * 0.6, gunW * 0.2, gunH * 0.4);
+
+    // 5. Screen Pain Flash (Red Damage Overlay)
+    if (doomPlayer.painFlash > 0) {
+      doomCtx.fillStyle = `rgba(220, 20, 20, ${Math.min(0.65, doomPlayer.painFlash * 0.65)})`;
+      doomCtx.fillRect(0, 0, w, h);
+    }
+  }
+
+  // Event Listeners for DOOM Controls
+  window.addEventListener('keydown', (e) => {
+    // Only capture keys if win-doom is active and visible
+    const winDoom = document.getElementById('win-doom');
+    if (!winDoom || winDoom.classList.contains('hidden') || winDoom.style.display === 'none') return;
+
+    if (['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'Space'].includes(e.code)) {
+      e.preventDefault();
+      doomKeys[e.code] = true;
+      if (e.code === 'Space') {
+        if (doomGameOver || doomLevelWon) {
+          resetDoomGame();
+        } else {
+          fireDoomShotgun();
+        }
+      }
+    }
+  });
+
+  window.addEventListener('keyup', (e) => {
+    doomKeys[e.code] = false;
+  });
+
+  // Canvas Click to Fire
+  if (doomCanvas) {
+    doomCanvas.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      initDoomAudio();
+      if (doomGameOver || doomLevelWon) {
+        resetDoomGame();
+      } else {
+        fireDoomShotgun();
+      }
+    });
+  }
+
+  // Touch controls for mobile
+  const doomTouchUp = document.getElementById('doom-touch-up');
+  const doomTouchDown = document.getElementById('doom-touch-down');
+  const doomTouchLeft = document.getElementById('doom-touch-left');
+  const doomTouchRight = document.getElementById('doom-touch-right');
+  const doomTouchFire = document.getElementById('doom-touch-fire');
+
+  if (doomTouchUp) {
+    doomTouchUp.addEventListener('pointerdown', () => { doomKeys['KeyW'] = true; });
+    doomTouchUp.addEventListener('pointerup', () => { doomKeys['KeyW'] = false; });
+  }
+  if (doomTouchDown) {
+    doomTouchDown.addEventListener('pointerdown', () => { doomKeys['KeyS'] = true; });
+    doomTouchDown.addEventListener('pointerup', () => { doomKeys['KeyS'] = false; });
+  }
+  if (doomTouchLeft) {
+    doomTouchLeft.addEventListener('pointerdown', () => { doomKeys['KeyA'] = true; });
+    doomTouchLeft.addEventListener('pointerup', () => { doomKeys['KeyA'] = false; });
+  }
+  if (doomTouchRight) {
+    doomTouchRight.addEventListener('pointerdown', () => { doomKeys['KeyD'] = true; });
+    doomTouchRight.addEventListener('pointerup', () => { doomKeys['KeyD'] = false; });
+  }
+  if (doomTouchFire) {
+    doomTouchFire.addEventListener('pointerdown', () => {
+      initDoomAudio();
+      if (doomGameOver || doomLevelWon) resetDoomGame();
+      else fireDoomShotgun();
+    });
+  }
+
+  if (doomBtnRestart) doomBtnRestart.addEventListener('click', resetDoomGame);
+  if (doomOverlayBtn) doomOverlayBtn.addEventListener('click', resetDoomGame);
+
+  // Doom Face Click Easter Egg
+  document.getElementById('doom-hud-face-container')?.addEventListener('click', () => {
+    initDoomAudio();
+    playDoomSound('monster_hit');
+    doomPlayer.faceMood = 'firing';
+    doomPlayer.faceLookTimer = 0.8;
+    renderDoomFace();
+  });
+
+  function startDoom() {
+    generateDoomTextures();
+    resetDoomGame();
+    if (!doomRunning) {
+      doomRunning = true;
+      doomLastTime = performance.now();
+      doomAnimId = requestAnimationFrame(doomLoop);
+    }
+  }
+
+  function stopDoom() {
+    doomRunning = false;
+    if (doomAnimId) {
+      cancelAnimationFrame(doomAnimId);
+      doomAnimId = null;
+    }
+  }
+
+  (window as any).startDoom = startDoom;
+  (window as any).stopDoom = stopDoom;
+
 
   // ==========================================================================
   // 19. TRAY BALLOON NOTIFICATION
