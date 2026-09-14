@@ -226,6 +226,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     workstation.add(desk);
 
     // Monitor Group (Centered)
+    let crtScreen: THREE.Mesh | null = null;
     const monitorGroup = new THREE.Group();
     const monitorBaseY = 0.25;
     let targetMonitorY = monitorBaseY;
@@ -254,13 +255,25 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     monitorBezel.position.set(0, 0.05, 0.82);
     monitorGroup.add(monitorBezel);
 
-    // CRT Screen Face (Click Target)
-    const crtScreen = new THREE.Mesh(
-      new THREE.PlaneGeometry(1.85, 1.35),
+    // CRT Screen Face (Click Target) - high segment count for degauss vertex wobble
+    crtScreen = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.85, 1.35, 32, 32),
       screenMat
     );
     crtScreen.position.set(0, 0.12, 0.91);
     monitorGroup.add(crtScreen);
+
+    // Store original CRT vertex positions for the degauss wobble effect
+    let crtOriginalPositions: Float32Array | null = null;
+    if (crtScreen && crtScreen.geometry) {
+      const posAttr = crtScreen.geometry.attributes.position;
+      crtOriginalPositions = new Float32Array(posAttr.count * 3);
+      for (let i = 0; i < posAttr.count; i++) {
+        crtOriginalPositions[i * 3] = posAttr.getX(i);
+        crtOriginalPositions[i * 3 + 1] = posAttr.getY(i);
+        crtOriginalPositions[i * 3 + 2] = posAttr.getZ(i);
+      }
+    }
 
     // Badge Plate
     const badge = new THREE.Mesh(
@@ -594,6 +607,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     );
     kbKeys.position.set(0, 0.045, 0);
     kbGroup.add(kbKeys);
+
+    tagInteractive(kbGroup, 'keyboard');
 
     const mousePad = new THREE.Mesh(
       new THREE.BoxGeometry(0.85, 0.02, 1.05),
@@ -1007,6 +1022,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           return isId
             ? '[ 🖥️ Nyalakan Windows XD Workstation ]'
             : '[ 🖥️ Power On Windows XD Workstation ]';
+        case 'keyboard':
+          return isId
+            ? '[ ⌨️ Ketik untuk boot cepat ]'
+            : '[ ⌨️ Type to fast boot ]';
         default:
           return '';
       }
@@ -1063,11 +1082,83 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     let rotX = 0;
     let hoveredType: string | null = null;
     let lastHandledClickTime = 0;
+    let keyPressTime = -Infinity;
+
+    // CRT degauss effect state
+    let degaussStartTime = -Infinity;
+    const DEGAUSS_DURATION = 600;
+
+    // Mechanical keyboard SFX using Web Audio API (no external assets)
+    const AudioContext = (window as any).AudioContext || (window as any).webkitAudioContext;
+    const keyAudioCtx = AudioContext ? new AudioContext() : null;
+
+    function resumeKeyAudio() {
+      if (keyAudioCtx && keyAudioCtx.state === 'suspended') {
+        keyAudioCtx.resume().catch(() => {});
+      }
+    }
+
+    function playMechKeyClick() {
+      if (!keyAudioCtx) return;
+      const now = keyAudioCtx.currentTime;
+      const baseFreq = 140 + Math.random() * 35;
+
+      // High-impact "click" body (short sine sweep)
+      const clickOsc = keyAudioCtx.createOscillator();
+      const clickGain = keyAudioCtx.createGain();
+      clickOsc.type = 'sine';
+      clickOsc.frequency.setValueAtTime(baseFreq * 4, now);
+      clickOsc.frequency.exponentialRampToValueAtTime(baseFreq, now + 0.018);
+      clickGain.gain.setValueAtTime(0.0001, now);
+      clickGain.gain.exponentialRampToValueAtTime(0.22, now + 0.003);
+      clickGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.045);
+      clickOsc.connect(clickGain).connect(keyAudioCtx.destination);
+      clickOsc.start(now);
+      clickOsc.stop(now + 0.05);
+
+      // "Thock" bottom-out layer
+      const thockOsc = keyAudioCtx.createOscillator();
+      const thockGain = keyAudioCtx.createGain();
+      const thockFilter = keyAudioCtx.createBiquadFilter();
+      thockOsc.type = 'triangle';
+      thockOsc.frequency.setValueAtTime(baseFreq * 0.45, now);
+      thockOsc.frequency.exponentialRampToValueAtTime(baseFreq * 0.25, now + 0.08);
+      thockFilter.type = 'lowpass';
+      thockFilter.frequency.setValueAtTime(900, now);
+      thockFilter.frequency.exponentialRampToValueAtTime(220, now + 0.1);
+      thockGain.gain.setValueAtTime(0.0001, now);
+      thockGain.gain.exponentialRampToValueAtTime(0.18, now + 0.006);
+      thockGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.14);
+      thockOsc.connect(thockFilter).connect(thockGain).connect(keyAudioCtx.destination);
+      thockOsc.start(now);
+      thockOsc.stop(now + 0.15);
+
+      // Subtle plastic rattle noise burst
+      const bufferSize = keyAudioCtx.sampleRate * 0.05;
+      const noiseBuffer = keyAudioCtx.createBuffer(1, bufferSize, keyAudioCtx.sampleRate);
+      const noiseData = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        noiseData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 3);
+      }
+      const noise = keyAudioCtx.createBufferSource();
+      const noiseGain = keyAudioCtx.createGain();
+      const noiseFilter = keyAudioCtx.createBiquadFilter();
+      noise.buffer = noiseBuffer;
+      noiseFilter.type = 'bandpass';
+      noiseFilter.frequency.setValueAtTime(2200 + Math.random() * 800, now);
+      noiseFilter.Q.setValueAtTime(0.8, now);
+      noiseGain.gain.setValueAtTime(0.0001, now);
+      noiseGain.gain.exponentialRampToValueAtTime(0.03, now + 0.002);
+      noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.035);
+      noise.connect(noiseFilter).connect(noiseGain).connect(keyAudioCtx.destination);
+      noise.start(now);
+    }
     const raycaster = new THREE.Raycaster();
     const mouseVector = new THREE.Vector2();
 
     renderer.domElement.addEventListener('pointerdown', (e: PointerEvent) => {
       if (stage?.classList.contains('hidden') || stage?.classList.contains('opacity-0')) return;
+      resumeKeyAudio();
       isMouseDown = true;
       hasDragged = false;
       totalDragDist = 0;
@@ -1176,6 +1267,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           triggerBoot(true);
         } else if (targetType === 'monitor') {
           triggerBoot(false);
+        } else if (targetType === 'keyboard') {
+          resumeKeyAudio();
+          playMechKeyClick();
+          keyPressTime = performance.now();
+          setTimeout(() => triggerBoot(true), 120);
         }
       }
     });
@@ -1204,6 +1300,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       isBooting = true;
       hoveredType = null;
       updateHudTooltip(null);
+
+      // CRT degauss: electromagnetic field bloom on power-on
+      degaussStartTime = performance.now();
 
       const assetBase = document.getElementById('three-computer-stage')?.dataset.baseUrl || '';
       playRealXpSound(`${assetBase}/sounds/xp-startup.wav`);
@@ -1319,6 +1418,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         // Floating particles drift
         dustParticles.rotation.y += 0.0008;
 
+        // Keyboard keypress bounce animation
+        const keyBounce = typeof keyPressTime !== 'undefined' && performance.now() - keyPressTime < 120
+          ? Math.sin((performance.now() - keyPressTime) / 120 * Math.PI) * 0.008
+          : 0;
+        if (kbKeys) kbKeys.position.y = 0.045 - keyBounce;
+
         // Visual hover feedback: Smooth levitation & emissive glow
         if (hoveredType === 'cv') {
           targetCvY = cvBaseY + 0.045;
@@ -1372,6 +1477,42 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         phoneGroup.position.y += (targetPhoneY - phoneGroup.position.y) * lerpFactor;
         floppyDiskGroup.position.y += (targetFloppyY - floppyDiskGroup.position.y) * lerpFactor;
         monitorGroup.position.y += (targetMonitorY - monitorGroup.position.y) * lerpFactor;
+      }
+
+      // CRT Degauss vertex wobble during boot power-on
+      if (isBooting && crtScreen && crtOriginalPositions) {
+        const dgElapsed = performance.now() - degaussStartTime;
+        if (dgElapsed < DEGAUSS_DURATION) {
+          const t = dgElapsed / DEGAUSS_DURATION;
+          const env = Math.exp(-4.0 * t) * Math.sin(t * Math.PI * 10.0);
+          const posAttr = crtScreen.geometry.attributes.position;
+          for (let i = 0; i < posAttr.count; i++) {
+            const ox = crtOriginalPositions[i * 3];
+            const oy = crtOriginalPositions[i * 3 + 1];
+            const oz = crtOriginalPositions[i * 3 + 2];
+            const dist = Math.hypot(ox, oy);
+            const bulge = env * 0.06 * (1.0 - dist * 0.5);
+            posAttr.setXYZ(
+              i,
+              ox + ox * bulge * 0.35,
+              oy + oy * bulge * 0.35,
+              oz + bulge * 0.2 + Math.sin(i * 0.5 + t * 20.0) * env * 0.02
+            );
+          }
+          posAttr.needsUpdate = true;
+          crtScreen.geometry.computeVertexNormals();
+        }
+      }
+
+      // CRT degauss chromatic bloom/shift overlay
+      if (isBooting) {
+        const dgElapsed = performance.now() - degaussStartTime;
+        if (dgElapsed < DEGAUSS_DURATION) {
+          const t = dgElapsed / DEGAUSS_DURATION;
+          const bloom = Math.exp(-3.5 * t) * Math.sin(t * Math.PI * 8.0);
+          crtGlow.intensity = 3.2 + bloom * 2.8;
+          crtGlow.distance = 6 + bloom * 4.0;
+        }
       }
 
       renderer.render(scene, camera);
@@ -1438,6 +1579,22 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           stage.classList.remove('opacity-0', 'pointer-events-none');
           startRenderLoop();
         }, 50);
+      }
+    });
+
+    // Mechanical keyboard: global keydown listener while 3D stage is visible
+    window.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (isBooting || !stage || stage.classList.contains('hidden') || stage.classList.contains('opacity-0')) return;
+      // Ignore if user is typing in an input/textarea outside the stage
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) return;
+
+      resumeKeyAudio();
+      playMechKeyClick();
+      keyPressTime = performance.now();
+      if (e.code === 'Enter' || e.code === 'Space') {
+        e.preventDefault();
+        triggerBoot(true);
       }
     });
 

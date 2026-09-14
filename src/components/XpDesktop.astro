@@ -926,9 +926,9 @@ const certificates = [
         <!-- Header -->
         <div class="border-b-2 border-slate-900 pb-4 mb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
-            <h1 class="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
               ANDHIKA PUTRA PRATAMA, S.Kom.
-            </h1>
+            </h2>
             <div class="text-sm font-bold text-blue-800 mt-0.5">
               System Analyst &bull; Solution Architect &bull; Tech Lead
             </div>
@@ -1980,9 +1980,9 @@ const certificates = [
                   <span class="text-slate-400">&bull;</span>
                   <span class="text-slate-600 font-mono text-[10px]">{p.data.period}</span>
                 </div>
-                <h1 class="text-xl sm:text-2xl font-black text-slate-950 leading-tight">
+                <h2 class="text-xl sm:text-2xl font-black text-slate-950 leading-tight">
                   {p.data.title}
-                </h1>
+                </h2>
                 <p class="text-slate-800 text-xs mt-2 leading-relaxed">
                   {p.data.description}
                 </p>
@@ -3261,6 +3261,7 @@ const certificates = [
       </div>
 
       <div class="w-1/2 p-2 space-y-1 text-slate-700">
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Executive One-Sheet" data-id="Ringkasan Eksekutif" onclick="const b=document.getElementById('three-computer-stage')?.dataset.baseUrl || ''; window.open(`${b}/executive-one-sheet/`, '_blank', 'noopener,noreferrer'); document.getElementById('xp-start-menu').classList.add('hidden');">Executive One-Sheet</div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="My Computer" data-id="Komputer Saya" onclick="openWindow('win-explorer'); document.getElementById('xp-start-menu').classList.add('hidden');">My Computer</div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="System Properties" data-id="Properti Sistem" onclick="openWindow('win-sys-props'); document.getElementById('xp-start-menu').classList.add('hidden');">System Properties</div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Display & Themes" data-id="Tampilan & Tema" onclick="openWindow('win-display-props'); document.getElementById('xp-start-menu').classList.add('hidden');">Display & Themes</div>
@@ -3461,7 +3462,15 @@ const certificates = [
   import { workDocsMap } from '../data/workDocs';
   import { animate } from 'animejs';
   import { sdlcDataId, sdlcDataEn } from '../scripts/sdlcData';
-  import '../scripts/printSpooler';
+
+  // Lazy-load the retro print spooler (Web Audio SFX + print UI) on first use
+  // so it is not included in the initial XpDesktop.js bundle.
+  if (typeof window !== 'undefined' && !(window as any).openPrintSpooler) {
+    (window as any).openPrintSpooler = async (docTitle: string, selector = '') => {
+      const { default: spooler } = await import('../scripts/printSpooler');
+      spooler.open(docTitle, selector);
+    };
+  }
 
   // 1. Window Management & Taskbar Sync
   let highestZIndex = 30;

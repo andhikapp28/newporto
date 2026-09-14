@@ -1,0 +1,210 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const siteOrigin = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://andhikapp28.github.io';
+const canonicalURL = `${siteOrigin}${base}/executive-one-sheet/`;
+
+const breadcrumbs = [
+  { name: "Home", item: `${siteOrigin}${base}/` },
+  { name: "Executive One-Sheet", item: canonicalURL },
+];
+
+const executiveSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfilePage",
+      "@id": `${canonicalURL}#onesheet`,
+      "url": canonicalURL,
+      "name": "Executive One-Sheet — Andhika Putra Pratama, S.Kom.",
+      "description": "One-page executive summary of enterprise systems, ROI metrics, and case studies for Andhika Putra Pratama, S.Kom.",
+      "mainEntity": {
+        "@type": "Person",
+        "name": "Andhika Putra Pratama",
+        "jobTitle": "Senior System Analyst & Solution Architect",
+        "url": `${siteOrigin}${base}/`
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalURL}#page-breadcrumb`,
+      "itemListElement": breadcrumbs.map((bc, idx) => ({
+        "@type": "ListItem",
+        "position": idx + 1,
+        "name": bc.name,
+        "item": bc.item
+      }))
+    }
+  ]
+};
+
+const metrics = [
+  { label: "Enterprise Systems Delivered", value: "40+", note: "Production specs across BUMN, logistics & fintech" },
+  { label: "Operational OPEX Saved", value: "Rp 4.2B+", note: "Fuel anomaly & reconciliation automation" },
+  { label: "Double-Booking Defects", value: "0%", note: "Redis SETNX distributed mutex @ 10k req/s" },
+  { label: "Reconciliation Accuracy", value: "99.999%", note: "3-way matching SNAP BI MT940 ledger" },
+];
+---
+
+<Layout
+  title="Executive One-Sheet — Andhika Putra Pratama, S.Kom."
+  description="One-page executive summary of enterprise systems, ROI metrics, and case studies for Andhika Putra Pratama, S.Kom. — Senior System Analyst & Solution Architect."
+  ogType="profile"
+  canonical={canonicalURL}
+  breadcrumbs={breadcrumbs}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(executiveSchema)} />
+
+  <main class="min-h-screen bg-[#ece9d8] text-slate-800 print:bg-white print:text-black">
+    <!-- Top action bar -->
+    <div class="no-print sticky top-0 z-50 bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow">
+      <div class="max-w-5xl mx-auto px-4 py-2 flex items-center justify-between">
+        <span class="font-bold text-sm">🖨️ Executive One-Sheet — Ready to Print / Share</span>
+        <div class="flex items-center gap-2">
+          <a
+            href={`${base}/documents/CV_ATS_Andhika_Putra_Pratama.pdf`}
+            class="px-3 py-1 bg-[#ece9d8] text-[#003c74] text-xs font-bold rounded border border-white/50 hover:bg-white transition"
+            download
+          >
+            📄 Download ATS CV
+          </a>
+          <button
+            id="btn-print-onesheet"
+            class="px-3 py-1 bg-emerald-600 text-white text-xs font-bold rounded border border-white/50 hover:bg-emerald-500 transition"
+            onclick="if(window.openPrintSpooler){window.openPrintSpooler('Executive_One_Sheet_Andhika.doc','#one-sheet-paper')}else{window.print();}"
+          >
+            🖨️ Print
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="one-sheet-paper" class="max-w-5xl mx-auto p-6 sm:p-10">
+      <!-- Header -->
+      <header class="flex flex-col sm:flex-row gap-6 items-start border-b-2 border-[#0055ea] pb-6 mb-6">
+        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-lg bg-gradient-to-br from-[#0058ee] to-[#3593ff] text-white flex items-center justify-center text-4xl font-black shadow-lg shrink-0">
+          AP
+        </div>
+        <div class="flex-1">
+          <h1 class="text-3xl sm:text-4xl font-black text-slate-900 leading-tight">Andhika Putra Pratama, S.Kom.</h1>
+          <p class="text-lg text-[#0055ea] font-bold mt-1">Senior System Analyst & Enterprise Solution Architect</p>
+          <p class="text-sm text-slate-600 mt-2 max-w-3xl">
+            Lead System Analyst with direct end-to-end engineering lifecycle across 40+ enterprise platforms. Bridges ambiguous business logic into auditable SRS/BRD/TAD specifications, builds production-proven concurrency and FinTech systems, and governs SIT/UAT quality gates for BUMN, logistics, and fintech ecosystems.
+          </p>
+          <div class="flex flex-wrap gap-3 mt-3 text-xs text-slate-700">
+            <span class="px-2 py-1 bg-white border border-[#7f9db9] rounded">📧 andhikapp28@gmail.com</span>
+            <span class="px-2 py-1 bg-white border border-[#7f9db9] rounded">💼 linkedin.com/in/andhikaputrapratama</span>
+            <span class="px-2 py-1 bg-white border border-[#7f9db9] rounded">🐙 github.com/andhikapp28</span>
+            <span class="px-2 py-1 bg-white border border-[#7f9db9] rounded">📱 +62 812-7255-5407</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Triad -->
+      <section class="mb-6">
+        <h2 class="text-lg font-black text-slate-900 uppercase tracking-wide border-b border-slate-300 pb-1 mb-3">The Triad Competency Profile</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-white border border-[#7f9db9] p-3 rounded shadow-sm">
+            <div class="text-2xl font-black text-[#0055ea]">50%</div>
+            <div class="font-bold text-sm">System Analysis</div>
+            <div class="text-xs text-slate-600 mt-1">SRS/BRD/TAD, BPMN 2.0, C4 models, ITIL governance, 3NF data dictionaries</div>
+          </div>
+          <div class="bg-white border border-[#7f9db9] p-3 rounded shadow-sm">
+            <div class="text-2xl font-black text-emerald-600">25%</div>
+            <div class="font-bold text-sm">Quality Assurance</div>
+            <div class="text-xs text-slate-600 mt-1">42-scenario SIT/UAT matrices, boundary value analysis, concurrency stress testing</div>
+          </div>
+          <div class="bg-white border border-[#7f9db9] p-3 rounded shadow-sm">
+            <div class="text-2xl font-black text-amber-600">25%</div>
+            <div class="font-bold text-sm">Software Development</div>
+            <div class="text-xs text-slate-600 mt-1">Laravel, PostgreSQL, Redis SETNX, BI SNAP, HMAC-SHA256 webhooks</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Metrics -->
+      <section class="mb-6">
+        <h2 class="text-lg font-black text-slate-900 uppercase tracking-wide border-b border-slate-300 pb-1 mb-3">Verified Business & Engineering Impact</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {metrics.map(m => (
+            <div class="bg-gradient-to-br from-[#0058ee] to-[#3593ff] text-white p-3 rounded shadow text-center">
+              <div class="text-2xl sm:text-3xl font-black">{m.value}</div>
+              <div class="text-xs font-bold leading-tight mt-1">{m.label}</div>
+              <div class="text-[10px] opacity-90 leading-tight mt-0.5">{m.note}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Case Studies -->
+      <section class="mb-6">
+        <h2 class="text-lg font-black text-slate-900 uppercase tracking-wide border-b border-slate-300 pb-1 mb-3">Flagship Enterprise Case Studies</h2>
+        <div class="space-y-3">
+          {projects.map((project, idx) => (
+            <div class="bg-white border border-[#7f9db9] p-3 rounded shadow-sm">
+              <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                <span class="text-xs font-bold text-white bg-[#0055ea] px-2 py-0.5 rounded shrink-0 w-fit">{idx + 1}</span>
+                <h3 class="font-black text-sm sm:text-base text-slate-900">{project.data.title}</h3>
+              </div>
+              <p class="text-xs text-slate-700 mt-1">{project.data.description}</p>
+              <div class="flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-slate-500 mt-1.5">
+                <span><strong>Client:</strong> {project.data.client}</span>
+                <span><strong>Role:</strong> {project.data.role}</span>
+                <span><strong>Domain:</strong> {project.data.category}</span>
+                <span><strong>Period:</strong> {project.data.period}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Compliance & Education -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <div class="bg-white border border-[#7f9db9] p-3 rounded shadow-sm">
+          <h2 class="text-sm font-black text-slate-900 uppercase tracking-wide border-b border-slate-200 pb-1 mb-2">Regulatory & Compliance Alignment</h2>
+          <ul class="text-xs text-slate-700 space-y-1">
+            <li>✓ UU PDP No. 27/2022 — AES-256 NIK encryption & pseudonymization</li>
+            <li>✓ ISO 27001:2022 Annex A.8 — SSO Shadow User & access governance</li>
+            <li>✓ BI SNAP / PADG No. 23/15/PADG/2021 — Open-banking reconciliation</li>
+            <li>✓ BPK RI SPKN & PSAK 71 — Merkle-chained audit ledgers</li>
+          </ul>
+        </div>
+        <div class="bg-white border border-[#7f9db9] p-3 rounded shadow-sm">
+          <h2 class="text-sm font-black text-slate-900 uppercase tracking-wide border-b border-slate-200 pb-1 mb-2">Education & Credentials</h2>
+          <ul class="text-xs text-slate-700 space-y-1">
+            <li>🎓 S.Kom. Informatics Engineering — ITERA (GPA 3.73 / 4.00)</li>
+            <li>🏅 Pearson IT Specialist in Python (890/1000)</li>
+            <li>🏅 DeepLearning.AI Machine Learning Specialization</li>
+            <li>🌐 TOEFL ITP 640 (C1 Advanced English)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Footer CTA -->
+      <footer class="border-t-2 border-[#0055ea] pt-4 text-center">
+        <p class="text-sm font-bold text-slate-900">Available for Senior System Analyst / Solution Architect roles</p>
+        <p class="text-xs text-slate-600 mt-1">
+          Open to relocation Jakarta / Jabodetabek • Notice period 1 month (negotiable) • Onsite / Hybrid / Remote
+        </p>
+        <div class="flex flex-wrap justify-center gap-3 mt-3 text-xs">
+          <a href={`${base}/`} class="text-[#0055ea] hover:underline">Open Interactive Portfolio</a>
+          <a href={`${base}/docs/cv-ats/`} class="text-[#0055ea] hover:underline">View ATS CV Document</a>
+          <a href="https://wa.me/6281272555407" target="_blank" rel="noopener noreferrer" class="text-[#0055ea] hover:underline">WhatsApp Direct</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      main { padding: 0 !important; }
+      #one-sheet-paper { max-width: 100% !important; padding: 0.5in !important; }
+      a { text-decoration: none; color: inherit; }
+    }
+  </style>
+</Layout>
