@@ -16,6 +16,57 @@ metrics:
     value: "< 0.12% False Positive Rate"
 ---
 
+<div class="executive-impact-banner p-4 sm:p-5 rounded-xl bg-gradient-to-r from-amber-950 via-orange-950 to-slate-900 border-2 border-amber-400 text-white shadow-xl mb-8">
+  <div class="flex flex-wrap items-center justify-between gap-2 border-b border-amber-400/30 pb-3 mb-3">
+    <div class="flex items-center gap-2">
+      <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/40 text-[11px] font-bold uppercase tracking-wider">
+        Executive Business Impact
+      </span>
+      <span class="text-xs text-amber-200 font-mono">FLEET TELEMATICS &amp; IOT INTELLIGENCE</span>
+    </div>
+    <div class="text-xs font-mono text-amber-400 font-bold flex items-center gap-1">
+      <span>ROI: 88x Direct OPEX Savings</span>
+    </div>
+  </div>
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+    <div class="p-2.5 rounded-lg bg-white/5 border border-white/10">
+      <div class="text-lg sm:text-2xl font-black font-mono text-emerald-400">Rp 4.2 Miliar</div>
+      <div class="text-[11px] text-slate-300 mt-0.5 font-medium">BBM OPEX Saved / Tahun</div>
+    </div>
+    <div class="p-2.5 rounded-lg bg-white/5 border border-white/10">
+      <div class="text-lg sm:text-2xl font-black font-mono text-cyan-300">7 Hari → &lt;45s</div>
+      <div class="text-[11px] text-slate-300 mt-0.5 font-medium">Real-Time Theft Alert</div>
+    </div>
+    <div class="p-2.5 rounded-lg bg-white/5 border border-white/10">
+      <div class="text-lg sm:text-2xl font-black font-mono text-amber-300">&lt; 0.12%</div>
+      <div class="text-[11px] text-slate-300 mt-0.5 font-medium">Sloshing False Alarm Rate</div>
+    </div>
+    <div class="p-2.5 rounded-lg bg-white/5 border border-white/10">
+      <div class="text-lg sm:text-2xl font-black font-mono text-blue-300">1.500+ Bus</div>
+      <div class="text-[11px] text-slate-300 mt-0.5 font-medium">Armada Aktif Terpantau</div>
+    </div>
+  </div>
+</div>
+
+<div class="compliance-badges flex flex-wrap gap-2 mb-6">
+  <span class="px-3 py-1 rounded-md bg-amber-50 border border-amber-300 text-amber-900 text-xs font-bold inline-flex items-center gap-1.5 shadow-sm">
+    <span class="w-2 h-2 rounded-full bg-amber-600 inline-block"></span>
+    Kepmenhub No. KM 158/2021 (Standar Pelacakan GPS Angkutan Umum)
+  </span>
+  <span class="px-3 py-1 rounded-md bg-blue-50 border border-blue-300 text-blue-900 text-xs font-bold inline-flex items-center gap-1.5 shadow-sm">
+    <span class="w-2 h-2 rounded-full bg-blue-600 inline-block"></span>
+    Peraturan BPH Migas No. 04/2020 (Pengawasan BBM Solar Subsidi)
+  </span>
+  <span class="px-3 py-1 rounded-md bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold inline-flex items-center gap-1.5 shadow-sm">
+    <span class="w-2 h-2 rounded-full bg-emerald-600 inline-block"></span>
+    UU PDP No. 27/2022 Compliant (Driver Anonymization &amp; Geolocation Privacy)
+  </span>
+  <span class="px-3 py-1 rounded-md bg-purple-50 border border-purple-300 text-purple-900 text-xs font-bold inline-flex items-center gap-1.5 shadow-sm">
+    <span class="w-2 h-2 rounded-full bg-purple-600 inline-block"></span>
+    ISO 27001:2022 Annex A.8.15 (IoT Logging &amp; Network Monitoring)
+  </span>
+</div>
+
 ## Ringkasan Eksekutif
 Dalam manajemen armada transportasi darat dan logistik berskala nasional (1.500+ unit bus antarkota dan truk kargo), bahan bakar minyak (BBM Solar) menyerap **38% hingga 45% dari total biaya operasional perusahaan**. Sebelum sistem pemantauan telematika berbasis sensor ini dibangun, kebocoran bahan bakar akibat pencurian BBM ilegal (*fuel siphoning* / "kencing solar"), deviasi rute tidak resmi, dan manipulasi nota pengisian SPBU menyebabkan kerugian korporasi lebih dari **Rp 400 Juta setiap bulan**.
 
@@ -233,3 +284,39 @@ Seluruh spesifikasi teknis dan model kalkulasi penghematan keuangan telah didoku
 * `Daftar Porto/04_Fleet_Telematics_Fuel_Anomaly_Engine/01_SRS_Fleet_Telematics_Fuel_Anomaly_Engine.docx` (Dokumen SRS Standar Korporat - 39 KB)
 * `Daftar Porto/04_Fleet_Telematics_Fuel_Anomaly_Engine/02_Fuel_Anomaly_Telemetry_and_Savings_Model.xlsx` (Model Finansial ROI Hemat Rp 4.2 Miliar & Simulasi Kalman 60 Ping - 11 KB)
 * `Daftar Porto/04_Fleet_Telematics_Fuel_Anomaly_Engine/03_SIT_UAT_Telematics_Matrix.xlsx` (Matriks 35 Skenario UAT Telematika & Geofence - 7 KB)
+
+
+---
+
+## FinOps & Cloud Infrastructure Cost Analysis
+
+Sistem memproses 5.000 ping/detik data telemetri secara berkelanjutan dari 1.500 unit armada dengan efisiensi cloud FinOps terukur:
+
+| Komponen Infrastruktur | Spesifikasi / Cloud Tier | Biaya Bulanan (USD) | Biaya Bulanan (IDR) | Cost per 1M Telemetry Frames | Nilai Efisiensi Bisnis |
+| :--- | :--- | :---: | :---: | :---: | :--- |
+| **Kafka Streaming Cluster** | 3-Broker High Throughput | $220 / bln | Rp 3.410.000 | **Rp 0.26 / 1K ping** | Menjamin 0 packet drop pada lonjakan sinyal seluler |
+| **TimescaleDB Cluster** | Managed TimeSeries Storage | $160 / bln | Rp 2.480.000 | **Rp 0.19 / 1K ping** | Kompresi 92% untuk data sensor historis 12 bulan |
+| **Anomaly Worker Pool** | Auto-Scaling Container Pods | $100 / bln | Rp 1.550.000 | **Rp 0.12 / 1K ping** | Eksekusi filter Kalman dan evaluasi geofence $<5	ext{ms}$ |
+| **Total Cloud FinOps** | **Dedicated IoT Pipeline** | **$480 / bln** | **Rp 7.440.000** | **Rp 0.00057 / ping** | **Biaya Cloud = 2.1% dari Total Solar Terselamatkan** |
+
+### Analisis Efisiensi FinOps:
+* **Cost Per Ping Analysis:** Setiap titik koordinat GPS dan data sensor CAN-bus diproses dengan biaya hanya **Rp 0.00057 per ping**.
+* **Financial Loss Averted:** Mencegah pencurian solar ilegal dan pemborosan BBM akibat deviasi rute resmi sebesar **Rp 350 Juta per bulan (Rp 4,2 Miliar per tahun)**.
+* **FinOps ROI:** Pengeluaran cloud Rp 7,44 Juta/bulan menghasilkan penghematan bahan bakar riil Rp 350 Juta/bulan, mencerminkan rasio pengembalian modal **88x lipat**.
+
+---
+
+## Enterprise Governance: SLA, SLO, SLI & Error Budget
+
+Sistem telematika armada mematuhi parameter ketersediaan operasi transportasi darat nasional:
+
+| Service Level Indicator (SLI) | Service Level Objective (SLO) | Error Budget (Bulanan) | Baseline Terukur | Kebijakan Paging & Eskalasi |
+| :--- | :--- | :--- | :--- | :--- |
+| **Telemetry Ingestion Uptime** | $\ge 99.95\%$ ketersediaan streaming | **21.6 Menit / bulan** | **99.98% Uptime** | PagerDuty P1 jika buffer Kafka melebihi kapasitas 75% |
+| **Siphoning Detection Latency** | P99 $< 45	ext{ detik}$ dari kejadian | $< 0.1\%$ delayed alerts | **P99 = 22.4 detik** | Notifikasi P1 seketika ke Command Center & Manajer Depo |
+| **Kalman Filter Processing** | P99 $< 5	ext{ ms}$ per telemetry frame | $< 0.01\%$ filter backlog | **P99 = 1.82 ms** | Auto-scaling instance jika antrian worker $> 500$ item |
+| **False Alarm Rate** | $< 0.15\%$ false positive rate | Max 2 alarm palsu/hari | **0.11% Terukur** | Kalibrasi ulang matriks kovarians filter otomatis |
+| **Geofence Breach Ingestion** | P95 $< 15	ext{ detik}$ dari deviasi | $< 0.05\%$ missing logs | **P95 = 8.1 detik** | Alert otomatis ke pengawas operasional terminal |
+
+### Prosedur Eskalasi Insiden Lapangan:
+Ketika anomali pencurian terkonfirmasi (penurunan level bahan bakar $> 8$ liter dalam kurun $< 180$ detik saat mesin mati), sistem memicu tiket insiden keamanan berstatus P1 secara otomatis. Petugas Command Center DAMRI menerima koordinat Google Maps presisi beserta histori supir dan nomor bus dalam waktu 30 detik untuk pengamanan armada.

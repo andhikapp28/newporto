@@ -1,0 +1,405 @@
+---
+import { workDocs, type WorkDoc } from '../../data/workDocs';
+import Layout from '../../layouts/Layout.astro';
+import { 
+  FileText, 
+  ArrowLeft, 
+  Copy, 
+  Check, 
+  Download, 
+  Printer, 
+  X, 
+  Minus, 
+  Square, 
+  Calendar, 
+  ShieldCheck, 
+  ExternalLink, 
+  Volume2, 
+  FolderOpen
+} from '@lucide/astro';
+
+export async function getStaticPaths() {
+  return workDocs.map((doc) => ({
+    params: { id: doc.id },
+    props: { doc },
+  }));
+}
+
+interface Props {
+  doc: WorkDoc;
+}
+
+const { doc } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const blissImg = `${base}/images/bliss.jpg`;
+
+const siteOrigin = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://andhikapp28.github.io';
+const canonicalURL = `${siteOrigin}${base}/docs/${doc.id}/`;
+
+const breadcrumbs = [
+  { name: "Home", item: `${siteOrigin}${base}/` },
+  { name: "Work Documents", item: `${siteOrigin}${base}/#docs` },
+  { name: doc.title, item: canonicalURL },
+];
+
+const docSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["TechArticle", "DigitalDocument"],
+      "@id": `${canonicalURL}#document`,
+      "headline": `${doc.title} — ${doc.category}`,
+      "name": doc.title,
+      "description": doc.description,
+      "url": canonicalURL,
+      "inLanguage": "en",
+      "articleSection": doc.category,
+      "keywords": doc.keywords.join(', '),
+      "datePublished": "2026-01-01",
+      "author": {
+        "@type": "Person",
+        "name": doc.author,
+        "jobTitle": "Senior System Analyst & Enterprise Solution Architect",
+        "url": `${siteOrigin}${base}/`
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Andhika Putra Pratama",
+        "url": `${siteOrigin}${base}/`
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalURL}#page-breadcrumb`,
+      "itemListElement": breadcrumbs.map((bc, idx) => ({
+        "@type": "ListItem",
+        "position": idx + 1,
+        "name": bc.name,
+        "item": bc.item
+      }))
+    }
+  ]
+};
+
+// Navigation to sibling documents
+const otherDocs = workDocs.filter(d => d.id !== doc.id);
+---
+
+<Layout 
+  title={`${doc.title} | Enterprise Work Document - Andhika Putra Pratama`}
+  description={doc.description}
+  ogType="article"
+  canonical={canonicalURL}
+  breadcrumbs={breadcrumbs}
+  articleSection={doc.category}
+  articleTags={doc.keywords}
+>
+  <!-- Schema.org TechArticle & DigitalDocument JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(docSchema)} />
+
+  <div 
+    class="fixed inset-0 w-screen h-screen flex flex-col select-none overflow-hidden font-sans"
+    style={`background-image: url('${blissImg}'); background-size: cover; background-position: center;`}
+  >
+    <!-- Desktop Workspace -->
+    <div class="relative flex-1 w-full h-[calc(100vh-30px)] p-2 sm:p-6 flex items-center justify-center overflow-hidden">
+      
+      <!-- WordPad XP / Microcok Document Window -->
+      <div class="w-full max-w-5xl h-full rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 flex flex-col overflow-hidden">
+        
+        <!-- Titlebar -->
+        <div class="h-7 px-2 flex items-center justify-between select-none bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee] text-white shadow-inner">
+          <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow-[1px_1px_1px_rgba(0,0,0,0.7)] truncate">
+            <FileText class="w-3.5 h-3.5 text-blue-200 shrink-0" />
+            <span class="truncate">{doc.title} - Microcok WordPad</span>
+          </div>
+          <div class="flex items-center gap-1 shrink-0">
+            <button class="w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold" title="Minimize">
+              <Minus class="w-2.5 h-2.5" />
+            </button>
+            <button class="w-5 h-4.5 rounded bg-[#2c7cfc] hover:bg-[#5294ff] border border-white/70 flex items-center justify-center text-white font-bold" title="Maximize">
+              <Square class="w-2 h-2" />
+            </button>
+            <a 
+              href={`${base}/`} 
+              class="w-5 h-4.5 rounded bg-[#e81123] hover:bg-[#f63847] border border-white/70 flex items-center justify-center text-white font-bold" 
+              title="Close & Return to Desktop"
+            >
+              <X class="w-2.5 h-2.5" />
+            </a>
+          </div>
+        </div>
+
+        <!-- Menu Bar -->
+        <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700">
+          <span class="hover:underline cursor-pointer">File</span>
+          <span class="hover:underline cursor-pointer">Edit</span>
+          <span class="hover:underline cursor-pointer">View</span>
+          <span class="hover:underline cursor-pointer">Insert</span>
+          <span class="hover:underline cursor-pointer">Format</span>
+          <span class="hover:underline cursor-pointer">Help</span>
+        </div>
+
+        <!-- Action Toolbar -->
+        <div class="h-9 px-2 flex items-center justify-between gap-2 bg-[#ece9d8] border-b border-[#d8d4c2] text-xs">
+          <div class="flex items-center gap-1.5 shrink-0">
+            <a
+              href={`${base}/`}
+              class="px-2.5 py-1 rounded bg-white/80 hover:bg-white border border-[#7f9db9] flex items-center gap-1.5 text-slate-800 font-medium cursor-pointer shadow-xs active:shadow-inner"
+              title="Return to Windows XD Desktop"
+            >
+              <ArrowLeft class="w-3.5 h-3.5 text-blue-600" />
+              <span class="font-bold">Desktop</span>
+            </a>
+
+            <button
+              id="btn-copy-doc"
+              class="px-2.5 py-1 rounded bg-white/80 hover:bg-white border border-[#7f9db9] flex items-center gap-1.5 text-slate-800 font-medium cursor-pointer shadow-xs active:shadow-inner"
+              title="Copy snippet text to clipboard"
+            >
+              <Copy class="w-3.5 h-3.5 text-blue-600" id="icon-copy" />
+              <Check class="w-3.5 h-3.5 text-emerald-600 hidden" id="icon-check" />
+              <span id="label-copy">Copy Snippet</span>
+            </button>
+
+            {doc.downloadUrl ? (
+              <a
+                href={`${base}${doc.downloadUrl}`}
+                download={doc.downloadFilename}
+                class="px-2.5 py-1 rounded bg-white/80 hover:bg-white border border-[#7f9db9] flex items-center gap-1.5 text-slate-800 font-medium cursor-pointer shadow-xs active:shadow-inner"
+                title="Download original document file"
+              >
+                <Download class="w-3.5 h-3.5 text-emerald-600" />
+                <span>Download</span>
+              </a>
+            ) : (
+              <button
+                id="btn-download-doc"
+                class="px-2.5 py-1 rounded bg-white/80 hover:bg-white border border-[#7f9db9] flex items-center gap-1.5 text-slate-800 font-medium cursor-pointer shadow-xs active:shadow-inner"
+                title="Download document text as file"
+              >
+                <Download class="w-3.5 h-3.5 text-emerald-600" />
+                <span>Download</span>
+              </button>
+            )}
+
+            <button
+              onclick="window.print()"
+              class="px-2.5 py-1 rounded bg-white/80 hover:bg-white border border-[#7f9db9] hidden sm:flex items-center gap-1.5 text-slate-800 font-medium cursor-pointer shadow-xs active:shadow-inner"
+              title="Print Document"
+            >
+              <Printer class="w-3.5 h-3.5 text-slate-600" />
+              <span>Print</span>
+            </button>
+          </div>
+
+          <!-- Document Reference Bar -->
+          <div class="flex items-center gap-1.5 flex-1 max-w-sm hidden md:flex">
+            <span class="text-[10px] text-slate-500 font-semibold uppercase">Ref:</span>
+            <div class="flex-1 px-2 py-0.5 bg-white border border-[#7f9db9] rounded-sm text-[11px] font-mono text-slate-700 truncate shadow-inner">
+              {doc.ref} &bull; v{doc.version || '1.0'}
+            </div>
+          </div>
+        </div>
+
+        <!-- Document Content Area -->
+        <div class="flex-1 p-4 sm:p-8 bg-[#f5f5f5] overflow-y-auto text-slate-800 font-sans text-xs sm:text-sm leading-relaxed">
+          
+          <!-- Document Metadata Header Card -->
+          <div class="mb-6 p-4 sm:p-5 rounded-lg bg-white border border-[#c0c0c0] shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-200">
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-900 font-bold text-[10px] uppercase tracking-wide border border-blue-200">
+                  {doc.categoryBadge}
+                </span>
+                <span class="text-slate-400">&bull;</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[10px] uppercase border border-emerald-200 flex items-center gap-1">
+                  <ShieldCheck class="w-3 h-3 text-emerald-600" />
+                  {doc.status}
+                </span>
+              </div>
+              <div class="text-[11px] font-mono text-slate-500 flex items-center gap-1">
+                <Calendar class="w-3.5 h-3.5 text-slate-400" />
+                {doc.date}
+              </div>
+            </div>
+
+            <h1 class="text-xl sm:text-2xl font-bold text-slate-900 mt-3 font-sans tracking-tight">
+              {doc.title}
+            </h1>
+
+            <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+              {doc.description}
+            </p>
+
+            <!-- Metadata Details Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mt-4 pt-4 border-t border-slate-100 text-xs">
+              <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
+                <span class="text-[10px] font-mono text-slate-500 block uppercase">Document Reference</span>
+                <span class="font-mono font-bold text-blue-900 text-[11px] truncate block">{doc.ref}</span>
+              </div>
+              <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
+                <span class="text-[10px] font-mono text-slate-500 block uppercase">Author / Role</span>
+                <span class="font-bold text-slate-800 text-[11px] truncate block">{doc.author}</span>
+              </div>
+              <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
+                <span class="text-[10px] font-mono text-slate-500 block uppercase">Category Classification</span>
+                <span class="font-bold text-indigo-900 text-[11px] truncate block">{doc.category}</span>
+              </div>
+              <div class="p-2.5 rounded bg-slate-50 border border-slate-200">
+                <span class="text-[10px] font-mono text-slate-500 block uppercase">Audit / Release Status</span>
+                <span class="font-bold text-emerald-800 text-[11px] truncate block">{doc.status}</span>
+              </div>
+            </div>
+
+            <!-- Optional Related Project Link -->
+            {doc.relatedProjectId && (
+              <div class="mt-4 p-3 rounded-lg bg-blue-50/80 border border-blue-200 flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2 text-xs text-blue-950 font-medium">
+                  <ExternalLink class="w-4 h-4 text-blue-600 shrink-0" />
+                  <span>Explore corresponding full interactive case study in Explorer (E:)</span>
+                </div>
+                <a
+                  href={`${base}/projects/${doc.relatedProjectId}/`}
+                  class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs"
+                >
+                  <span>Open Case Study &rarr;</span>
+                </a>
+              </div>
+            )}
+          </div>
+
+          <!-- Document Body Paper Container -->
+          <div class="p-6 sm:p-8 bg-white border border-[#c0c0c0] shadow-md rounded-sm select-text">
+            <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-200 text-[11px] font-mono text-slate-400">
+              <span>DOCUMENT VIEW — MONOSPACE SPECIFICATION</span>
+              <span>CHARACTERS: {doc.snippet.length}</span>
+            </div>
+            <pre 
+              id="raw-doc-snippet"
+              class="whitespace-pre-wrap font-mono text-xs sm:text-[13px] leading-relaxed text-slate-900 overflow-x-auto select-text"
+              style="user-select: text !important;"
+            >{doc.snippet}</pre>
+          </div>
+
+          <!-- Directory of All 15 Work Documents for Discovery & SEO -->
+          <div class="mt-8 p-5 rounded-lg bg-white border border-[#c0c0c0] shadow-xs">
+            <h2 class="text-xs font-mono font-bold uppercase text-slate-700 tracking-wider mb-3 flex items-center gap-1.5">
+              <FolderOpen class="w-4 h-4 text-blue-600" />
+              <span>All 15 Enterprise Work Documents in Dossier</span>
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+              {otherDocs.map((other) => (
+                <a
+                  href={`${base}/docs/${other.id}/`}
+                  class="p-2.5 rounded border border-slate-200 hover:border-blue-400 hover:bg-blue-50 transition-all flex items-start gap-2 group"
+                >
+                  <FileText class="w-4 h-4 text-blue-600 shrink-0 mt-0.5 group-hover:scale-105 transition-transform" />
+                  <div class="truncate">
+                    <div class="font-bold text-xs text-slate-800 group-hover:text-blue-900 group-hover:underline truncate">
+                      {other.title}
+                    </div>
+                    <div class="text-[10px] text-slate-500 font-mono mt-0.5">
+                      {other.categoryBadge} &bull; {other.ref}
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <!-- Back to Desktop Footer -->
+          <div class="mt-8 pt-4 border-t border-slate-300 flex items-center justify-between text-xs">
+            <a
+              href={`${base}/`}
+              class="inline-flex items-center gap-1.5 px-4 py-2 rounded bg-[#ece9d8] border border-[#7f9db9] font-bold text-slate-800 hover:bg-white shadow-xs active:shadow-inner cursor-pointer"
+            >
+              <ArrowLeft class="w-3.5 h-3.5" />
+              <span>Return to Windows XD Desktop</span>
+            </a>
+            <span class="text-slate-500 font-mono text-[11px]">
+              Microcok Windows XD &bull; WordPad 5.1
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Taskbar Pinned at Bottom -->
+    <div class="relative z-[9999] h-[30px] w-full bg-gradient-to-b from-[#245edb] via-[#3f8cf3] to-[#1941a5] border-t border-[#468df2] flex items-center justify-between select-none shadow-lg shrink-0">
+      <div class="flex items-center h-full">
+        <a
+          href={`${base}/`}
+          class="h-full px-3.5 rounded-r-xl bg-gradient-to-b from-[#388e3c] via-[#4caf50] to-[#2e7d32] hover:brightness-110 active:brightness-90 border-r border-[#1b5e20] shadow-[inset_1px_1px_1px_rgba(255,255,255,0.7)] flex items-center gap-1.5 cursor-pointer"
+          title="Start"
+        >
+          <svg class="w-3.5 h-3.5 drop-shadow" viewBox="0 0 24 24">
+            <rect x="2" y="2" width="9" height="9" fill="#f44336" rx="1" />
+            <rect x="13" y="2" width="9" height="9" fill="#4caf50" rx="1" />
+            <rect x="2" y="13" width="9" height="9" fill="#2196f3" rx="1" />
+            <rect x="13" y="13" width="9" height="9" fill="#ffeb3b" rx="1" />
+          </svg>
+          <span class="font-black italic text-white text-xs drop-shadow-[1px_1px_2px_rgba(0,0,0,0.8)]">
+            start
+          </span>
+        </a>
+
+        <div class="flex items-center gap-1 px-2 h-full">
+          <div class="h-6 px-3 rounded text-[11px] font-bold flex items-center gap-1.5 bg-[#1b3f94] text-white border border-[#0d2358] shadow-inner max-w-[280px] truncate">
+            <FileText class="w-3 h-3 text-blue-200 shrink-0" />
+            <span class="truncate">{doc.title}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="h-full px-2.5 bg-gradient-to-b from-[#0f388a] via-[#16439e] to-[#0d2f78] border-l border-[#194bb5] shadow-inner flex items-center gap-2.5 text-xs text-white font-mono">
+        <Volume2 class="w-3 h-3 text-blue-200" />
+        <span class="text-[11px]">WordPad 5.1</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client Script for Interactive Copy and Download -->
+  <script is:inline define:vars={{ docFilename: doc.downloadFilename, docSnippet: doc.snippet }}>
+    // Copy Snippet Handler
+    const copyBtn = document.getElementById('btn-copy-doc');
+    const iconCopy = document.getElementById('icon-copy');
+    const iconCheck = document.getElementById('icon-check');
+    const labelCopy = document.getElementById('label-copy');
+
+    if (copyBtn && docSnippet) {
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(docSnippet);
+          if (iconCopy) iconCopy.classList.add('hidden');
+          if (iconCheck) iconCheck.classList.remove('hidden');
+          if (labelCopy) labelCopy.innerText = 'Copied!';
+          setTimeout(() => {
+            if (iconCopy) iconCopy.classList.remove('hidden');
+            if (iconCheck) iconCheck.classList.add('hidden');
+            if (labelCopy) labelCopy.innerText = 'Copy Snippet';
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy text: ', err);
+        }
+      });
+    }
+
+    // Download Text File Handler (if not direct link)
+    const downloadBtn = document.getElementById('btn-download-doc');
+    if (downloadBtn && docSnippet) {
+      downloadBtn.addEventListener('click', () => {
+        const blob = new Blob([docSnippet], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = docFilename || 'document.doc';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+    }
+  </script>
+</Layout>

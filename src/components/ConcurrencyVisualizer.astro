@@ -1,0 +1,547 @@
+---
+import { 
+  Zap, 
+  Minus, 
+  Square, 
+  X, 
+  Play, 
+  RotateCcw, 
+  Unlock, 
+  ShieldCheck, 
+  Activity, 
+  Terminal as TerminalIcon, 
+  Server, 
+  Cpu
+} from '@lucide/astro';
+---
+
+<div
+  id="win-concurrency"
+  class="xp-window absolute top-2 sm:top-10 left-1 sm:left-32 w-[95vw] sm:w-[820px] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-20 flex flex-col overflow-hidden hidden"
+>
+  <!-- Titlebar -->
+  <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner bg-gradient-to-r from-[#0058ee] via-[#3593ff] to-[#0058ee]">
+    <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
+      <Zap class="w-3.5 h-3.5 text-amber-300 fill-amber-300 shrink-0" />
+      <span class="i18n" data-en="Concurrency Visualizer - Distributed Redis SETNX Mutex Engine" data-id="Visualizer Konkurensi - Engine Distributed Mutex Redis SETNX">Concurrency Visualizer - Distributed Redis SETNX Mutex Engine</span>
+    </div>
+    <div class="flex items-center gap-1 shrink-0">
+      <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
+      <button class="win-btn-maximize" title="Maximize"><Square class="w-2 h-2" /></button>
+      <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
+    </div>
+  </div>
+
+  <!-- Menu Bar -->
+  <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700 select-none">
+    <span class="hover:underline cursor-pointer">Simulation</span>
+    <span class="hover:underline cursor-pointer">Cluster</span>
+    <span class="hover:underline cursor-pointer">Telemetry</span>
+    <span class="hover:underline cursor-pointer">Log Stream</span>
+    <span class="hover:underline cursor-pointer">Help</span>
+  </div>
+
+  <!-- Toolbar Controls -->
+  <div class="p-2 bg-[#ece9d8] border-b border-[#d8d4c2] flex flex-wrap items-center justify-between gap-2 text-xs select-none">
+    <div class="flex flex-wrap items-center gap-1.5">
+      <button
+        id="cv-btn-sim-50"
+        class="xp-btn xp-btn-default font-bold flex items-center gap-1.5"
+      >
+        <Play class="w-3 h-3 text-emerald-600 fill-emerald-600" />
+        <span class="i18n" data-en="Simulate 50 Concurrent Bookings" data-id="Simulasikan 50 Booking Konkuren">Simulate 50 Concurrent Bookings</span>
+      </button>
+
+      <button
+        id="cv-btn-sim-100"
+        class="xp-btn font-semibold flex items-center gap-1 text-slate-700 hover:text-blue-900"
+      >
+        <Activity class="w-3 h-3 text-purple-600" />
+        <span class="i18n" data-en="Stress 100 Reqs" data-id="Stress 100 Request">Stress 100 Reqs</span>
+      </button>
+
+      <button
+        id="cv-btn-release"
+        class="xp-btn font-semibold flex items-center gap-1 text-slate-700 hover:text-amber-900"
+      >
+        <Unlock class="w-3 h-3 text-amber-600" />
+        <span class="i18n" data-en="Release Lock (TTL 0s)" data-id="Lepas Kunci (TTL 0s)">Release Lock (TTL 0s)</span>
+      </button>
+
+      <button
+        id="cv-btn-reset"
+        class="xp-btn font-semibold flex items-center gap-1 text-slate-700 hover:text-slate-900"
+      >
+        <RotateCcw class="w-3 h-3 text-slate-500" />
+        <span class="i18n" data-en="Reset" data-id="Reset">Reset</span>
+      </button>
+    </div>
+
+    <!-- Target Resource & Key -->
+    <div class="flex items-center gap-1.5 text-[11px] font-mono bg-white px-2 py-0.5 border border-[#7f9db9] rounded">
+      <span class="text-slate-500 font-sans font-bold text-[10px] uppercase">Lock Key:</span>
+      <span id="cv-key-badge" class="font-bold text-blue-900">seat:damri:sub-jkt-12A</span>
+    </div>
+  </div>
+
+  <!-- Telemetry HUD Bar -->
+  <div class="grid grid-cols-2 sm:grid-cols-6 gap-1 p-2 bg-[#f4f3ec] border-b border-[#d8d4c2] text-center text-xs select-none">
+    <div class="p-1.5 bg-white border border-[#7f9db9] rounded">
+      <div class="text-[10px] text-slate-500 font-medium i18n" data-en="Target Seat" data-id="Kursi Target">Target Seat</div>
+      <div class="font-bold text-slate-900 font-mono text-xs truncate">SUB-JKT-12A</div>
+    </div>
+    <div class="p-1.5 bg-white border border-[#7f9db9] rounded">
+      <div class="text-[10px] text-slate-500 font-medium i18n" data-en="Requests" data-id="Permintaan">Requests</div>
+      <div id="cv-stat-reqs" class="font-black text-blue-700 font-mono text-sm">0</div>
+    </div>
+    <div class="p-1.5 bg-white border border-emerald-300 rounded bg-emerald-50/40">
+      <div class="text-[10px] text-emerald-800 font-medium i18n" data-en="Winner (201 OK)" data-id="Pemenang (201 OK)">Winner (201 OK)</div>
+      <div id="cv-stat-winner" class="font-black text-emerald-700 font-mono text-sm">0</div>
+    </div>
+    <div class="p-1.5 bg-white border border-rose-300 rounded bg-rose-50/40">
+      <div class="text-[10px] text-rose-800 font-medium i18n" data-en="Rejected (409)" data-id="Ditolak (409)">Rejected (409)</div>
+      <div id="cv-stat-rejected" class="font-black text-rose-700 font-mono text-sm">0</div>
+    </div>
+    <div class="p-1.5 bg-white border border-blue-300 rounded bg-blue-50/40">
+      <div class="text-[10px] text-blue-800 font-medium i18n" data-en="Race Conditions" data-id="Race Condition">Race Conditions</div>
+      <div id="cv-stat-race" class="font-black text-blue-800 font-mono text-sm">0</div>
+    </div>
+    <div class="p-1.5 bg-white border border-[#7f9db9] rounded">
+      <div class="text-[10px] text-slate-500 font-medium i18n" data-en="P99 Latency" data-id="Latensi P99">P99 Latency</div>
+      <div id="cv-stat-latency" class="font-black text-slate-800 font-mono text-sm">0 ms</div>
+    </div>
+  </div>
+
+  <!-- Main Visualizer Stage + Terminal -->
+  <div class="flex-1 bg-white p-3 overflow-y-auto max-h-[66vh] space-y-3">
+    <!-- Visual Architecture & Animated Packet Lanes -->
+    <div class="border border-[#7f9db9] rounded-lg p-3 bg-gradient-to-b from-slate-50 to-slate-100 shadow-inner">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-[11px] font-bold text-slate-700 uppercase tracking-wide flex items-center gap-1.5">
+          <Server class="w-3.5 h-3.5 text-blue-600" />
+          <span class="i18n" data-en="Distributed Architecture Packet Flow (Redis SETNX)" data-id="Aliran Paket Arsitektur Terdistribusi (Redis SETNX)">Distributed Architecture Packet Flow (Redis SETNX)</span>
+        </span>
+        <div id="cv-lock-status-badge" class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] font-mono font-bold flex items-center gap-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+          <span>MUTEX UNLOCKED (FREE)</span>
+        </div>
+      </div>
+
+      <!-- Animated Stage Canvas -->
+      <div class="relative w-full h-32 sm:h-36 bg-[#080d1a] rounded border border-slate-700 overflow-hidden shadow-inner">
+        <!-- SVG Architecture Diagram & Lanes -->
+        <svg id="cv-canvas-svg" class="w-full h-full" viewBox="0 0 800 140" preserveAspectRatio="none">
+          <!-- Background Grid -->
+          <defs>
+            <pattern id="cv-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            </pattern>
+            <linearGradient id="winner-glow" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#10b981" />
+              <stop offset="100%" stop-color="#059669" />
+            </linearGradient>
+            <linearGradient id="conflict-glow" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#f43f5e" />
+              <stop offset="100%" stop-color="#e11d48" />
+            </linearGradient>
+          </defs>
+          <rect width="800" height="140" fill="url(#cv-grid)" />
+
+          <!-- Lane 1: Client Ingress Layer (Left) -->
+          <rect x="20" y="20" width="130" height="100" rx="6" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5" />
+          <text x="85" y="42" fill="#93c5fd" font-size="11" font-weight="bold" text-anchor="middle" font-family="monospace">50 CONCURRENT</text>
+          <text x="85" y="58" fill="#cbd5e1" font-size="10" text-anchor="middle">Clients / OTA Apps</text>
+          <text x="85" y="76" fill="#64748b" font-size="9" text-anchor="middle">Flash-Sale Ingress</text>
+          <circle cx="85" cy="98" r="8" fill="#3b82f6" opacity="0.8" />
+          <text x="85" y="101" fill="#ffffff" font-size="9" font-weight="bold" text-anchor="middle">50</text>
+
+          <!-- Arrow 1 -> 2 -->
+          <line x1="150" y1="70" x2="250" y2="70" stroke="#475569" stroke-width="2" stroke-dasharray="4 4" />
+
+          <!-- Lane 2: API Gateway Layer -->
+          <rect x="250" y="25" width="120" height="90" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="1.5" />
+          <text x="310" y="48" fill="#c4b5fd" font-size="11" font-weight="bold" text-anchor="middle" font-family="monospace">API GATEWAY</text>
+          <text x="310" y="66" fill="#cbd5e1" font-size="10" text-anchor="middle">Rate Limiter</text>
+          <text x="310" y="84" fill="#94a3b8" font-size="9" text-anchor="middle">Idempotency Key</text>
+
+          <!-- Arrow 2 -> 3 -->
+          <line x1="370" y1="70" x2="460" y2="70" stroke="#475569" stroke-width="2" stroke-dasharray="4 4" />
+
+          <!-- Lane 3: Redis Distributed Mutex (Center) -->
+          <rect id="cv-svg-mutex-box" x="460" y="15" width="150" height="110" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="2" />
+          <text x="535" y="38" fill="#34d399" font-size="11" font-weight="bold" text-anchor="middle" font-family="monospace">REDIS SETNX</text>
+          <text x="535" y="55" fill="#f1f5f9" font-size="10" font-family="monospace" text-anchor="middle">Atomic Mutex</text>
+          <text x="535" y="75" fill="#94a3b8" font-size="9" text-anchor="middle">Key: seat:12A</text>
+          <rect x="475" y="85" width="120" height="24" rx="4" fill="#1e293b" />
+          <text id="cv-svg-ttl-text" x="535" y="101" fill="#38bdf8" font-size="10" font-family="monospace" text-anchor="middle">TTL: 600s (FREE)</text>
+
+          <!-- Paths from Redis: Winner (Up-Right) & Conflict (Down-Right) -->
+          <!-- Winner line to 201 -->
+          <path d="M 610 50 Q 650 35 680 35" fill="none" stroke="#10b981" stroke-width="2" />
+          <!-- Conflict line to 409 -->
+          <path d="M 610 90 Q 650 105 680 105" fill="none" stroke="#f43f5e" stroke-width="2" />
+
+          <!-- Lane 4A: Winner Box (HTTP 201) -->
+          <rect id="cv-svg-winner-box" x="680" y="15" width="105" height="42" rx="5" fill="#064e3b" stroke="#10b981" stroke-width="1.5" />
+          <text x="732" y="32" fill="#a7f3d0" font-size="10" font-weight="bold" text-anchor="middle" font-family="monospace">1 WINNER</text>
+          <text x="732" y="47" fill="#6ee7b7" font-size="9" text-anchor="middle">HTTP 201 (4.2ms)</text>
+
+          <!-- Lane 4B: Conflict Box (HTTP 409) -->
+          <rect id="cv-svg-conflict-box" x="680" y="80" width="105" height="45" rx="5" fill="#4c0519" stroke="#f43f5e" stroke-width="1.5" />
+          <text x="732" y="97" fill="#fecdd3" font-size="10" font-weight="bold" text-anchor="middle" font-family="monospace">49 CONFLICTS</text>
+          <text x="732" y="112" fill="#fda4af" font-size="9" text-anchor="middle">HTTP 409 (12ms)</text>
+
+          <!-- Dynamic Packet Container -->
+          <g id="cv-packet-layer"></g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Active Lock Inspector & Proof Details -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+      <!-- Lock State Inspector -->
+      <div class="p-2.5 rounded border border-[#7f9db9] bg-[#f9fbfd] space-y-1.5">
+        <div class="font-bold text-slate-800 text-[11px] flex items-center justify-between">
+          <span class="flex items-center gap-1">
+            <ShieldCheck class="w-3.5 h-3.5 text-emerald-600" />
+            <span class="i18n" data-en="Redis Distributed Mutex State" data-id="Status Mutex Terdistribusi Redis">Redis Distributed Mutex State</span>
+          </span>
+          <span id="cv-ttl-countdown" class="text-[10px] font-mono text-blue-700 font-bold">TTL: IDLE</span>
+        </div>
+        <div class="bg-white p-2 rounded border border-slate-200 font-mono text-[11px] space-y-1 text-slate-800">
+          <div><span class="text-slate-500">Resource:</span> <span class="font-bold text-blue-900">seat:damri:sub-jkt-12A</span></div>
+          <div><span class="text-slate-500">Lock Token:</span> <span id="cv-token-display" class="text-slate-600 font-mono">null (no active holder)</span></div>
+          <div><span class="text-slate-500">Algorithm:</span> <span class="text-emerald-700 font-bold">SET key token NX EX 600</span></div>
+          <div><span class="text-slate-500">Release Guard:</span> <span class="text-purple-700">Atomic Lua Check-and-Delete</span></div>
+        </div>
+      </div>
+
+      <!-- Concurrency Guarantees Callout -->
+      <div class="p-2.5 rounded border border-blue-200 bg-blue-50/50 space-y-1.5 text-[11px]">
+        <div class="font-bold text-blue-950 flex items-center gap-1">
+          <Cpu class="w-3.5 h-3.5 text-blue-700" />
+          <span class="i18n" data-en="Hard Consistency Guarantees" data-id="Jaminan Konsistensi Keras">Hard Consistency Guarantees</span>
+        </div>
+        <ul class="space-y-1 text-slate-700 text-[11px]">
+          <li class="flex items-start gap-1">
+            <span class="text-emerald-600 font-bold">✓</span>
+            <span><strong>Tepat 0% Double Booking:</strong> Hanya 1 proses yang menerima status 201 Created.</span>
+          </li>
+          <li class="flex items-start gap-1">
+            <span class="text-emerald-600 font-bold">✓</span>
+            <span><strong>Fast-Fail Rejection:</strong> 49 request ditolak dalam 12ms tanpa antrian lock database.</span>
+          </li>
+          <li class="flex items-start gap-1">
+            <span class="text-emerald-600 font-bold">✓</span>
+            <span><strong>TTL Watchdog:</strong> Kunci otomatis hangus dalam 600 detik jika pembeli menutup browser.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Millisecond Terminal Execution Log Stream -->
+    <div class="border border-slate-800 rounded-lg overflow-hidden">
+      <div class="h-6 px-2 bg-[#1e293b] flex items-center justify-between text-[11px] text-slate-300 font-mono select-none">
+        <div class="flex items-center gap-1.5">
+          <TerminalIcon class="w-3 h-3 text-emerald-400" />
+          <span class="text-white font-bold">Live Execution Log Stream (Sub-Millisecond Precision)</span>
+        </div>
+        <button id="cv-btn-clear-log" class="text-[10px] text-slate-400 hover:text-white cursor-pointer hover:underline">
+          Clear
+        </button>
+      </div>
+      <div
+        id="cv-log-stream"
+        class="bg-[#090e17] text-emerald-400 p-2.5 font-mono text-[10.5px] h-40 overflow-y-auto space-y-0.5 leading-relaxed"
+      >
+        <div class="text-slate-500">// Ready. Click "Simulate 50 Concurrent Bookings" to dispatch real-time race collision.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status Bar -->
+  <div class="h-6 px-2 bg-[#ece9d8] border-t border-[#d8d4c2] flex items-center justify-between text-[11px] text-slate-600 font-mono select-none">
+    <div class="flex items-center gap-2 truncate">
+      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+      <span id="cv-status-footer">Engine Ready &bull; Redis Cluster Online (3 Sentinels)</span>
+    </div>
+    <span class="text-[10px] text-slate-500">Sub-Jakarta 12A Mutex</span>
+  </div>
+
+  <div class="win-resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-se-resize flex items-end justify-end p-0.5 z-30">
+    <svg class="w-3 h-3 text-slate-400" viewBox="0 0 12 12" fill="currentColor">
+      <circle cx="10" cy="10" r="1.2" /><circle cx="6" cy="10" r="1.2" /><circle cx="10" cy="6" r="1.2" /><circle cx="2" cy="10" r="1.2" /><circle cx="6" cy="6" r="1.2" /><circle cx="10" cy="2" r="1.2" />
+    </svg>
+  </div>
+</div>
+
+<script>
+  let isSimulating = false;
+  let activeLock: { token: string; acquiredAt: number; ttlSec: number } | null = null;
+  let ttlTimer: number | null = null;
+
+  function formatTime(d = new Date()) {
+    const hh = String(d.getHours()).padStart(2, '0');
+    const mm = String(d.getMinutes()).padStart(2, '0');
+    const ss = String(d.getSeconds()).padStart(2, '0');
+    const ms = String(d.getMilliseconds()).padStart(3, '0');
+    return `${hh}:${mm}:${ss}.${ms}`;
+  }
+
+  function appendCvLog(text: string, colorClass = 'text-slate-300') {
+    const logEl = document.getElementById('cv-log-stream');
+    if (!logEl) return;
+    const row = document.createElement('div');
+    row.className = `${colorClass} break-all`;
+    row.innerHTML = `<span class="text-slate-500">[${formatTime()}]</span> ${text}`;
+    logEl.appendChild(row);
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function updateLockUi() {
+    const badge = document.getElementById('cv-lock-status-badge');
+    const tokenDisplay = document.getElementById('cv-token-display');
+    const ttlText = document.getElementById('cv-ttl-countdown');
+    const svgTtl = document.getElementById('cv-svg-ttl-text');
+    const mutexBox = document.getElementById('cv-svg-mutex-box');
+
+    if (activeLock) {
+      if (badge) {
+        badge.className = 'px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-mono font-bold flex items-center gap-1';
+        badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span><span>MUTEX LOCKED (${activeLock.token.slice(0, 12)}...)</span>`;
+      }
+      if (tokenDisplay) tokenDisplay.innerText = activeLock.token;
+      if (ttlText) ttlText.innerText = `TTL: ${activeLock.ttlSec}s ACTIVE`;
+      if (svgTtl) svgTtl.textContent = `TTL: ${activeLock.ttlSec}s (LOCKED)`;
+      if (mutexBox) mutexBox.setAttribute('stroke', '#f59e0b');
+    } else {
+      if (badge) {
+        badge.className = 'px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] font-mono font-bold flex items-center gap-1';
+        badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span><span>MUTEX UNLOCKED (FREE)</span>`;
+      }
+      if (tokenDisplay) tokenDisplay.innerText = 'null (no active holder)';
+      if (ttlText) ttlText.innerText = 'TTL: IDLE';
+      if (svgTtl) svgTtl.textContent = 'TTL: 600s (FREE)';
+      if (mutexBox) mutexBox.setAttribute('stroke', '#10b981');
+    }
+  }
+
+  function startTtlCountdown() {
+    if (ttlTimer) clearInterval(ttlTimer);
+    ttlTimer = window.setInterval(() => {
+      if (!activeLock) {
+        if (ttlTimer) clearInterval(ttlTimer);
+        return;
+      }
+      activeLock.ttlSec -= 1;
+      if (activeLock.ttlSec <= 0) {
+        appendCvLog(`TTL WATCHDOG: Lock for key seat:damri:sub-jkt-12A reached 0s. Auto-released to cluster.`, 'text-cyan-400');
+        activeLock = null;
+        updateLockUi();
+        if (ttlTimer) clearInterval(ttlTimer);
+      } else {
+        updateLockUi();
+      }
+    }, 1000);
+  }
+
+  /**
+   * Main simulation execution
+   */
+  async function runSimulation(count = 50) {
+    if (isSimulating) return;
+    isSimulating = true;
+
+    const reqsStat = document.getElementById('cv-stat-reqs');
+    const winnerStat = document.getElementById('cv-stat-winner');
+    const rejectedStat = document.getElementById('cv-stat-rejected');
+    const raceStat = document.getElementById('cv-stat-race');
+    const latencyStat = document.getElementById('cv-stat-latency');
+    const footerStat = document.getElementById('cv-status-footer');
+    const packetLayer = document.getElementById('cv-packet-layer');
+
+    if (reqsStat) reqsStat.innerText = String(count);
+    if (winnerStat) winnerStat.innerText = '0';
+    if (rejectedStat) rejectedStat.innerText = '0';
+    if (raceStat) raceStat.innerText = '0';
+    if (latencyStat) latencyStat.innerText = '...';
+    if (footerStat) footerStat.innerText = `Dispatching ${count} concurrent requests to API Gateway...`;
+
+    appendCvLog(`INGRESS: Dispatching ${count} concurrent booking transactions targeting resource 'seat:damri:sub-jkt-12A'`, 'text-cyan-300 font-bold');
+
+    // Generate random sessions
+    const sessions = Array.from({ length: count }, (_, i) => {
+      return {
+        id: i + 1,
+        uuid: 'usr_' + Math.random().toString(36).substring(2, 9) + Math.random().toString(36).substring(2, 7),
+        channel: ['WebPortal', 'MobileAndroid', 'MobileiOS', 'OTA_Partner'][i % 4],
+      };
+    });
+
+    // Create animated SVG dots
+    if (packetLayer) {
+      packetLayer.innerHTML = '';
+      sessions.forEach((s, idx) => {
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        const cy = 35 + (idx % 15) * 5;
+        circle.setAttribute('cx', '140');
+        circle.setAttribute('cy', String(cy));
+        circle.setAttribute('r', '3');
+        circle.setAttribute('fill', '#60a5fa');
+        circle.setAttribute('id', `cv-dot-${s.id}`);
+        packetLayer.appendChild(circle);
+      });
+    }
+
+    // Step 1: Fly to API Gateway (150ms)
+    await new Promise(r => setTimeout(r, 120));
+    sessions.forEach(s => {
+      const dot = document.getElementById(`cv-dot-${s.id}`);
+      if (dot) {
+        dot.setAttribute('cx', '310');
+        dot.setAttribute('fill', '#a78bfa');
+      }
+    });
+
+    appendCvLog(`GATEWAY: 50 requests validated by Envoy rate limiter. Passing to Redis Mutex Guard.`, 'text-slate-300');
+
+    // Step 2: Fly to Redis SETNX (150ms)
+    await new Promise(r => setTimeout(r, 150));
+    sessions.forEach(s => {
+      const dot = document.getElementById(`cv-dot-${s.id}`);
+      if (dot) {
+        dot.setAttribute('cx', '535');
+        dot.setAttribute('fill', '#fde047');
+      }
+    });
+
+    // Step 3: Atomic Evaluation
+    appendCvLog(`ATOMIC EVAL: Redis SETNX seat:damri:sub-jkt-12A {token} NX EX 600`, 'text-amber-300 font-bold');
+
+    const winnerIndex = 0; // Request #1 arrives first in microsecond race
+    const winnerSession = sessions[winnerIndex];
+    const lockToken = `token:uuid-${winnerSession.uuid}-${Date.now().toString(16)}`;
+
+    // Set lock
+    activeLock = {
+      token: lockToken,
+      acquiredAt: Date.now(),
+      ttlSec: 600,
+    };
+    updateLockUi();
+    startTtlCountdown();
+
+    await new Promise(r => setTimeout(r, 80));
+
+    // Animate Winner Dot to Winner Box (Upper Right)
+    const winnerDot = document.getElementById(`cv-dot-${winnerSession.id}`);
+    if (winnerDot) {
+      winnerDot.setAttribute('cx', '732');
+      winnerDot.setAttribute('cy', '35');
+      winnerDot.setAttribute('r', '6');
+      winnerDot.setAttribute('fill', '#10b981');
+    }
+
+    appendCvLog(
+      `MUTEX WON: Request #${winnerSession.id} (${winnerSession.channel} - ${winnerSession.uuid}) acquired lock in 4.2ms -> HTTP 201 Created (Booking Confirmed)`,
+      'text-emerald-400 font-bold'
+    );
+    if (winnerStat) winnerStat.innerText = '1';
+
+    // Animate 49 Rejections to Conflict Box (Lower Right)
+    let rejectedCount = 0;
+    for (let i = 1; i < count; i++) {
+      const rej = sessions[i];
+      const dot = document.getElementById(`cv-dot-${rej.id}`);
+      if (dot) {
+        dot.setAttribute('cx', '732');
+        dot.setAttribute('cy', '102');
+        dot.setAttribute('r', '3');
+        dot.setAttribute('fill', '#f43f5e');
+      }
+      rejectedCount++;
+    }
+
+    if (rejectedStat) rejectedStat.innerText = String(rejectedCount);
+    if (raceStat) raceStat.innerText = '0';
+    if (latencyStat) latencyStat.innerText = '11.8 ms';
+
+    appendCvLog(
+      `CONFLICTS: 49 concurrent requests rejected in 11.8ms -> HTTP 409 Conflict {"status": 409, "title": "Seat Locked", "lock_owner": "${winnerSession.uuid.slice(0, 8)}"}`,
+      'text-rose-400'
+    );
+
+    appendCvLog(
+      `SUMMARY: 1 Lock Granted &bull; 49 Conflict Rollbacks &bull; Exactly 0 Race Conditions (100% Invariant Preserved)`,
+      'text-emerald-300 font-bold'
+    );
+
+    if (footerStat) {
+      footerStat.innerText = `Simulation Complete &bull; 1 Winner (201) &bull; 49 Safe Rejections (409) &bull; 0 Race Conditions`;
+    }
+
+    isSimulating = false;
+  }
+
+  function releaseLock() {
+    if (!activeLock) {
+      appendCvLog(`RELEASE: Mutex key 'seat:damri:sub-jkt-12A' is already free.`, 'text-slate-400');
+      return;
+    }
+    const token = activeLock.token;
+    activeLock = null;
+    if (ttlTimer) clearInterval(ttlTimer);
+    updateLockUi();
+
+    appendCvLog(`ATOMIC LUA RELEASE: EVAL "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end"`, 'text-purple-300');
+    appendCvLog(`MUTEX RELEASED: Lock key 'seat:damri:sub-jkt-12A' freed with token '${token.slice(0, 16)}...'. Seat is now AVAILABLE.`, 'text-emerald-400 font-bold');
+
+    const winnerStat = document.getElementById('cv-stat-winner');
+    if (winnerStat) winnerStat.innerText = '0 (Freed)';
+  }
+
+  function resetSim() {
+    isSimulating = false;
+    activeLock = null;
+    if (ttlTimer) clearInterval(ttlTimer);
+    updateLockUi();
+
+    const reqsStat = document.getElementById('cv-stat-reqs');
+    const winnerStat = document.getElementById('cv-stat-winner');
+    const rejectedStat = document.getElementById('cv-stat-rejected');
+    const raceStat = document.getElementById('cv-stat-race');
+    const latencyStat = document.getElementById('cv-stat-latency');
+    const packetLayer = document.getElementById('cv-packet-layer');
+    const footerStat = document.getElementById('cv-status-footer');
+
+    if (reqsStat) reqsStat.innerText = '0';
+    if (winnerStat) winnerStat.innerText = '0';
+    if (rejectedStat) rejectedStat.innerText = '0';
+    if (raceStat) raceStat.innerText = '0';
+    if (latencyStat) latencyStat.innerText = '0 ms';
+    if (packetLayer) packetLayer.innerHTML = '';
+    if (footerStat) footerStat.innerText = 'Engine Ready &bull; Redis Cluster Online (3 Sentinels)';
+
+    appendCvLog(`RESET: Simulation state and canvas reset to idle.`, 'text-slate-400');
+  }
+
+  // Bind Buttons
+  document.getElementById('cv-btn-sim-50')?.addEventListener('click', () => runSimulation(50));
+  document.getElementById('cv-btn-sim-100')?.addEventListener('click', () => runSimulation(100));
+  document.getElementById('cv-btn-release')?.addEventListener('click', releaseLock);
+  document.getElementById('cv-btn-reset')?.addEventListener('click', resetSim);
+  document.getElementById('cv-btn-clear-log')?.addEventListener('click', () => {
+    const logEl = document.getElementById('cv-log-stream');
+    if (logEl) logEl.innerHTML = '<div class="text-slate-500">// Log cleared.</div>';
+  });
+
+  // Global exposure
+  if (typeof window !== 'undefined') {
+    (window as any).simulateConcurrency = (n = 50) => {
+      (window as any).openWindow?.('win-concurrency');
+      setTimeout(() => runSimulation(n), 300);
+    };
+    (window as any).releaseConcurrencyLock = releaseLock;
+    (window as any).resetConcurrencySimulation = resetSim;
+  }
+</script>

@@ -1,65 +1,153 @@
 ---
 import '../styles/global.css';
 
+export interface BreadcrumbItem {
+  name: string;
+  item: string;
+}
+
 interface Props {
   title?: string;
   description?: string;
   image?: string;
-  ogType?: 'website' | 'article';
+  ogType?: 'website' | 'article' | 'profile';
+  canonical?: string;
+  breadcrumbs?: BreadcrumbItem[];
+  articleDate?: string;
+  articleAuthor?: string;
+  articleSection?: string;
+  articleTags?: string[];
 }
 
-const defaultTitle = "Andhika Putra Pratama | Senior System Analyst & Solution Architect";
-const defaultDescription = "Portofolio teknis Andhika Putra Pratama, S.Kom. Spesialis Senior System Analyst & Solution Architect, arsitektur enterprise BUMN/Fintech, spesifikasi SRS/BRD, dan sistem konkurensi terdistribusi.";
+const defaultTitle = "Andhika Putra Pratama, S.Kom. — Senior System Analyst & Solution Architect";
+const defaultDescription = "Technical portfolio of Andhika Putra Pratama, S.Kom. Senior System Analyst & Enterprise Solution Architect (BUMN/Transport/Fintech), SRS/BRD/TAD specifications, SIT/UAT testing, and distributed concurrency engineering.";
 
 const {
   title = defaultTitle,
   description = defaultDescription,
   image,
-  ogType = "website"
+  ogType = "website",
+  canonical,
+  breadcrumbs,
+  articleDate,
+  articleAuthor = "Andhika Putra Pratama, S.Kom.",
+  articleSection,
+  articleTags = []
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const favicon = `${base}/favicon.svg`;
 
-const siteOrigin = Astro.site ?? 'https://andhikapp28.github.io/newporto/';
-const canonicalURL = new URL(Astro.url.pathname, siteOrigin);
+const siteOrigin = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://andhikapp28.github.io';
+
+// Compute explicit canonical URL with trailing slash for static directories
+let canonicalHref = canonical;
+if (!canonicalHref) {
+  let path = Astro.url.pathname;
+  if (!path.endsWith('/') && !path.split('/').pop()?.includes('.')) {
+    path += '/';
+  }
+  canonicalHref = `${siteOrigin}${path}`;
+}
 
 const defaultImage = `${base}/images/og-preview.png`;
 const socialImageURL = new URL(image || defaultImage, siteOrigin);
 
-// Schema.org Person Structured Data
-const personSchema = {
+// Build Breadcrumbs for Schema.org
+const effectiveBreadcrumbs: BreadcrumbItem[] = (breadcrumbs && breadcrumbs.length > 0)
+  ? breadcrumbs
+  : [
+      { name: "Home", item: `${siteOrigin}${base}/` }
+    ];
+
+const breadcrumbItemList = effectiveBreadcrumbs.map((bc, idx) => ({
+  "@type": "ListItem",
+  "position": idx + 1,
+  "name": bc.name,
+  "item": bc.item
+}));
+
+// Overhauled Unified Schema.org @graph Array
+const schemaGraph = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Andhika Putra Pratama",
-  "alternateName": ["Andhika", "Dipa"],
-  "honorificSuffix": "S.Kom.",
-  "jobTitle": "System Analyst & Enterprise Solution Architect",
-  "url": canonicalURL.href,
-  "image": socialImageURL.href,
-  "description": description,
-  "email": "mailto:andhikapp28@gmail.com",
-  "alumniOf": {
-    "@type": "CollegeOrUniversity",
-    "name": "Institut Teknologi Sumatera",
-    "alternateName": "ITERA",
-    "url": "https://www.itera.ac.id"
-  },
-  "sameAs": [
-    "https://linkedin.com/in/andhikaputrapratama",
-    "https://github.com/andhikapp28"
-  ],
-  "knowsAbout": [
-    "System Analysis",
-    "Enterprise Solution Architecture",
-    "Software Requirements Specification (SRS)",
-    "Business Requirements Document (BRD)",
-    "Technical Architecture Document (TAD)",
-    "BPMN 2.0 Business Process Modeling",
-    "Distributed Concurrency & Seat Locking",
-    "Automated Financial Reconciliation & Settlement",
-    "Quality Assurance & UAT Governance",
-    "Full-Stack Web Development"
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteOrigin}${base}/#website`,
+      "url": `${siteOrigin}${base}/`,
+      "name": "Andhika Putra Pratama Portfolio",
+      "description": defaultDescription,
+      "publisher": {
+        "@id": `${siteOrigin}${base}/#person`
+      },
+      "inLanguage": ["id", "en"]
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": `${canonicalHref}#webpage`,
+      "url": canonicalHref,
+      "name": title,
+      "description": description,
+      "isPartOf": {
+        "@id": `${siteOrigin}${base}/#website`
+      },
+      "about": {
+        "@id": `${siteOrigin}${base}/#person`
+      },
+      "mainEntity": {
+        "@id": `${siteOrigin}${base}/#person`
+      },
+      "breadcrumb": {
+        "@id": `${canonicalHref}#breadcrumb`
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": `${siteOrigin}${base}/#person`,
+      "name": "Andhika Putra Pratama",
+      "alternateName": ["Andhika", "Dipa"],
+      "honorificSuffix": "S.Kom.",
+      "jobTitle": "Senior System Analyst & Enterprise Solution Architect",
+      "description": defaultDescription,
+      "url": `${siteOrigin}${base}/`,
+      "image": socialImageURL.href,
+      "email": "mailto:andhikapp28@gmail.com",
+      "telephone": "+6281272555407",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "ID",
+        "addressLocality": "Indonesia"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Institut Teknologi Sumatera",
+        "alternateName": "ITERA",
+        "url": "https://www.itera.ac.id"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/andhikaputrapratama",
+        "https://github.com/andhikapp28",
+        "https://wa.me/6281272555407"
+      ],
+      "knowsAbout": [
+        "System Analysis",
+        "Enterprise Solution Architecture",
+        "Software Requirements Specification (SRS)",
+        "Business Requirements Document (BRD)",
+        "Technical Architecture Document (TAD)",
+        "BPMN 2.0 Business Process Modeling",
+        "Distributed Concurrency & Seat Locking",
+        "Automated Financial Reconciliation & Settlement",
+        "Fleet Telematics & IoT Fuel Monitoring",
+        "Quality Assurance & UAT Governance",
+        "Full-Stack Web Development (PHP, Laravel, TypeScript, PostgreSQL)"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalHref}#breadcrumb`,
+      "itemListElement": breadcrumbItemList
+    }
   ]
 };
 ---
@@ -73,7 +161,7 @@ const personSchema = {
     <meta name="generator" content={Astro.generator} />
 
     <!-- Canonical URL -->
-    <link rel="canonical" href={canonicalURL.href} />
+    <link rel="canonical" href={canonicalHref} />
 
     <!-- SEO Meta Tags -->
     <title>{title}</title>
@@ -84,7 +172,7 @@ const personSchema = {
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content={ogType} />
-    <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:url" content={canonicalHref} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImageURL.href} />
@@ -93,18 +181,24 @@ const personSchema = {
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:alt" content={title} />
     <meta property="og:site_name" content="Andhika Putra Pratama Portfolio" />
-    <meta property="og:locale" content="id_ID" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="id_ID" />
+
+    {articleDate && <meta property="article:published_time" content={articleDate} />}
+    {articleAuthor && <meta property="article:author" content={articleAuthor} />}
+    {articleSection && <meta property="article:section" content={articleSection} />}
+    {articleTags.map(tag => <meta property="article:tag" content={tag} />)}
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content={canonicalURL.href} />
+    <meta name="twitter:url" content={canonicalHref} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImageURL.href} />
     <meta name="twitter:image:alt" content={title} />
 
-    <!-- Structured Data: Schema.org Person JSON-LD -->
-    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <!-- Unified Schema.org @graph JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
 
     <!-- Google Fonts for XP: Tahoma, Trebuchet MS, Segoe UI, JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

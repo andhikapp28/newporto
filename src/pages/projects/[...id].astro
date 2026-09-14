@@ -29,7 +29,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const blissImg = `${base}/images/bliss.jpg`;
 
 const siteOrigin = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://andhikapp28.github.io';
-const canonicalURL = `${siteOrigin}${base}/projects/${project.id}`;
+const canonicalURL = `${siteOrigin}${base}/projects/${project.id}/`;
+
+const breadcrumbs = [
+  { name: "Home", item: `${siteOrigin}${base}/` },
+  { name: "Case Studies", item: `${siteOrigin}${base}/#projects` },
+  { name: project.data.title, item: canonicalURL },
+];
 
 const techArticleSchema = {
   "@context": "https://schema.org",
@@ -41,7 +47,7 @@ const techArticleSchema = {
       "name": project.data.title,
       "description": project.data.description,
       "url": canonicalURL,
-      "inLanguage": "id-ID",
+      "inLanguage": "en",
       "articleSection": project.data.category,
       "keywords": project.data.tags.join(', '),
       "author": {
@@ -70,6 +76,16 @@ const techArticleSchema = {
         "@type": "Person",
         "name": "Andhika Putra Pratama"
       }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalURL}#page-breadcrumb`,
+      "itemListElement": breadcrumbs.map((bc, idx) => ({
+        "@type": "ListItem",
+        "position": idx + 1,
+        "name": bc.name,
+        "item": bc.item
+      }))
     }
   ]
 };
@@ -79,6 +95,10 @@ const techArticleSchema = {
   title={`${project.data.title} | Case Study - Andhika Putra Pratama`}
   description={project.data.description}
   ogType="article"
+  canonical={canonicalURL}
+  breadcrumbs={breadcrumbs}
+  articleSection={project.data.category}
+  articleTags={project.data.tags}
 >
   <!-- Schema.org TechArticle & SoftwareSourceCode JSON-LD -->
   <script type="application/ld+json" set:html={JSON.stringify(techArticleSchema)} />

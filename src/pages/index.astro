@@ -3,9 +3,96 @@ import Layout from '../layouts/Layout.astro';
 import XpPreloader from '../components/XpPreloader.astro';
 import ThreeComputerScene from '../components/ThreeComputerScene.astro';
 import XpDesktop from '../components/XpDesktop.astro';
+import { getCollection } from 'astro:content';
+import { workDocs } from '../data/workDocs';
+
+const projects = await getCollection('projects');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout>
+  <!-- Semantic SSR Fallback Layer for Search Engines (Googlebot), Screen Readers & WCAG AA Accessibility -->
+  <header class="sr-only">
+    <h1>Andhika Putra Pratama, S.Kom. — Senior System Analyst & Solution Architect</h1>
+    <p>
+      Lead System Analyst & Enterprise Solution Architect with direct end-to-end engineering lifecycle experience across 40+ enterprise platforms (Perum DAMRI, PT Nusantara Transindo, national logistics, multimodal transportation & fintech ecosystems). Bridges complex business logic into rigorous, auditable technical specifications (SRS, BRD, TAD, BPMN 2.0).
+    </p>
+    
+    <nav aria-label="Professional Competencies & Triad Advantage">
+      <h2>The Triad Competencies (SA 50% • QA 25% • DEV 25%)</h2>
+      <ul>
+        <li>
+          <strong>System Analyst (50% Primary Focus):</strong> 40+ documented enterprise systems, ISO/IEC/IEEE 29148 SRS/BRD authoring, 32KB+ relational data dictionaries (3NF), C4 model architecture, BPMN 2.0 executable business process workflows, ITIL change request governance.
+        </li>
+        <li>
+          <strong>Quality Assurance & Testing (25% Second Pillar):</strong> Dual-phase SIT/UAT testing governance, 42-scenario test execution matrices, boundary value analysis, automated concurrency stress testing (k6, 10,000 VU), zero critical defect escape to production.
+        </li>
+        <li>
+          <strong>Software Development (25% Hands-On Depth):</strong> Production-proven backend engineering (PHP 8.2+, Laravel, PostgreSQL, Redis SETNX distributed locking, HMAC-SHA256 GitHub webhooks, Bank Indonesia SNAP payment gateway integration).
+        </li>
+      </ul>
+    </nav>
+
+    <nav aria-label="Direct Contact & Verification Links">
+      <h2>Contact & Channels</h2>
+      <ul>
+        <li><a href="mailto:andhikapp28@gmail.com">Email: andhikapp28@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/andhikaputrapratama" target="_blank" rel="noopener noreferrer">LinkedIn: linkedin.com/in/andhikaputrapratama</a></li>
+        <li><a href="https://github.com/andhikapp28" target="_blank" rel="noopener noreferrer">GitHub: github.com/andhikapp28</a></li>
+        <li><a href="https://wa.me/6281272555407" target="_blank" rel="noopener noreferrer">WhatsApp: +62 812-7255-5407</a></li>
+        <li><a href={`${base}/documents/CV_ATS_Andhika_Putra_Pratama.pdf`} download>Download ATS Curriculum Vitae (PDF)</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="sr-only" aria-labelledby="featured-case-studies-heading">
+    <h2 id="featured-case-studies-heading">Enterprise Case Studies & Architectural Blueprints</h2>
+    <ul>
+      {projects.map((project) => (
+        <li>
+          <article>
+            <h3>
+              <a href={`${base}/projects/${project.id}/`}>
+                {project.data.title}
+              </a>
+            </h3>
+            <p>{project.data.description}</p>
+            <p>
+              <span>Category: {project.data.category}</span> | 
+              <span>Role: {project.data.role}</span> | 
+              <span>Client: {project.data.client}</span> | 
+              <span>Period: {project.data.period}</span>
+            </p>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="sr-only" aria-labelledby="work-documents-heading">
+    <h2 id="work-documents-heading">15 Enterprise Work Documents & Technical Artefacts</h2>
+    <ul>
+      {workDocs.map((doc) => (
+        <li>
+          <article>
+            <h3>
+              <a href={`${base}/docs/${doc.id}/`}>
+                {doc.title}
+              </a>
+            </h3>
+            <p>{doc.description}</p>
+            <p>
+              <span>Ref: {doc.ref}</span> | 
+              <span>Category: {doc.category}</span> | 
+              <span>Status: {doc.status}</span> | 
+              <span>Author: {doc.author}</span>
+            </p>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </section>
+
   <main class="relative w-screen h-screen overflow-hidden bg-black select-none">
     <!-- Stage 1: Circular 0-100% Preloader (Image 1 style) -->
     <XpPreloader />

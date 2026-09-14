@@ -45,8 +45,10 @@ import {
   Activity, 
   Palette, 
   Bomb, 
-  Monitor 
+  Monitor,
+  Zap
 } from '@lucide/astro';
+import ConcurrencyVisualizer from './ConcurrencyVisualizer.astro';
 
 const allProjects = await getCollection('projects');
 
@@ -131,18 +133,6 @@ const certificates = [
   }
 ];
 
-// Sample Work Documents (only CV ATS for now; others can be added later by user)
-const sampleWorkDocs = [
-  {
-    id: "cv-ats",
-    title: "CV_ATS_Andhika_Putra.doc",
-    category: "Curriculum Vitae / ATS",
-    size: "28 KB",
-    date: "September 2025",
-    desc: "Curriculum Vitae (CV) dalam format ATS-friendly untuk melamar posisi System Analyst, IT Business Analyst, Web Developer, atau QA Engineer.",
-    docSnippet: `CURRICULUM VITAE\nANDHIKA PUTRA PRATAMA, S.Kom.\n\nRINGKASAN PROFESIONAL\nSystem Analyst dengan fondasi langsung di Software Development dan Quality Assurance. Mampu menjembatani kebutuhan bisnis kompleks dengan solusi teknis yang teruji, terstruktur, dan mudah diskalakan.\n\nPENDIDIKAN\nBachelor of Computer Science (S.Kom.) — Informatics Engineering\nInstitut Teknologi Sumatera (ITERA) | 2019 – 2023 | <span class="i18n" data-en="GPA 3.73/4.00 (High Distinction)" data-id="IPK 3.73/4.00 (Sangat Memuaskan)">GPA 3.73/4.00 (High Distinction)</span>\n\nKEAHLIAN UTAMA\nSystem Analysis: BPMN, BRD/SRS, Use Case, ERD 3NF, Data Dictionary, Flowchart\nDevelopment: PHP Laravel, PostgreSQL, REST API, Git, GitHub API, SSO Integration\nQA Testing: Test Case, Boundary/Negative Testing, Postman, Concurrency Validation\n\nSERTIFIKASI\n• IT Specialist in Python (Pearson/Certiport)\n• Machine Learning Specialization (DeepLearning.AI / Stanford)\n• Crash Course on Python (Google / Coursera)\n• TOEFL ITP Score: 640`
-  }
-];
 ---
 
 <div 
@@ -275,6 +265,20 @@ const sampleWorkDocs = [
           <Briefcase class="w-6 h-6 text-indigo-600" />
         </div>
         <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Resume.doc" data-id="Resume.doc">Resume.doc</span>
+      </div>
+
+      <!-- Icon 8: Concurrency.exe -->
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50 focus:outline-dashed focus:outline-1 focus:outline-white/80"
+           tabindex="0"
+           role="button"
+           data-open="win-concurrency"
+           title="Concurrency.exe"
+           data-tooltip-title="Concurrency.exe (⚡ Distributed Lock Visualizer)"
+           data-tooltip-desc="Simulasi 50 booking tiket konkuren dengan Redis SETNX mutex, token UUID & TTL watchdog. | Simulate 50 concurrent ticket bookings with Redis SETNX mutex & TTL watchdog.">
+        <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-white/95 border border-amber-400 shadow-md group-hover:scale-105 transition-transform">
+          <Zap class="w-6 h-6 text-amber-500 fill-amber-400" />
+        </div>
+        <span class="text-[11px] font-sans text-white drop-shadow-[1px_1px_2px_rgba(0,0,0,0.95)] font-semibold leading-tight px-1 i18n" data-en="Concurrency.exe" data-id="Concurrency.exe">Concurrency.exe</span>
       </div>
     </div>
 
@@ -448,7 +452,7 @@ const sampleWorkDocs = [
             <div class="p-2.5 rounded border border-blue-200 bg-blue-50/50 flex flex-col gap-2 hover:bg-blue-100/60 transition-colors">
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
-                  <a href={`${base}/projects/approval-workflow-engine`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">1. Dynamic Multi-Tier Approval Workflow Engine</a>
+                  <a href={`${base}/projects/approval-workflow-engine/`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">1. Dynamic Multi-Tier Approval Workflow Engine</a>
                   <span class="px-1.5 py-0.2 rounded bg-blue-200 text-blue-900 text-[9px] font-bold uppercase">Core ERP</span>
                 </div>
                 <p class="text-[11px] text-slate-600 mt-0.5 i18n"
@@ -459,7 +463,7 @@ const sampleWorkDocs = [
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
                 <a
-                  href={`${base}/projects/approval-workflow-engine`}
+                  href={`${base}/projects/approval-workflow-engine/`}
                   onclick="if (!event.ctrlKey && !event.metaKey) { event.preventDefault(); openArticleInIE('approval-workflow-engine'); }"
                   class="xp-btn text-[10px] font-bold flex items-center gap-1 text-slate-800"
                 >
@@ -474,7 +478,7 @@ const sampleWorkDocs = [
             <div class="p-2.5 rounded border border-slate-200 bg-slate-50 flex flex-col gap-2 hover:bg-slate-100 transition-colors">
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
-                  <a href={`${base}/projects/damri-pumk-system`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">2. Aplikasi PUMK Financial Core</a>
+                  <a href={`${base}/projects/damri-pumk-system/`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">2. Aplikasi PUMK Financial Core</a>
                   <span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-900 text-[9px] font-bold uppercase">BUMN TJSL</span>
                 </div>
                 <p class="text-[11px] text-slate-600 mt-0.5 i18n"
@@ -485,7 +489,7 @@ const sampleWorkDocs = [
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
                 <a
-                  href={`${base}/projects/damri-pumk-system`}
+                  href={`${base}/projects/damri-pumk-system/`}
                   onclick="if (!event.ctrlKey && !event.metaKey) { event.preventDefault(); openArticleInIE('damri-pumk-system'); }"
                   class="xp-btn text-[10px] font-bold flex items-center gap-1 text-slate-800"
                 >
@@ -500,7 +504,7 @@ const sampleWorkDocs = [
             <div class="p-2.5 rounded border border-blue-200 bg-blue-50/50 flex flex-col gap-2 hover:bg-blue-100/60 transition-colors">
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
-                  <a href={`${base}/projects/payment-reconciliation-engine`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">3. Multi-Bank Payment Reconciliation &amp; Settlement Engine</a>
+                  <a href={`${base}/projects/payment-reconciliation-engine/`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">3. Multi-Bank Payment Reconciliation &amp; Settlement Engine</a>
                   <span class="px-1.5 py-0.2 rounded bg-cyan-100 text-cyan-900 text-[9px] font-bold uppercase">FinTech / SNAP</span>
                 </div>
                 <p class="text-[11px] text-slate-600 mt-0.5 i18n"
@@ -511,7 +515,7 @@ const sampleWorkDocs = [
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
                 <a
-                  href={`${base}/projects/payment-reconciliation-engine`}
+                  href={`${base}/projects/payment-reconciliation-engine/`}
                   onclick="if (!event.ctrlKey && !event.metaKey) { event.preventDefault(); openArticleInIE('payment-reconciliation-engine'); }"
                   class="xp-btn text-[10px] font-bold flex items-center gap-1 text-slate-800"
                 >
@@ -526,7 +530,7 @@ const sampleWorkDocs = [
             <div class="p-2.5 rounded border border-slate-200 bg-slate-50 flex flex-col gap-2 hover:bg-slate-100 transition-colors">
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
-                  <a href={`${base}/projects/seat-lock-concurrency-engine`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">4. High-Concurrency Seat Lock &amp; Distributed Reservation Engine</a>
+                  <a href={`${base}/projects/seat-lock-concurrency-engine/`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">4. High-Concurrency Seat Lock &amp; Distributed Reservation Engine</a>
                   <span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-900 text-[9px] font-bold uppercase">Concurrency</span>
                 </div>
                 <p class="text-[11px] text-slate-600 mt-0.5 i18n"
@@ -537,7 +541,7 @@ const sampleWorkDocs = [
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
                 <a
-                  href={`${base}/projects/seat-lock-concurrency-engine`}
+                  href={`${base}/projects/seat-lock-concurrency-engine/`}
                   onclick="if (!event.ctrlKey && !event.metaKey) { event.preventDefault(); openArticleInIE('seat-lock-concurrency-engine'); }"
                   class="xp-btn text-[10px] font-bold flex items-center gap-1 text-slate-800"
                 >
@@ -552,7 +556,7 @@ const sampleWorkDocs = [
             <div class="p-2.5 rounded border border-blue-200 bg-blue-50/50 flex flex-col gap-2 hover:bg-blue-100/60 transition-colors">
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
-                  <a href={`${base}/projects/fleet-telematics-fuel-anomaly-engine`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">5. Enterprise Fleet Telematics &amp; Fuel Anomaly Engine</a>
+                  <a href={`${base}/projects/fleet-telematics-fuel-anomaly-engine/`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">5. Enterprise Fleet Telematics &amp; Fuel Anomaly Engine</a>
                   <span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-900 text-[9px] font-bold uppercase">IoT &amp; Logistics</span>
                 </div>
                 <p class="text-[11px] text-slate-600 mt-0.5 i18n"
@@ -563,7 +567,7 @@ const sampleWorkDocs = [
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
                 <a
-                  href={`${base}/projects/fleet-telematics-fuel-anomaly-engine`}
+                  href={`${base}/projects/fleet-telematics-fuel-anomaly-engine/`}
                   onclick="if (!event.ctrlKey && !event.metaKey) { event.preventDefault(); openArticleInIE('fleet-telematics-fuel-anomaly-engine'); }"
                   class="xp-btn text-[10px] font-bold flex items-center gap-1 text-slate-800"
                 >
@@ -578,7 +582,7 @@ const sampleWorkDocs = [
             <div class="p-2.5 rounded border border-slate-200 bg-slate-50 flex flex-col gap-2 hover:bg-slate-100 transition-colors">
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
-                  <a href={`${base}/projects/damri-push-request-tracker`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">6. GitHub Push Request Audit &amp; Deploy Tracker</a>
+                  <a href={`${base}/projects/damri-push-request-tracker/`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">6. GitHub Push Request Audit &amp; Deploy Tracker</a>
                   <span class="px-1.5 py-0.2 rounded bg-indigo-100 text-indigo-900 text-[9px] font-bold uppercase">DevOps Audit</span>
                 </div>
                 <p class="text-[11px] text-slate-600 mt-0.5 i18n"
@@ -589,7 +593,7 @@ const sampleWorkDocs = [
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
                 <a
-                  href={`${base}/projects/damri-push-request-tracker`}
+                  href={`${base}/projects/damri-push-request-tracker/`}
                   onclick="if (!event.ctrlKey && !event.metaKey) { event.preventDefault(); openArticleInIE('damri-push-request-tracker'); }"
                   class="xp-btn text-[10px] font-bold flex items-center gap-1 text-slate-800"
                 >
@@ -911,7 +915,7 @@ const sampleWorkDocs = [
 
       <div class="h-6 px-2 flex items-center justify-between text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700">
         <div class="flex items-center gap-3">
-          <span class="hover:underline cursor-pointer i18n" data-en="Print" data-id="Cetak" onclick="window.print()">Print</span>
+          <span class="hover:underline cursor-pointer i18n" data-en="Print" data-id="Cetak" onclick="openPrintSpooler('Curriculum_Vitae_Andhika.doc')">Print</span>
           <span class="hover:underline cursor-pointer i18n" data-en="Contact Me" data-id="Hubungi Saya" onclick="openWindow('win-contact')">Contact Me</span>
           <span class="hover:underline cursor-pointer i18n" data-en="View Certificates" data-id="Lihat Sertifikat Asli" onclick="openWindow('win-gallery')">View Certificates</span>
         </div>
@@ -1475,9 +1479,14 @@ const sampleWorkDocs = [
         </div>
       </div>
 
-      <div class="h-6 px-2 flex items-center gap-3 text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700">
-        <span class="hover:underline cursor-pointer i18n" data-en="&larr; Back to Folder" data-id="&larr; Kembali ke Folder" onclick="openWindow('win-docs-folder')">&larr; Back to Folder</span>
-        <span class="hover:underline cursor-pointer i18n" data-en="Print Document" data-id="Cetak Dokumen" onclick="window.print()">Print Document</span>
+      <div class="h-6 px-2 flex items-center justify-between text-[11px] bg-[#ece9d8] border-b border-[#d8d4c2] text-slate-700">
+        <div class="flex items-center gap-3">
+          <span class="hover:underline cursor-pointer i18n" data-en="&larr; Back to Folder" data-id="&larr; Kembali ke Folder" onclick="openWindow('win-docs-folder')">&larr; Back to Folder</span>
+          <span class="hover:underline cursor-pointer i18n" data-en="Print Document" data-id="Cetak Dokumen" onclick="openPrintSpooler(document.getElementById('doc-viewer-title')?.innerText || 'Document.doc')">Print Document</span>
+        </div>
+        <div>
+          <a id="doc-viewer-permalink" href="#" class="hover:underline text-blue-700 font-semibold i18n flex items-center gap-1" data-en="Open Full Page &rarr;" data-id="Buka Halaman Lengkap &rarr;">Open Full Page &rarr;</a>
+        </div>
       </div>
 
       <div class="flex-1 p-6 bg-white overflow-y-auto max-h-[64vh] text-slate-900 font-mono text-xs leading-relaxed">
@@ -1534,7 +1543,7 @@ const sampleWorkDocs = [
           </a>
           <button
             class="xp-btn font-semibold"
-            onclick="window.print()"
+            onclick="openPrintSpooler('CV_ATS_Andhika_Putra_Pratama.pdf')"
             title="Print"
           >
             <Printer class="w-3.5 h-3.5 text-slate-700" />
@@ -1944,6 +1953,10 @@ const sampleWorkDocs = [
         <button class="px-2 py-0.5 rounded hover:bg-white flex items-center gap-1 text-slate-700 cursor-pointer">
           <RotateCw class="w-3.5 h-3.5 text-emerald-600" />
           <span>Refresh</span>
+        </button>
+        <button class="px-2 py-0.5 rounded hover:bg-white flex items-center gap-1 text-slate-700 cursor-pointer" onclick="openPrintSpooler(document.getElementById('ie-titlebar-text')?.innerText || 'Case_Study.doc')">
+          <Printer class="w-3.5 h-3.5 text-blue-600" />
+          <span class="i18n" data-en="Print" data-id="Cetak">Print</span>
         </button>
         <div class="h-4 w-[1px] bg-slate-400 mx-1"></div>
         <div class="flex items-center gap-1.5 flex-1 min-w-0">
@@ -2391,6 +2404,32 @@ const sampleWorkDocs = [
                 <Search class="w-3.5 h-3.5" />
                 <span class="i18n" data-en="Search" data-id="Cari">Search</span>
               </button>
+            </div>
+
+            <!-- Rover Recruiter Co-Pilot Prompt Pills -->
+            <div class="mt-2.5 pt-2 border-t border-[#d8d4c2]/80">
+              <div class="text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                <span class="i18n" data-en="Recruiter Co-Pilot Quick Prompts:" data-id="Pills Pintas Recruiter Co-Pilot:">Recruiter Co-Pilot Quick Prompts:</span>
+                <span class="text-[9px] font-mono text-blue-700 bg-blue-100/80 px-1.5 py-0.2 rounded font-bold">1-Click</span>
+              </div>
+              <div class="grid grid-cols-2 gap-1.5">
+                <button type="button" class="rover-prompt-pill px-2 py-1 bg-white hover:bg-blue-50 hover:border-blue-400 border border-[#7f9db9] rounded text-[10.5px] font-semibold text-slate-800 text-left flex items-center gap-1 shadow-sm transition-all cursor-pointer" data-pill="why-andhika">
+                  <span class="shrink-0">🎯</span>
+                  <span class="i18n truncate" data-en="Why Andhika?" data-id="Kenapa Andhika?">Why Andhika?</span>
+                </button>
+                <button type="button" class="rover-prompt-pill px-2 py-1 bg-white hover:bg-blue-50 hover:border-blue-400 border border-[#7f9db9] rounded text-[10.5px] font-semibold text-slate-800 text-left flex items-center gap-1 shadow-sm transition-all cursor-pointer" data-pill="concurrency">
+                  <span class="shrink-0">⚡</span>
+                  <span class="i18n truncate" data-en="Concurrency Solution" data-id="Solusi Concurrency">Concurrency Solution</span>
+                </button>
+                <button type="button" class="rover-prompt-pill px-2 py-1 bg-white hover:bg-blue-50 hover:border-blue-400 border border-[#7f9db9] rounded text-[10.5px] font-semibold text-slate-800 text-left flex items-center gap-1 shadow-sm transition-all cursor-pointer" data-pill="proof-40">
+                  <span class="shrink-0">📋</span>
+                  <span class="i18n truncate" data-en="40+ Systems Proof" data-id="Bukti 40+ Sistem">40+ Systems Proof</span>
+                </button>
+                <button type="button" class="rover-prompt-pill px-2 py-1 bg-white hover:bg-blue-50 hover:border-blue-400 border border-[#7f9db9] rounded text-[10.5px] font-semibold text-slate-800 text-left flex items-center gap-1 shadow-sm transition-all cursor-pointer" data-pill="download-cv">
+                  <span class="shrink-0">📄</span>
+                  <span class="i18n truncate" data-en="Download ATS CV" data-id="Download CV ATS">Download ATS CV</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -2972,6 +3011,9 @@ const sampleWorkDocs = [
         </div>
       </div>
 
+    <!-- WINDOW 19: Concurrency Visualizer -->
+    <ConcurrencyVisualizer />
+
     <!-- ==================== AUTHENTIC WINDOWS XP SHUTDOWN DIALOG ==================== -->
   <div 
     id="xp-shutdown-modal" 
@@ -3212,6 +3254,10 @@ const sampleWorkDocs = [
           <Bomb class="w-4 h-4 text-red-600" />
           <span class="font-bold text-slate-800">Minesweeper</span>
         </div>
+        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-concurrency'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <Zap class="w-4 h-4 text-amber-500 fill-amber-400" />
+          <span class="font-bold text-slate-800 i18n" data-en="Concurrency Visualizer" data-id="Visualizer Konkurensi">Concurrency Visualizer</span>
+        </div>
       </div>
 
       <div class="w-1/2 p-2 space-y-1 text-slate-700">
@@ -3225,6 +3271,10 @@ const sampleWorkDocs = [
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Notepad Notes" data-id="Catatan Notepad" onclick="openWindow('win-notepad'); document.getElementById('xp-start-menu').classList.add('hidden');">Notepad Notes</div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Run..." data-id="Jalankan..." onclick="openWindow('win-run'); document.getElementById('xp-start-menu').classList.add('hidden');">Run...</div>
         <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n" data-en="Recycle Bin" data-id="Tempat Sampah" onclick="openWindow('win-recycle-bin'); document.getElementById('xp-start-menu').classList.add('hidden');">Recycle Bin</div>
+        <div class="p-1.5 font-bold hover:bg-blue-200/50 rounded cursor-pointer i18n flex items-center gap-1.5" data-en="Printers and Faxes" data-id="Printer &amp; Faks" onclick="openPrintSpooler('Document.doc'); document.getElementById('xp-start-menu').classList.add('hidden');">
+          <Printer class="w-3.5 h-3.5 text-slate-600" />
+          <span>Printers and Faxes</span>
+        </div>
       </div>
     </div>
 
@@ -3408,8 +3458,10 @@ const sampleWorkDocs = [
 
 <script>
   import { audioManager } from '../scripts/audioManager';
+  import { workDocsMap } from '../data/workDocs';
   import { animate } from 'animejs';
   import { sdlcDataId, sdlcDataEn } from '../scripts/sdlcData';
+  import '../scripts/printSpooler';
 
   // 1. Window Management & Taskbar Sync
   let highestZIndex = 30;
@@ -3423,7 +3475,7 @@ const sampleWorkDocs = [
   }
 
   // Expose openWindow to window so inline onclick handlers work without fail
-  (window as any).openWindow = function(winId: string) {
+  function openWindow(winId: string) {
     const win = document.getElementById(winId);
     if (!win) return;
 
@@ -3490,8 +3542,8 @@ const sampleWorkDocs = [
         }
       } catch (e) {}
     }
-
-  };
+  }
+  (window as any).openWindow = openWindow;
   (window as any).closeWindow = closeWindow;
 
   // Close window helper used by keyboard shortcuts & recycle tracking
@@ -3726,7 +3778,7 @@ const sampleWorkDocs = [
   });
 
   // Desktop Icons Opening Windows + tooltip helpers
-  const desktopIcons = document.querySelectorAll('.xp-desktop-icon');
+  const desktopIcons = document.querySelectorAll<HTMLElement>('.xp-desktop-icon');
   const iconTooltip = document.getElementById('xp-icon-tooltip');
   const iconTooltipTitle = document.getElementById('xp-icon-tooltip-title');
   const iconTooltipDesc = document.getElementById('xp-icon-tooltip-desc');
@@ -4178,663 +4230,7 @@ const sampleWorkDocs = [
   });
 
   // 6. Sample Work Documents Viewer (SA, QA, and DEV Evidence Documents)
-  const sampleDocsData: Record<string, { title: string; snippet: string }> = {
-    "cv-ats": {
-      title: "CV_ATS_Andhika_Putra_Pratama.doc",
-      snippet: `================================================================================
-CURRICULUM VITAE — ATS STANDARD SPECIFICATION
-ANDHIKA PUTRA PRATAMA, S.Kom.
-System Analyst (with hands-on Software Development & QA Testing Depth)
-Email: andhikapp28@gmail.com | GitHub: github.com/andhikapp28 | Location: Indonesia
-================================================================================
-
-[PROFESSIONAL PROFILE]
-System Analyst with direct end-to-end engineering lifecycle experience across 
-40+ enterprise platforms. Bridges ambiguous business logic into razor-sharp,
-auditable technical specifications (SRS/BRD/TAD). Experienced in implementing 
-database concurrency control, API integrations, and leading rigorous 
-System Integration Testing (SIT) and User Acceptance Testing (UAT).
-
-[EDUCATION]
-Bachelor of Computer Science (S.Kom.) — Informatics Engineering
-Institut Teknologi Sumatera (ITERA) | 2019 – 2023
-GPA: 3.73 / 4.00 (Sangat Memuaskan / High Distinction)
-
-[CORE TECHNICAL COMPETENCIES]
-• System Analysis: SRS/BRD, BPMN 2.0, Use Case, ERD 3NF, Data Dictionary, WBS, MoM
-• Software Development: PHP 8.2+, Laravel 12, PostgreSQL, REST APIs, GitHub API, SSO
-• QA & Testing: SIT/UAT Test Suites, Boundary Value Analysis, Concurrency Stress Test
-• Change Management: ITIL-aligned Change Requests (CR), Rollback Protocols, GL QA/QC
-
-[CERTIFICATIONS]
-• IT Specialist in Python — Pearson / Certiport (Score: 890 / 1000)
-• Machine Learning Specialization — DeepLearning.AI / Stanford Online
-• Crash Course on Python — Google / Coursera
-• TOEFL ITP Official Score: 640 (C1 Advanced English Proficiency)`
-    },
-    "srs-pumk": {
-      title: "SRS_PUMK_Executive_Summary.doc",
-      snippet: `================================================================================
-SOFTWARE REQUIREMENTS SPECIFICATION (SRS) — EXECUTIVE SUMMARY
-Aplikasi Program Pendanaan Usaha Mikro dan Kecil (PUMK) — Perum DAMRI
-Doc Ref: SRS-PUMK-08062026-15 | Version: 1.2 | Status: APPROVED FOR PRODUCTION
-Author / Lead System Analyst: Andhika Putra Pratama, S.Kom.
-Target Units: TJSL / PKBL, Divisi Keuangan, 40+ Cabang Operasional
-================================================================================
-
-1. EXECUTIVE BUSINESS PROBLEM & STATEMENT OF NEED
-   Unit Tanggung Jawab Sosial dan Lingkungan (TJSL) Perum DAMRI membutuhkan sentralisasi
-   tata kelola penyaluran dana pinjaman modal kerja bagi Usaha Mikro & Kecil (Mitra Binaan).
-   Sistem terdahulu yang berbasis spreadsheet manual memiliki celah:
-   a. Desinkronisasi data angsuran, bunga pinjaman, dan rekonsiliasi mutasi perbankan.
-   b. Risiko registrasi ganda penerima pembiayaan lintas BUMN akibat belum validnya NIK.
-   c. Benturan kode mitra saat cabang di seluruh Indonesia menginput secara bersamaan.
-
-2. SYSTEM SCOPE & FUNCTIONAL BREAKDOWN (16 Core Modules)
-   [MOD-01] Validasi NIK 16 Digit & Integrasi Kependudukan
-   [MOD-02] Scoring & Evaluasi Kelayakan Karakter Usaha Mikro
-   [MOD-03] Penetapan Plafon Pembiayaan & Skema Angsuran (Jasa Admin & Pokok)
-   [MOD-04] Penerbitan Digital Akad Perjanjian & Surat Penyerahan Pinjaman
-   [MOD-05] Manajemen Kas Masuk & Pencatatan Kwitansi Rekonsiliasi Bank BUMN
-   [MOD-06] Pemantauan Kolektibilitas Pinjaman (Lancar, DPK, Kurang Lancar, Macet)
-   [MOD-07] Restrukturisasi Termin Pinjaman & Penjadwalan Ulang Angsuran
-   [MOD-08] Ekspor Laporan Triwulanan (TW1 - TW4) Standar Mandatori Kementerian BUMN & OJK
-
-3. CRITICAL BUSINESS RULES & TECHNICAL GOVERNANCE
-   BR-01 [Validasi Identitas]: NIK wajib tepat 16 digit angka terverifikasi unik dalam
-         basis data sistem untuk mencegah duplikasi bantuan.
-   BR-02 [Penerbitan Kode Unik Mitra]: Format standar PUMK-{YYYY}-{NNN}. Wajib dieksekusi
-         dalam isolasi transaksi tingkat database menggunakan pessimistic locking 
-         (lockForUpdate) untuk mencegah race condition / nomor ganda saat jam sibuk.
-   BR-03 [Matriks Akses Berjenjang (RBAC)]:
-         - Staff Cabang       : Input profil mitra & upload proposal (Draft).
-         - Kepala Cabang      : Verifikasi kelayakan lapangan & rekomendasi awal.
-         - Tim TJSL Kantor Pusat: Approval limit pembiayaan & penerbitan SPK.
-         - Divisi Keuangan    : Pencatatan mutasi kas masuk & rekonsiliasi bank.
-         - Auditor BPK / SPI  : Akses peninjauan menyeluruh (Read-Only Audit Trail).
-
-4. DATA DICTIONARY & NON-FUNCTIONAL STANDARDS
-   - Kamus Data Teknis: Mendefinisikan 24 tabel relasional (32KB data dictionary formal).
-   - SSO Terpusat: Otentikasi pegawai via LDAP/SSO DAMRI (Shadow User Pattern).
-   - Audit Trail: Setiap perubahan plafon, status, dan transaksi mencatat ID user,
-     timestamp presisi milidetik, alamat IP, serta delta data before/after.`
-    },
-    "cr-governance": {
-      title: "CR_Change_Request_Governance_Log.doc",
-      snippet: `================================================================================
-CHANGE REQUEST (CR) GOVERNANCE & AUDIT LOG SUMMARY
-Framework: ITIL Change Management Lifecycle & Software Quality Gate
-Lead System Analyst & Release Gatekeeper: Andhika Putra Pratama, S.Kom.
-================================================================================
-
-1. PRINSIP TATA KELOLA PERUBAHAN SISTEM
-   Menjamin setiap modifikasi alur proses bisnis, penyesuaian formula kalkulasi,
-   dan penambahan modul pada sistem produksi berjalan terprediksi, terdokumentasi,
-   memiliki analisis dampak (impact analysis) komprehensif, dan disetujui stakeholder.
-
-2. STANDAR PROSEDUR OPERASIONAL (SOP) CHANGE REQUEST
-   [Inisiasi CR] -> [Analisis Dampak & Risiko] -> [Tinjauan Teknis & Estimasi Mandays]
-   -> [Persetujuan CAB / Unit Owner] -> [Development Staging] -> [Verifikasi SIT & UAT]
-   -> [Sign-Off Go-Live (GL-QAQC)] -> [Deployment Produksi & Evaluasi 72 Jam]
-
-3. DAFTAR SAMPEL CHANGE REQUEST YANG TELAH SELESAI DIEKSEKUSI:
-
-   -----------------------------------------------------------------------------
-   [CR-01] CR-SO-26062026-02 | Sistem: SIMA OPERASI (Penjadwalan & Armada)
-   - Deskripsi      : Penambahan Modul Rekapan Anggaran Operasional Cabang
-   - Latar Belakang : Kebutuhan konsolidasi real-time biaya BBM dan tol armada bus.
-   - Analisis Dampak: 
-     * Basis Data: Penambahan tabel tr_anggaran_operasi (FK: id_trayek, id_bus).
-     * Backend   : Optimasi aggregation query dengan composite indexing.
-     * Frontend  : Form validasi limit plafon anggaran per armada.
-   - Status & Hasil : APPROVED & DEPLOYED | UAT Pass Rate: 100%
-   -----------------------------------------------------------------------------
-   [CR-02] CR-EOF-27082026-12 | Sistem: E-OFFICE (Tata Naskah Dinas Elektronik)
-   - Deskripsi      : Penyesuaian Format Naskah Dinas & Alur Disposisi Bertingkat
-   - Latar Belakang : Kepatuhan terhadap Peraturan Direksi Tata Naskah Dinas terbaru.
-   - Analisis Dampak: Refactoring state machine disposisi, penambahan validasi digital signature.
-   - Status & Hasil : APPROVED & DEPLOYED | UAT Pass Rate: 100%
-   -----------------------------------------------------------------------------
-   [CR-03] CR-SIMAT-07072026-03 | Sistem: SIMA TEKNIK (Perawatan Armada Bus)
-   - Deskripsi      : Penyesuaian Formula Estimasi Biaya Pemeliharaan & Suku Cadang
-   - Latar Belakang : Pembaruan katalog harga sparepart vendor rekanan tahun anggaran baru.
-   - Analisis Dampak: Update service layer kalkulasi biaya estimasi vs realisasi faktur.
-   - Status & Hasil : APPROVED & DEPLOYED | UAT Pass Rate: 98.5%
-   -----------------------------------------------------------------------------
-
-4. METRIK KEBERHASILAN GOVERNANCE
-   - 100% Perubahan skema basis data produksi memiliki tiket CR formal.
-   - Zero undocumented schema changes di seluruh lingkungan server operasional.
-   - Waktu rata-rata penyelesaian analisis dampak: < 24 jam kerja.`
-    },
-    "enterprise-systems": {
-      title: "Enterprise_Systems_Documentation_Catalogue.doc",
-      snippet: `================================================================================
-ENTERPRISE SYSTEMS DOCUMENTATION CATALOGUE (40+ SYSTEMS)
-Role: System Analyst & Technical Specification Lead — Andhika Putra Pratama, S.Kom.
-Organisasi: Perum DAMRI (Transportasi, Logistik & Ekosistem Bisnis BUMN)
-================================================================================
-
-PORTFOLIO OVERVIEW:
-Telah memetakan proses bisnis, menyusun spesifikasi kebutuhan teknis (SRS/BRD),
-merancang arsitektur data (TAD/ERD), menyusun panduan pengguna (Manual Guide),
-serta memandu pengujian integrasi (SIT/UAT) untuk lebih dari 40 sistem enterprise:
-
-[A] SISTEM OPERASIONAL, LOGISTIK & MANAJEMEN ARMADA
-01. SIMA UMUM               : Sistem Informasi Manajemen Administrasi Umum
-02. SIMA OPERASI            : Manajemen Penjadwalan Bus, Trayek, & Alokasi Awak
-03. SIMA TEKNIK             : Perawatan Armada Bus, Bengkel, & Manajemen Suku Cadang
-04. SIMA PROPERTY           : Manajemen Aset Gedung, Pool, Depo & Properti Komersial
-05. DILS                    : DAMRI Integrated Logistics System
-06. DILS AGEN               : Portal Keagenan Kargo & Ekspedisi Logistik
-07. LMB ONLINE              : Laporan Muatan Bus & Kapasitas Bagasi Real-Time
-08. AUTOMATIC SCALE SYSTEM  : Integrasi Sensor Jembatan Timbang Truk Kargo
-
-[B] SISTEM TIKET, TRANSAKSI PENUMPANG & GATE PAYMENT
-09. NEW TIKET (LOKET)       : Point-of-Sale (POS) Kasir Loket Tiket Terminal
-10. NEW ETIKETING API       : Gateway Integrasi Tiket dengan OTA & Mitra Eksternal
-11. AUTOMATIC FARE COLLECTION (AFC) : Integrasi Gate Pembayaran Non-Tunai / Kartu
-12. TICKET BOX              : Kios Penjualan Tiket Mandiri Penumpang
-13. MY DAMRI                : Aplikasi Mobile Penumpang (Pemesanan & Jadwal Bus)
-14. DAMRI BUS ASIA          : Sistem Reservasi & Operasional Rute Antarnegara
-15. MITRA DAMRI             : Dashboard Mitra Penjualan & Agen Perjalanan
-
-[C] SISTEM KEUANGAN, PENGADAAN & INVESTASI
-16. PUMK                    : Program Pendanaan Usaha Mikro & Kecil (TJSL BUMN)
-17. E-PROPOSAL              : Pengajuan Anggaran Inisiatif & Bisnis Divisi
-18. E-PROCUREMENT           : Pengadaan Barang & Jasa serta Evaluasi Vendor
-19. E-CASH RECEIPT          : Penerimaan Kas Operasional & Penyetoran Bank
-20. WEB REKON               : Rekonsiliasi Transaksi Tiket vs Mutasi Rekening Bank
-21. CENTRAL KEU             : Sentralisasi Pelaporan & Pembukuan Keuangan
-22. DOKUMEN KONTRAK         : Manajemen Kontrak Kerjasama Legal & Finansial
-
-[D] SISTEM SDM, TATA KELOLA NASKAH, RISK & CRM
-23. HCMS                    : Human Capital Management System (Data Pegawai)
-24. E-OFFICE (NASKAH DINAS) : Tata Naskah Dinas Elektronik & Alur Disposisi
-25. CUTI & ABSENSI          : Presensi Geotagging & Pengajuan Cuti Karyawan
-26. PAYROLL                 : Perhitungan Gaji Pokok, Tunjangan, & Insentif
-27. EVALKIN                 : Sistem Evaluasi Kinerja & Penilaian KPI Tahunan
-28. DAMRI LEARNING          : Learning Management System (LMS) Pelatihan Pegawai
-29. SERVICE DESK (CRM)      : Helpdesk Pelayanan Keluhan Penumpang & Layanan
-30. AUDIT MANAGEMENT (AMS)  : Pelacakan Temuan Audit Internal & Eksternal
-31. RISK REGISTER           : Manajemen Profil & Mitigasi Risiko Korporat
-32. QUALITY CHECK           : Standardisasi Inspeksi Kelaikan Armada (Ramp Check)
-33-40. VMS, SMAPS, API ENHANCEMENT, MIDDLEWARE, DAN MODUL INTEGRASI LAINNYA.
-
-STANDAR ARTEFAK YANG DIHASILKAN:
-- Software Requirements Specification (SRS) & Business Requirement Document (BRD)
-- Technical Architecture Document (TAD) & Entity Relationship Diagram (ERD 3NF)
-- Diagram Alur Proses Bisnis (BPMN 2.0 / Activity Diagram)
-- Matriks System Integration Testing (SIT) & User Acceptance Testing (UAT)
-- Buku Panduan Pengguna (Manual Guide) & Notulensi Rapat Teknis (MoM)`
-    },
-    "sit-uat-matrix": {
-      title: "SIT_and_UAT_Signoff_Matrix.doc",
-      snippet: `================================================================================
-SYSTEM INTEGRATION TESTING (SIT) & USER ACCEPTANCE TESTING (UAT) MATRIX
-QA Specialist & Test Architect: Andhika Putra Pratama, S.Kom.
-Standar Ref: SIT-VMS / SIT-EOF / UAT-SIMA / GL-QAQC
-Tujuan Kualitas: Zero Critical Defect Escaped to Production Environment
-================================================================================
-
-1. METODOLOGI PENGUJIAN DUA FASE (DUAL-PHASE TESTING)
-   a. System Integration Testing (SIT) — Verifikasi Internal Engineering:
-      - Validasi kontrak REST API dan error handling antarmodul.
-      - Integritas relasional foreign key & constraint basis data.
-      - Concurrency & race condition handling di bawah traffic simulasi.
-   b. User Acceptance Testing (UAT) — Validasi Kebutuhan Bisnis Pengguna:
-      - Skenario pengujian berbasis alur kerja nyata (End-to-End User Journey).
-      - Dilaksanakan bersama Product Owner, perwakilan cabang, & unit bisnis.
-
-2. SAMPEL LEMBAR PENGUJIAN UAT (Aplikasi PUMK & SIMA Operasi)
-   -----------------------------------------------------------------------------
-   [TC-ID] UAT-PUMK-01 | Fitur: Pendaftaran Mitra Binaan Baru
-   - Aktor        : Petugas Cabang (Role: CABANG_OPERATOR)
-   - Prasyarat    : Pengguna login via SSO DAMRI dengan hak akses cabang aktif.
-   - Langkah Uji  : 1. Akses menu Pendaftaran Mitra Binaan.
-                    2. Input NIK 16 digit valid: '3201012345670001'.
-                    3. Upload dokumen proposal kelayakan (PDF < 5MB).
-                    4. Klik tombol 'Simpan Pengajuan'.
-   - Hasil Harapan: Data tersimpan, kode mitra PUMK-{YYYY}-{NNN} terbit otomatis,
-                    NIK terverifikasi unik, status 'DRAFT_PROPOSAL'.
-   - Hasil Aktual : LULUS (PASS) — Kode unik PUMK-2026-042 terbit tanpa anomali.
-   -----------------------------------------------------------------------------
-   [TC-ID] UAT-PUMK-02 | Fitur: Negative & Boundary Test Validasi NIK
-   - Langkah Uji  : Input NIK 15 digit dan input NIK yang telah terdaftar sebelumnya.
-   - Hasil Harapan: Form menampilkan error interaktif: 'NIK harus tepat 16 digit'
-                    atau 'NIK telah terdaftar dalam sistem'. Tombol simpan terkunci.
-   - Hasil Aktual : LULUS (PASS) — Validasi client & server berjalan sinkron.
-   -----------------------------------------------------------------------------
-   [TC-ID] UAT-PUMK-03 | Fitur: Concurrency Stress Test Multi-Cabang
-   - Langkah Uji  : 20 submit pengajuan serentak dalam jendela waktu 2 detik.
-   - Hasil Harapan: 20 nomor urut terbit berurutan, 0 duplicate key error.
-   - Hasil Aktual : LULUS (PASS) — Pessimistic locking (lockForUpdate) berhasil.
-   -----------------------------------------------------------------------------
-
-3. KLASIFIKASI DEFECT & SEVERITY SLA
-   - P1 (Blocker)  : Crash sistem, korupsi data, kegagalan perhitungan uang. (SLA: < 2 Jam)
-   - P2 (Critical) : Fungsi inti gagal beroperasi, tidak ada workaround. (SLA: < 8 Jam)
-   - P3 (Major)    : Fungsi parsial terganggu, ada alternatif operasional. (SLA: < 24 Jam)
-   - P4 (Minor)    : Kesalahan tipografi, glitch tata letak visual. (SLA: Next Release)
-
-4. PENCAPAIAN MUTU PENGUJIAN
-   - Tingkat kelulusan UAT siklus pertama: > 96.8%.
-   - Defect Leakage ke Lingkungan Produksi: 0 Critical Bugs.`
-    },
-    "golive-checklist": {
-      title: "GoLive_QAQC_Release_Checklist.doc",
-      snippet: `================================================================================
-GO-LIVE QA/QC QUALITY GATE & DEPLOYMENT CHECKLIST
-Quality Assurance & Release Governance — Andhika Putra Pratama, S.Kom.
-Referensi Standar: GL-QAQC-06072026-05 / GL-HCMS-10072026-08
-Status: PRODUCTION GATING PROTOCOL
-================================================================================
-
-1. PRINSIP QUALITY GATE SEBELUM PRODUKSI
-   Sebuah sistem atau modul baru DILARANG KERAS di-deploy ke server produksi
-   sebelum seluruh poin verifikasi berikut dinyatakan PASSED dan ditandatangani.
-
-2. DAFTAR PERIKSA KESIAPAN RILIS (PRE-RELEASE CHECKLIST):
-
-   [A] KUALITAS KODE & INTEGRASI (DEVELOPER & QA)
-   [x] 1. Seluruh branch fitur telah di-merge ke branch release via approved PR.
-   [x] 2. Unit testing & static analysis pass (0 error, 0 security vulnerability).
-   [x] 3. Skenario System Integration Testing (SIT) 100% lulus tanpa defect blocker.
-   [x] 4. Berita Acara UAT telah ditandatangani resmi oleh Product Owner / User.
-
-   [B] BASIS DATA & SKEMA (DATABASE SANITY)
-   [x] 5. Migration script telah diuji di staging environment dengan data riil tersanitasi.
-   [x] 6. Backup snapshot basis data produksi diambil sebelum eksekusi migrasi.
-   [x] 7. Script rollback migrasi siap pakai jika terjadi anomali runtime.
-   [x] 8. Foreign key constraints dan indexing tabel telah tervalidasi.
-
-   [C] KONFIGURASI KEAMANAN & ENVIRONMENT
-   [x] 9. Parameter debug dinonaktifkan (APP_DEBUG=false / NODE_ENV=production).
-   [x] 10. Kredensial, API key, dan webhook secret tersimpan di Environment Vault aman.
-   [x] 11. Endpoint otentikasi SSO terhubung ke production identity realm.
-   [x] 12. Sertifikat SSL/TLS valid dan HTTPS enforced pada seluruh route.
-
-   [D] RENCANA MITIGASI & ROLLBACK
-   [x] 13. Dokumen SOP Rollback 5 Menit tersedia di meja Tech Lead.
-   [x] 14. Tim siaga (Standby Support) ditetapkan untuk masa pemantauan pasca-rilis (72 jam).
-
-3. SIGN-OFF KELAYAKAN RILIS
-   Status Verifikasi : SIAP PRODUKSI (READY FOR PRODUCTION)
-   Quality Gatekeeper: Andhika Putra Pratama, S.Kom. (QA & System Analyst)`
-    },
-    "tad-pushrequest": {
-      title: "TAD_PushRequest_Architecture.doc",
-      snippet: `================================================================================
-TECHNICAL ARCHITECTURE DOCUMENT (TAD) — PUSH REQUEST TRACKER
-Internal DevOps & Deployment Governance Tool — Perum DAMRI
-Lead Developer & System Analyst: Andhika Putra Pratama, S.Kom.
-Status: IMPLEMENTED & IN PRODUCTION
-================================================================================
-
-1. ARSITEKTUR TINGKAT TINGGI (HIGH LEVEL ARCHITECTURE)
-   Push Request Tracker dibangun untuk menyatukan audit commit repository GitHub,
-   pelacakan status deployment ke server live produksi, dan kanban workflow.
-   
-   Alur Data:
-   [GitHub Enterprise Repo] 
-         | (Webhook POST on Push / Release Event)
-         v
-   [Webhook Controller] (HMAC-SHA256 Signature Verification)
-         |
-         v
-   [Ingestion Queue & Background Worker]
-         |
-         +--> [GitHub REST API] (Fetch Commit Diff, File Additions / Deletions)
-         |
-         +--> [PostgreSQL Database] (Audit Trail Storage)
-         |
-         v
-   [Real-Time Kanban UI] (Datatables, Diff Modal, Deploy Approval Gate)
-
-2. DESAIN BASIS DATA UTAMA (DATA ARCHITECTURE)
-   - push_notes       : Header event push, repository, branch, author, commit hash.
-   - change_logs      : Rincian commit message, author, dan ringkasan fungsional.
-   - change_log_files : Rincian nama file, status (added/modified/deleted), lines (+/-).
-   - prod_pulls       : Rekam status penarikan kode ke server produksi live.
-   - users & roles    : RBAC (Admin TI, Tech Lead, Developer, QA Auditor).
-
-3. FITUR KEAMANAN & KEANDALAN SISTEM
-   - HMAC-SHA256 Verification: Memvalidasi header X-Hub-Signature-256 pada setiap event.
-   - Idempotency Handling: Menghindari duplikasi log audit saat terjadi webhook retry.
-   - Rate Limiting: Melindungi server dari lonjakan traffic push mendadak.
-
-4. HASIL KUANTITATIF & NILAI BISNIS
-   - 100% Visibilitas Deployment: Menghilangkan insiden file tertinggal saat rilis.
-   - Efisiensi Approval: Tech Lead dapat menginspeksi file diff langsung dari browser XP
-     sebelum menyetujui penarikan kode ke server live.`
-    },
-        "srs-approval-engine": {
-      title: "SRS_Approval_Workflow_Engine.doc",
-      snippet: `================================================================================
-SOFTWARE REQUIREMENTS SPECIFICATION (SRS) — ENTERPRISE APPROVAL & DELEGATION ENGINE
-PT Nusantara Transindo (Persero) — Holding Logistik & Multimoda Nasional
-Doc Ref: SRS-2026-NT-WF-001 | Version: 2.0-Enterprise | Status: APPROVED FOR IMPLEMENTATION
-Lead System Analyst & Solution Architect: Andhika Putra Pratama, S.Kom.
-Coverage: 50+ Cabang Regional, 3.000+ Pegawai, 1.200 Armada, Modul Procurement/Capex/CR/HR
-================================================================================
-
-1. EXECUTIVE BUSINESS PROBLEM STATEMENT & STATUTORY BASELINE
-   Pada operasional korporat berskala nasional dengan 50+ cabang, alur persetujuan pengadaan
-   barang/jasa (PR/PO), belanja modal (Capex), tiket perubahan sistem (Change Request),
-   dan mutasi/cuti SDM sebelumnya berjalan manual berbasis lembar fisik dan email informal.
-   Hal ini memunculkan 4 risiko fatal:
-   a. Bottleneck Persetujuan (Absentee Delay): Ketika pejabat berwenang dinas luar/cuti,
-      pengajuan tertahan rata-rata 14–21 hari tanpa ada mekanisme penunjukan resmi.
-   b. Hardcoded Approval Trap: Alur persetujuan ditanam di kode aplikasi (hardcoded).
-      Setiap perubahan struktur organisasi mewajibkan developer mengubah kode dan redeploy.
-   c. Ketiadaan SLA & Escalation: Tidak ada timer pengingat (warning) maupun eskalasi
-      otomatis ke atasan jika berkas diabaikan dalam batas 1x24 jam.
-   d. Celah Integritas Audit: Riwayat persetujuan tidak memiliki rantai kriptografis yang
-      membuktikan non-repudiation di hadapan auditor BPK / pengawas internal.
-
-2. FINANCIAL THRESHOLD MATRIX (GCG & PERPRES 16/2018 COMPLIANCE)
-   Sistem mengevaluasi rantai persetujuan secara sekuensial dinamis berdasarkan nominal belanja:
-   --------------------------------------------------------------------------------
-   Tier 1 | Requester / Staf     | < Rp 5.000.000       | Inisiasi & Form Submission
-   Tier 2 | Supervisor / Kasie   | < Rp 25.000.000      | Verifikasi Operasional Cabang
-   Tier 3 | Branch Manager       | < Rp 100.000.000     | Pengadaan Rutin Depo Regional
-   Tier 4 | General Manager/SVP  | < Rp 500.000.000     | Maintenance Berat / Tender Terbatas
-   Tier 5 | VP Divisi Terkait    | < Rp 2.000.000.000   | Kontrak Vendor Tahunan
-   Tier 6 | Direktur Terkait     | < Rp 10.000.000.000  | Capex Pengadaan Armada Baru
-   Tier 7 | Direktur Utama & BoD | > Rp 10.000.000.000  | Investasi Strategis Multi-Tahun
-   --------------------------------------------------------------------------------
-
-3. PEJABAT SEMENTARA (Pjs) DELEGATION PROTOCOL
-   BR-DEL-01 [Scope Restriction]: Pejabat hanya dapat mendelegasikan wewenang ke posisi
-              setara (peer) atau satu tingkat di bawahnya (direct subordinate). Dilarang
-              mendelegasikan wewenang melompati dua tingkat struktural.
-   BR-DEL-02 [Time-Bound Window]: Masa delegasi wajib memiliki tanggal mulai dan selesai
-              (maksimal 30 hari kalender). Kadaluwarsa secara otomatis (auto-revoke).
-   BR-DEL-03 [Threshold Ceiling]: Penerima kuasa (Pjs) tidak boleh melampaui plafon nominal
-              asli pemberi kuasa.
-   BR-DEL-04 [Dual-Identity Audit]: Setiap transaksi mencatat actor_user_id (Pjs yang bertindak)
-              dan delegator_user_id (pejabat asal pemilik hak) demi transparansi hukum penuh.
-
-4. 24-HOUR SLA SENTINEL & AUTO-ESCALATION
-   - SLA Clock: Tepat 24 jam waktu kerja per tier persetujuan.
-   - 18 Jam (75% Elapsed): Sistem mengirimkan peringatan dini via Push Notification & Email.
-   - 24 Jam (100% Breached): SLA Sentinel memicu Boundary Timer Event, otomatis mengeskalasi
-     tiket ke atasan langsung pejabat yang lambat, mencatat penalti SLA pada log KPI pejabat.
-
-5. CONCURRENCY CONTROL & CRYPTOGRAPHIC AUDIT LEDGER
-   - Optimistic Concurrency Control (OCC): Kolom 'version' pada tabel approval_steps.
-     Jika delegator dan Pjs mengklik approve bersamaan, request pertama sukses dan menaikkan
-     version; request kedua gagal seketika dengan HTTP 409 Conflict.
-   - SHA-256 Merkle Hash Chaining: Setiap event persetujuan merekam hash berantai dari blok
-     sebelumnya. Manipulasi data langsung di database akan membatalkan integritas seluruh rantai.`
-    },
-    "sit-approval-engine": {
-      title: "SIT_UAT_Approval_Engine_Matrix.doc",
-      snippet: `================================================================================
-SYSTEM INTEGRATION & USER ACCEPTANCE TESTING (SIT/UAT) SIGN-OFF MATRIX
-Project: Dynamic Multi-Tier Approval Workflow & Delegation Engine
-Doc Ref: QA-MATRIX-2026-NT-003 | Status: 100% EXECUTED & APPROVED
-Lead QA Automation & Test Architect: Andhika Putra Pratama, S.Kom.
-Coverage: 42 Enterprise Test Scenarios (Happy Path, Concurrency, Delegation, SLA, Security)
-================================================================================
-
-1. EXECUTIVE TEST EXECUTION SUMMARY
-   Total Scenarios Executed : 42 Scenarios
-   Passed                   : 42 (100%)
-   Failed / Blocked         : 0 (Zero Tolerance)
-   P1 (Blocker Defects)     : 0 Open
-   P2 (Critical Defects)    : 0 Open
-   P95 API Response Time    : 42ms (Target: < 200ms)
-   Concurrency Contention   : 100 Simultaneous Requests -> 1 Winner, 99 Handled Gracefully
-
-2. CATEGORY BREAKDOWN MATRIX
-   Category A: Happy Path & Threshold Boundaries (10 Scenarios) -> 10 PASSED
-     - TC-HP-01: Inisiasi PR Rp 4.5M (Single Tier Approval - Supervisor) -> PASS
-     - TC-HP-02: Pengadaan Capex Rp 850M (Multi-Tier: Spv -> Mgr -> GM -> VP) -> PASS
-     - TC-HP-03: Akuisisi Armada Rp 12M (Full 7-Tier to President Director) -> PASS
-     - TC-HP-04: Return for Revision flow with differential resubmit -> PASS
-   Category B: Delegation & Pejabat Sementara (Pjs) (8 Scenarios) -> 8 PASSED
-     - TC-DEL-01: Auto-routing ke Pjs saat approver berstatus 'ON_LEAVE' -> PASS
-     - TC-DEL-02: Auto-expire delegasi tepat pada pukul 23:59:59 hari terakhir -> PASS
-     - TC-DEL-03: Pencegahan siklus sirkular (A delegasi ke B, B delegasi ke A) -> PASS (422 Error)
-     - TC-DEL-04: Dual-identity audit recording (Pjs actor vs Delegator principal) -> PASS
-   Category C: SLA Sentinel & Auto-Escalation (6 Scenarios) -> 6 PASSED
-     - TC-SLA-01: Early warning notification pada 75% batas waktu (jam ke-18) -> PASS
-     - TC-SLA-02: Auto-escalation ke atasan langsung pada jam ke-24 tepat -> PASS
-     - TC-SLA-03: Pengecualian hari libur nasional & akhir pekan dari jam SLA -> PASS
-   Category D: Concurrency & Race-Condition Defense (8 Scenarios) -> 8 PASSED
-     - TC-CON-01: Delegator & Pjs klik 'Approve' bersamaan (<5ms) -> 1 Succeeds, 1 409 Conflict
-     - TC-CON-02: Simultan Approve vs Reject -> State terkunci pada aksi pemenang pertama
-     - TC-CON-03: Double-click submit form -> Idempotency-Key mencegah duplikasi baris
-   Category E: Security & Access Control (5 Scenarios) -> 5 PASSED
-     - TC-SEC-01: Unauthorized approval injection via parameter tampering -> 403 Forbidden
-     - TC-SEC-02: Cross-branch requisition tampering -> 403 Forbidden (RBAC Branch Guard)
-     - TC-SEC-03: Database audit ledger tampering detection -> Hash mismatch detected
-   Category F: Boundary Values & Error Recovery (5 Scenarios) -> 5 PASSED
-     - TC-BND-01: Persis pada batas nominal Rp 25.000.000 vs Rp 25.000.001 -> Naik Tier tepat
-     - TC-BND-02: Rollback SOP 5-Menit simulasi kegagalan migrasi -> Sukses tanpa data loss
-
-3. QUALITY GATE & STAKEHOLDER SIGN-OFF
-   Lead Solution Architect  : Andhika Putra Pratama, S.Kom. [SIGNED]
-   Head of Internal Audit   : Dra. Sri Wahyuni, M.Ak., CFrA  [SIGNED]
-   VP Enterprise Systems    : Ir. Bambang Hermanto, M.T.    [SIGNED]`
-    },
-    "srs-payment-recon": {
-      title: "SRS_Payment_Reconciliation_Engine.doc",
-      snippet: `================================================================================
-SOFTWARE REQUIREMENTS SPECIFICATION (SRS) — 3-WAY PAYMENT RECONCILIATION ENGINE
-PT Nusantara Transindo (Persero) & Integrasi SNAP Bank Indonesia
-Doc Ref: SRS-2026-FIN-RECON-002 | Version: 2.1-Enterprise | Status: APPROVED
-Lead System Analyst & FinTech Solutions Architect: Andhika Putra Pratama, S.Kom.
-Ground Truth: Bank Indonesia SNAP (PADG 23/15/PADG/2021) & PBI 23/6/PBI/2021
-================================================================================
-
-1. EXECUTIVE BUSINESS PROBLEM & STATEMENT OF NEED
-   Platform transaksi transportasi dan merchant korporat menerima volume pembayaran
-   tinggi melalui beragam kanal: QRIS SNAP, Virtual Account (Mandiri, BCA, BRI, BNI),
-   dan Kartu Uang Elektronik prabayar. Proses rekonsiliasi manual menimbulkan 3 krisis:
-   a. Webhook Timeout Drops: Sekitar 1.4% notifikasi pembayaran asinkron hilang saat jam sibuk.
-      Nasabah telah terdebit di bank, namun tiket di aplikasi penumpang berstatus UNPAID.
-   b. Cutoff Shifts (23:00 WIB vs UTC 24/7): Transaksi pukul 23:15 WIB tercatat pada tanggal
-      berbeda di mutasi bank vs sistem internal, memicu alarm selisih kas palsu.
-   c. Beban Kerja Spreadsheet Manual: Staf Treasury menghabiskan 40+ jam/bulan mencocokkan
-      jutaan baris Excel dengan rumus VLOOKUP yang rentan human error.
-
-2. 3-WAY MATCHING PIPELINE SPECIFICATION
-   - Leg 1 (Internal Core DB)  : Pesanan tiket dan status billing (orders, tickets)
-   - Leg 2 (Payment Gateway)    : Webhook event callback store (HMAC SHA-256)
-   - Leg 3 (Bank Clearing File) : Mutasi rekening koran SWIFT MT940 / CSV Kliring
-
-3. AUTOMATED SELF-HEALING & ANOMALY RESOLUTION
-   - Asynchronous Healing Daemon: Saat mutasi bank ada tetapi webhook hilang, daemon memanggil
-     API BI SNAP GET /v1.0/debit/status. Jika status confirmed, tiket diterbitkan <90 detik.
-   - Timing Bucket Rollforward: Transaksi antara 23:00-23:59 WIB otomatis dialokasikan ke bucket
-     kliring D+1, menghasilkan 0 Rupiah selisih pembukuan harian.
-   - MDR Deduper Engine: Validasi nominal potongan biaya transaksi (QRIS 0.7%, VA Rp 2.500)
-     menghasilkan pencocokan dana bersih hingga presisi 1 Rupiah.
-
-4. REAL BUSINESS IMPACT METRICS
-   - Durasi Rekonsiliasi : 40 Jam/Bulan -> 12 Menit/Batch (-99.5% Penghematan Waktu)
-   - Selisih Saldo Mengambang : 2.8% -> 0.001% (Nir-Varians)
-   - Temuan Audit BPK / KAP : 100% Wajar Tanpa Pengecualian (WTP)`
-    },
-    "sit-payment-recon": {
-      title: "SIT_UAT_Payment_Recon_Matrix.doc",
-      snippet: `================================================================================
-SIT/UAT TEST EXECUTION MATRIX — 3-WAY PAYMENT RECONCILIATION ENGINE
-Project: Multi-Bank Automated Payment Reconciliation & Settlement Engine
-Doc Ref: QA-RECON-2026-004 | Status: 100% PASSED & SIGNED OFF
-Lead QA Automation: Andhika Putra Pratama, S.Kom.
-Coverage: 35 Enterprise Test Scenarios (SNAP, Cutoff Shift, Fee Deduplication, Rollback)
-================================================================================
-
-1. TEST EXECUTION SUMMARY
-   Total Scenarios Executed : 35 Scenarios
-   Passed                   : 35 (100%)
-   Blocker / Critical Open  : 0 (Zero Tolerance)
-   Reconciliation Accuracy  : 100.00% (Penny-Level Match)
-   Auto-Healing Latency     : P95 = 38 seconds (Target: < 90s)
-
-2. CORE SCENARIOS HIGHLIGHTS
-   [TC-REC-01] Synchronous QRIS SNAP Match -> PASS (Zero Variance)
-   [TC-REC-02] VA Mandiri Gross, Fee & Net Triangulation -> PASS
-   [TC-REC-11] Async Webhook Timeout Drop Healing via SNAP API -> PASS (<90s recovery)
-   [TC-REC-15] X-SIGNATURE Tampering Injection Defense -> PASS (401 Unauthorized)
-   [TC-REC-19] Midnight Cutoff 23:15 WIB Rollforward to D+1 Bucket -> PASS
-   [TC-REC-25] QRIS 0.7% MDR Cent-Rounding Consistency -> PASS
-   [TC-REC-35] 5-Minute Financial Rollback SOP -> PASS (State reverted cleanly)`
-    },
-    "srs-telematics": {
-      title: "SRS_Fleet_Telematics_Fuel_Anomaly.doc",
-      snippet: `================================================================================
-SOFTWARE REQUIREMENTS SPECIFICATION (SRS) — ENTERPRISE FLEET TELEMATICS
-PT Trans Nusantara Logistics & BPH Migas Pengawasan Subsidi BBM
-Doc Ref: SRS-2026-IOT-FLEET-004 | Status: APPROVED FOR PRODUCTION
-Lead System Analyst & IoT Solutions Architect: Andhika Putra Pratama, S.Kom.
-Coverage: 1,500+ Unit Armada, CAN-bus SAE J1939, Protokol MQTT, Kepmenhub KM 158/2021
-================================================================================
-
-1. EXECUTIVE BUSINESS PROBLEM & STATEMENT OF NEED
-   Biaya BBM Solar menyerap 38%-45% Opex armada bus dan truk kargo nasional.
-   Sistem pemantauan manual terdahulu menimbulkan kebocoran Rp 400+ Juta per bulan:
-   a. Pencurian Solar Ilegal (Fuel Siphoning): Pengemudi menyedot 30-50 liter saat berhenti
-      di rest area liar atau parkir malam tanpa izin. Baru terdeteksi setelah 7 hari.
-   b. False Alarm Sloshing: Guncangan armada di jalanan berlubang memicu fluktuasi cairan
-      tangki hingga +/- 15L, memicu ribuan alarm palsu tanpa filter sinyal.
-   c. Deviasi Rute Resmi: Armada keluar koridor izin Ditjen Hubdat demi muatan tidak berizin.
-
-2. ARCHITECTURAL & ALGORITHMIC SPECIFICATION
-   - High-Throughput Ingestion: Kafka / Redis Streams menampung 5.000 ping/detik dari 1.500 bus.
-   - 1D Continuous Kalman Filter: Mengeliminasi noise guncangan jalanan (<0.12% false alarm).
-   - Fuel Siphoning Rule Engine: Penurunan volume >8 Liter dalam <180 detik saat mesin OFF
-     memicu push alert Critical P1 ke Manajer Depo dalam tempo <45 detik.
-   - Dynamic Geofence Corridor: Buffer 250 meter di sepanjang rute resmi Ditjen Hubdat.
-   - SPBU 3-Way Triangulation: Mencocokkan nota Pertamina vs kenaikan sensor tangki (+/- 15 min).
-
-3. MEASURED BUSINESS IMPACT
-   - Penurunan Pencurian BBM : Turun 88.5% (Penghematan Opex Rp 4.2 Miliar/Tahun)
-   - Waktu Deteksi Anomali  : Dari 7 Hari Audit Manual menjadi < 45 Detik Real-Time Alert
-   - Kepatuhan Trayek Resmi : 99.8% Kepatuhan Koridor Geofence
-   - Payback Period IoT      : 2.2 Bulan (Target Awal: 12 Bulan)`
-    },
-    "sit-telematics": {
-      title: "SIT_UAT_Telematics_Matrix.doc",
-      snippet: `================================================================================
-SIT/UAT TEST EXECUTION MATRIX — ENTERPRISE FLEET TELEMATICS & IOT
-Project: Fleet Telematics, Geofencing & Fuel Anomaly Detection Engine
-Doc Ref: QA-IOT-2026-005 | Status: 100% PASSED & SIGNED OFF
-Lead QA Specialist: Andhika Putra Pratama, S.Kom.
-Coverage: 35 Enterprise Test Scenarios (CAN-bus, Kalman Filter, Theft Alert, Geofence)
-================================================================================
-
-1. TEST EXECUTION SUMMARY
-   Total Scenarios Executed : 35 Scenarios
-   Passed                   : 35 (100%)
-   Blocker / Critical Open  : 0 (Zero Tolerance)
-   Detection Alert Latency  : P95 = 34 seconds (Target: < 45s)
-   False Alarm Rate         : 0.08% under severe simulated road vibration
-
-2. CORE SCENARIOS HIGHLIGHTS
-   [IOT-TC-01] J1939 CAN-bus Frame Decode (Fuel, Speed, RPM) -> PASS
-   [IOT-TC-02] Kalman Filter Liquid Sloshing Vibration Suppression -> PASS (<0.1% False Alarm)
-   [IOT-TC-03] Fuel Siphoning Rapid Drop (>8L in <180s, Engine OFF) -> PASS (Alert in 32s)
-   [IOT-TC-04] Geofence Corridor Breach (250m buffer, >5 min deviation) -> PASS
-   [IOT-TC-05] SPBU Struk Reconciliation vs Inflow Sensor Delta -> PASS (1.5% delta matched)
-   [IOT-TC-06] Ghost SPBU Receipt Fraud Detection (0.0L delta flag) -> PASS
-   [IOT-TC-07] GPS Tunnel Blackout Flash Memory Offline Buffer Recovery -> PASS
-   [IOT-TC-08] MQTT Telemetry Packet Replay Attack Defense -> PASS (401 Unauthorized)`
-    },
-    "catalog-artefak": {
-      title: "00_MASTER_INDEX_PORTFOLIO_EVIDENCE.doc",
-      snippet: `================================================================================
-MASTER CATALOG ARTEFAK PORTOFOLIO BISNIS & TEKNIS (DAFTAR PORTO)
-Candidate: Andhika Putra Pratama, S.Kom. (Lead System Analyst & Solution Architect)
-Status: INTERVIEW AUDIT DOSSIER — READY FOR RECRUITER & DIRECTORS
-Location: E:/KODING/Porto/Daftar Porto/ (Confidential Enterprise Evidence)
-================================================================================
-
-1. STRUKTUR BERKAS STANDAR BISNIS (.DOCX & .XLSX):
-   [01_Multi_Tier_Approval_Engine]
-   • 01_SRS_Approval_Workflow_Engine.docx (55 KB) - 24 FR, 10 NFR, 7-Tier Thresholds
-   • 02_Financial_Threshold_Matrix_and_SLA_Model.xlsx (11 KB) - Model 50 Transaksi & SLA
-   • 03_SIT_UAT_Test_Execution_Matrix.xlsx (12 KB) - 42 Skenario SIT/UAT Formal
-
-   [02_Payment_Reconciliation_Settlement_Engine]
-   • 01_SRS_Payment_Reconciliation_Engine.docx (41 KB) - 3-Way Matching SNAP Bank Indonesia
-   • 02_Three_Way_Reconciliation_and_Discrepancy_Model.xlsx (14 KB) - 100 Transaksi Multikanal
-   • 03_SIT_UAT_Payment_Recon_Matrix.xlsx (10 KB) - 35 Skenario UAT Rekonsiliasi & Cutoff
-   • 04_Executive_Summary_and_Data_Sources.docx (38 KB) - Rujukan Regulasi PADG BI & SPKN
-
-   [03_Seat_Lock_and_Concurrency_Engine]
-   • 01_SRS_Seat_Lock_Concurrency_Engine.docx (38 KB) - Distributed Mutex (Redis SETNX)
-   • 02_Concurrency_Stress_Test_and_Capacity_Model.xlsx (6 KB) - Model Beban k6 10.000 VU
-   • 03_SIT_UAT_Seat_Lock_Matrix.xlsx (6 KB) - 30 Skenario UAT Konkurensi & Failover
-
-2. GROUND TRUTH SOURCES & REGULATORY CITATIONS:
-   - Bank Indonesia SNAP (PADG No. 23/15/PADG/2021)
-   - Peraturan Presiden No. 16/2018 jo No. 12/2021 & PER-08/MBU/12/2019
-   - Standar Pemeriksaan Keuangan Negara (SPKN) BPK RI & PSAK 71`
-    },
-    "srs-seatlock": {
-      title: "SRS_SeatLock_Engine_v1.0.doc",
-      snippet: `================================================================================
-SOFTWARE REQUIREMENTS SPECIFICATION (SRS) — SEAT LOCK ENGINE
-High-Concurrency Reservation, Race Condition & Idempotency Specification
-Doc Ref: SRS-RND-SL-2026-001 | Version: 1.0-R&D | Status: DRAFT — R&D LAB
-Author / System Analyst: Andhika Putra Pratama, S.Kom.
-Domain: High-Throughput Transport & Fleet Reservation Systems
-================================================================================
-
-1. EXECUTIVE BUSINESS PROBLEM STATEMENT
-   Pada sistem reservasi tiket armada transportasi berskala nasional saat peak season
-   (seperti mudik Lebaran atau promo flash sale), lonjakan ribuan pemesanan per detik 
-   memicu race condition fatal:
-   a. Double-Booking Catastrophe: Dua pengguna berhasil membayar kursi yang persis sama
-      karena jeda latensi database relasional (phantom read / non-atomic read-then-write).
-   b. Zombie Seat Locks: Kursi dikunci oleh pengguna yang meninggalkan halaman checkout,
-      sehingga kursi hangus tanpa ada pembelian riil (lost revenue).
-   c. Network Retry Duplication: Koneksi internet seluler yang tidak stabil membuat aplikasi
-      mengirimkan ulang request pemesanan, menduplikasi transaksi di payment gateway.
-
-2. SYSTEM SCOPE & CORE MODULES (8 Core Modules)
-   [MOD-01] Real-Time Seat Inventory & Topology Matrix
-   [MOD-02] Distributed Lock Manager (Redis SETNX + Dynamic TTL)
-   [MOD-03] Checkout Orchestrator & State Transition Engine
-   [MOD-04] Payment Webhook Ingestion & 3-Way Reconciliation
-   [MOD-05] TTL Watchdog & Zombie Key Auto-Eviction
-   [MOD-06] Idempotency Registry (UUIDv4 Key De-duplication)
-   [MOD-07] Cryptographic Audit Trail & Event Sourcing Ledger
-   [MOD-08] Concurrency Telemetry & Capacity Stress Analytics
-
-3. CRITICAL BUSINESS RULES & CONCURRENCY GOVERNANCE
-   BR-SL-01 [Plafon Kursi]: Maksimal 4 kursi per akun per sesi transaksi.
-   BR-SL-02 [Lock Expiry TTL]: Kunci kursi bersifat sementara dengan TTL tepat 10 menit
-            (600 detik). Watchdog wajib melepas lock jika checkout tidak rampung.
-   BR-SL-03 [Mandatori Idempotency]: Setiap transaksi wajib menyertakan header Idempotency-Key
-            (UUIDv4). Request identik dalam 24 jam wajib mengembalikan response cache 200 OK.
-   BR-SL-04 [Penanganan Webhook Terlambat]: Jika notifikasi bayar masuk setelah TTL habis
-            dan kursi sudah dibeli orang lain, engine otomatis menerbitkan auto-refund voucher.
-   BR-SL-05 [Pessimistic Fallback]: Redis Cluster sebagai primary distributed lock, dengan
-            database pessimistic locking (SELECT FOR UPDATE) sebagai secondary consistency guard.
-   BR-SL-06 [Audit Trail Immutability]: Setiap event pergantian state (LOCKED, RELEASED,
-            BOOKED) wajib ditulis ke event stream yang append-only.
-
-4. DATA DICTIONARY HIGHLIGHTS (seat_locks table)
-   - id             : UUID (Primary Key, Cluster Clustered Index)
-   - seat_id        : VARCHAR(32) (Foreign Key ke seats.id, Indexed)
-   - session_token  : VARCHAR(64) (Kriptografis unik pemegang kunci)
-   - locked_at      : TIMESTAMP WITH TIME ZONE (Presisi milidetik)
-   - ttl_expires_at : TIMESTAMP WITH TIME ZONE (Evaluasi kedaluwarsa)
-   - status         : ENUM('TEMP_LOCKED', 'CHECKOUT', 'BOOKED', 'EXPIRED')
-   - idempotency_key: VARCHAR(64) (Unique constraint, 24h retention)
-
-5. NON-FUNCTIONAL REQUIREMENTS (NFR) & ARCHITECTURAL BENCHMARKS
-   - P99 Lock Acquisition Latency : < 50 milidetik pada beban 10.000 req/detik.
-   - Double-Booking Tolerance     : 0.00% (Strict Zero-Tolerance).
-   - Redis Memory Footprint       : ~256 bytes per active seat lock key.
-   - Failure Mode SLA             : Graceful degradation ke database transaction boundary.`
-    }
-  };
+  const sampleDocsData = workDocsMap;
 
   (window as any).openCvPdf = function() {
     const container = document.getElementById('xp-desktop-container');
@@ -4853,6 +4249,12 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
     const contentEl = document.getElementById('doc-viewer-content');
     if (titleEl) titleEl.innerText = data.title;
     if (contentEl) contentEl.innerText = data.snippet;
+    const permalinkEl = document.getElementById('doc-viewer-permalink') as HTMLAnchorElement;
+    if (permalinkEl) {
+      const container = document.getElementById('xp-desktop-container');
+      const baseUrl = container?.dataset.baseUrl || document.body.dataset.baseUrl || '/newporto';
+      permalinkEl.href = `${baseUrl}/docs/${docKey}/`;
+    }
     (window as any).openWindow('win-doc-viewer');
   };
 
@@ -5291,7 +4693,9 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
     { id: 'cmd-projects', title: 'Command: projects', titleId: 'Perintah: projects', desc: 'Open case studies', descId: 'Buka studi kasus', type: 'command', keywords: 'command projects', action: () => (window as any).openWindow('win-projects') },
     { id: 'cmd-contact', title: 'Command: contact', titleId: 'Perintah: contact', desc: 'Open contact', descId: 'Buka kontak', type: 'command', keywords: 'command contact', action: () => (window as any).openWindow('win-contact') },
     { id: 'cmd-notepad', title: 'Command: notepad', titleId: 'Perintah: notepad', desc: 'Open Notepad', descId: 'Buka Notepad', type: 'command', keywords: 'command notepad', action: () => (window as any).openWindow('win-notepad') },
-    { id: 'cmd-search', title: 'Command: search', titleId: 'Perintah: search', desc: 'Open search', descId: 'Buka pencarian', type: 'command', keywords: 'command search', action: () => (window as any).openWindow('win-search') }
+    { id: 'cmd-search', title: 'Command: search', titleId: 'Perintah: search', desc: 'Open search', descId: 'Buka pencarian', type: 'command', keywords: 'command search', action: () => (window as any).openWindow('win-search') },
+    { id: 'win-concurrency', title: 'Concurrency Visualizer', titleId: 'Visualizer Konkurensi', desc: 'Interactive Redis Distributed Lock & 50-Request Race Simulator', descId: 'Simulator Lock Terdistribusi Redis & 50 Request Konkuren', type: 'tool', keywords: 'concurrency visualizer race condition mutex redis setnx seatlock distributed lock 409 conflict', action: () => { (window as any).openWindow('win-concurrency'); (window as any).simulateConcurrency?.(50); } },
+    { id: 'win-print-spooler', title: 'Printers and Faxes', titleId: 'Printer dan Faks', desc: 'EPSON LX-300+ II Dot-Matrix Print Spooler with Web Audio SFX', descId: 'Spooler Cetak Dot-Matrix EPSON LX-300+ II dengan Web Audio SFX', type: 'tool', keywords: 'printer print spooler epson lx300 dot matrix printui cetak', action: () => (window as any).openPrintSpooler?.('Document.doc') }
   ];
 
   function renderRoverResults(results: typeof roverIndex) {
@@ -5350,6 +4754,182 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
   roverBtn?.addEventListener('click', runRoverSearch);
   roverInput?.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') runRoverSearch();
+  });
+
+  // Rover Recruiter Co-Pilot Prompt Pills Handler
+  function handleRoverPillClick(pillType: string | null) {
+    if (!roverResults) return;
+    if (roverInput) roverInput.value = '';
+
+    if (pillType === 'why-andhika') {
+      if (roverSpeech) {
+        roverSpeech.innerText = currentLang === 'id'
+          ? 'Guk! Inilah alasan kenapa Andhika adalah kandidat ideal: Lead System Analyst berpengalaman dengan 40+ sistem enterprise, gatekeeper mutu QA berstandar ketat, dan developer hands-on yang menjamin 0% race condition!'
+          : 'Woof! Here is why Andhika is the ideal hire: Proven Lead System Analyst with 40+ enterprise systems, rigorous QA quality gatekeeper, and hands-on developer who enforces 0% race condition concurrency!';
+      }
+      roverResults.innerHTML = `
+        <div class="p-3 rounded-lg border-2 border-blue-400 bg-gradient-to-b from-blue-50 to-indigo-50 shadow-md space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-blue-950 text-xs flex items-center gap-1.5">
+              <span>🎯</span>
+              <span>${currentLang === 'id' ? 'Kenapa Memilih Andhika Putra Pratama?' : 'Why Hire Andhika Putra Pratama?'}</span>
+            </span>
+            <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white font-mono text-[9px] font-bold">SCORE: 100/100</span>
+          </div>
+          <p class="text-slate-800 text-[11px] leading-relaxed">
+            ${currentLang === 'id'
+              ? '<strong>Kandidat Langka Triad (SA &gt; QA &gt; Dev):</strong> Memiliki kedalaman formal dalam memetakan dokumen arsitektur ISO/IEC 29148 &amp; BPMN 2.0, memimpin pengujian SIT/UAT zero-defect, serta mengeksekusi rekayasa konkurensi skala tinggi.'
+              : '<strong>Rare Triad Candidate (SA &gt; QA &gt; Dev):</strong> Masters formal ISO/IEC 29148 &amp; BPMN 2.0 technical architecture, orchestrates zero-defect SIT/UAT gates, and executes hands-on high-concurrency engineering.'}
+          </p>
+          <div class="grid grid-cols-2 gap-1.5 text-[10.5px]">
+            <div class="p-1.5 bg-white rounded border border-blue-200">
+              <strong class="text-blue-900 block">🏛️ 40+ Enterprise Specs</strong>
+              <span class="text-slate-600">BRD/SRS, 3NF ERD, TAD &amp; ITIL Logs</span>
+            </div>
+            <div class="p-1.5 bg-white rounded border border-emerald-200">
+              <strong class="text-emerald-900 block">💰 Rp 4.2B+ Financial ROI</strong>
+              <span class="text-slate-600">Diesel OPEX &amp; reconciliation savings</span>
+            </div>
+            <div class="p-1.5 bg-white rounded border border-purple-200">
+              <strong class="text-purple-900 block">🛡️ 0% Race Condition</strong>
+              <span class="text-slate-600">Hard-lock Redis SETNX &amp; OCC</span>
+            </div>
+            <div class="p-1.5 bg-white rounded border border-amber-200">
+              <strong class="text-amber-900 block">🎓 GPA 3.73 &bull; TOEFL 640</strong>
+              <span class="text-slate-600">B.Eng. Informatics ITERA</span>
+            </div>
+          </div>
+          <div class="pt-2 border-t border-blue-200 flex flex-wrap gap-1.5">
+            <button class="xp-btn xp-btn-default text-[10px] font-bold" onclick="openWindow('win-fasttrack')">
+              ⚡ Open Fast-Track Scorecard
+            </button>
+            <button class="xp-btn text-[10px] font-bold" onclick="openCvPdf()">
+              📄 Download ATS CV
+            </button>
+            <button class="xp-btn text-[10px]" onclick="openPrintSpooler('Resume_Andhika_Putra_Pratama.doc')">
+              🖨️ Dot-Matrix Print
+            </button>
+          </div>
+        </div>
+      `;
+    } else if (pillType === 'concurrency') {
+      if (roverSpeech) {
+        roverSpeech.innerText = currentLang === 'id'
+          ? 'Guk! Telusuri Arsitektur Concurrency! Menggunakan Redis SETNX Distributed Mutex, TTL Watchdog, dan pengujian stress 10.000 req/s dengan 0% double-booking!'
+          : 'Woof! Check out the Concurrency Architecture! Powered by Redis SETNX Distributed Mutex, TTL Watchdogs, and stress-tested under 10,000 req/s with 0% double-booking!';
+      }
+      roverResults.innerHTML = `
+        <div class="p-3 rounded-lg border-2 border-emerald-400 bg-gradient-to-b from-emerald-50 to-teal-50 shadow-md space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-emerald-950 text-xs flex items-center gap-1.5">
+              <span>⚡</span>
+              <span>${currentLang === 'id' ? 'Engine Reservasi Konkurensi Tinggi' : 'High-Concurrency Distributed Lock'}</span>
+            </span>
+            <span class="px-1.5 py-0.5 rounded bg-emerald-700 text-white font-mono text-[9px] font-bold">10.000 REQ/S</span>
+          </div>
+          <p class="text-slate-800 text-[11px] leading-relaxed">
+            ${currentLang === 'id'
+              ? 'Arsitektur penguncian terdistribusi untuk eliminasi <em>race condition</em> pada lonjakan flash sale mudik: 1 Pemenang mendapatkan status 201 Created dalam 4.2ms, sedangkan 49 permintaan lainnya ditolak aman dalam 12ms via HTTP 409 Conflict.'
+              : 'Distributed locking architecture eliminating race conditions under holiday flash-sale traffic: 1 Winner acquires HTTP 201 Created in 4.2ms, while 49 conflicting requests safely fail-fast in 12ms via HTTP 409 Conflict.'}
+          </p>
+          <div class="bg-white p-2 rounded border border-emerald-200 font-mono text-[10.5px] text-slate-800 space-y-1">
+            <div><span class="text-slate-500">Atomic Command:</span> <span class="font-bold text-emerald-700">SETNX seat:damri:sub-jkt-12A {token} EX 600</span></div>
+            <div><span class="text-slate-500">Safety Invariant:</span> <span class="font-bold text-blue-900">0% Double-Booking &bull; P99 &lt; 45ms</span></div>
+          </div>
+          <div class="pt-2 border-t border-emerald-200 flex flex-wrap gap-1.5">
+            <button class="xp-btn xp-btn-default text-[10px] font-bold" onclick="simulateConcurrency(50)">
+              ⚡ Launch Interactive Visualizer
+            </button>
+            <button class="xp-btn text-[10px] font-bold" onclick="openWindow('win-projects'); setTimeout(() => { const row = document.querySelector('[data-project-id=\'seat-lock-concurrency-engine\']'); row?.dispatchEvent(new Event('click')); }, 200);">
+              📖 Read Case Study
+            </button>
+          </div>
+        </div>
+      `;
+    } else if (pillType === 'proof-40') {
+      if (roverSpeech) {
+        roverSpeech.innerText = currentLang === 'id'
+          ? 'Guk! Ini bukti 40+ sistem enterprise tervalidasi: Dari sistem BUMN PUMK & Push Request, tata kelola pengadaan, hingga arsitektur telematika IoT!'
+          : 'Woof! Here is the auditable proof of 40+ documented enterprise systems: From BUMN PUMK & Push Request to multi-tier procurement and IoT fleet telematics!';
+      }
+      roverResults.innerHTML = `
+        <div class="p-3 rounded-lg border-2 border-amber-400 bg-gradient-to-b from-amber-50 to-yellow-50 shadow-md space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-amber-950 text-xs flex items-center gap-1.5">
+              <span>📋</span>
+              <span>${currentLang === 'id' ? 'Katalog 40+ Sistem Enterprise' : 'Catalogue of 40+ Enterprise Systems'}</span>
+            </span>
+            <span class="px-1.5 py-0.5 rounded bg-amber-600 text-white font-mono text-[9px] font-bold">AUDITED GCG</span>
+          </div>
+          <p class="text-slate-800 text-[11px] leading-relaxed">
+            ${currentLang === 'id'
+              ? 'Terdokumentasi lengkap dalam 15 berkas teknis formal mencakup BRD/SRS ISO/IEC 29148, kamus data 3NF, matriks SIT/UAT 42 skenario, checklist Go-Live, dan log ITIL Change Request.'
+              : 'Thoroughly documented across 15 formal technical specs including ISO/IEC 29148 BRD/SRS, 3NF data dictionaries, 42-scenario SIT/UAT matrices, and ITIL Change Request logs.'}
+          </p>
+          <div class="grid grid-cols-2 gap-1.5 text-[10.5px]">
+            <div class="p-1.5 bg-white rounded border border-amber-200">
+              <strong class="text-slate-900 block">PUMK &amp; Push Request</strong>
+              <span class="text-slate-600">Sistem Produksi BUMN DAMRI</span>
+            </div>
+            <div class="p-1.5 bg-white rounded border border-amber-200">
+              <strong class="text-slate-900 block">Core ERP &amp; Governance</strong>
+              <span class="text-slate-600">SIMA, HCMS, DILS, e-Proposal</span>
+            </div>
+          </div>
+          <div class="pt-2 border-t border-amber-200 flex flex-wrap gap-1.5">
+            <button class="xp-btn xp-btn-default text-[10px] font-bold" onclick="openWindow('win-docs-folder')">
+              📁 Open Work Docs (15 Specs)
+            </button>
+            <button class="xp-btn text-[10px]" onclick="openSampleDoc('enterprise-systems')">
+              📜 View Catalogue
+            </button>
+            <button class="xp-btn text-[10px]" onclick="openWindow('win-projects')">
+              🔍 Explore Case Studies
+            </button>
+          </div>
+        </div>
+      `;
+    } else if (pillType === 'download-cv') {
+      if (roverSpeech) {
+        roverSpeech.innerText = currentLang === 'id'
+          ? 'Guk! Membuka CV ATS standar (PDF) untuk ditinjau dan diunduh seketika!'
+          : 'Woof! Opening the ATS-friendly Resume PDF for immediate review and download!';
+      }
+      roverResults.innerHTML = `
+        <div class="p-3 rounded-lg border-2 border-purple-400 bg-gradient-to-b from-purple-50 to-indigo-50 shadow-md space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="font-black text-purple-950 text-xs flex items-center gap-1.5">
+              <span>📄</span>
+              <span>${currentLang === 'id' ? 'Resume Standar ATS & Profil Eksekutif' : 'ATS Resume & Executive Credentials'}</span>
+            </span>
+            <span class="px-1.5 py-0.5 rounded bg-purple-700 text-white font-mono text-[9px] font-bold">READY TO PRINT</span>
+          </div>
+          <p class="text-slate-800 text-[11px] leading-relaxed">
+            ${currentLang === 'id'
+              ? 'Tersedia dalam format PDF 1-halaman standar parser ATS, dokumen WordPad teks lengkap, serta simulasi cetak printer dot-matrix EPSON LX-300+ II.'
+              : 'Available as a clean 1-page single-column ATS PDF, full WordPad monospace document, and retro EPSON LX-300+ II dot-matrix print spooler simulation.'}
+          </p>
+          <div class="pt-2 border-t border-purple-200 flex flex-wrap gap-1.5">
+            <button class="xp-btn xp-btn-default text-[10px] font-bold" onclick="openCvPdf()">
+              📥 View &amp; Download CV_ATS.pdf
+            </button>
+            <button class="xp-btn text-[10px] font-bold" onclick="openPrintSpooler('Resume_Andhika_Putra_Pratama.doc')">
+              🖨️ Dot-Matrix Spooler (SFX)
+            </button>
+            <button class="xp-btn text-[10px]" onclick="openWindow('win-gallery')">
+              📜 Verified Credentials
+            </button>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.rover-prompt-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const pillType = btn.getAttribute('data-pill');
+      handleRoverPillClick(pillType);
+    });
   });
 
   // 9b. Notepad Sticky Notes (localStorage persistence)
@@ -5599,7 +5179,12 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
       summary: () => (window as any).openWindow('win-fasttrack'),
       metrics: () => (window as any).openWindow('win-fasttrack'),
       approval: () => (window as any).openWindow('win-sdlc'),
-      seatlock: () => (window as any).openWindow('win-sdlc'),
+      seatlock: () => { (window as any).openWindow('win-concurrency'); (window as any).simulateConcurrency?.(50); },
+      concurrency: () => { (window as any).openWindow('win-concurrency'); (window as any).simulateConcurrency?.(50); },
+      visualizer: () => (window as any).openWindow('win-concurrency'),
+      spooler: () => (window as any).openPrintSpooler?.('Document.doc'),
+      print: () => (window as any).openPrintSpooler?.('Document.doc'),
+      printui: () => (window as any).openPrintSpooler?.('Document.doc'),
       contact: () => (window as any).openWindow('win-contact'),
       notepad: () => (window as any).openWindow('win-notepad'),
       search: () => (window as any).openWindow('win-search'),
@@ -5692,6 +5277,8 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
           &bull; <span class="text-yellow-300">media</span>    - Buka Windows Media Player<br/>
           &bull; <span class="text-yellow-300">sdlc</span>     - Buka SDLC Lens<br/>
           &bull; <span class="text-yellow-300">approval</span> - Simulasi Dynamic Multi-Tier Approval Engine<br/>
+          &bull; <span class="text-yellow-300">concurrency / seatlock</span> - Simulasi 50 Booking Konkuren &amp; Redis SETNX Mutex<br/>
+          &bull; <span class="text-yellow-300">print / spooler</span> - Buka Windows XP Print Spooler (EPSON LX-300+ II SFX)<br/>
           &bull; <span class="text-yellow-300">notepad</span>  - Buka Notepad<br/>
           &bull; <span class="text-yellow-300">search</span>   - Buka Search Companion<br/>
           &bull; <span class="text-yellow-300">shutdown</span> - Matikan komputer<br/>
@@ -5703,6 +5290,23 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
           &bull; <span class="text-yellow-300">screensaver</span> - Screensaver 3D Teks<br/>
           &bull; <span class="text-yellow-300">crash / bsod</span> - Blue Screen of Death Easter Egg<br/>
           &bull; <span class="text-yellow-300">clear</span>    - Bersihkan layar terminal
+        `;
+      } else if (val === 'concurrency' || val === 'seatlock' || val === 'simulate-lock') {
+        (window as any).openWindow('win-concurrency');
+        (window as any).simulateConcurrency?.(50);
+        resp.innerHTML = `
+          <span class="text-cyan-300 font-bold">=== Microcok Concurrency Visualizer v1.0 ===</span><br/>
+          &gt; Target Resource: <span class="text-yellow-300">seat:damri:sub-jkt-12A</span><br/>
+          &gt; Ingress Load: <span class="text-white">50 concurrent requests dispatched</span><br/>
+          &gt; Evaluating Redis SETNX Mutex with 600s TTL Watchdog...<br/>
+          &gt; Status: <span class="text-emerald-400 font-bold">1 Winner (201) &bull; 49 Conflicts (409) &bull; 0 Race Conditions</span>
+        `;
+      } else if (val === 'print' || val === 'spooler' || val === 'printui') {
+        (window as any).openPrintSpooler?.('Document.doc');
+        resp.innerHTML = `
+          <span class="text-emerald-300 font-bold">=== Microcok Print Spooler (printui.dll) ===</span><br/>
+          &gt; Active Device: <span class="text-white">EPSON LX-300+ II (LPT1: 9-Pin Dot Matrix)</span><br/>
+          &gt; Audio Engine: <span class="text-cyan-300">Web Audio API Mechanical Synthesizer Active</span>
         `;
       } else if (val === 'andhika') {
         resp.innerHTML = `
