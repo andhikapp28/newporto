@@ -50,8 +50,6 @@ import {
   Monitor,
   Info,
   Smile,
-  Crosshair,
-  Flame
 } from '@lucide/astro';
 
 const allProjects = await getCollection('projects');
@@ -247,7 +245,7 @@ const sampleWorkDocs = [
            data-open="win-games-folder"
            title="Games"
            data-tooltip-title="Games (Folder)"
-           data-tooltip-desc="Folder game klasik Windows XP: Minesweeper (winmine.exe), DOOM (DOOM.EXE), 3D Pinball, dan Solitaire. | Classic Windows XP games: Minesweeper (winmine.exe), DOOM (DOOM.EXE), 3D Pinball, and Solitaire.">
+           data-tooltip-desc="Folder game klasik Windows XP: Minesweeper (winmine.exe), 3D Pinball, dan Solitaire. | Classic Windows XP games: Minesweeper (winmine.exe), 3D Pinball, and Solitaire.">
         <div class="w-10 h-10 mb-0.5 rounded flex items-center justify-center bg-gradient-to-br from-amber-100 to-yellow-200 border border-amber-400 shadow-md group-hover:scale-105 transition-transform relative">
           <Folder class="w-6 h-6 text-amber-500 fill-amber-400" />
           <Bomb class="w-3.5 h-3.5 text-red-600 absolute bottom-1 right-1 drop-shadow" />
@@ -2934,25 +2932,6 @@ const sampleWorkDocs = [
             </div>
           </div>
 
-          <!-- Game 4: Doom 95 (DOOM95.EXE - Official Microsoft Windows 95 DirectX Port) -->
-          <div
-            class="p-3.5 rounded-lg border-2 border-red-500 bg-gradient-to-br from-red-50/90 to-amber-50/70 hover:from-red-100 hover:border-red-600 cursor-pointer group flex items-start gap-3.5 transition-all shadow-xs"
-            onclick="openWindow('win-doom')"
-          >
-            <div class="w-10 h-10 rounded bg-gradient-to-br from-stone-900 to-red-950 border-2 border-red-500 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform text-red-500">
-              <Flame class="w-6 h-6 text-red-500 fill-red-500/30" />
-            </div>
-            <div>
-              <div class="flex items-center gap-1.5 mb-0.5">
-                <span class="px-1.5 py-0.2 rounded bg-red-100 text-red-800 border border-red-300 font-mono text-[9px] font-bold uppercase">Doom 95 DirectX</span>
-              </div>
-              <div class="font-bold text-red-950 group-hover:underline text-sm">Doom 95 (DOOM95.EXE)</div>
-              <div class="text-[11px] text-slate-600 mt-0.5 i18n" data-en="Official 1996 Windows 95 DirectX port by Microsoft (lead by Gabe Newell). Authentic Launcher & complete game engine!" data-id="Port resmi Windows 95 DirectX legendaris oleh Microsoft (dipimpin Gabe Newell). Lengkap dengan Launcher otentik & game engine asli!">Official 1996 Windows 95 DirectX port by Microsoft (lead by Gabe Newell). Authentic Launcher & complete game engine!</div>
-              <div class="text-[10.5px] text-red-700 font-bold mt-2 flex items-center gap-1">
-                <span>▶ Jalankan Doom 95</span> &rarr;
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -2996,364 +2975,6 @@ const sampleWorkDocs = [
           </div>
         </div>
       </div>
-
-    <!-- WINDOW 19: Doom 95 (DOOM95.EXE - Microsoft Windows 95 DirectX Port) -->
-    <div
-      id="win-doom"
-      class="xp-window absolute top-2 sm:top-6 left-1 sm:left-24 w-[700px] max-w-[calc(100vw-8px)] rounded-t-lg shadow-2xl border-[3px] border-[#0055ea] bg-[#ece9d8] text-slate-800 z-30 flex flex-col overflow-hidden hidden"
-    >
-      <!-- Titlebar -->
-      <div class="xp-titlebar h-7 px-2 flex items-center justify-between cursor-move select-none text-white shadow-inner bg-gradient-to-r from-[#0055ea] via-[#2a77f0] to-[#0055ea]">
-        <div class="flex items-center gap-2 font-bold text-xs tracking-wide drop-shadow truncate">
-          <Flame class="w-3.5 h-3.5 text-red-400 fill-red-400 shrink-0" />
-          <span>Doom for Windows 95 (DOOM95.EXE — Microcok DirectX Edition)</span>
-        </div>
-        <div class="flex items-center gap-1 shrink-0">
-          <button class="win-btn-minimize" title="Minimize"><Minus class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-maximize" title="Maximize"><Square class="w-2.5 h-2.5" /></button>
-          <button class="win-btn-close" title="Close"><X class="w-2.5 h-2.5" /></button>
-        </div>
-      </div>
-
-      <!-- Navigation & Mode Bar -->
-      <div class="h-7 px-2 flex items-center justify-between text-[11px] bg-[#e0dccf] border-b border-[#c8c4b7] text-slate-800 select-none">
-        <div class="flex items-center gap-1">
-          <button id="d95-tb-launcher" class="px-2.5 py-1 rounded-t text-xs font-bold bg-[#1b3f94] text-white flex items-center gap-1 cursor-pointer transition-colors shadow-xs">
-            <span>⚙</span> <span>Doom 95 Launcher</span>
-          </button>
-          <button id="d95-tb-doom1" class="px-2.5 py-1 rounded-t text-xs text-slate-700 hover:bg-slate-200 flex items-center gap-1 cursor-pointer transition-colors">
-            <span>▶</span> <span>DOOM I (1993)</span>
-          </button>
-          <button id="d95-tb-doom2" class="px-2.5 py-1 rounded-t text-xs text-slate-700 hover:bg-slate-200 flex items-center gap-1 cursor-pointer transition-colors">
-            <span>▶</span> <span>DOOM II: Hell on Earth</span>
-          </button>
-        </div>
-        <div class="flex items-center gap-2">
-          <button id="d95-tb-fullscreen" class="px-2 py-0.5 rounded bg-white border border-slate-400 hover:bg-yellow-100 text-[10px] font-bold text-slate-700 flex items-center gap-1 cursor-pointer" title="Enter Fullscreen">
-            <span>⛶</span> <span class="hidden sm:inline">Fullscreen</span>
-          </button>
-          <button id="d95-tb-cheats" class="px-2 py-0.5 rounded bg-white border border-slate-400 hover:bg-yellow-100 text-[10px] font-bold text-red-700 flex items-center gap-1 cursor-pointer" title="Cheat Codes">
-            <span>🔑</span> <span>Cheats</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- VIEW 1: AUTHENTIC DOOM 95 LAUNCHER -->
-      <div id="doom95-launcher-view" class="p-3 bg-[#ece9d8] flex flex-col gap-2.5">
-        <!-- Banner Header -->
-        <div class="p-2.5 rounded bg-gradient-to-r from-stone-950 via-red-950 to-stone-900 border border-red-900 shadow-inner flex items-center justify-between text-white">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded bg-red-600/20 border border-red-500/50 flex items-center justify-center shrink-0">
-              <Flame class="w-6 h-6 text-red-500 fill-red-500/40" />
-            </div>
-            <div>
-              <div class="font-black text-base sm:text-lg tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-yellow-400 to-amber-200 drop-shadow">
-                DOOM FOR WINDOWS 95
-              </div>
-              <div class="text-[10px] text-slate-300 font-mono">
-                DirectX 1.0/2.0 Showcase Port • Directed by Gabe Newell (Microsoft)
-              </div>
-            </div>
-          </div>
-          <div class="hidden sm:block text-right font-mono text-[9px] text-amber-300/80">
-            <div>v3.0.0.0 (Win32)</div>
-            <div>DirectDraw Active</div>
-          </div>
-        </div>
-
-        <!-- Launcher Tabs Header -->
-        <div class="flex items-center border-b border-[#999] px-1 gap-1 text-xs select-none">
-          <button class="d95-tab-btn px-3 py-1 rounded-t border-t border-l border-r border-[#999] -mb-[1px] bg-[#ece9d8] font-bold text-slate-900 cursor-pointer" data-tab="main">Main</button>
-          <button class="d95-tab-btn px-3 py-1 rounded-t border-t border-l border-r border-[#bbb] -mb-[1px] bg-[#d4d0c8] text-slate-600 cursor-pointer" data-tab="display">Display</button>
-          <button class="d95-tab-btn px-3 py-1 rounded-t border-t border-l border-r border-[#bbb] -mb-[1px] bg-[#d4d0c8] text-slate-600 cursor-pointer" data-tab="audio">Audio</button>
-          <button class="d95-tab-btn px-3 py-1 rounded-t border-t border-l border-r border-[#bbb] -mb-[1px] bg-[#d4d0c8] text-slate-600 cursor-pointer" data-tab="directx">DirectX & History</button>
-        </div>
-
-        <!-- TAB CONTENT 1: MAIN -->
-        <div id="d95-panel-main" class="d95-panel p-3 bg-[#ece9d8] border border-t-0 border-[#999] rounded-b shadow-inner">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <!-- Left Column -->
-            <div class="space-y-2.5">
-              <fieldset class="border border-slate-400 p-2 rounded bg-white/40 text-xs">
-                <legend class="px-1 text-slate-800 font-bold text-[11px]">Game WAD File</legend>
-                <select id="d95-wad-select" class="w-full bg-white border border-slate-400 p-1 text-xs rounded">
-                  <option value="doom1">DOOM.WAD — The Ultimate DOOM (Shareware E1)</option>
-                  <option value="doom2">DOOM2.WAD — DOOM II: Hell on Earth</option>
-                </select>
-                <div class="text-[10px] text-slate-500 mt-1">IWAD: C:\MICROCOK\GAMES\DOOM95\DOOM.WAD</div>
-              </fieldset>
-
-              <fieldset class="border border-slate-400 p-2 rounded bg-white/40 text-xs">
-                <legend class="px-1 text-slate-800 font-bold text-[11px]">Skill Level</legend>
-                <select id="d95-skill-select" class="w-full bg-white border border-slate-400 p-1 text-xs font-mono rounded">
-                  <option value="1">1. I'm too young to die (Easy)</option>
-                  <option value="2">2. Hey, not too rough (Moderate)</option>
-                  <option value="3" selected>3. Hurt me plenty (Standard)</option>
-                  <option value="4">4. Ultra-Violence (Hardcore)</option>
-                  <option value="5">5. Nightmare! (Fast & Respawn)</option>
-                </select>
-              </fieldset>
-
-              <fieldset class="border border-slate-400 p-2 rounded bg-white/40 text-xs">
-                <legend class="px-1 text-slate-800 font-bold text-[11px]">Episode & Mission</legend>
-                <div class="grid grid-cols-2 gap-2">
-                  <div>
-                    <label class="text-[10px] text-slate-600 block">Episode:</label>
-                    <select class="w-full bg-white border border-slate-400 p-1 text-[11px] rounded">
-                      <option>1: Knee-Deep in the Dead</option>
-                      <option>2: The Shores of Hell</option>
-                      <option>3: Inferno</option>
-                      <option>4: Thy Flesh Consumed</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label class="text-[10px] text-slate-600 block">Mission (Map):</label>
-                    <select class="w-full bg-white border border-slate-400 p-1 text-[11px] rounded">
-                      <option>E1M1: Hangar</option>
-                      <option>E1M2: Nuclear Plant</option>
-                      <option>E1M3: Toxin Refinery</option>
-                    </select>
-                  </div>
-                </div>
-              </fieldset>
-            </div>
-
-            <!-- Right Column -->
-            <div class="space-y-2.5">
-              <fieldset class="border border-slate-400 p-2 rounded bg-white/40 text-xs">
-                <legend class="px-1 text-slate-800 font-bold text-[11px]">Game Mode</legend>
-                <div class="space-y-1 text-[11px]">
-                  <label class="flex items-center gap-1.5 cursor-pointer">
-                    <input type="radio" name="d95-mode" checked class="text-blue-600" />
-                    <span>Single Player</span>
-                  </label>
-                  <label class="flex items-center gap-1.5 cursor-pointer text-slate-500">
-                    <input type="radio" name="d95-mode" disabled />
-                    <span>Cooperative (DirectPlay Network)</span>
-                  </label>
-                  <label class="flex items-center gap-1.5 cursor-pointer text-slate-500">
-                    <input type="radio" name="d95-mode" disabled />
-                    <span>Deathmatch 2.0 (DirectPlay Modem / IPX)</span>
-                  </label>
-                </div>
-              </fieldset>
-
-              <fieldset class="border border-slate-400 p-2 rounded bg-white/40 text-xs">
-                <legend class="px-1 text-slate-800 font-bold text-[11px]">Command Parameters</legend>
-                <div class="space-y-1 text-[11px]">
-                  <label class="flex items-center gap-1.5 cursor-pointer">
-                    <input type="checkbox" />
-                    <span>-nomonsters (Practice run)</span>
-                  </label>
-                  <label class="flex items-center gap-1.5 cursor-pointer">
-                    <input type="checkbox" />
-                    <span>-fast (Faster monster projectiles)</span>
-                  </label>
-                  <label class="flex items-center gap-1.5 cursor-pointer">
-                    <input type="checkbox" />
-                    <span>-respawn (Killed monsters respawn)</span>
-                  </label>
-                </div>
-              </fieldset>
-
-              <div class="p-2 rounded bg-amber-50 border border-amber-300 text-[10.5px] text-amber-900 leading-snug">
-                <div class="font-bold flex items-center gap-1">
-                  <span>💡</span> <span>Doom 95 Historical Easter Egg:</span>
-                </div>
-                In the original 1996 launcher, Level 1 was accidentally spelled <em>"Hanger"</em> instead of <em>"Hangar"</em>!
-              </div>
-            </div>
-          </div>
-
-          <!-- Actions Bar -->
-          <div class="mt-3.5 pt-2.5 border-t border-slate-300 flex items-center justify-between flex-wrap gap-2">
-            <div class="flex items-center gap-2">
-              <button id="d95-btn-run" class="px-6 py-2 bg-gradient-to-b from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 active:from-red-900 active:to-red-950 text-white font-black text-xs sm:text-sm rounded shadow-md border-2 border-red-400 cursor-pointer flex items-center gap-1.5 tracking-wider uppercase">
-                <span>▶</span> <span>Run Game (DOOM95)</span>
-              </button>
-              <button id="d95-btn-billgates" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs rounded border border-slate-400 shadow-xs cursor-pointer flex items-center gap-1">
-                <span>🎬</span> <span>Bill Gates 1995 Promo Memo</span>
-              </button>
-            </div>
-            <div class="text-[10px] text-slate-500 font-mono">
-              DirectDraw HAL • 32 Mixing Channels
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB CONTENT 2: DISPLAY -->
-        <div id="d95-panel-display" class="d95-panel p-3 bg-[#ece9d8] border border-t-0 border-[#999] rounded-b shadow-inner hidden space-y-3">
-          <fieldset class="border border-slate-400 p-2.5 rounded bg-white/40 text-xs">
-            <legend class="px-1 text-slate-800 font-bold text-[11px]">Screen Resolution (DirectDraw)</legend>
-            <div class="space-y-1.5 text-xs">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="d95-res" />
-                <span>320 x 200 (Classic MS-DOS Mode • 70Hz)</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="d95-res" />
-                <span>320 x 240 (Square Pixels Aspect Ratio)</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="d95-res" checked />
-                <span class="font-bold text-slate-900">640 x 480 (Windows 95 High-Resolution Mode — Recommended)</span>
-              </label>
-            </div>
-          </fieldset>
-
-          <fieldset class="border border-slate-400 p-2.5 rounded bg-white/40 text-xs">
-            <legend class="px-1 text-slate-800 font-bold text-[11px]">Display Mode</legend>
-            <div class="space-y-1.5 text-xs">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="d95-disp-mode" checked />
-                <span>Windowed inside Microcok Windows XD Desktop</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="d95-disp-mode" />
-                <span>DirectX Exclusive Fullscreen Mode</span>
-              </label>
-            </div>
-          </fieldset>
-
-          <div class="p-2 rounded bg-blue-50 border border-blue-300 text-[11px] text-blue-900">
-            <strong>DirectX Hardware Acceleration:</strong> Microsoft DirectDraw 1.0 Driver is enabled. Supports smooth scaling, 60fps refresh, and hardware double buffering.
-          </div>
-        </div>
-
-        <!-- TAB CONTENT 3: AUDIO -->
-        <div id="d95-panel-audio" class="d95-panel p-3 bg-[#ece9d8] border border-t-0 border-[#999] rounded-b shadow-inner hidden space-y-3">
-          <fieldset class="border border-slate-400 p-2.5 rounded bg-white/40 text-xs">
-            <legend class="px-1 text-slate-800 font-bold text-[11px]">Sound Effects (DirectSound)</legend>
-            <div class="flex items-center justify-between gap-4">
-              <label class="text-xs text-slate-700">Volume:</label>
-              <input type="range" min="0" max="100" value="85" class="w-2/3" />
-              <span class="font-mono text-xs">85%</span>
-            </div>
-            <div class="mt-2 text-[10.5px] text-slate-600">
-              Sound Channels: <strong>32 Channels</strong> (Doom 95 enhanced mixing, upgraded from the original DOS 8-channel limit).
-            </div>
-          </fieldset>
-
-          <fieldset class="border border-slate-400 p-2.5 rounded bg-white/40 text-xs">
-            <legend class="px-1 text-slate-800 font-bold text-[11px]">Music Synthesizer</legend>
-            <div class="flex items-center justify-between gap-4">
-              <label class="text-xs text-slate-700">Volume:</label>
-              <input type="range" min="0" max="100" value="75" class="w-2/3" />
-              <span class="font-mono text-xs">75%</span>
-            </div>
-            <div class="mt-2 text-[10.5px] text-slate-600">
-              Device: <strong>General MIDI / Sound Blaster AWE32 Emulation</strong> (Bobby Prince soundtrack).
-            </div>
-          </fieldset>
-        </div>
-
-        <!-- TAB CONTENT 4: DIRECTX & HISTORY -->
-        <div id="d95-panel-directx" class="d95-panel p-3 bg-[#ece9d8] border border-t-0 border-[#999] rounded-b shadow-inner hidden space-y-2.5">
-          <div class="p-2.5 rounded bg-white border border-slate-300 text-xs text-slate-800 space-y-2 leading-relaxed">
-            <div class="font-bold text-red-900 flex items-center gap-1.5">
-              <span>🏛️</span> <span>Sejarah Doom 95 & Lahirnya DirectX</span>
-            </div>
-            <p>
-              Pada tahun 1995–1996, Microsoft mengalami tantangan besar: para developer game menolak membuat game untuk Windows 95 karena sistem operasinya dianggap terlalu lambat dibanding MS-DOS. 
-            </p>
-            <p>
-              Seorang manajer program muda di Microsoft bernama <strong>Gabe Newell</strong> (yang kemudian mendirikan <strong>Valve</strong> dan menciptakan <em>Half-Life & Steam</em>) memimpin inisiatif melakukan porting resmi DOOM ke Windows 95, dinamai <strong>Doom 95</strong>.
-            </p>
-            <p>
-              Untuk mempromosikannya, <strong>Bill Gates</strong> secara ikonik tampil dalam video presentasi internal mengenakan mantel duster hitam panjang sambil memegang shotgun di dalam arena DOOM, membuktikan bahwa Windows 95 siap menjadi rumah baru video game PC.
-            </p>
-          </div>
-
-          <fieldset class="border border-slate-400 p-2 rounded bg-white/60 text-xs">
-            <legend class="px-1 text-slate-800 font-bold text-[11px]">Classic Cheat Codes</legend>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 font-mono text-[11px]">
-              <div><strong class="text-red-700">IDDQD</strong> — God Mode</div>
-              <div><strong class="text-red-700">IDKFA</strong> — All Weapons & Keys</div>
-              <div><strong class="text-red-700">IDCLIP</strong> — No Clip (Walk walls)</div>
-              <div><strong class="text-red-700">IDCHOPPERS</strong> — Chainsaw</div>
-              <div><strong class="text-red-700">FHSHH</strong> — Invisibility (Doom 95)</div>
-              <div><strong class="text-red-700">FHHALL</strong> — Kill all monsters</div>
-            </div>
-          </fieldset>
-        </div>
-      </div>
-
-      <!-- VIEW 2: REAL AUTHENTIC PLAYABLE DOOM ENGINE -->
-      <div id="doom95-game-view" class="relative bg-black flex-1 flex flex-col hidden overflow-hidden">
-        <div class="w-full flex-1 min-h-[460px] relative bg-black flex items-center justify-center">
-          <iframe
-            id="doom95-iframe"
-            src="https://archive.org/embed/doom_dos"
-            class="w-full h-[470px] bg-black border-0 block"
-            allow="autoplay; fullscreen; keyboard; gamepad"
-            loading="eager"
-          ></iframe>
-        </div>
-
-        <!-- Doom 95 Status Bar -->
-        <div class="h-6 px-2 bg-[#222] border-t border-[#444] text-[11px] text-slate-300 font-mono flex items-center justify-between select-none">
-          <div class="flex items-center gap-3 truncate">
-            <span class="text-emerald-400 font-bold flex items-center gap-1">● DirectDraw Active</span>
-            <span class="text-slate-400 hidden sm:inline">|</span>
-            <span class="text-slate-300 truncate hidden sm:inline">Official id Software DOOM Engine • 35 FPS</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <button id="d95-return-launcher" class="text-amber-400 hover:text-amber-300 underline font-bold cursor-pointer">
-              ⚙ Doom 95 Setup
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- POPUP MODAL: BILL GATES PROMO MEMO -->
-      <div id="d95-promo-modal" class="fixed inset-0 z-[120000] flex items-center justify-center p-4 bg-black/50 select-none hidden">
-        <div class="w-full max-w-md bg-[#ece9d8] border-[3px] border-[#0055ea] rounded-t-lg shadow-2xl overflow-hidden">
-          <div class="h-7 px-2.5 flex items-center justify-between bg-gradient-to-r from-[#0058ee] via-[#288eff] to-[#0055ea] text-white font-bold text-xs">
-            <span>Bill Gates 1995 DirectX Video Memo</span>
-            <button id="d95-promo-close" class="win-btn-close w-4 h-4 flex items-center justify-center rounded bg-[#d83b01] text-white cursor-pointer">✕</button>
-          </div>
-          <div class="p-4 space-y-3 text-xs text-slate-800">
-            <div class="p-3 bg-stone-900 text-amber-200 font-mono text-xs rounded border border-stone-700 italic">
-              "Don't you wish you could play games like DOOM without leaving Windows? With Windows 95, you can!"<br />
-              <span class="text-right block text-white font-bold not-italic mt-1">— Bill Gates, October 1995 (DirectX Keynote)</span>
-            </div>
-            <p class="leading-relaxed">
-              Video promosi ini dibuat oleh tim Gabe Newell di Microsoft untuk mendemonstrasikan bahwa DirectDraw di Windows 95 mampu menjalankan grafis 3D secepat MS-DOS tanpa perlu me-restart komputer.
-            </p>
-            <div class="text-right">
-              <button class="xp-btn xp-btn-default font-bold px-4 py-1" onclick="document.getElementById('d95-promo-modal').classList.add('hidden')">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- POPUP MODAL: CHEATS -->
-      <div id="d95-cheats-modal" class="fixed inset-0 z-[120000] flex items-center justify-center p-4 bg-black/50 select-none hidden">
-        <div class="w-full max-w-sm bg-[#ece9d8] border-[3px] border-[#0055ea] rounded-t-lg shadow-2xl overflow-hidden">
-          <div class="h-7 px-2.5 flex items-center justify-between bg-gradient-to-r from-[#0058ee] via-[#288eff] to-[#0055ea] text-white font-bold text-xs">
-            <span>Doom 95 Cheat Sheet</span>
-            <button id="d95-cheats-close" class="win-btn-close w-4 h-4 flex items-center justify-center rounded bg-[#d83b01] text-white cursor-pointer">✕</button>
-          </div>
-          <div class="p-3 space-y-2 text-xs">
-            <p class="text-slate-600 text-[11px]">Ketik kode berikut saat berada di dalam permainan:</p>
-            <div class="space-y-1.5 font-mono text-xs bg-white p-2.5 rounded border border-slate-300">
-              <div><strong class="text-red-700">IDDQD</strong> — Kebal peluru & serangan (God Mode)</div>
-              <div><strong class="text-red-700">IDKFA</strong> — Semua senjata, amunisi penuh, semua kunci</div>
-              <div><strong class="text-red-700">IDCLIP</strong> — Tembus dinding (No-clip)</div>
-              <div><strong class="text-red-700">IDCHOPPERS</strong> — Dapatkan gergaji mesin (Chainsaw)</div>
-              <div><strong class="text-red-700">IDBEHOLD</strong> — Menu pilihan invulnerability/night-vision</div>
-              <div class="border-t border-slate-200 pt-1 text-[11px] text-amber-900">
-                <strong class="text-orange-700">FHSHH</strong> — Khusus Doom 95: Invisible<br />
-                <strong class="text-orange-700">FHHALL</strong> — Khusus Doom 95: Hancurkan semua monster
-              </div>
-            </div>
-            <div class="text-right mt-2">
-              <button class="xp-btn xp-btn-default font-bold px-4 py-1" onclick="document.getElementById('d95-cheats-modal').classList.add('hidden')">Tutup</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- ==================== AUTHENTIC WINDOWS XP SHUTDOWN DIALOG ==================== -->
   <div 
@@ -3594,10 +3215,6 @@ const sampleWorkDocs = [
         <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-minesweeper'); document.getElementById('xp-start-menu').classList.add('hidden');">
           <Bomb class="w-4 h-4 text-red-600" />
           <span class="font-bold text-slate-800">Minesweeper</span>
-        </div>
-        <div class="p-1.5 rounded hover:bg-blue-100 flex items-center gap-2 cursor-pointer" onclick="openWindow('win-doom'); document.getElementById('xp-start-menu').classList.add('hidden');">
-          <Flame class="w-4 h-4 text-red-600 fill-red-500/20" />
-          <span class="font-bold text-slate-800">Doom 95</span>
         </div>
       </div>
 
@@ -3878,15 +3495,6 @@ const sampleWorkDocs = [
       } catch (e) {}
     }
 
-    // If opening DOOM 95, initialize view
-    if (winId === 'win-doom') {
-      try {
-        const d95Iframe = document.getElementById('doom95-iframe') as HTMLIFrameElement | null;
-        if (d95Iframe && !d95Iframe.src) {
-          d95Iframe.src = 'https://archive.org/embed/doom_dos';
-        }
-      } catch (e) {}
-    }
   };
   (window as any).closeWindow = closeWindow;
 
@@ -3909,21 +3517,6 @@ const sampleWorkDocs = [
     if (id === 'win-media-player') {
       try {
         (window as any).stopWmp?.();
-      } catch (e) {}
-    }
-    // Reset DOOM iframe if closing DOOM 95 to silence audio
-    if (id === 'win-doom') {
-      try {
-        const d95Iframe = document.getElementById('doom95-iframe') as HTMLIFrameElement | null;
-        if (d95Iframe) {
-          const currentSrc = d95Iframe.src;
-          d95Iframe.src = '';
-          setTimeout(() => {
-            if (d95Iframe && !d95Iframe.src) {
-              d95Iframe.src = currentSrc || 'https://archive.org/embed/doom_dos';
-            }
-          }, 300);
-        }
       } catch (e) {}
     }
     win.dataset.state = 'closed';
@@ -4079,9 +3672,6 @@ const sampleWorkDocs = [
       win.dataset.state = 'minimized';
       win.classList.add('hidden');
       win.style.display = 'none';
-      if (win.id === 'win-doom') {
-        try { (window as any).stopDoom?.(); } catch (e) {}
-      }
       updateTaskbar();
     });
 
@@ -5659,9 +5249,8 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
     { id: 'win-search', title: 'Search Companion', titleId: 'Pencarian', desc: 'Search with Rover', descId: 'Cari dengan Rover', type: 'window', keywords: 'search pencarian rover find', action: () => (window as any).openWindow('win-search') },
     { id: 'win-taskmgr', title: 'Task Manager', titleId: 'Task Manager', desc: 'Monitor CPU & memory load, End Task', descId: 'Monitor beban CPU & memori, End Task', type: 'window', keywords: 'taskmgr task manager cpu memory performance proses', action: () => (window as any).openWindow('win-taskmgr') },
     { id: 'win-paint', title: 'Paint', titleId: 'Paint', desc: 'Interactive doodle canvas with colors', descId: 'Kanvas gambar coret-coret interaktif', type: 'window', keywords: 'paint mspaint drawing doodle canvas gambar lukis kuas', action: () => (window as any).openWindow('win-paint') },
-    { id: 'win-games-folder', title: 'Games', titleId: 'Games', desc: 'Classic Windows XP games folder (Minesweeper, Pinball)', descId: 'Folder game retro klasik (Minesweeper, Pinball)', type: 'window', keywords: 'games game minesweeper winmine bom ranjau pinball solitaire doom', action: () => (window as any).openWindow('win-games-folder') },
+    { id: 'win-games-folder', title: 'Games', titleId: 'Games', desc: 'Classic Windows XP games folder (Minesweeper, Pinball)', descId: 'Folder game retro klasik (Minesweeper, Pinball)', type: 'window', keywords: 'games game minesweeper winmine bom ranjau pinball solitaire', action: () => (window as any).openWindow('win-games-folder') },
     { id: 'win-minesweeper', title: 'Minesweeper', titleId: 'Minesweeper', desc: 'Classic 9x9 grid retro puzzle game', descId: 'Game klasik retro 9x9 kotak', type: 'game', keywords: 'minesweeper winmine game ranjau bom flag sweep', action: () => (window as any).openWindow('win-minesweeper') },
-    { id: 'win-doom', title: 'Doom 95 (DOOM95.EXE)', titleId: 'Doom 95 (DOOM95.EXE)', desc: 'Official Microsoft Windows 95 DirectX port & authentic game', descId: 'Port resmi Microsoft Windows 95 DirectX legendaris & game asli', type: 'game', keywords: 'doom doom95 doom95.exe doom.exe directx fps 3d gabe newell game tembak monster id software', action: () => (window as any).openWindow('win-doom') },
     { id: 'win-display-props', title: 'Display Properties', titleId: 'Properti Tampilan', desc: 'Change XP themes (Luna, Olive, Silver) & wallpaper', descId: 'Ganti tema & wallpaper Windows XD', type: 'window', keywords: 'display properties desk.cpl tema theme wallpaper luna olive silver bliss', action: () => (window as any).openWindow('win-display-props') },
     { id: 'win-sys-props', title: 'System Properties', titleId: 'Properti Sistem', desc: 'System Analyst hardware & academic specs', descId: 'Spesifikasi sistem & akademik kandidat', type: 'window', keywords: 'system properties sysdm.cpl spesifikasi specs gpa toefl itera', action: () => (window as any).openWindow('win-sys-props') },
     { id: 'win-projects', title: 'Case Studies (E:)', titleId: 'Studi Kasus (E:)', desc: 'List of DAMRI projects (PUMK & Push Request)', descId: 'Daftar proyek PUMK & Push', type: 'project', keywords: 'case studies project proyek pumk push damri', action: () => (window as any).openWindow('win-projects') },
@@ -5984,10 +5573,6 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
       games: () => (window as any).openWindow('win-games-folder'),
       winmine: () => (window as any).openWindow('win-minesweeper'),
       minesweeper: () => (window as any).openWindow('win-minesweeper'),
-      doom: () => (window as any).openWindow('win-doom'),
-      'doom.exe': () => (window as any).openWindow('win-doom'),
-      doom95: () => (window as any).openWindow('win-doom'),
-      'doom95.exe': () => (window as any).openWindow('win-doom'),
       display: () => (window as any).openWindow('win-display-props'),
       'desk.cpl': () => (window as any).openWindow('win-display-props'),
       sysdm: () => (window as any).openWindow('win-sys-props'),
@@ -6167,9 +5752,6 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
       } else if (val === 'winmine' || val === 'minesweeper') {
         (window as any).openWindow('win-minesweeper');
         resp.innerHTML = 'Membuka Minesweeper...';
-      } else if (val === 'doom' || val === 'doom.exe' || val === 'doom95' || val === 'doom95.exe') {
-        (window as any).openWindow('win-doom');
-        resp.innerHTML = 'Starting Doom 95 (Microsoft Windows 95 DirectX Port)...<br>DirectDraw HAL active. Initializing DOOM95.EXE... Ready to Rip and Tear!';
       } else if (val === 'theme' || val === 'display' || val === 'desk.cpl') {
         (window as any).openWindow('win-display-props');
         resp.innerHTML = 'Membuka Properti Tampilan (Tema)...';
@@ -7024,127 +6606,6 @@ Domain: High-Throughput Transport & Fleet Reservation Systems
   initMinesweeper();
 
   
-  // ==========================================================================
-  // 18B. DOOM 95 (Microsoft Windows 95 DirectX Port - Microcok Edition)
-  // ==========================================================================
-  const d95LauncherView = document.getElementById('doom95-launcher-view');
-  const d95GameView = document.getElementById('doom95-game-view');
-  const d95Iframe = document.getElementById('doom95-iframe') as HTMLIFrameElement | null;
-  const d95WadSelect = document.getElementById('d95-wad-select') as HTMLSelectElement | null;
-  const d95ReturnLauncher = document.getElementById('d95-return-launcher');
-
-  // Tabs inside launcher
-  const d95TabBtns = document.querySelectorAll('.d95-tab-btn');
-  const d95Panels = document.querySelectorAll('.d95-panel');
-
-  d95TabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.getAttribute('data-tab');
-      d95TabBtns.forEach(b => {
-        b.classList.remove('bg-[#ece9d8]', 'font-bold', 'text-slate-900');
-        b.classList.add('bg-[#d4d0c8]', 'text-slate-600');
-      });
-      btn.classList.remove('bg-[#d4d0c8]', 'text-slate-600');
-      btn.classList.add('bg-[#ece9d8]', 'font-bold', 'text-slate-900');
-
-      d95Panels.forEach(p => p.classList.add('hidden'));
-      const activePanel = document.getElementById(`d95-panel-${target}`);
-      if (activePanel) activePanel.classList.remove('hidden');
-    });
-  });
-
-  function showDoom95Launcher() {
-    if (d95LauncherView) d95LauncherView.classList.remove('hidden');
-    if (d95GameView) d95GameView.classList.add('hidden');
-    updateDoom95Toolbar('launcher');
-  }
-
-  function launchDoom95Game(game: 'doom1' | 'doom2' = 'doom1') {
-    if (d95LauncherView) d95LauncherView.classList.add('hidden');
-    if (d95GameView) d95GameView.classList.remove('hidden');
-
-    const src = game === 'doom2' 
-      ? 'https://archive.org/embed/Doom-2'
-      : 'https://archive.org/embed/doom_dos';
-
-    if (d95Iframe && d95Iframe.src !== src) {
-      d95Iframe.src = src;
-    }
-    updateDoom95Toolbar(game);
-  }
-
-  function updateDoom95Toolbar(view: 'launcher' | 'doom1' | 'doom2') {
-    const btnLauncher = document.getElementById('d95-tb-launcher');
-    const btnDoom1 = document.getElementById('d95-tb-doom1');
-    const btnDoom2 = document.getElementById('d95-tb-doom2');
-    
-    [btnLauncher, btnDoom1, btnDoom2].forEach(b => {
-      if (b) {
-        b.classList.remove('bg-[#1b3f94]', 'text-white', 'font-bold');
-        b.classList.add('text-slate-700');
-      }
-    });
-
-    if (view === 'launcher' && btnLauncher) {
-      btnLauncher.classList.add('bg-[#1b3f94]', 'text-white', 'font-bold');
-      btnLauncher.classList.remove('text-slate-700');
-    } else if (view === 'doom1' && btnDoom1) {
-      btnDoom1.classList.add('bg-[#1b3f94]', 'text-white', 'font-bold');
-      btnDoom1.classList.remove('text-slate-700');
-    } else if (view === 'doom2' && btnDoom2) {
-      btnDoom2.classList.add('bg-[#1b3f94]', 'text-white', 'font-bold');
-      btnDoom2.classList.remove('text-slate-700');
-    }
-  }
-
-  document.getElementById('d95-tb-launcher')?.addEventListener('click', showDoom95Launcher);
-  document.getElementById('d95-tb-doom1')?.addEventListener('click', () => launchDoom95Game('doom1'));
-  document.getElementById('d95-tb-doom2')?.addEventListener('click', () => launchDoom95Game('doom2'));
-  d95ReturnLauncher?.addEventListener('click', showDoom95Launcher);
-
-  document.getElementById('d95-btn-run')?.addEventListener('click', () => {
-    const selectedWad = d95WadSelect?.value || 'doom1';
-    launchDoom95Game(selectedWad === 'doom2' ? 'doom2' : 'doom1');
-  });
-
-  // Fullscreen handler
-  document.getElementById('d95-tb-fullscreen')?.addEventListener('click', () => {
-    if (d95Iframe) {
-      if (d95Iframe.requestFullscreen) {
-        d95Iframe.requestFullscreen();
-      } else if ((d95Iframe as any).webkitRequestFullscreen) {
-        (d95Iframe as any).webkitRequestFullscreen();
-      }
-    }
-  });
-
-  // Cheats modal toggle
-  const d95CheatsModal = document.getElementById('d95-cheats-modal');
-  document.getElementById('d95-tb-cheats')?.addEventListener('click', () => {
-    if (d95CheatsModal) d95CheatsModal.classList.toggle('hidden');
-  });
-  document.getElementById('d95-cheats-close')?.addEventListener('click', () => {
-    if (d95CheatsModal) d95CheatsModal.classList.add('hidden');
-  });
-
-  // Bill Gates 1995 Promo Memo modal
-  const d95PromoModal = document.getElementById('d95-promo-modal');
-  document.getElementById('d95-btn-billgates')?.addEventListener('click', () => {
-    if (d95PromoModal) d95PromoModal.classList.remove('hidden');
-  });
-  document.getElementById('d95-promo-close')?.addEventListener('click', () => {
-    if (d95PromoModal) d95PromoModal.classList.add('hidden');
-  });
-
-  (window as any).openDoom95 = function(wad?: 'doom1' | 'doom2') {
-    (window as any).openWindow('win-doom');
-    if (wad) {
-      launchDoom95Game(wad);
-    } else {
-      showDoom95Launcher();
-    }
-  };
-
   // ==========================================================================
   // 19. TRAY BALLOON NOTIFICATION
   // ==========================================================================
