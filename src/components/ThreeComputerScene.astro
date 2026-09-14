@@ -337,6 +337,235 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     tagInteractive(towerGroup, 'monitor');
 
+    // ==========================================
+    // 4.B. Keyboard Canvas Texture (Full ANSI 104-Key Authentic Layout)
+    // ==========================================
+    const kbCanvas = document.createElement('canvas');
+    kbCanvas.width = 1160;
+    kbCanvas.height = 344;
+    const kCtx = kbCanvas.getContext('2d');
+    if (kCtx) {
+      const w = 1160;
+      const h = 344;
+      kCtx.fillStyle = '#262422'; // Dark recessed tray
+      kCtx.fillRect(0, 0, w, h);
+
+      // Border bevel
+      kCtx.fillStyle = '#161412';
+      kCtx.fillRect(0, 0, w, 2);
+      kCtx.fillRect(0, 0, 2, h);
+      kCtx.fillStyle = '#373532';
+      kCtx.fillRect(0, h - 2, w, 2);
+      kCtx.fillRect(w - 2, 0, 2, h);
+
+      const colAlphaTop = '#ece8de'; // Classic warm beige keycap
+      const colAlphaBot = '#c2bcb0'; // Bevel shadow
+      const colModTop = '#d4cec4';   // Classic grayish-beige modifier
+      const colModBot = '#aaa49a';
+      const colText = '#1e1c1a';     // Crisp dark charcoal legends
+
+      function drawCanvasKey(x: number, y: number, kw: number, kh: number, text: string, isMod = false, isWin = false, subText: string | null = null, isFkey = false) {
+        if (!kCtx) return;
+        const topC = isMod ? colModTop : colAlphaTop;
+        const botC = isMod ? colModBot : colAlphaBot;
+
+        // Keycap base bevel
+        kCtx.fillStyle = botC;
+        kCtx.beginPath();
+        kCtx.roundRect(x, y, kw, kh, 4);
+        kCtx.fill();
+
+        // Top highlight
+        kCtx.fillStyle = '#ffffff';
+        kCtx.fillRect(x + 2, y + 1, kw - 4, 1);
+        kCtx.fillRect(x + 1, y + 2, 1, kh - 4);
+
+        // Bottom shadow
+        kCtx.fillStyle = '#878278';
+        kCtx.fillRect(x + 2, y + kh - 2, kw - 4, 1);
+        kCtx.fillRect(x + kw - 2, y + 2, 1, kh - 4);
+
+        // Top dish
+        kCtx.fillStyle = topC;
+        kCtx.beginPath();
+        kCtx.roundRect(x + 3, y + 3, kw - 6, kh - 7, 3);
+        kCtx.fill();
+
+        // Windows Logo Key
+        if (isWin) {
+          const wx = x + kw / 2 - 8;
+          const wy = y + kh / 2 - 8;
+          kCtx.fillStyle = '#e1372d'; kCtx.fillRect(wx, wy, 7, 7);
+          kCtx.fillStyle = '#41af41'; kCtx.fillRect(wx + 9, wy, 7, 7);
+          kCtx.fillStyle = '#2d73e1'; kCtx.fillRect(wx, wy + 9, 7, 7);
+          kCtx.fillStyle = '#ebc323'; kCtx.fillRect(wx + 9, wy + 9, 7, 7);
+          return;
+        }
+
+        if (text) {
+          kCtx.fillStyle = colText;
+          kCtx.textAlign = 'center';
+          kCtx.textBaseline = 'middle';
+
+          if (isFkey) {
+            kCtx.font = 'bold 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+          } else if (text === '▲' || text === '▼' || text === '◄' || text === '►') {
+            kCtx.font = 'bold 15px sans-serif';
+          } else if (text.length > 1) {
+            kCtx.font = 'bold 10px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+          } else {
+            kCtx.font = 'bold 15px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+          }
+
+          let ty = y + kh / 2 - 1;
+          if (subText) {
+            ty = y + kh / 2 + 6;
+            kCtx.font = '9px sans-serif';
+            kCtx.fillStyle = '#4b4946';
+            kCtx.fillText(subText, x + kw / 2, y + 12);
+            kCtx.font = 'bold 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            kCtx.fillStyle = colText;
+          }
+          kCtx.fillText(text, x + kw / 2, ty);
+        }
+      }
+
+      const rowY = [14, 68, 120, 172, 224, 276];
+      const khF = 40;
+      const kh = 48;
+
+      // BLOCK 1: ALPHANUMERIC
+      drawCanvasKey(24, rowY[0], 44, khF, 'ESC', true);
+      let fx = 96;
+      for (let i = 1; i <= 12; i++) {
+        if (i === 5 || i === 9) fx += 16;
+        drawCanvasKey(fx, rowY[0], 44, khF, `F${i}`, true, false, null, true);
+        fx += 48;
+      }
+
+      const numKeys = [
+        ['`', '~'], ['1', '!'], ['2', '@'], ['3', '#'], ['4', '$'],
+        ['5', '%'], ['6', '^'], ['7', '&'], ['8', '*'], ['9', '('],
+        ['0', ')'], ['-', '_'], ['=', '+']
+      ];
+      let nx = 24;
+      for (const [pri, sec] of numKeys) {
+        drawCanvasKey(nx, rowY[1], 44, kh, pri, false, false, sec);
+        nx += 48;
+      }
+      drawCanvasKey(nx, rowY[1], 92, kh, 'BACKSPACE', true);
+
+      drawCanvasKey(24, rowY[2], 68, kh, 'TAB', true);
+      let qx = 24 + 72;
+      for (const ch of ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']']) {
+        drawCanvasKey(qx, rowY[2], 44, kh, ch);
+        qx += 48;
+      }
+      drawCanvasKey(qx, rowY[2], 68, kh, '\\', true);
+
+      drawCanvasKey(24, rowY[3], 80, kh, 'CAPS', true);
+      let ax = 24 + 84;
+      for (const ch of ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'"]) {
+        drawCanvasKey(ax, rowY[3], 44, kh, ch);
+        ax += 48;
+      }
+      drawCanvasKey(ax, rowY[3], 104, kh, 'ENTER', true);
+
+      drawCanvasKey(24, rowY[4], 104, kh, 'SHIFT', true);
+      let zx = 24 + 108;
+      for (const ch of ['Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/']) {
+        drawCanvasKey(zx, rowY[4], 44, kh, ch);
+        zx += 48;
+      }
+      drawCanvasKey(zx, rowY[4], 128, kh, 'SHIFT', true);
+
+      drawCanvasKey(24, rowY[5], 58, kh, 'CTRL', true);
+      drawCanvasKey(86, rowY[5], 54, kh, '', false, true);
+      drawCanvasKey(144, rowY[5], 54, kh, 'ALT', true);
+      drawCanvasKey(202, rowY[5], 286, kh, '', false); // Spacebar
+      drawCanvasKey(492, rowY[5], 54, kh, 'ALT', true);
+      drawCanvasKey(550, rowY[5], 54, kh, '', false, true);
+      drawCanvasKey(608, rowY[5], 54, kh, 'MENU', true);
+      drawCanvasKey(666, rowY[5], 74, kh, 'CTRL', true);
+
+      // BLOCK 2: NAVIGATION ISLAND (Separated by 32px gap)
+      const navX = 772;
+      drawCanvasKey(navX, rowY[0], 44, khF, 'PRT', true);
+      drawCanvasKey(navX + 48, rowY[0], 44, khF, 'SCR', true);
+      drawCanvasKey(navX + 96, rowY[0], 44, khF, 'BRK', true);
+
+      drawCanvasKey(navX, rowY[1], 44, kh, 'INS', true);
+      drawCanvasKey(navX + 48, rowY[1], 44, kh, 'HOME', true);
+      drawCanvasKey(navX + 96, rowY[1], 44, kh, 'PGUP', true);
+
+      drawCanvasKey(navX, rowY[2], 44, kh, 'DEL', true);
+      drawCanvasKey(navX + 48, rowY[2], 44, kh, 'END', true);
+      drawCanvasKey(navX + 96, rowY[2], 44, kh, 'PGDN', true);
+
+      drawCanvasKey(navX + 48, rowY[4], 44, kh, '▲', true);
+      drawCanvasKey(navX, rowY[5], 44, kh, '◄', true);
+      drawCanvasKey(navX + 48, rowY[5], 44, kh, '▼', true);
+      drawCanvasKey(navX + 96, rowY[5], 44, kh, '►', true);
+
+      // BLOCK 3: NUMPAD (Separated by 32px gap)
+      const numX = 944;
+      kCtx.fillStyle = '#121214';
+      kCtx.beginPath();
+      kCtx.roundRect(numX, rowY[0] + 4, 188, khF - 8, 4);
+      kCtx.fill();
+
+      // Green NumLock LED
+      kCtx.fillStyle = '#2de62d';
+      kCtx.beginPath();
+      kCtx.arc(numX + 27, rowY[0] + 20, 5, 0, Math.PI * 2);
+      kCtx.fill();
+      kCtx.fillStyle = '#afafaf';
+      kCtx.font = '9px sans-serif';
+      kCtx.fillText('NUM', numX + 48, rowY[0] + 20);
+
+      // CapsLock LED (off)
+      kCtx.fillStyle = '#193c19';
+      kCtx.beginPath();
+      kCtx.arc(numX + 87, rowY[0] + 20, 5, 0, Math.PI * 2);
+      kCtx.fill();
+      kCtx.fillStyle = '#afafaf';
+      kCtx.fillText('CAPS', numX + 110, rowY[0] + 20);
+
+      // ScrollLock LED (off)
+      kCtx.fillStyle = '#193c19';
+      kCtx.beginPath();
+      kCtx.arc(numX + 147, rowY[0] + 20, 5, 0, Math.PI * 2);
+      kCtx.fill();
+      kCtx.fillStyle = '#afafaf';
+      kCtx.fillText('SCR', numX + 168, rowY[0] + 20);
+
+      drawCanvasKey(numX, rowY[1], 44, kh, 'NUM', true);
+      drawCanvasKey(numX + 48, rowY[1], 44, kh, '/', true);
+      drawCanvasKey(numX + 96, rowY[1], 44, kh, '*', true);
+      drawCanvasKey(numX + 144, rowY[1], 44, kh, '-', true);
+
+      drawCanvasKey(numX, rowY[2], 44, kh, '7');
+      drawCanvasKey(numX + 48, rowY[2], 44, kh, '8');
+      drawCanvasKey(numX + 96, rowY[2], 44, kh, '9');
+      drawCanvasKey(numX + 144, rowY[2], 44, kh * 2 + 4, '+', true);
+
+      drawCanvasKey(numX, rowY[3], 44, kh, '4');
+      drawCanvasKey(numX + 48, rowY[3], 44, kh, '5');
+      drawCanvasKey(numX + 96, rowY[3], 44, kh, '6');
+
+      drawCanvasKey(numX, rowY[4], 44, kh, '1');
+      drawCanvasKey(numX + 48, rowY[4], 44, kh, '2');
+      drawCanvasKey(numX + 96, rowY[4], 44, kh, '3');
+      drawCanvasKey(numX + 144, rowY[4], 44, kh * 2 + 4, 'ENT', true);
+
+      drawCanvasKey(numX, rowY[5], 92, kh, '0');
+      drawCanvasKey(numX + 96, rowY[5], 44, kh, '.');
+    }
+
+    const kbTexture = new THREE.CanvasTexture(kbCanvas);
+    kbTexture.minFilter = THREE.LinearFilter;
+    kbTexture.generateMipmaps = true;
+
     // Keyboard & Mouse
     const kbGroup = new THREE.Group();
     kbGroup.position.set(0, -0.92, 1.28);
@@ -344,16 +573,27 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     workstation.add(kbGroup);
 
     const kbBase = new THREE.Mesh(
-      new THREE.BoxGeometry(2.3, 0.08, 0.8),
+      new THREE.BoxGeometry(2.32, 0.08, 0.82),
       retroPlastic
     );
     kbGroup.add(kbBase);
 
+    const kbSideMat = new THREE.MeshLambertMaterial({ color: 0x262422 });
+    const kbTopMat = new THREE.MeshLambertMaterial({ map: kbTexture });
+    const kbKeyMaterials = [
+      kbSideMat, // +X right
+      kbSideMat, // -X left
+      kbTopMat,  // +Y top
+      kbSideMat, // -Y bottom
+      kbSideMat, // +Z front
+      kbSideMat  // -Z back
+    ];
+
     const kbKeys = new THREE.Mesh(
-      new THREE.BoxGeometry(2.1, 0.06, 0.65),
-      keybDark
+      new THREE.BoxGeometry(2.18, 0.05, 0.68),
+      kbKeyMaterials
     );
-    kbKeys.position.set(0, 0.05, 0);
+    kbKeys.position.set(0, 0.045, 0);
     kbGroup.add(kbKeys);
 
     const mousePad = new THREE.Mesh(
@@ -406,7 +646,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const cvDocGroup = new THREE.Group();
     const cvBaseY = -0.95;
     let targetCvY = cvBaseY;
-    cvDocGroup.position.set(-1.58, cvBaseY, 1.35);
+    cvDocGroup.position.set(-1.68, cvBaseY, 1.35);
     cvDocGroup.rotation.y = 0.22;
     workstation.add(cvDocGroup);
 
@@ -651,7 +891,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const floppyDiskGroup = new THREE.Group();
     const floppyBaseY = -0.96;
     let targetFloppyY = floppyBaseY;
-    floppyDiskGroup.position.set(-0.78, floppyBaseY, 1.62);
+    floppyDiskGroup.position.set(-0.95, floppyBaseY, 1.72);
     floppyDiskGroup.rotation.y = -0.14;
     workstation.add(floppyDiskGroup);
 
