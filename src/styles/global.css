@@ -552,7 +552,8 @@
 /* Inactive XP Window Titlebar & Button Styling */
 .xp-window:not(.active-window) .xp-titlebar {
   background: linear-gradient(to right, #7b9ebd, #a6c1db 40%, #7b9ebd) !important;
-  color: #d8e5f2 !important;
+  color: #102a45 !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .xp-window:not(.active-window) .win-btn-close {

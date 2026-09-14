@@ -168,7 +168,9 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Icon 0: Executive_Summary.exe (Recruiter Fast-Track) -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-amber-600/30 active:bg-amber-600/50 relative"
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-amber-600/30 active:bg-amber-600/50 relative focus:outline-dashed focus:outline-1 focus:outline-white/80"
+           tabindex="0"
+           role="button"
            data-open="win-fasttrack"
            title="Executive_Summary.exe"
            data-tooltip-title="Executive_Summary.exe (⚡ Recruiter Fast-Track)"
@@ -181,7 +183,9 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Icon 1: Case Studies (E:) -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50 focus:outline-dashed focus:outline-1 focus:outline-white/80"
+           tabindex="0"
+           role="button"
            data-open="win-projects"
            title="Case Studies (E:)"
            data-tooltip-title="Case Studies (E:)"
@@ -193,7 +197,9 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Icon 2: SDLC_Lens.exe -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50 focus:outline-dashed focus:outline-1 focus:outline-white/80"
+           tabindex="0"
+           role="button"
            data-open="win-sdlc"
            title="SDLC_Lens.exe"
            data-tooltip-title="SDLC_Lens.exe"
@@ -205,7 +211,9 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Icon 3: Work Docs -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50 focus:outline-dashed focus:outline-1 focus:outline-white/80"
+           tabindex="0"
+           role="button"
            data-open="win-docs-folder"
            title="Dokumen Kerja"
            data-tooltip-title="Dokumen Kerja / Work Docs"
@@ -217,7 +225,9 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Icon 4: Certificates -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50 focus:outline-dashed focus:outline-1 focus:outline-white/80"
+           tabindex="0"
+           role="button"
            data-open="win-gallery"
            title="Certificates"
            data-tooltip-title="Certificates / Sertifikat"
@@ -229,7 +239,9 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Icon 5: Games (Folder containing Minesweeper) -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50 focus:outline-dashed focus:outline-1 focus:outline-white/80"
+           tabindex="0"
+           role="button"
            data-open="win-games-folder"
            title="Games"
            data-tooltip-title="Games (Folder)"
@@ -242,7 +254,9 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Icon 6: Welcome.doc (Panduan & Profil) -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50 focus:outline-dashed focus:outline-1 focus:outline-white/80"
+           tabindex="0"
+           role="button"
            data-open="win-welcome"
            title="Welcome.doc"
            data-tooltip-title="Welcome.doc (🧭 Panduan Alur Portofolio)"
@@ -254,7 +268,9 @@ const sampleWorkDocs = [
       </div>
 
       <!-- Icon 7: Resume.doc -->
-      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50"
+      <div class="xp-desktop-icon group flex flex-col items-center w-20 text-center cursor-pointer p-1 rounded hover:bg-blue-600/30 active:bg-blue-600/50 focus:outline-dashed focus:outline-1 focus:outline-white/80"
+           tabindex="0"
+           role="button"
            data-open="win-resume"
            title="Resume.doc"
            data-tooltip-title="Resume.doc"
@@ -436,7 +452,7 @@ const sampleWorkDocs = [
             <div class="p-2.5 rounded border border-blue-200 bg-blue-50/50 flex flex-col gap-2 hover:bg-blue-100/60 transition-colors">
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
-                  <span class="font-bold text-slate-900 text-xs">1. Dynamic Multi-Tier Approval Workflow Engine</span>
+                  <a href={`${base}/projects/approval-workflow-engine`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">1. Dynamic Multi-Tier Approval Workflow Engine</a>
                   <span class="px-1.5 py-0.2 rounded bg-blue-200 text-blue-900 text-[9px] font-bold uppercase">Core ERP</span>
                 </div>
                 <p class="text-[11px] text-slate-600 mt-0.5 i18n"
@@ -446,7 +462,14 @@ const sampleWorkDocs = [
                 </p>
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
-                <button onclick="openArticleInIE('approval-workflow-engine')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><ExternalLink class="w-3 h-3" /><span class="i18n" data-en="Read in IE" data-id="Baca di IE">Read in IE</span></button>
+                <a
+                  href={`${base}/projects/approval-workflow-engine`}
+                  onclick="if (!event.ctrlKey && !event.metaKey) { event.preventDefault(); openArticleInIE('approval-workflow-engine'); }"
+                  class="xp-btn text-[10px] font-bold flex items-center gap-1 text-slate-800"
+                >
+                  <ExternalLink class="w-3 h-3" />
+                  <span class="i18n" data-en="Read in IE" data-id="Baca di IE">Read in IE</span>
+                </a>
                 <button onclick="openSDLC('approval-engine')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><Layers class="w-3 h-3" /><span class="i18n" data-en="SDLC Lens" data-id="SDLC Lens">SDLC Lens</span></button>
                 <button onclick="openDocsBatch('srs-approval-engine,sit-approval-engine')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><FileText class="w-3 h-3" /><span class="i18n" data-en="↓ Dossier: SRS + QA Matrix" data-id="↓ Dossier: SRS + Matriks QA">↓ Dossier: SRS + QA Matrix</span></button>
               </div>
@@ -455,7 +478,7 @@ const sampleWorkDocs = [
             <div class="p-2.5 rounded border border-slate-200 bg-slate-50 flex flex-col gap-2 hover:bg-slate-100 transition-colors">
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
-                  <span class="font-bold text-slate-900 text-xs">2. Aplikasi PUMK Financial Core</span>
+                  <a href={`${base}/projects/damri-pumk-system`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">2. Aplikasi PUMK Financial Core</a>
                   <span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-900 text-[9px] font-bold uppercase">BUMN TJSL</span>
                 </div>
                 <p class="text-[11px] text-slate-600 mt-0.5 i18n"
@@ -465,7 +488,14 @@ const sampleWorkDocs = [
                 </p>
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
-                <button onclick="openArticleInIE('damri-pumk-system')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><ExternalLink class="w-3 h-3" /><span class="i18n" data-en="Read in IE" data-id="Baca di IE">Read in IE</span></button>
+                <a
+                  href={`${base}/projects/damri-pumk-system`}
+                  onclick="if (!event.ctrlKey && !event.metaKey) { event.preventDefault(); openArticleInIE('damri-pumk-system'); }"
+                  class="xp-btn text-[10px] font-bold flex items-center gap-1 text-slate-800"
+                >
+                  <ExternalLink class="w-3 h-3" />
+                  <span class="i18n" data-en="Read in IE" data-id="Baca di IE">Read in IE</span>
+                </a>
                 <button onclick="openSDLC('pumk')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><Layers class="w-3 h-3" /><span class="i18n" data-en="SDLC Lens" data-id="SDLC Lens">SDLC Lens</span></button>
                 <button onclick="openDocsBatch('srs-pumk,sit-uat-matrix')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><FileText class="w-3 h-3" /><span class="i18n" data-en="↓ Dossier: SRS + SIT/UAT" data-id="↓ Dossier: SRS + SIT/UAT">↓ Dossier: SRS + SIT/UAT</span></button>
               </div>
@@ -474,7 +504,7 @@ const sampleWorkDocs = [
             <div class="p-2.5 rounded border border-blue-200 bg-blue-50/50 flex flex-col gap-2 hover:bg-blue-100/60 transition-colors">
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
-                  <span class="font-bold text-slate-900 text-xs">3. Multi-Bank Payment Reconciliation &amp; Settlement Engine</span>
+                  <a href={`${base}/projects/payment-reconciliation-engine`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">3. Multi-Bank Payment Reconciliation &amp; Settlement Engine</a>
                   <span class="px-1.5 py-0.2 rounded bg-cyan-100 text-cyan-900 text-[9px] font-bold uppercase">FinTech / SNAP</span>
                 </div>
                 <p class="text-[11px] text-slate-600 mt-0.5 i18n"
@@ -484,7 +514,14 @@ const sampleWorkDocs = [
                 </p>
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
-                <button onclick="openArticleInIE('payment-reconciliation-engine')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><ExternalLink class="w-3 h-3" /><span class="i18n" data-en="Read in IE" data-id="Baca di IE">Read in IE</span></button>
+                <a
+                  href={`${base}/projects/payment-reconciliation-engine`}
+                  onclick="if (!event.ctrlKey && !event.metaKey) { event.preventDefault(); openArticleInIE('payment-reconciliation-engine'); }"
+                  class="xp-btn text-[10px] font-bold flex items-center gap-1 text-slate-800"
+                >
+                  <ExternalLink class="w-3 h-3" />
+                  <span class="i18n" data-en="Read in IE" data-id="Baca di IE">Read in IE</span>
+                </a>
                 <button onclick="openSDLC('payment-recon')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><Layers class="w-3 h-3" /><span class="i18n" data-en="SDLC Lens" data-id="SDLC Lens">SDLC Lens</span></button>
                 <button onclick="openDocsBatch('srs-payment-recon,sit-payment-recon')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><FileText class="w-3 h-3" /><span class="i18n" data-en="↓ Dossier: SRS + Recon Model" data-id="↓ Dossier: SRS + Model Rekon">↓ Dossier: SRS + Recon Model</span></button>
               </div>
@@ -493,7 +530,7 @@ const sampleWorkDocs = [
             <div class="p-2.5 rounded border border-slate-200 bg-slate-50 flex flex-col gap-2 hover:bg-slate-100 transition-colors">
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
-                  <span class="font-bold text-slate-900 text-xs">4. High-Concurrency Seat Lock &amp; Distributed Reservation Engine</span>
+                  <a href={`${base}/projects/seat-lock-concurrency-engine`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">4. High-Concurrency Seat Lock &amp; Distributed Reservation Engine</a>
                   <span class="px-1.5 py-0.2 rounded bg-amber-100 text-amber-900 text-[9px] font-bold uppercase">Concurrency</span>
                 </div>
                 <p class="text-[11px] text-slate-600 mt-0.5 i18n"
@@ -503,7 +540,14 @@ const sampleWorkDocs = [
                 </p>
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
-                <button onclick="openArticleInIE('seat-lock-concurrency-engine')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><ExternalLink class="w-3 h-3" /><span class="i18n" data-en="Read in IE" data-id="Baca di IE">Read in IE</span></button>
+                <a
+                  href={`${base}/projects/seat-lock-concurrency-engine`}
+                  onclick="if (!event.ctrlKey && !event.metaKey) { event.preventDefault(); openArticleInIE('seat-lock-concurrency-engine'); }"
+                  class="xp-btn text-[10px] font-bold flex items-center gap-1 text-slate-800"
+                >
+                  <ExternalLink class="w-3 h-3" />
+                  <span class="i18n" data-en="Read in IE" data-id="Baca di IE">Read in IE</span>
+                </a>
                 <button onclick="openSDLC('seatlock')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><Layers class="w-3 h-3" /><span class="i18n" data-en="SDLC Lens" data-id="SDLC Lens">SDLC Lens</span></button>
                 <button onclick="openDocsBatch('srs-seatlock')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><FileText class="w-3 h-3" /><span class="i18n" data-en="↓ Dossier: SRS Spec" data-id="↓ Dossier: Spesifikasi SRS">↓ Dossier: SRS Spec</span></button>
               </div>
@@ -512,7 +556,7 @@ const sampleWorkDocs = [
             <div class="p-2.5 rounded border border-blue-200 bg-blue-50/50 flex flex-col gap-2 hover:bg-blue-100/60 transition-colors">
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
-                  <span class="font-bold text-slate-900 text-xs">5. Enterprise Fleet Telematics &amp; Fuel Anomaly Engine</span>
+                  <a href={`${base}/projects/fleet-telematics-fuel-anomaly-engine`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">5. Enterprise Fleet Telematics &amp; Fuel Anomaly Engine</a>
                   <span class="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-900 text-[9px] font-bold uppercase">IoT &amp; Logistics</span>
                 </div>
                 <p class="text-[11px] text-slate-600 mt-0.5 i18n"
@@ -522,7 +566,14 @@ const sampleWorkDocs = [
                 </p>
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
-                <button onclick="openArticleInIE('fleet-telematics-fuel-anomaly-engine')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><ExternalLink class="w-3 h-3" /><span class="i18n" data-en="Read in IE" data-id="Baca di IE">Read in IE</span></button>
+                <a
+                  href={`${base}/projects/fleet-telematics-fuel-anomaly-engine`}
+                  onclick="if (!event.ctrlKey && !event.metaKey) { event.preventDefault(); openArticleInIE('fleet-telematics-fuel-anomaly-engine'); }"
+                  class="xp-btn text-[10px] font-bold flex items-center gap-1 text-slate-800"
+                >
+                  <ExternalLink class="w-3 h-3" />
+                  <span class="i18n" data-en="Read in IE" data-id="Baca di IE">Read in IE</span>
+                </a>
                 <button onclick="openSDLC('telematics')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><Layers class="w-3 h-3" /><span class="i18n" data-en="SDLC Lens" data-id="SDLC Lens">SDLC Lens</span></button>
                 <button onclick="openDocsBatch('srs-telematics,sit-telematics')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><FileText class="w-3 h-3" /><span class="i18n" data-en="↓ Dossier: SRS + IoT Matrix" data-id="↓ Dossier: SRS + Matriks IoT">↓ Dossier: SRS + IoT Matrix</span></button>
               </div>
@@ -531,7 +582,7 @@ const sampleWorkDocs = [
             <div class="p-2.5 rounded border border-slate-200 bg-slate-50 flex flex-col gap-2 hover:bg-slate-100 transition-colors">
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
-                  <span class="font-bold text-slate-900 text-xs">6. GitHub Push Request Audit &amp; Deploy Tracker</span>
+                  <a href={`${base}/projects/damri-push-request-tracker`} class="font-bold text-slate-900 text-xs hover:underline hover:text-blue-700">6. GitHub Push Request Audit &amp; Deploy Tracker</a>
                   <span class="px-1.5 py-0.2 rounded bg-indigo-100 text-indigo-900 text-[9px] font-bold uppercase">DevOps Audit</span>
                 </div>
                 <p class="text-[11px] text-slate-600 mt-0.5 i18n"
@@ -541,7 +592,14 @@ const sampleWorkDocs = [
                 </p>
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
-                <button onclick="openArticleInIE('damri-push-request-tracker')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><ExternalLink class="w-3 h-3" /><span class="i18n" data-en="Read in IE" data-id="Baca di IE">Read in IE</span></button>
+                <a
+                  href={`${base}/projects/damri-push-request-tracker`}
+                  onclick="if (!event.ctrlKey && !event.metaKey) { event.preventDefault(); openArticleInIE('damri-push-request-tracker'); }"
+                  class="xp-btn text-[10px] font-bold flex items-center gap-1 text-slate-800"
+                >
+                  <ExternalLink class="w-3 h-3" />
+                  <span class="i18n" data-en="Read in IE" data-id="Baca di IE">Read in IE</span>
+                </a>
                 <button onclick="openSDLC('push-request')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><Layers class="w-3 h-3" /><span class="i18n" data-en="SDLC Lens" data-id="SDLC Lens">SDLC Lens</span></button>
                 <button onclick="openDocsBatch('tad-pushrequest')" class="xp-btn text-[10px] font-bold flex items-center gap-1"><FileText class="w-3 h-3" /><span class="i18n" data-en="↓ Dossier: TAD + Runbook" data-id="↓ Dossier: TAD + Runbook">↓ Dossier: TAD + Runbook</span></button>
               </div>
@@ -1833,12 +1891,24 @@ const sampleWorkDocs = [
                   {project.data.metrics[0]?.value}
                 </td>
                 <td class="py-2.5 px-2 text-right">
-                  <button
-                    class="xp-btn text-[11px] font-semibold"
-                  >
-                    <span class="i18n" data-en="Open in IE" data-id="Buka di IE">Open in IE</span>
-                    <Globe class="w-3 h-3 text-blue-600" />
-                  </button>
+                  <div class="inline-flex items-center gap-1.5 justify-end">
+                    <a
+                      href={`${base}/projects/${project.id}`}
+                      class="xp-btn text-[11px] font-semibold inline-flex items-center gap-1 text-slate-800 hover:text-blue-900"
+                      title="Open standalone case study page"
+                      onclick="event.stopPropagation();"
+                    >
+                      <ExternalLink class="w-3 h-3 text-slate-600" />
+                      <span class="i18n" data-en="Standalone" data-id="Halaman">Standalone</span>
+                    </a>
+                    <button
+                      type="button"
+                      class="xp-btn text-[11px] font-semibold inline-flex items-center gap-1"
+                    >
+                      <span class="i18n" data-en="Open in IE" data-id="Buka di IE">Open in IE</span>
+                      <Globe class="w-3 h-3 text-blue-600" />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -3523,6 +3593,14 @@ const sampleWorkDocs = [
       };
 
       titlebar.addEventListener('pointerdown', onDragStart);
+
+      titlebar.addEventListener('dblclick', (e: MouseEvent) => {
+        if ((e.target as HTMLElement).closest('.win-btn-minimize, .win-btn-maximize, .win-btn-close')) {
+          return;
+        }
+        const maxBtn = win.querySelector<HTMLButtonElement>('.win-btn-maximize');
+        maxBtn?.click();
+      });
     }
 
     // Window Resizing via bottom-right grip handle (Pointer Events for Touch & Mouse)
@@ -3636,6 +3714,17 @@ const sampleWorkDocs = [
       }
     });
 
+    icon.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        e.stopPropagation();
+        const targetId = icon.getAttribute('data-open');
+        if (targetId) {
+          (window as any).openWindow(targetId);
+        }
+      }
+    });
+
     icon.addEventListener('mouseenter', () => {
       if (!iconTooltip || !iconTooltipTitle || !iconTooltipDesc) return;
       const title = icon.getAttribute('data-tooltip-title') || icon.getAttribute('title') || '';
@@ -3655,6 +3744,25 @@ const sampleWorkDocs = [
     });
 
     icon.addEventListener('mouseleave', () => {
+      iconTooltip?.classList.add('hidden');
+    });
+
+    icon.addEventListener('focus', () => {
+      if (!iconTooltip || !iconTooltipTitle || !iconTooltipDesc) return;
+      const title = icon.getAttribute('data-tooltip-title') || icon.getAttribute('title') || '';
+      const desc = icon.getAttribute('data-tooltip-desc') || '';
+      const langIdx = currentLang === 'id' ? 0 : 1;
+      const titleLine = title.split(' | ')[langIdx] || title.split(' | ')[0] || title;
+      const descLine = desc.split(' | ')[langIdx] || desc.split(' | ')[0] || desc;
+      iconTooltipTitle.innerText = titleLine;
+      iconTooltipDesc.innerText = descLine;
+      const rect = icon.getBoundingClientRect();
+      iconTooltip.style.left = `${rect.right + 8}px`;
+      iconTooltip.style.top = `${rect.top}px`;
+      iconTooltip.classList.remove('hidden');
+    });
+
+    icon.addEventListener('blur', () => {
       iconTooltip?.classList.add('hidden');
     });
   });
@@ -3900,6 +4008,11 @@ const sampleWorkDocs = [
     if (isTyping) return;
 
     if (e.key === 'Escape') {
+      // Guard: if error dialog is open, let the modal dialog handle its own dismissal
+      const errorDialog = document.getElementById('win-xp-error-dialog');
+      if (errorDialog && !errorDialog.classList.contains('hidden')) {
+        return;
+      }
       // Close topmost visible window
       const topWin = getTopmostWindow();
       if (topWin) closeWindow(topWin);

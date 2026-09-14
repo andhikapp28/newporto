@@ -75,6 +75,25 @@ export const sdlcDataId: Record<string, SdlcProjectData> = {
               Laporan TJSL/PKBL harus memenuhi format OJK: realisasi dana per triwulan, jumlah mitra aktif, sektor usaha, dan dampak sosial. Sistem menyediakan export Excel/CSV otomatis dengan primary key kode mitra yang konsisten agar auditor dapat melakukan vlookup lintas periode tanpa mismatch ID.
             </p>
           </div>
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white text-[9px] font-bold">ADR</span>
+              <span>ADR-001: Kode Mitra Sequential Tanpa Celah (Zero-Gap) vs UUID</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Sesuai mandat Peraturan Menteri BUMN dan standar audit BPK RI, penomoran mitra binaan wajib berurutan kronologis (format PUMK-YYYY-XXX). Menggunakan penguncian transaksi PostgreSQL <code>lockForUpdate()</code> alih-alih UUID/Redis counter guna menjamin konsistensi ACID, mencegah nomor urut loncat saat rollback, dan mempermudah rekonsiliasi VLOOKUP bank.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-700 text-white text-[9px] font-bold">GOVERNANCE</span>
+              <span>Tata Kelola TJSL BUMN &amp; Kepatuhan Permen PER-05/MBU/04/2021</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Penetapan gerbang validasi NIK 16 digit terverifikasi, screening pencegahan pendanaan ganda (anti-double-financing) lintas BUMN, dan rekonsiliasi saldo kas masuk Rp 0 varians dengan rekening penampung Bank BRI/Mandiri sebelum laporan triwulan (TW1-TW4) disahkan.
+            </p>
+          </div>
         </div>`,
     dev: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
@@ -138,6 +157,25 @@ DB::transaction(function () use ($request) {
               <div class="p-2 rounded bg-white border border-slate-300">PATCH /api/v1/pengajuan/{id}/approve</div>
               <div class="p-2 rounded bg-white border border-slate-300">GET /api/v1/reports/tjsl</div>
             </div>
+          </div>
+          <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-indigo-600 text-white text-[9px] font-bold">ADR DECISION</span>
+              <span>Pessimistic Lock Transaksional &amp; Shadow User Pattern SSO</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Mekanisme DB::transaction dengan <code>lockForUpdate()</code> mengisolasi kueri urutan terakhir mitra, mengeliminasi race condition di 50+ cabang tanpa infrastruktur Redis eksternal. Otentikasi menerapkan Shadow User Pattern via OAuth2 SSO DAMRI sehingga kredensial password pegawai 100% tidak pernah disimpan di database aplikasi (Kepatuhan ISO 27001).
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-slate-800 text-indigo-300 text-[9px] font-bold">QUALITY GATES</span>
+              <span>Enterprise Quality Gates (SAST &amp; Backup SLA)</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Standar CI/CD mewajibkan analisis statis PHPStan Level 8 lolos 100%, 0 celah SQL Injection via Eloquent Parameterized Binding, SLA ketersediaan 99.8% pada jam operasional, serta automated backup snapshot harian terenkripsi AES-256 dengan target RPO &lt; 24 jam dan RTO &lt; 2 jam.
+            </p>
           </div>
         </div>`,
     qa: `<div class="space-y-4">
@@ -287,6 +325,25 @@ DB::transaction(function () use ($request) {
             <div class="p-2 rounded bg-white border border-blue-200"><div class="text-lg font-black text-blue-700">100%</div><div class="text-[10px] text-slate-600">Approval Traceability</div></div>
             <div class="p-2 rounded bg-white border border-blue-200"><div class="text-lg font-black text-blue-700">24h</div><div class="text-[10px] text-slate-600">Rollback SLA</div></div>
           </div>
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white text-[9px] font-bold">ADR</span>
+              <span>ADR-001: Event-Driven GitHub Webhook vs Periodic Polling Cron</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Polling berkala setiap 15 menit menghabiskan batas kuota GitHub API (5.000 req/jam) dan menimbulkan latensi audit tinggi. Memilih arsitektur Event-Driven GitHub Webhooks dengan verifikasi kriptografis HMAC SHA-256 (header X-Hub-Signature-256) untuk penyerapan data commit seketika (&lt;1 detik) dan proteksi anti-spoofing.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-700 text-white text-[9px] font-bold">GOVERNANCE</span>
+              <span>Pengawasan Vendor &amp; Kepatuhan Berita Acara Serah Terima (BAST)</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Pencairan termin pembayaran vendor dikunci secara sah berdasarkan riwayat commit dan pemenuhan checklist go-live di sistem. Penegakan Branch Protection ketat: larangan direct push ke branch main/production dan kewajiban minimal 2 approving reviews (System Analyst + Tech Lead DAMRI).
+            </p>
+          </div>
         </div>`,
     dev: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
@@ -361,6 +418,25 @@ public function handlePush(Request $request)
               <li><strong>Pipeline Automation:</strong> webhook trigger menjalankan GitHub Actions untuk build & unit test.</li>
               <li><strong>Security:</strong> secret webhook disimpan di environment, tidak di codebase.</li>
             </ul>
+          </div>
+          <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-indigo-600 text-white text-[9px] font-bold">ADR DECISION</span>
+              <span>HMAC Signature Verification &amp; Commit Traceability Engine</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Setiap payload webhook divalidasi dengan shared secret menggunakan hash_hmac(&#39;sha256&#39;) sebelum diparsing. Commit SHA-1/SHA-256, author, dan diff file langsung dipetakan ke task kanban dan database relasional PostgreSQL, menjamin ketertelusuran deployment live tanpa celah pergeseran server.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-slate-800 text-indigo-300 text-[9px] font-bold">QUALITY GATES</span>
+              <span>CI/CD Security Gatekeeper &amp; 15-Minute Rollback SLA</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Gatekeeper otomatis memeriksa dependensi via Dependabot/Trivy (0 kerentanan High/Critical). Server produksi hanya diizinkan mengeksekusi git pull untuk commit yang berstatus Approved for Deployment. SLA rollback darurat ditetapkan maksimal 15 menit dengan pelaporan post-mortem &lt;4 jam.
+            </p>
           </div>
         </div>`,
     qa: `<div class="space-y-4">
@@ -571,6 +647,25 @@ public function handlePush(Request $request)
               Setiap aksi persetujuan menghasilkan payload hash SHA-256 yang merantai hash transaksi sebelumnya (prinsip Merkle Tree). Hal ini menjamin bahwa riwayat audit tidak dapat dimanipulasi dari database internal oleh pihak manapun tanpa merusak integritas rantai verifikasi.
             </p>
           </div>
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white text-[9px] font-bold">ADR</span>
+              <span>ADR-001: Cryptographic Merkle Ledger vs Logging CRUD Biasa</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Persetujuan Capex &amp; Pengadaan hingga &gt;Rp 10 Miliar rawan sengketa hukum dan manipulasi DBA langsung di database. Memilih Cryptographic Append-Only Ledger berantai hash SHA-256 (prinsip Merkle Tree) yang memenuhi standar forensik SPKN BPK RI dengan latensi sub-15ms tanpa pemborosan komputasi blockchain privat.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-700 text-white text-[9px] font-bold">GOVERNANCE</span>
+              <span>Separation of Duties (SoD) &amp; Anti-Loop Delegation Policy</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Pencegahan konflik kepentingan: Pemohon secara kriptografis diblokir menyetujui tiketnya sendiri (403 Forbidden). Pjs delegation diperiksa via algoritma Directed Acyclic Graph (maksimal level 1, anti-rekursif). Kebijakan Grandfathering melindungi alur tiket berjalan saat restrukturisasi organisasi.
+            </p>
+          </div>
         </div>`,
     dev: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
@@ -623,6 +718,25 @@ DB::transaction(function () use ($ticketId, $approverId, $expectedVersion) {
         'signature' => hash('sha256', $ticket->id . $approverId . now())
     ]);
 });</pre>
+          <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-indigo-600 text-white text-[9px] font-bold">ADR DECISION</span>
+              <span>Optimistic Concurrency Control (OCC) vs Pessimistic Locking</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Proteksi konkurensi ganda mengandalkan kolom <code>version</code> pada tabel <code>approval_steps</code> (WHERE id = ? AND version = ?). Saat delegator dan Pjs menyetujui bersamaan, salah satu request langsung ditolak dengan HTTP 409 Conflict secara elegan tanpa membebani connection pool basis data atau risiko deadlock.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-slate-800 text-indigo-300 text-[9px] font-bold">QUALITY GATES</span>
+              <span>Enterprise Quality Gates &amp; SLA Sentinel Automation</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              SonarQube SAST rating A (0 vulnerabilities, 90%+ branch test coverage). SLA Sentinel Daemon terjadwal otomatis menembakkan peringatan pada jam ke-18 dan auto-eskalasi pada jam ke-24 dengan audit log tak terhapuskan. Prosedur rollback pra-produksi darurat teruji &lt; 5 menit.
+            </p>
+          </div>
         </div>`,
     qa: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-200">
@@ -684,6 +798,25 @@ DB::transaction(function () use ($ticketId, $approverId, $expectedVersion) {
               </ul>
             </div>
           </div>
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white text-[9px] font-bold">ADR</span>
+              <span>ADR-001: Redis SETNX Mutex Lock vs PostgreSQL SELECT FOR UPDATE</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Lonjakan flash sale mudik 10.000 req/s memicu connection pool exhaustion dan deadlock pada row-level lock database relasional. Memilih Redis in-memory SETNX Mutex Lock ber-TTL 600 detik sebagai peredam kejut (shock absorber), menyaring 99.9% konflik konkurensi di layer cache dan mereduksi beban CPU basis data hingga 88%.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-700 text-white text-[9px] font-bold">GOVERNANCE</span>
+              <span>Tata Kelola Akses Adil Publik &amp; Mitigasi Scalping Bot</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Penegakan kuota maksimal 4 kursi per akun/NIK, pembatasan Token Bucket 20 req/detik pada API Gateway untuk menghentikan bot calo tiket, serta SLA ketersediaan 99.99% yang didukung automatic Sentinel failover &lt; 1.5 detik.
+            </p>
+          </div>
         </div>`,
     dev: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
@@ -715,6 +848,25 @@ const acquired = await redis.set("seat:" + scheduleId + ":" + seatNo, sessionId,
 if (!acquired) {
   return res.status(409).json({ error: 'Seat is currently being reserved by another passenger' });
 }</pre>
+          <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-indigo-600 text-white text-[9px] font-bold">ADR DECISION</span>
+              <span>Eksekusi In-Memory Atomik &amp; Lexicographical Key Sorting</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Perintah SETNX dieksekusi dalam tempo &lt;5ms (P99 &lt;45ms). Alokasi multi-kursi diurutkan secara leksikografis untuk mengeliminasi circular deadlock. Kursi yang dikunci diamankan oleh JWT reservation token ber-TTL pendek yang hanya dapat ditebus oleh peramban pengguna pemenang lock.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-slate-800 text-indigo-300 text-[9px] font-bold">QUALITY GATES</span>
+              <span>Concurrency Quality Gatekeeper &amp; Stress Benchmarking</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Setiap rilis modul kunci wajib lolos pengujian beban k6 10.000 VU dengan toleransi double-booking tepat 0.000%. Kontrak header Idempotency-Key (RFC 7395) mencegah duplikasi pemotongan kuota saat retransmisi jaringan seluler.
+            </p>
+          </div>
         </div>`,
     qa: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-200">
@@ -773,6 +925,25 @@ if (!acquired) {
               </ul>
             </div>
           </div>
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white text-[9px] font-bold">ADR</span>
+              <span>ADR-001: 3-Way Auto-Healing Daemon vs Batch Cron Harian</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Webhook drop (1.4%) dan cutoff bank 23:00 WIB menyebabkan komplain penumpang dan selisih pembukuan kas harian. Memilih Auto-Healing Daemon berbasis micro-batch (jendela 5 menit) dengan On-Demand Inquiry SNAP BI (GET /v1.0/debit/status), memangkas pemulihan tiket tersangkut dari 40 jam menjadi &lt;90 detik.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-700 text-white text-[9px] font-bold">GOVERNANCE</span>
+              <span>Tata Kelola Finansial BUMN &amp; Rekonsiliasi Kas Nir-Varians</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Pemisahan tugas ketat (Four-Eyes Principle / Maker-Checker), kepatuhan PCI-DSS v4.0, masking data rekening, dan kebijakan toleransi selisih saldo Rp 0 (penny-level zero variance) untuk menjamin opini audit Wajar Tanpa Pengecualian (WTP) dari BPK RI.
+            </p>
+          </div>
         </div>`,
     dev: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
@@ -798,6 +969,25 @@ if (!acquired) {
             <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">0.00%</div><div class="text-[10px] text-slate-600">Financial Leakage</div></div>
             <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">200k/m</div><div class="text-[10px] text-slate-600">Batch Ingestion</div></div>
             <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">&lt;90s</div><div class="text-[10px] text-slate-600">Auto-Healing SLA</div></div>
+          </div>
+          <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-indigo-600 text-white text-[9px] font-bold">ADR DECISION</span>
+              <span>Timing Bucket Rollforward &amp; Pipa Rekonsiliasi Micro-Batch</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Transaksi pada rentang 23:00–23:59 WIB secara otomatis ditandai TIMING_T1_SHIFT dan dialihkan ke keranjang kliring hari berikutnya, mengeliminasi alarm selisih semu. Pemrosesan chunk 500 baris berindeks menjaga latensi kueri &lt;25ms tanpa mengunci tabel pesanan utama.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-slate-800 text-indigo-300 text-[9px] font-bold">QUALITY GATES</span>
+              <span>Security Quality Gates &amp; SLA Vendor Perbankan</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Validasi tanda tangan HMAC SHA-256 wajib pada seluruh webhook masuk. Gateway mitra terikat SLA webhook delivery 99.9% dengan 5x exponential retry. File rekening koran bank MT940 wajib tersedia via SFTP sebelum pukul 03:00 WIB setiap hari kalender.
+            </p>
           </div>
         </div>`,
     qa: `<div class="space-y-4">
@@ -851,6 +1041,25 @@ if (!acquired) {
               </ul>
             </div>
           </div>
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white text-[9px] font-bold">ADR</span>
+              <span>ADR-001: 1D Discrete Kalman Filter vs Moving Average</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Guncangan tangki solar armada (sloshing) menimbulkan fluktuasi ±15 Liter yang memicu 24.5% alarm palsu. Algoritma moving average menimbulkan phase lag 10 menit sehingga pencurian tidak terdeteksi seketika. Memilih 1D Discrete Kalman Filter yang mengestimasi volume riil secara optimal, mereduksi alarm palsu ke &lt;0.12% dan mendeteksi siphoning dalam &lt;45 detik.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-700 text-white text-[9px] font-bold">GOVERNANCE</span>
+              <span>Tata Kelola Subsidi BBM PSO &amp; Kepatuhan BPH Migas</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Kepatuhan resmi terhadap Kepmenhub KM 158/2021 dan pengawasan kuota solar subsidi BPH Migas. Triangulasi 3-arah nota pengisian Pertamina Fuel Card vs kenaikan volume riil sensor tangki (toleransi 2%) menghemat anggaran operasional BBM armada hingga Rp 4.2 Miliar/tahun.
+            </p>
+          </div>
         </div>`,
     dev: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
@@ -878,6 +1087,25 @@ if (engineStatus === "OFF" &amp;&amp; speed === 0) {
     await dispatchCriticalAlert("FUEL_SIPHONING", { busId, deltaFuel, location });
   }
 }</pre>
+          <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-indigo-600 text-white text-[9px] font-bold">ADR DECISION</span>
+              <span>Stream Ingestion Pipeline &amp; PostGIS Geofence Corridor Engine</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Komputasi rekursif O(1) skalar pada 1D Kalman Filter memungkinkan penyerapan 5.000 ping/detik tanpa latensi pada Kafka Stream Consumer. Koridor rute dihitung secara real-time via PostGIS ST_DWithin selebar 250m sepanjang rute resmi izin Ditjen Hubdat.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-slate-800 text-indigo-300 text-[9px] font-bold">QUALITY GATES</span>
+              <span>Hardware Durability Gatekeeper &amp; Private APN Telematics SLA</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Sertifikasi perangkat keras GPS berstandar IP67 dengan memori buffer offline minimum 72 jam (kehilangan paket &lt;0.5%). SLA kartu SIM IoT M2M 99.5% dengan auto-switch dual APN privat (Telkomsel/Indosat) dan batas perbaikan hardware (MTTR) &lt; 24 jam.
+            </p>
+          </div>
         </div>`,
     qa: ``
   }
@@ -944,6 +1172,25 @@ export const sdlcDataEn: Record<string, SdlcProjectData> = {
               TJSL/PKBL statements must adhere to strict regulatory guidelines: quarterly disbursement quotas, active beneficiary counts, economic sector classification, and audited social impacts. The system provides automated Excel/CSV exports utilizing immutable primary keys so external auditors can run multi-period audits without ID mismatches.
             </p>
           </div>
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white text-[9px] font-bold">ADR</span>
+              <span>ADR-001: Sequential Zero-Gap Partner ID vs UUID</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Mandated by SOE Ministerial Regulations and State Audit Board (BPK) standards, partner registration requires chronological sequential numbering (PUMK-YYYY-XXX). Chose PostgreSQL transactional <code>lockForUpdate()</code> over UUIDs or Redis atomic counters to enforce ACID consistency, prevent uncommitted sequence gaps on rollback, and streamline banking VLOOKUP reconciliations.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-700 text-white text-[9px] font-bold">GOVERNANCE</span>
+              <span>SOE Regulatory Governance &amp; Decree PER-05/MBU/04/2021</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Mandatory 16-digit verified NIK gatekeeper, cross-SOE anti-double-financing verification, and zero-variance cash reconciliation against Bank Mandiri and BRI escrow accounts prior to finalizing quarterly performance reports (Q1-Q4).
+            </p>
+          </div>
         </div>`,
     dev: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
@@ -998,6 +1245,25 @@ DB::transaction(function () use ($request) {
         'status_approval' => 'DRAFT',
     ]));
 }, 5);</pre>
+          <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-indigo-600 text-white text-[9px] font-bold">ADR DECISION</span>
+              <span>Transactional Pessimistic Locking &amp; SSO Shadow User Pattern</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              DB::transaction with <code>lockForUpdate()</code> serializes sequence generation across 50+ branches without external Redis cluster dependencies. Authentication utilizes the Shadow User Pattern via DAMRI Central OAuth2 SSO, ensuring zero employee passwords are stored in the local database (ISO 27001 compliance).
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-slate-800 text-indigo-300 text-[9px] font-bold">QUALITY GATES</span>
+              <span>Enterprise Quality Gates (SAST &amp; Backup SLA)</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              CI/CD pipeline mandates PHPStan Level 8 zero-error pass, zero SQL injection risks via Eloquent parameterized queries, 99.8% operational availability SLA, and AES-256 encrypted daily snapshot backups with RPO &lt; 24h and RTO &lt; 2h.
+            </p>
+          </div>
         </div>`,
     qa: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-200">
@@ -1060,6 +1326,25 @@ DB::transaction(function () use ($request) {
               </ul>
             </div>
           </div>
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white text-[9px] font-bold">ADR</span>
+              <span>ADR-001: Event-Driven GitHub Webhooks vs Periodic Polling Cron</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Periodic 15-minute polling quickly exhausted GitHub API rate limits (5,000 req/h) and introduced audit lag. Selected Event-Driven GitHub Webhooks secured by HMAC SHA-256 cryptographic signatures (X-Hub-Signature-256 header) for real-time sub-second commit ingestion and spoofing defense.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-700 text-white text-[9px] font-bold">GOVERNANCE</span>
+              <span>Vendor Oversight &amp; Milestone Sign-Off (BAST) Governance</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Third-party vendor invoice sign-offs are strictly linked to verified commit histories and go-live checklist completion. Branch Protection rules prohibit direct pushes to main/production, enforcing mandatory dual-approval peer reviews (System Analyst + Tech Lead).
+            </p>
+          </div>
         </div>`,
     dev: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
@@ -1085,6 +1370,25 @@ DB::transaction(function () use ($request) {
             <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">100%</div><div class="text-[10px] text-slate-600">HMAC Verified</div></div>
             <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">500+</div><div class="text-[10px] text-slate-600">Deployments Tracked</div></div>
             <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">0</div><div class="text-[10px] text-slate-600">Lost Events</div></div>
+          </div>
+          <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-indigo-600 text-white text-[9px] font-bold">ADR DECISION</span>
+              <span>HMAC Signature Validation &amp; Commit Traceability Engine</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Inbound payloads are verified against a shared secret using hash_hmac(&#39;sha256&#39;) prior to parsing. Commit hashes, author metadata, and changed file diffs are mapped directly to kanban tasks and PostgreSQL audit tables, eliminating production server drift.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-slate-800 text-indigo-300 text-[9px] font-bold">QUALITY GATES</span>
+              <span>CI/CD Security Gatekeeper &amp; 15-Minute Rollback SLA</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Automated gates enforce Dependabot/Trivy scans with zero High/Critical vulnerabilities. Production servers only pull pre-approved commit hashes with signed checklists. Emergency rollback SLA is capped at 15 minutes with mandatory &lt;4h incident post-mortems.
+            </p>
           </div>
         </div>`,
     qa: `<div class="space-y-4">
@@ -1208,6 +1512,25 @@ DB::transaction(function () use ($request) {
               </ul>
             </div>
           </div>
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white text-[9px] font-bold">ADR</span>
+              <span>ADR-001: Cryptographic Merkle Ledger vs Standard CRUD Logging</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Authorizing Capex and Procurement up to &gt;$1M involves high legal stakes and DBA tampering risks. Selected an append-only SHA-256 Merkle-chained audit ledger fulfilling State Audit Board (BPK) digital forensic standards with sub-15ms latency, avoiding private blockchain compute overhead.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-700 text-white text-[9px] font-bold">GOVERNANCE</span>
+              <span>Separation of Duties (SoD) &amp; Anti-Loop Delegation Policy</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Conflict-of-interest prevention: Requesters are cryptographically barred from approving their own submissions (403 Forbidden). Acting Officer delegation is governed by Directed Acyclic Graph validation (max depth-1, cycle-free). Grandfathering policies safeguard in-flight approvals during corporate restructuring.
+            </p>
+          </div>
         </div>`,
     dev: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
@@ -1248,6 +1571,25 @@ DB::transaction(function () use ($ticketId, $approverId, $expectedVersion) {
         'signature' => hash('sha256', $ticket->id . $approverId . now())
     ]);
 });</pre>
+          <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-indigo-600 text-white text-[9px] font-bold">ADR DECISION</span>
+              <span>Optimistic Concurrency Control (OCC) vs Pessimistic Locking</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Double-action defense utilizes an incremental <code>version</code> column on <code>approval_steps</code> (WHERE id = ? AND version = ?). When a delegator and acting officer click simultaneously, the secondary transaction yields an immediate HTTP 409 Conflict without connection pool exhaustion or deadlock risks.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-slate-800 text-indigo-300 text-[9px] font-bold">QUALITY GATES</span>
+              <span>Enterprise Quality Gates &amp; SLA Sentinel Automation</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              SonarQube SAST rating A (0 vulnerabilities, 90%+ branch coverage). Scheduled SLA Sentinel daemon automatically triggers 18-hour early warnings and 24-hour hierarchical auto-escalation with immutable hash logging. Verified emergency rollback SLA &lt; 5 minutes.
+            </p>
+          </div>
         </div>`,
     qa: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-emerald-50 border border-emerald-200">
@@ -1299,6 +1641,25 @@ DB::transaction(function () use ($ticketId, $approverId, $expectedVersion) {
               </ul>
             </div>
           </div>
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white text-[9px] font-bold">ADR</span>
+              <span>ADR-001: Redis SETNX Mutex Lock vs PostgreSQL SELECT FOR UPDATE</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Peak holiday flash sale surges of 10,000 req/s triggered connection pool exhaustion and deadlocks under relational row-level locks. Selected Redis in-memory SETNX Mutex with a 600s TTL as a shock absorber, intercepting 99.9% of concurrency conflicts in memory and slashing database CPU load by 88%.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-700 text-white text-[9px] font-bold">GOVERNANCE</span>
+              <span>Fair Public Access Governance &amp; Anti-Scalping Scalability</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Strict quota enforcement of max 4 seats per verified ID, Token Bucket rate limiting (20 req/s) at the API Gateway to neutralize ticket scalping bots, and a 99.99% availability SLA backed by sub-1.5s Redis Sentinel automatic failover.
+            </p>
+          </div>
         </div>`,
     dev: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
@@ -1316,6 +1677,25 @@ DB::transaction(function () use ($ticketId, $approverId, $expectedVersion) {
             <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">&lt;8ms</div><div class="text-[10px] text-slate-600">Lock Acquisition</div></div>
             <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">600s</div><div class="text-[10px] text-slate-600">Deterministic TTL</div></div>
             <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">0%</div><div class="text-[10px] text-slate-600">Double Booking</div></div>
+          </div>
+          <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-indigo-600 text-white text-[9px] font-bold">ADR DECISION</span>
+              <span>Atomic In-Memory Mutex &amp; Lexicographical Key Sorting</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              SETNX commands execute in &lt;5ms (P99 &lt;45ms). Multi-seat reservations employ lexicographical key sorting to eliminate circular deadlock graphs. Locked seats are secured by short-lived cryptographic JWT reservation tokens redeemable exclusively by the winning session.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-slate-800 text-indigo-300 text-[9px] font-bold">QUALITY GATES</span>
+              <span>Concurrency Quality Gatekeeper &amp; Stress Benchmarking</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Code releases mandate automated k6 stress testing at 10,000 VU with strictly 0.000% double-booking tolerance. Strict RFC 7395 Idempotency-Key headers prevent duplicate inventory deductions across unstable mobile connections.
+            </p>
           </div>
         </div>`,
     qa: `<div class="space-y-4">
@@ -1367,6 +1747,25 @@ DB::transaction(function () use ($ticketId, $approverId, $expectedVersion) {
               </ul>
             </div>
           </div>
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white text-[9px] font-bold">ADR</span>
+              <span>ADR-001: 3-Way Auto-Healing Daemon vs Daily Batch Cron</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Inbound webhook drops (1.4%) and 23:00 bank cutoffs triggered passenger disputes and floating cash discrepancies. Selected a 5-minute micro-batch Auto-Healing Daemon with SNAP BI On-Demand Inquiries (GET /v1.0/debit/status), slashing unverified ticket recovery from 40 hours to &lt;90 seconds.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-700 text-white text-[9px] font-bold">GOVERNANCE</span>
+              <span>SOE Financial Governance &amp; Zero-Variance Cash Reconciliation</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Four-Eyes Principle (Maker-Checker segregation), PCI-DSS v4.0 compliance, account number masking, and a strict penny-level zero-variance reconciliation policy ensuring unqualified clean audit opinions (WTP) from the State Audit Board (BPK).
+            </p>
+          </div>
         </div>`,
     dev: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
@@ -1384,6 +1783,25 @@ DB::transaction(function () use ($ticketId, $approverId, $expectedVersion) {
             <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">0.00%</div><div class="text-[10px] text-slate-600">Financial Leakage</div></div>
             <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">200k/m</div><div class="text-[10px] text-slate-600">Batch Ingestion</div></div>
             <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">&lt;90s</div><div class="text-[10px] text-slate-600">Auto-Healing SLA</div></div>
+          </div>
+          <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-indigo-600 text-white text-[9px] font-bold">ADR DECISION</span>
+              <span>Timing Bucket Rollforward &amp; Micro-Batch Processing Pipeline</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Transactions occurring between 23:00-23:59 WIB are tagged with TIMING_T1_SHIFT and rolled into the T+1 settlement bucket, eliminating false deficit alerts. Chunked 500-row indexed processing maintains sub-25ms query latency without locking core transaction tables.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-slate-800 text-indigo-300 text-[9px] font-bold">QUALITY GATES</span>
+              <span>Security Quality Gates &amp; Banking Partner SLA</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Mandatory HMAC SHA-256 signature verification on all inbound webhooks. Payment gateway partners are contractually bound to a 99.9% delivery SLA with 5x exponential backoff retries. Bank MT940 statement files must land in SFTP by 03:00 AM daily.
+            </p>
           </div>
         </div>`,
     qa: `<div class="space-y-4">
@@ -1435,6 +1853,25 @@ DB::transaction(function () use ($ticketId, $approverId, $expectedVersion) {
               </ul>
             </div>
           </div>
+          <div class="p-3 rounded bg-blue-50 border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white text-[9px] font-bold">ADR</span>
+              <span>ADR-001: 1D Discrete Kalman Filter vs Moving Average</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Tank fluid sloshing caused ±15L analog fluctuations, triggering 24.5% false theft alarms. Moving average algorithms introduced 10-minute phase lag, failing to catch rapid siphoning. Selected a 1D Discrete Kalman Filter for optimal real-time state estimation, slashing false alarms to &lt;0.12% and capturing siphoning within &lt;45 seconds.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-blue-200">
+            <div class="font-bold text-blue-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-blue-700 text-white text-[9px] font-bold">GOVERNANCE</span>
+              <span>Subsidized Fuel Governance &amp; BPH Migas Regulatory Compliance</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Enforces compliance with Ministry of Transportation Decree KM 158/2021 and BPH Migas public service obligation (PSO) mandates. 3-Way triangulation of Pertamina Fuel Card vouchers against sensor volume deltas (2% tolerance) delivers verified fuel savings of Rp 4.2 Billion ($270k+) annually.
+            </p>
+          </div>
         </div>`,
     dev: `<div class="space-y-4">
           <div class="p-4 rounded-lg bg-indigo-50 border border-indigo-200">
@@ -1452,6 +1889,25 @@ DB::transaction(function () use ($ticketId, $approverId, $expectedVersion) {
             <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">1,500+</div><div class="text-[10px] text-slate-600">Active Fleets</div></div>
             <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">99.8%</div><div class="text-[10px] text-slate-600">Kalman Accuracy</div></div>
             <div class="p-2.5 rounded bg-white border border-indigo-200"><div class="text-lg font-black text-indigo-700">&lt;100ms</div><div class="text-[10px] text-slate-600">Ingestion Latency</div></div>
+          </div>
+          <div class="p-3 rounded bg-indigo-50 border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-indigo-600 text-white text-[9px] font-bold">ADR DECISION</span>
+              <span>Stream Ingestion Pipeline &amp; PostGIS Geofence Corridor Engine</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              O(1) scalar recursive algebra in the 1D Kalman Filter processes 5,000 incoming telemetry pings/sec with sub-millisecond Kafka consumer latency. Route compliance corridors are evaluated in real time using PostGIS ST_DWithin (250m polyline buffer) against official transport ministry routes.
+            </p>
+          </div>
+
+          <div class="p-3 rounded bg-white border border-indigo-200">
+            <div class="font-bold text-indigo-900 text-xs mb-1.5 flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-slate-800 text-indigo-300 text-[9px] font-bold">QUALITY GATES</span>
+              <span>Hardware Durability Gatekeeper &amp; Private APN Telematics SLA</span>
+            </div>
+            <p class="text-slate-800 text-[11px] leading-relaxed">
+              Mandates IP67-rated GPS tracking hardware with 72-hour offline store-and-forward memory (packet loss &lt;0.5%). Private APN M2M SIM connectivity SLA of 99.5% with dual-carrier auto-failover and hardware replacement MTTR &lt; 24 hours.
+            </p>
           </div>
         </div>`,
     qa: `<div class="space-y-4">

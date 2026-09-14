@@ -140,6 +140,135 @@ Jika seorang teknisi basis data mencoba mengubah *action* atau memanipulasi riwa
 
 ---
 
+## Architecture Decision Record (ADR)
+
+### ADR-001: Tamper-Evident Audit Trail & Concurrency Control (Chained SHA-256 Ledger & OCC vs Standard CRUD Logging)
+
+* **Status:** ACCEPTED & BPK-AUDIT-VERIFIED
+* **Tanggal Keputusan:** Q1 2026
+* **Penanggung Jawab:** Lead System Analyst & Solution Architect
+* **Konteks Keputusan:**
+  Pengelolaan persetujuan anggaran Capex, pengadaan barang/jasa, dan tiket perubahan sistem bernilai tinggi (< Rp 5 Juta hingga > Rp 10 Miliar) di holding BUMN melibatkan risiko hukum signifikan. Terdapat kerentanan benturan aksi persetujuan ganda (*concurrent dual-approval*) saat pendelegasian kuasa Pejabat Sementara (Pjs), serta risiko manipulasi riwayat persetujuan oleh pengguna berpriveleged tinggi (*database administrator*) pada sistem logging CRUD konvensional. Sistem membutuhkan mekanisme pembuktian forensik yang tidak terbantahkan (*non-repudiation*) serta pencegahan *race condition* yang efisien.
+
+* **Opsi yang Dipertimbangkan:**
+  1. **Opsi A: Standard Relational Logging (Database Triggers / Tabel `audit_logs` biasa)**
+     * *Kelebihan:* Sangat mudah dibangun dengan fitur bawaan framework web/ORM.
+     * *Kelemahan:* Rekaman log rentan diubah atau dihapus langsung melalui kueri SQL (`UPDATE` / `DELETE`) oleh oknum teknis tanpa jejak kerusakan struktural. Tidak memenuhi standar pembuktian digital SPKN BPK RI jika terjadi sengketa pengadaan di pengadilan tipikor.
+  2. **Opsi B: Enterprise Private Blockchain (Hyperledger Fabric)**
+     * *Kelebihan:* Imutabilitas absolut dengan konsensus terdistribusi antar node independen.
+     * *Kelemahan:* Latensi transaksi tinggi (500–2.000 ms), kompleksitas setup dan maintenance konsorsium node, serta konsumsi biaya infrastruktur komputasi yang tidak sebanding untuk aplikasi internal korporat tunggal.
+  3. **Opsi C: Cryptographic Merkle-Chained SHA-256 Append-Only Ledger + Optimistic Concurrency Control (OCC) (Pilihan)**
+     * *Kelebihan:* Menghasilkan garansi anti-tamper setara blockchain langsung di dalam basis data PostgreSQL relasional ($H_n = \text{SHA256}(H_{n-1} \parallel \dots)$) dengan latensi transisi status sub-15ms. Perlindungan konkurensi berbasis kolom `version` (OCC) secara deterministik menghentikan benturan ganda dengan respons HTTP `409 Conflict` tanpa risiko *lock deadlock*.
+     * *Kelemahan:* Membutuhkan implementasi algoritma verifikasi integritas rantai secara berkala.
+
+* **Keputusan yang Diambil:**
+  Memilih **Opsi C (Chained SHA-256 Append-Only Ledger + OCC)** sebagai fondasi mesin audit dan transaksi, dipadukan dengan RBAC berlapis dan validasi batas wewenang finansial.
+
+* **Justifikasi Teknis & Analisis Trade-Off:**
+
+| Parameter Evaluasi | Opsi A: Standard Database Logs | Opsi B: Hyperledger Fabric | Opsi C: Chained SHA-256 Ledger + OCC (Pilihan) | Justifikasi Arsitektur |
+| :--- | :---: | :---: | :---: | :--- |
+| **Integritas Anti-Tamper** | Rendah (Mudah dimanipulasi SQL) | Sangat Tinggi (Konsensus distributed) | **Kriptografis Absolut (Merkle Hash)** | Setiap modifikasi ilegal merusak seluruh validasi rantai hash ke depan. |
+| **Latensi State Transition** | < 10 ms | 500 – 2.000 ms (Konsensus lambat) | **< 15 ms (Sub-Second)** | Transisi status seketika dengan penulisan log append-only berindeks. |
+| **Pencegahan Concurrency** | Rawan overwrite (*Last-Write-Wins*) | Transaksi serial mahal | **Zero Dual-Approval (OCC Versioning)**| Menghentikan aksi bersamaan delegator dan Pjs dengan HTTP 409 Conflict. |
+| **Beban & Biaya Infra** | Minimal (Tabel lokal) | Sangat Tinggi (Multi-Node Cluster)| **Ringan (Native di PostgreSQL RDBMS)**| Tanpa biaya tambahan server node konsensus pihak ketiga. |
+| **Kesiapan Audit BPK / KAP** | Butuh verifikasi manual mendalam | Kompleks diekstraksi auditor | **1-Click Forensic Integrity Report** | Endpoint verifikasi otomatis membuktikan keabsahan rantai stempel waktu. |
+
+---
+
+## C4 Model Architecture Blueprint (Context & Containers)
+
+### Level 1: System Context Diagram
+Diagram konteks menggambarkan posisi sistem approval berjenjang terhadap struktur organisasi korporat, pemegang kuasa sementara, dan ekosistem ERP induk:
+
+```
++---------------------------------------------------------------------------------------+
+|                                    SYSTEM CONTEXT                                     |
++---------------------------------------------------------------------------------------+
+
+  [ Pemohon (Requester) ]     [ Pejabat Struktural / Pjs ]     [ Auditor BPK / Internal ]
+  (Staf / Supervisor Divisi)  (Manager, GM, VP, Direksi)       (Pemeriksa Tata Kelola GCG)
+           │                             │                               │
+           │ Inisiasi Permohonan         │ Evaluasi & Otorisasi Bertingkat│ Verifikasi Rantai Audit
+           ▼                             ▼                               ▼
++---------------------------------------------------------------------------------------+
+|               DYNAMIC MULTI-TIER APPROVAL & DELEGATION ENGINE (SYSTEM)                |
+|                                                                                       |
+|   * Mengevaluasi perutean bertingkat dinamis berdasar plafon nominal (Rp 5M - >Rp 10M)|
+|   * Mengelola delegasi legal Pejabat Sementara (Pjs) dan auto-eskalasi SLA 24 jam.   |
+|   * Mencegah benturan konkurensi (OCC) dan membukukan rantai audit SHA-256.           |
++---------------------------------------------------------------------------------------+
+           │                                 │                       │
+           │ Integrasi SSO & Otorisasi       │ Webhook Notifikasi    │ Sinkronisasi Jurnal Kas
+           ▼                                 ▼                       ▼
+  [ Corporate SSO & HRIS ]          [ Alert Notification Hub ] [ Core Enterprise ERP ]
+  (Active Directory / Keycloak)     (Email, WhatsApp, Push)    (SAP S/4HANA Finance)
+```
+
+### Level 2: Container Architecture Diagram
+Diagram kontainer menguraikan sub-layanan orkestrasi aturan bisnis, ledger kriptografis, dan mekanisme proteksi konkurensi:
+
+```
++--------------------------------------------------------------------------------------------------+
+|                                   CONTAINER BLUEPRINT                                            |
++--------------------------------------------------------------------------------------------------+
+
+  [ Corporate Web Portal & ERP Workspace (React / Vite PWA) ]
+                          │
+                          │ HTTPS / JSON (Bearer JWT + X-Request-ID)
+                          ▼
++──────────────────────────────────────────────────────────────────────────────────────────────────+
+|  API GATEWAY & SECURITY ENFORCER (Kong Gateway)                                                  |
+|  * JWT Auth Validation, Rate Limiting, RBAC Claim Extraction, Audit IP Tagging                   |
++──────────────────────────────────────────────────────────────────────────────────────────────────+
+                          │
+                          │ Internal REST API / High-Speed HTTP
+                          ▼
++──────────────────────────────────────────────────────────────────────────────────────────────────+
+|  APPROVAL WORKFLOW ENGINE MICROSERVICE                                                           |
+|                                                                                                  |
+|  * Rule Engine Dispatcher: Evaluasi kategori pengajuan & batas nominal finansial                 |
+|  * Delegation Registry: Pengecekan masa tugas Pjs & pencegahan delegasi melingkar                |
+|  * SLA Sentinel Daemon: Worker terjadwal (Warning 18 jam, Auto-Escalate 24 jam)                  |
+|  * OCC Concurrency Controller: Verifikasi kolom `version` (Anti-Double-Approval)                 |
++──────────────────────────────────────────────────────────────────────────────────────────────────+
+        │                                         │                                      │
+        │ Append Signed Hashes                    │ Relational Operations                │ Publish Events
+        ▼                                         ▼                                      ▼
++──────────────────────────+             +──────────────────────────+          +───────────────────+
+| CRYPTOGRAPHIC LEDGER     |             | TRANSACTIONAL RELATIONAL |          | NOTIFICATION BUS  |
+| SERVICE & HASHER         |             | DATABASE (PostgreSQL 15) |          | (Redis Pub/Sub &  |
+|                          |             |                          |          |  Worker Daemon)   |
+| * H(n) = SHA256(...)     |             | * 3NF Normalized Schema  |          |                   |
+| * Merkle Integrity Probe |             | * Table: approval_steps  |          | * WA Business Bot |
+| * Nonce & Actor Identity |             | * Version Locking Fields |          | * Executive Email |
+| * Tamper-Detection Engine|             | * Stored Audit Records   |          | * In-App Alert    |
++──────────────────────────+             +──────────────────────────+          +───────────────────+
+```
+
+---
+
+## Enterprise Governance & Vendor Oversight
+
+### 1. Kriteria Acceptance Gatekeeper (Enterprise Governance Quality Gates)
+Penerapan sistem persetujuan korporat wajib mematuhi gerbang kendali tata kelola internal (*governance quality gates*):
+* **Separation of Duties (SoD) Enforcement Gate:**
+  * Pembuat permohonan (*requester*) dilarang secara mutlak bertindak sebagai pemberi persetujuan (*approver*) pada seluruh tahapan tiketnya sendiri.
+  * Sistem menerapkan *cryptographic assertion check*: jika `actor_id == requester_id`, proses otorisasi langsung ditolak dengan kode `403 Forbidden: Self-approval prohibited`.
+* **Anti-Loop Delegation Protection:**
+  * Pendaftaran delegasi Pejabat Sementara (Pjs) diperiksa menggunakan algoritma deteksi siklus graf berarah (*Directed Acyclic Graph*). Pengalihan wewenang melingkar (User A &rarr; User B &rarr; User A) atau berantai melebihi level 1 ditolak secara otomatis untuk menjamin kejelasan akuntabilitas hukum.
+* **Static Code Analysis & Test Coverage Gate:**
+  * SonarQube Quality Gate wajib berstatus **PASSED** dengan 0 Security Vulnerabilities dan branch coverage minimum 90% pada modul `ApprovalEngineService`, `SlaSentinelJob`, dan `AuditLedgerHasher`.
+
+### 2. Tata Kelola Change Request (CR) & Grandfathering Policy
+* **Protokol Grandfathering Migration:**
+  * Setiap terjadi perubahan regulasi batas kewenangan atau penambahan divisi baru (seperti Digital Transformation Office - DTO), pengajuan yang sedang berstatus `IN_REVIEW` tetap diselesaikan mengikuti alur aturan versi asal (*schema version lock*).
+  * Pengajuan baru yang dibuat pasca-aktivasi revisi secara otomatis diarahkan ke rantai aturan versi termutakhir tanpa mengganggu tiket yang sedang berjalan.
+* **Emergency 5-Minute Rollback SOP:**
+  * Setiap rilis versi skema alur persetujuan ke server produksi wajib dilengkapi skrip mitigasi migrasi balik (*reversible down() migration*) yang telah diuji pada lingkungan staging dengan target Recovery Time Objective (RTO) < 5 menit.
+
+---
+
 ## Artefak Spesifikasi & Tata Kelola Sistem (SA Suite)
 
 Seluruh dokumen spesifikasi formal telah disusun secara lengkap dan terstandarisasi industri di repositori proyek:

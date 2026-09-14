@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://andhikapp28.github.io/newporto/sitemap-index.xml
+Sitemap: https://andhikapp28.github.io/newporto/sitemap.xml

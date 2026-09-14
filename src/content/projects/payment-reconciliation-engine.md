@@ -73,6 +73,137 @@ Sistem membagi proses audit menjadi pipa (*pipeline*) pemrosesan otomatis 3-kaki
 
 ---
 
+## Architecture Decision Record (ADR)
+
+### ADR-001: 3-Way Auto-Healing Engine vs Daily Batch Cron Job
+
+* **Status:** ACCEPTED & REGULATORY-COMPLIANT
+* **Tanggal Keputusan:** Q1 2026
+* **Penanggung Jawab:** Lead System Analyst & FinTech Solutions Architect
+* **Konteks Keputusan:**
+  Operasional pemesanan tiket transportasi massal multikanal (QRIS, Virtual Account, Kartu Uang Elektronik) melibatkan interaksi 3 kaki data finansial: Internal Core Booking Database, Payment Gateway Event Store, dan Bank Statement MT940. Sekitar 1.4% notifikasi asinkron webhook hilang akibat *network timeout*, dan terdapat pergeseran jam tutup buku (*cutoff*) bank umum pada pukul 23:00 WIB. Sistem membutuhkan arsitektur rekonsiliasi yang menyelesaikan transaksi menggantung secara otomatis tanpa membiarkan penumpang menunggu berjam-jam, serta mengeliminasi selisih saldo pembukuan (*floating discrepancy*).
+
+* **Opsi yang Dipertimbangkan:**
+  1. **Opsi A: End-of-Day Batch Cron Job (Rekonsiliasi Harian T+1 Pukul 01:00 WIB)**
+     * *Kelebihan:* Struktur kueri sederhana berbasis SQL batch terjadwal.
+     * *Kelemahan:* Penumpang yang mengalami *webhook drop* harus menunggu hingga 24 jam sebelum status tiket diperbaiki. Kueri batch besar mengunci tabel pesanan di jam pergantian hari dan memicu lonjakan I/O basis data.
+  2. **Opsi B: Synchronous In-Flight Dual-Write Matching**
+     * *Kelebihan:* Verifikasi saldo seketika saat proses checkout berlangsung.
+     * *Kelemahan:* Menciptakan *hard dependency* ke sistem perbankan. Latensi perbankan yang fluktuatif langsung merusak *user experience* checkout dan memicu *cascading failure* jika core bank mengalami pelambatan.
+  3. **Opsi C: 3-Way Auto-Healing Daemon Berbasis Micro-Batch (Jendela 5 Menit) + SNAP BI On-Demand Inquiry**
+     * *Kelebihan:* Menggabungkan deteksi cepat asinkron (<90 detik) dengan pemulihan mandiri via API inquiry resmi Bank Indonesia SNAP (`GET /v1.0/debit/status`), isolasi beban kueri per 500 baris, dan penanganan pergeseran cutoff via `TIMING_T1_SHIFT` bucket rollforward.
+     * *Kelemahan:* Membutuhkan state machine idempotensi terpisah dan manajemen secret key HMAC yang terdistribusi.
+
+* **Keputusan yang Diambil:**
+  Memilih **Opsi C (3-Way Auto-Healing Engine dengan SNAP BI On-Demand Inquiry)** untuk menjamin tiket terbit otomatis dalam tempo <90 detik saat terjadi webhook drop, mengeliminasi selisih kas mengambang hingga <0.001%, dan memenuhi standar SPKN BPK RI.
+
+* **Justifikasi Teknis & Analisis Trade-Off:**
+
+| Parameter Evaluasi | Opsi A: Batch Cron Harian T+1 | Opsi B: Sync In-Flight Matching | Opsi C: 3-Way Auto-Healing Daemon (Pilihan) | Justifikasi Arsitektur |
+| :--- | :---: | :---: | :---: | :--- |
+| **Resolusi Webhook Drop** | 24 Jam (Komplain penumpang tinggi) | Gagal saat koneksi perbankan lambat | **< 90 Detik Otomatis** | Daemon mendeteksi mutasi bank dan memulihkan status tiket tanpa campur tangan manusia. |
+| **Mitigasi Cutoff 23:00 WIB** | Muncul alarm *false deficit* buku harian | Rentan inkonsistensi status | **Eliminasi Selisih (Nir-Varians)** | Transaksi 23:00-23:59 otomatis ditandai `TIMING_T1_SHIFT` ke keranjang kliring hari berikutnya. |
+| **Kepatuhan Audit BPK / KAP** | Catatan koreksi manual di spreadsheet | Jejak log tersebar tanpa hash | **100% Tamper-Evident Ledger** | Setiap keputusan rekonsiliasi dan auto-healing dicatat dalam rantai hash SHA-256 tak terhapuskan. |
+| **Dampak Beban Basis Data** | Lonjakan IOPS ekstrem jam 01:00 | *Connection thread pool exhaustion* | **Beban Terdistribusi Rata (<25ms)** | Pemrosesan chunk 500 baris berindeks mencegah *table locking* pada tabel utama. |
+| **Akurasi Pemotongan MDR** | Selisih sen (rounding error manual) | Terkendala variasi skema komisi | **Penny-Level Zero Variance** | Mesin aturan MDR menghitung ekspektasi biaya per metode pembayaran sebelum memverifikasi MT940. |
+
+---
+
+## C4 Model Architecture Blueprint (Context & Containers)
+
+### Level 1: System Context Diagram
+Diagram konteks memperlihatkan interaksi sistem rekonsiliasi otomatis 3-arah dengan ekosistem perbankan nasional, payment gateway, dan pemangku kepentingan kepatuhan:
+
+```
++---------------------------------------------------------------------------------------+
+|                                    SYSTEM CONTEXT                                     |
++---------------------------------------------------------------------------------------+
+
+  [ Calon Penumpang ]       [ Tim Treasury & Finance ]       [ Auditor Eksternal ]
+  (Pengguna Tiket Digital)  (Staf Perbendaharaan BUMN)       (BPK RI / KAP Independen)
+           │                             │                               │
+           │ Melakukan Pembayaran        │ Monitoring Discrepancy & Jurnal│ Audit Trail & SPKN Review
+           ▼                             ▼                               ▼
++---------------------------------------------------------------------------------------+
+|           MULTI-BANK AUTOMATED PAYMENT RECONCILIATION & SETTLEMENT SYSTEM             |
+|                                                                                       |
+|   * Mengkonsolidasikan data transaksi 3-arah (Internal DB, Gateway, Bank MT940).      |
+|   * Menjalankan Auto-Healing Daemon untuk memulihkan tiket tersangkut (<90s).         |
+|   * Mengeliminasi varians saldo mengambang dan menstandarisasi kepatuhan SNAP BI.     |
++---------------------------------------------------------------------------------------+
+           │                                 │                       │
+           │ Webhook Events (HMAC SHA-256)   │ SNAP BI Protocols     │ SFTP Host-to-Host
+           ▼                                 ▼                       ▼
+  [ Payment Gateways ]             [ SNAP BI API Gateways ]  [ Core Banking Systems ]
+  (Midtrans, Xendit, DOKU)         (Inquiry Status Services) (BCA, Mandiri, BRI, BNI MT940)
+```
+
+### Level 2: Container Architecture Diagram
+Diagram kontainer menguraikan alur kerja pemrosesan data, daemon pemulihan otomatis, dan repositori ledger kriptografis:
+
+```
++--------------------------------------------------------------------------------------------------+
+|                                   CONTAINER BLUEPRINT                                            |
++--------------------------------------------------------------------------------------------------+
+
+  [ External Sources: PG Webhooks, Bank MT940 Files, Internal Ticketing Database ]
+                          │
+                          │ HTTPS / SFTP / TLS 1.3
+                          ▼
++──────────────────────────────────────────────────────────────────────────────────────────────────+
+|  INGESTION & SIGNATURE VALIDATION GATEWAY                                                         |
+|  * HMAC SHA-256 Signature Verification, Decryption Payload, Idempotent Event Deduplication       |
++──────────────────────────────────────────────────────────────────────────────────────────────────+
+        │                                         │                                      │
+        │ Leg 1: Internal DB Poller               │ Leg 2: Raw Webhook Stream            │ Leg 3: MT940 SFTP Parser
+        ▼                                         ▼                                      ▼
++──────────────────────────────────────────────────────────────────────────────────────────────────+
+|  3-WAY RECONCILIATION CORE ENGINE                                                                |
+|  * Match Key Composer: Hash(Transaction_ID + Virtual_Account_No + Amount_IDR)                    |
+|  * MDR & Fee Calculator: Evaluasi Komisi QRIS (0.7%) dan Flat Fee VA (Rp 2.500)                 |
+|  * Timing Bucket Shifter: Pemisahan Transaksi Cutoff 23:00-23:59 WIB (`TIMING_T1_SHIFT`)         |
++──────────────────────────────────────────────────────────────────────────────────────────────────+
+        │                                                                                │
+        │ [Status: Matched (Clean)]                                                      │ [Status: Missing Leg 2 / Unmatched]
+        ▼                                                                                ▼
++──────────────────────────+                                                   +───────────────────+
+| CRYPTOGRAPHIC LEDGER     |                                                   | AUTO-HEALING      |
+| (PostgreSQL Append-Only) |                                                   | DAEMON WORKER     |
+|                          |                                                   |                   |
+| * Merkle-Chained Hashes  |                                                   | * SNAP BI Inquiry |
+| * Penny-Level Balance    | ◀── [Auto-Healed & Status Updated to PAID] ───────|   GET /status     |
+| * Siap Audit BPK / KAP   |                                                   | * Max Retry: 5x   |
+| * Jurnal Akuntansi SAP   |                                                   | * Dead Letter Q   |
++──────────────────────────+                                                   +───────────────────+
+```
+
+---
+
+## Enterprise Governance & Vendor Oversight
+
+### 1. Kriteria Acceptance Gatekeeper (Enterprise Financial Controls)
+Setiap modul rekonsiliasi dan pemrosesan jurnal akuntansi wajib mematuhi protokol tata kelola keuangan (*financial governance gates*):
+* **Prinsip Four-Eyes / Separation of Duties (SoD):**
+  * Staf pengembang (*developer*) dan analis dilarang memiliki hak akses langsung (*write access*) ke tabel ledger produksi atau file mutasi perbankan.
+  * Setiap intervensi rekonsiliasi manual (jika terdapat anomali rekening koran) wajib melalui alur *Maker-Checker-Approver* bertingkat sebelum jurnal penyesuaian dicatat.
+* **Standar Keamanan Transaksi & Enkripsi Data:**
+  * Kepatuhan PCI-DSS v4.0 dan POJK tentang Perlindungan Konsumen Sektor Jasa Keuangan.
+  * *Data Masking:* Nomor rekening bank, Virtual Account, dan identitas nasabah disamarkan (*masked*) pada antarmuka pengguna (`****-****-8821`).
+  * Enkripsi data sensitif menggunakan **AES-256-GCM** pada level penyimpanan (*data-at-rest*) dan **TLS 1.3** pada seluruh saluran pertukaran data (*data-in-transit*).
+* **Zero Unreconciled Balance Policy:**
+  * Kriteria kelulusan batch rekonsiliasi harian adalah selisih saldo mutlak Rp 0 (*penny-level zero variance*).
+  * Jika terdapat selisih >= Rp 1 yang tidak terpetakan oleh *healing daemon*, sistem otomatis menerbitkan tiket insiden prioritas P1 ke unit Treasury.
+
+### 2. Service Level Agreement (SLA) & Pengawasan Mitra Perbankan & Gateway
+* **SLA Pengiriman Webhook Payment Gateway:**
+  * Gateway pembayaran mitra (Midtrans, Xendit, DOKU) terikat SLA pengiriman webhook minimum **99.9% sukses pada percobaan pertama**.
+  * Mekanisme *retry* asinkron wajib diterapkan dengan batas toleransi maksimal 5 percobaan menggunakan algoritma *exponential backoff* (interval: 5s, 15s, 60s, 300s, 900s).
+* **SLA Ketersediaan Rekening Koran (Bank MT940 SFTP):**
+  * Bank mitra (Mandiri, BRI, BCA, BNI) wajib menyediakan file mutasi rekening koran harian format MT940 di direktori SFTP privat paling lambat pukul **03:00 WIB** setiap hari kalender.
+  * Klausul penalti finansial: Kegagalan penyediaan data rekening koran yang menyebabkan keterlambatan settlement dana ke unit operasional dikenakan denda kompensasi bunga berjalan sesuai standar PBI No. 23/6/PBI/2021.
+
+---
+
 ## Metrik Dampak & Hasil Teruji
 
 | Indikator Kinerja (KPI) | Sebelum Implementasi | Setelah Otomasi Mesin | Efisiensi / Peningkatan |

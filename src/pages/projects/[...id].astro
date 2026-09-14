@@ -28,13 +28,61 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const blissImg = `${base}/images/bliss.jpg`;
+
+const siteOrigin = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://andhikapp28.github.io';
+const canonicalURL = `${siteOrigin}${base}/projects/${project.id}`;
+
+const techArticleSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": `${canonicalURL}#article`,
+      "headline": `${project.data.title} | Case Study - Andhika Putra Pratama`,
+      "name": project.data.title,
+      "description": project.data.description,
+      "url": canonicalURL,
+      "inLanguage": "id-ID",
+      "articleSection": project.data.category,
+      "keywords": project.data.tags.join(', '),
+      "author": {
+        "@type": "Person",
+        "name": "Andhika Putra Pratama",
+        "jobTitle": "Senior System Analyst & Enterprise Solution Architect",
+        "url": `${siteOrigin}${base}/`
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Andhika Putra Pratama",
+        "url": `${siteOrigin}${base}/`
+      },
+      "about": {
+        "@id": `${canonicalURL}#software`
+      }
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": `${canonicalURL}#software`,
+      "name": project.data.title,
+      "description": project.data.description,
+      "programmingLanguage": "TypeScript, SQL, Redis, PHP, Python",
+      "runtimePlatform": "Linux / Enterprise Cloud",
+      "author": {
+        "@type": "Person",
+        "name": "Andhika Putra Pratama"
+      }
+    }
+  ]
+};
 ---
 
 <Layout 
-  title={`${project.data.title} - Microcok Internet Explorer`}
+  title={`${project.data.title} | Case Study - Andhika Putra Pratama`}
   description={project.data.description}
   ogType="article"
 >
+  <!-- Schema.org TechArticle & SoftwareSourceCode JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(techArticleSchema)} />
   <div 
     class="fixed inset-0 w-screen h-screen flex flex-col select-none overflow-hidden font-sans"
     style={`background-image: url('${blissImg}'); background-size: cover; background-position: center;`}
@@ -154,7 +202,7 @@ const blissImg = `${base}/images/bliss.jpg`;
           <!-- Return to Desktop -->
           <div class="mt-10 pt-6 border-t border-slate-200 flex items-center justify-between">
             <a
-              href="/"
+              href={`${base}/`}
               class="inline-flex items-center gap-1.5 px-4 py-2 rounded bg-[#ece9d8] border border-[#7f9db9] font-bold text-xs text-slate-800 hover:bg-white shadow-sm"
             >
               <ArrowLeft class="w-3.5 h-3.5" />
@@ -170,7 +218,7 @@ const blissImg = `${base}/images/bliss.jpg`;
     <div class="relative z-[9999] h-[30px] w-full bg-gradient-to-b from-[#245edb] via-[#3f8cf3] to-[#1941a5] border-t border-[#468df2] flex items-center justify-between select-none shadow-lg shrink-0">
       <div class="flex items-center h-full">
         <a
-          href="/"
+          href={`${base}/`}
           class="h-full px-3.5 rounded-r-xl bg-gradient-to-b from-[#388e3c] via-[#4caf50] to-[#2e7d32] hover:brightness-110 active:brightness-90 border-r border-[#1b5e20] shadow-[inset_1px_1px_1px_rgba(255,255,255,0.7)] flex items-center gap-1.5 cursor-pointer"
         >
           <svg class="w-3.5 h-3.5 drop-shadow" viewBox="0 0 24 24">

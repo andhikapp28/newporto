@@ -77,6 +77,142 @@ Sebagai **Lead System Analyst & Concurrency Architect**, saya merancang spesifik
 
 ---
 
+## Architecture Decision Record (ADR)
+
+### ADR-001: Distributed Mutex Locking Mechanism (Redis SETNX vs PostgreSQL SELECT FOR UPDATE)
+
+* **Status:** ACCEPTED & PRODUCTION-VERIFIED
+* **Tanggal Keputusan:** Q1 2026
+* **Penanggung Jawab:** Lead System Analyst & Concurrency Architect
+* **Konteks Keputusan:**
+  Pada periode puncak penjualan tiket mudik nasional (*peak flash sale*), sistem menerima lonjakan lalu lintas hingga 10.000 request per detik yang memperebutkan alokasi kursi identik dalam rentang waktu milidetik. Sistem membutuhkan mekanisme penguncian inventaris (*seat inventory lock*) yang menjamin konsistensi mutlak (*zero double-booking*), tidak menyebabkan kehabisan koneksi basis data (*connection pool exhaustion*), dan mampu melepaskan kursi secara otomatis jika proses transaksi ditinggalkan (*abandoned checkout*).
+
+* **Opsi yang Dipertimbangkan:**
+  1. **Opsi A: Database Row-Level Pessimistic Locking (`SELECT FOR UPDATE` pada PostgreSQL)**
+     * *Kelebihan:* Menjamin konsistensi transaksi ACID langsung pada basis data relasional sumber kebenaran (*single source of truth*).
+     * *Kelemahan:* Mengunci baris database secara sinkron membebani pool koneksi (*PgBouncer*). Pada pengujian beban 10.000 VU, throughput mentok di 850 req/s, latensi P99 membengkak hingga >2.400 ms, dan memicu *deadlock* saat reservasi multi-kursi dieksekusi bersamaan.
+  2. **Opsi B: Optimistic Concurrency Control (OCC) berbasis Versi Kolom**
+     * *Kelebihan:* Bebas *database lock contention* saat membaca data.
+     * *Kelemahan:* Tingkat penolakan transaksi (*retry storm*) sangat tinggi pada konkurensi tinggi, membuang sumber daya CPU untuk siklus baca-tulis ulang yang 99% berujung konflik.
+  3. **Opsi C: Distributed In-Memory Mutex Lock menggunakan Redis SETNX dengan Watchdog TTL**
+     * *Kelebihan:* Operasi atomik berbasis memori RAM dengan eksekusi sub-milidetik (<5 ms), pembebasan kunci otomatis berbasis TTL (*time-to-live*) deterministik, dan isolasi beban konkurensi ekstrem di luar basis data utama.
+     * *Kelemahan:* Membutuhkan manajemen kluster Redis berlatensi rendah dengan redundansi Sentinel untuk menjamin *high availability*.
+
+* **Keputusan yang Diambil:**
+  Memilih **Opsi C (Redis SETNX Mutex Lock dengan TTL Watchdog 600 Detik)** sebagai gerbang utama penguncian inventaris sementara, dipadukan dengan *atomic write commit* final di PostgreSQL saat pembayaran terverifikasi.
+
+* **Justifikasi Teknis & Analisis Trade-Off:**
+
+| Dimensi Evaluasi | Opsi A: PostgreSQL `SELECT FOR UPDATE` | Opsi B: Optimistic Locking (OCC) | Opsi C: Redis SETNX Distributed Lock (Pilihan) | Justifikasi Arsitektur |
+| :--- | :---: | :---: | :---: | :--- |
+| **Kapasitas Throughput** | 850 req/s (Bottleneck koneksi) | 1.200 req/s (Terkendala retry) | **10.000+ req/s** | Redis menangani 10k RPS tanpa membebani IOPS disk basis data. |
+| **P99 Lock Latency** | > 2.400 ms (Antrian kunci panjang) | 1.850 ms (Akibat konflik berulang) | **< 45 ms** | Eksekusi atomik in-memory memberikan respons sub-detik instan ke pengguna. |
+| **Pencegahan Deadlock** | Risiko tinggi pada reservasi multi-kursi | Risiko rendah, namun *high CPU burn* | **Zero Deadlock (Eliminasi Total)** | Alokasi kunci multi-kursi diurutkan secara leksikografis (*sorted keys*) dalam pipa atomik. |
+| **Ketahanan Failover** | Terikat failover database relasional (30s) | Terikat failover database relasional | **Failover Otomatis < 1.5 detik** | Redis Sentinel mempromosikan replika master secara transparan tanpa kehilangan state. |
+| **Biaya Sumber Daya** | 100% CPU spike pada basis data utama | Tingginya konsumsi write I/O | **Beban CPU DB turun 88%** | Redis berfungsi sebagai *shock absorber* peredam kejut lonjakan trafik. |
+
+---
+
+## C4 Model Architecture Blueprint (Context & Containers)
+
+### Level 1: System Context Diagram
+Diagram konteks menggambarkan batasan sistem reservasi berkonkurensi tinggi terhadap aktor pengguna dan ekosistem eksternal:
+
+```
++---------------------------------------------------------------------------------------+
+|                                    SYSTEM CONTEXT                                     |
++---------------------------------------------------------------------------------------+
+
+  [ Calon Penumpang ]       [ Konsorsium OTA ]         [ Loket Stasiun / POS ]
+  (Web & Mobile Apps)       (Traveloka, Tiket.com)     (Dedicated Cashier Terminals)
+           │                         │                               │
+           │ HTTPS / TLS 1.3         │ REST API / Idempotency Key    │ Dedicated VPN / LAN
+           ▼                         ▼                               ▼
++---------------------------------------------------------------------------------------+
+|              HIGH-CONCURRENCY SEAT LOCK & RESERVATION SYSTEM (BOUNDARY)               |
+|                                                                                       |
+|   * Mengamankan alokasi kursi secara atomik (10.000 req/s).                           |
+|   * Memastikan 0% insiden double-booking saat flash sale mudik.                       |
+|   * Mengelola siklus hidup kunci sementara (600s TTL Watchdog).                       |
++---------------------------------------------------------------------------------------+
+           │                                 │                       │
+           │ Webhook Callback                │ ISO 8583 / SNAP BI    │ AMQP Stream
+           ▼                                 ▼                       ▼
+  [ Payment Gateway ]              [ Bank Host-to-Host ]     [ Messaging & Notification ]
+  (Midtrans, Xendit, DOKU)         (Virtual Account / QRIS)  (SMS / WhatsApp / Push FCM)
+```
+
+### Level 2: Container Architecture Diagram
+Diagram kontainer memperinci komponen runtime, protokol interaksi, dan batas tanggung jawab komputasi:
+
+```
++--------------------------------------------------------------------------------------------------+
+|                                   CONTAINER BLUEPRINT                                            |
++--------------------------------------------------------------------------------------------------+
+
+  [ Clients: Web PWA, iOS, Android, OTA Partner APIs ]
+                          │
+                          │ HTTPS / JSON (Header: X-Idempotency-Key: {UUIDv4})
+                          ▼
++──────────────────────────────────────────────────────────────────────────────────────────────────+
+|  API GATEWAY & LOAD BALANCER (Kong / Nginx Ingress)                                              |
+|  * TLS Termination, Rate Limiting (Token Bucket: 100 req/IP/min), Global Idempotency Filter     |
++──────────────────────────────────────────────────────────────────────────────────────────────────+
+                          │
+                          │ Internal gRPC / High-Speed HTTP/2
+                          ▼
++──────────────────────────────────────────────────────────────────────────────────────────────────+
+|  SEAT LOCK MICROSERVICE ENGINE (Node.js Cluster / Go Concurrency Workers)                         |
+|  * Validasi Payload & Idempotency Header Cache                                                   |
+|  * Orchestrator Mutex Lock & Evaluasi Grace Period Transaksi                                    |
+|  * Pengendali Siklus Transaksi (AVAILABLE -> TEMP_LOCKED -> SOLD / RELEASED)                     |
++──────────────────────────────────────────────────────────────────────────────────────────────────+
+        │                                         │                                      │
+        │ Atomic SETNX (TCP Port 6379)            │ PgBouncer Connection Pool            │ AMQP 0-9-1
+        ▼                                         ▼                                      ▼
++──────────────────────────+             +──────────────────────────+          +───────────────────+
+| DISTRIBUTED LOCK STORE   |             | RELATIONAL CORE DATABASE |          | EVENT MESSAGE BUS |
+| (Redis Sentinel Cluster) |             | (PostgreSQL 15 Cluster)  |          | (RabbitMQ Broker) |
+|                          |             |                          |          |                   |
+| * Master-Replica Quorum  |             | * Primary (Read/Write)   |          | * Exchange:       |
+| * Key: seat:{sch}:{no}   |             | * Read Replicas (Jadwal) |          |   seat.events     |
+| * TTL: 600s Deterministic|             | * Final Committed Bookings|         | * Lock Expiration |
+| * Fallback Pub/Sub Keys  |             | * Stored Invariant Checks|          |   Notification    |
++──────────────────────────+             +──────────────────────────+          +───────────────────+
+```
+
+---
+
+## Enterprise Governance & Vendor Oversight
+
+### 1. Kriteria Acceptance Gatekeeper (Enterprise Quality Gates)
+Untuk memastikan stabilitas sistem misi-kritis (*mission-critical*), setiap rilis kode dan modul penguncian wajib melewati empat gerbang kontrol ketat (*Quality Gates*):
+* **Static Application Security Testing (SAST):** SonarQube Quality Gate wajib berstatus **PASSED** dengan standar minimum:
+  * *Code Coverage:* Minimum 85% untuk unit test dan minimum 95% khusus modul `LockEngineService` dan `IdempotencyInterceptor`.
+  * *Security Vulnerabilities:* 0 Blocker, 0 Critical, 0 Major issues (Security Rating A).
+  * *Technical Debt:* Rasio utang teknis < 3%.
+* **Zero Race Condition Gate (Automated Stress Verification):**
+  * Setiap pull request yang menyentuh lapisan persistensi wajib lulus pengujian konkurensi otomatis via k6 suite (10.000 VU menargetkan 1 nomor kursi simultan).
+  * Kriteria kelulusan mutlak: Tepat 1 respons `200 OK` dan 9.999 respons `409 Conflict`. Zero kursi ganda (*zero tolerance*).
+
+### 2. Mitigasi OWASP Top 10 & Anti-Scalping Scalability
+* **A04:2021 (Insecure Design) - Anti-Scalping & Bot Sniping Defense:**
+  * Pembatasan kuota per akun: Maksimal 4 kursi per transaksi dengan penegakan batasan identitas NIK/Paspor unik.
+  * *Rate Limiting Dinamis:* Algoritma Token Bucket pada layer API Gateway memblokir IP atau identitas yang mengirimkan >20 request kunci per detik.
+* **A01:2021 (Broken Access Control) - Cryptographic Reservation Tokens:**
+  * Hak penebusan kursi terkunci dilindungi *cryptographic reservation token* berbasis JWT ber-TTL singkat yang hanya dipegang oleh peramban pengguna pemenang kunci.
+* **A03:2021 (Injection) - Strict Parameter Schema Validation:**
+  * Sanitasi ketat terhadap parameter `schedule_id` dan `seat_no` menggunakan skema JSON tipe terikat, mencegah injeksi kueri memori maupun SQL.
+
+### 3. Service Level Agreement (SLA) & Pengawasan Mitra Vendor (OTA)
+* **SLA Ketersediaan Mesin Penguncian:** Ketersediaan kluster Redis Sentinel dan API Gateway dijamin minimum **99.99% per bulan** (toleransi *downtime* maksimum <4.32 menit/bulan).
+* **Vendor & OTA Contractual Oversight:**
+  * Konsorsium Online Travel Agent (OTA) wajib tunduk pada *Idempotency Header Contract* (RFC 7395).
+  * Batas *timeout* panggilan API pihak ketiga dipatok maksimal 2.500 ms. Jika sistem OTA gagal memanggil konfirmasi dalam batas waktu, kunci kursi otomatis terlepas ke inventaris publik tanpa penalti ke pihak operator.
+  * Klausul penalti finansial: Kegagalan integrasi sepihak dari vendor yang menyebabkan saldo pelanggan terdebit tanpa penerbitan tiket wajib diselesaikan secara otomatis oleh mekanisme *reverse refund* dalam tempo maksimal T+1 jam.
+
+---
+
 ## Metrik Pengujian & Performa Teruji
 
 | Parameter Metrik Beban | Sistem Database Tradisional | Redis Distributed Mutex | Hasil Validasi |
